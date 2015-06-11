@@ -1,0 +1,32 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/chraibi/" . ".emacs.d/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/chraibi/.emacs.d/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "setup-org-mode.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/chraibi/.emacs.d/" (21694 22815 0 0) "xcscope.el" "vendor/" "tmp/" "timeclock_project_names" "timeclock_project_hours_report" "timeclock-x.el" "timeclock-setup.el" "themes/" "template.el" "snippets/" "setup-powerline.el" "setup-package.el" "setup-org-mode.el" "setup-magit.el" "setup-electric.el" "recentf" "quicklisp.lisp" "quicklisp/" "python-pylint.el" "python-pep8.el" "plugins/" "plantumlmode.el" "plantuml.jar" "ox-latex.el" "org-clock-save.el" "ob-plantuml.el" "ob-C.el" "nav.el" "muti-term.el" "mode-mapping.el" "linum.el" "ipython.el" "image-dired/" "highlight-indentation.el" "hackernews.el" "google-this.el" "google-c-style.el" "flymake.el" "flymake-setup.el" "flymake-cursor.el" "ethan-wspace.el" "elpa/" "ede-projects.el" "dired+.el" "desktop/" "delme/" "data/" "cpputils-cmake.el " "cpputils-cmake.el" "cmake-project.el" "cmake-mode.el" "clang-complete" "cl-lib.el" "cache/" "auto-save-list/" "auto-complete-clang-async.el" "astyle-hooks.el" "ack.el" "ac-comphist.dat" ".org-id-locations" ".ob-c.el.~48658b04" ".emacsDIR/" "../" "./")
+
+ ("/Users/chraibi/" (21694 22816 0 0) "Workspace/" "Public/" "Pictures/" "ownCloud/" "Library/" "FZJprinter/" "Downloads/" "Documents/" "Desktop/" "conkeror-rc/" ".zshrc~" ".zshrc.pre-oh-my-zsh" ".zshrc-e" ".zshrc" ".zsh_history" ".zsh-update" ".zcompdump-ZAM259-5.0.7" ".zcompdump-Mohcine’s MacBook Pro-5.0.7" ".viminfo" ".Trash/" ".tmux.conf" ".tmux-powerlinerc" ".ssh/" ".scid/" ".saves/" ".pythonrc" ".profile" ".org/" ".oh-my-zsh/" ".matplotlib/" ".ipython/" ".gnupg/" ".gitk" ".gitignore" ".gitconfig" ".emacs.d/" ".emacs" ".DS_Store" ".config" ".CFUserTextEncoding" ".bash_profile" ".bash_history" "../" "./")
+
+ ("/Users/chraibi/ownCloud/" (21694 12381 0 0) "zam1218/" "Shared/" "030_Literature/" ".owncloudsync.log.1" ".owncloudsync.log" ".DS_Store" ".csync_journal.db-wal" ".csync_journal.db-shm" ".csync_journal.db" "../" "./")
+
+ ("/Users/chraibi/ownCloud/zam1218/" (21694 22218 0 0) "syncGoogleCal.sh" "pythonparser.py" "org-files/" "ical2org_private.awk" "ical2org.awk" "dotfiles/" "conkeror-rc/" "cal_private.ics" "cal.ics" "Books.bib" "bookmarks/" "auto/" ".tmux/" "../" "./")
+
+ ("/Users/chraibi/ownCloud/zam1218/dotfiles/" (21694 22039 0 0) "Dotfiles_David/" "conkeror-rc/" "config" ".zshrc.pre-oh-my-zsh" ".zshrc" ".tmux.conf" ".tmux-powerlinerc" ".ssh/" ".saves/" ".rsnapshot_volume.conf" ".rsnapshot_home.conf" ".rsnapshot_config.conf" ".rsnapshot.conf" ".pythonrc" ".profile" ".pcsync.excludes.zam1261" ".pcsync.excludes" ".org/" ".oh-my-zsh/" ".nvidia-settings-rc" ".makeCscopeFile.sh" ".ipythonrc" ".ido.last" ".gnupg/" ".gitk" ".gitignore" ".gitconfig" ".fvwm/" ".fonts/" ".fontconfig/" ".emacs.d/" ".emacs" ".DS_Store" ".conkyrc" ".conkerorrc" ".conkeror/" ".bashrc" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: yt
+# key: yt
+# --
+#+BEGIN_LaTeX
+\includemedia[
+  width=7.11cm,height=4cm,
+  activate=pageopen,
+  flashvars={
+    modestbranding=1 % no YT logo in control bar
+    &autohide=1 % controlbar autohide
+    &showinfo=0 % no title and other info before start
+    &rel=0 % no related videos after end
+  },
+  url% Flash loaded from URL
+  ]{}{${1:url}}
+#+END_LaTeX
+
+
+  

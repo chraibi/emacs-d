@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# name: beamer
+# key: beamer
+# --
+#+TITLE: ${1:title}
+#+AUTHOR:    Mohcine Chraibi
+#+EMAIL:     m.chraibi@gmail.com
+
+#+LATEX_HEADER: \renewcommand{\rmdefault}{phv} % Arial
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topics}\tableofcontents[currentsection]\end{frame}}
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [presentation]
+#+BEAMER_FRAME_LEVEL: 2
+
+#+BEAMER_HEADER_EXTRA: \usetheme{Szeged}\usecolortheme{orchid}
+#+COLUMNS: %35ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Args) %4BEAMER_col(Col) %8BEAMER_extra(Ex)
+#+BEAMER_HEADER_EXTRA: \useoutertheme[subsection=false,shadow]{miniframes}
+#+BEAMER_HEADER_EXTRA: \useinnertheme{default}
+#+BEAMER_HEADER_EXTRA: \usefonttheme{serif}
+#+BEAMER_HEADER_EXTRA: \usepackage{palatino}
+
+#+BEAMER_HEADER_EXTRA: \setbeamerfont{title like}{shape=\scshape}
+#+BEAMER_HEADER_EXTRA: \setbeamerfont{frametitle}{shape=\scshape}
+
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{normal text}{fg=black,bg=white}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{alerted text}{fg=red}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{example text}{fg=black}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{structure}{fg=black}
+
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{palette tertiary}{fg=black,bg=black!10}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{palette quaternary}{fg=black,bg=black!10}

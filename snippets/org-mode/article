@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: article
+# key: article
+# --
+#+TITLE: ${1:title}
+#+AUTHOR:    Mohcine Chraibi
+#+EMAIL:     m.chraibi@gmail.com
+
+#+LATEX_HEADER: \renewcommand{\rmdefault}{phv} % Arial
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{
+#+LATEX_HEADER:     colorlinks,%
+#+LATEX_HEADER:     citecolor=black,%
+#+LATEX_HEADER:     filecolor=black,%
+#+LATEX_HEADER:     linkcolor=blue,%
+#+LATEX_HEADER:     urlcolor=black
+#+LATEX_HEADER: }

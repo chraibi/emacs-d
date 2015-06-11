@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: informatik
+# key: info
+# --
+#+SETUPFILE: .settings.org
+
+#+TITLE: \huge Ingenieurinformatik \newline \small ${1:title}
+#+AUTHOR:    Mohcine Chraibi
+#+EMAIL:     m.chraibi@fz-juelich.de
+#+Description:  Ingenieurinformatik
+#+DATE: \today 
+

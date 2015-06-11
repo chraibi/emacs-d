@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: juelich beamer
+# key: juelich
+# --
+#+TITLE: \huge Pedestrian Dynamics (week ${1:title})\vspace{1 cm} \newline \small{Lecture for the MSc program} Computer Simulation in Science \newline \small Computer Simulation in Science \newline \small University of Wuppertal
+#+AUTHOR:    A. Seyfried & M. Chraibi \hspace{0.9 cm} Forschungszentrum Jülich GmbH
+#+EMAIL:     m.chraibi@gmail.com
+#+Description:  Lecture for the MSc program Computer Simulation in Science
+#+DATE: \today 
+
+#+LATEX_HEADER: \renewcommand{\rmdefault}{phv} % Arial
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage[english]{babel}
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [presentation]
+#+BEAMER_FRAME_LEVEL: 2
+#+BEAMER_HEADER_EXTRA: \usetheme{Juelich}\usecolortheme{orchid}
+#+COLUMNS: %35ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Args) %4BEAMER_col(Col) %8BEAMER_extra(Ex)
+#+BEAMER_HEADER_EXTRA: \useinnertheme{default}
+#+BEAMER_HEADER_EXTRA: \usefonttheme{serif}
+#+BEAMER_HEADER_EXTRA: \usepackage{palatino}
+#+BEAMER_HEADER_EXTRA: \usepackage{color}
+
+#+BEAMER_HEADER_EXTRA: \setbeamerfont{title like}{shape=\scshape}
+#+BEAMER_HEADER_EXTRA: \setbeamerfont{frametitle}{shape=\scshape}
+
+
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{normal text}{fg=black,bg=white}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{alerted text}{fg=red}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{example text}{fg=black}
+#+BEAMER_HEADER_EXTRA: \setbeamercolor*{palette quaternary}{fg=black,bg=black!10}
+#+BEAMER_HEADER_EXTRA: \setbeamertemplate{slide counter}[default][Slide]
+#+BEAMER_HEADER_EXTRA: \setbeamertemplate{footer element2}{}
+#+BEAMER_HEADER_EXTRA: \usepackage{tikz}
+#+BEAMER_HEADER_EXTRA: \usetikzlibrary{calc, shapes, backgrounds}
+#+LaTeX_HEADER:\addtobeamertemplate{footnote}{}{\vspace{2ex}}

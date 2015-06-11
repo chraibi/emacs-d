@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: movie
+# key: movie
+# --
+#+BEGIN_LaTeX
+ \includemedia[
+  width=0.6\paperwidth,
+  height=0.4\linewidth,
+  activate=pageopen,
+  addresource=${1:title},
+  flashvars={flv=$1&autoplay=1}
+ ]{}{player_flv_maxi.swf}
+#+END_LaTeX
+
