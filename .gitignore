@@ -8,7 +8,8 @@ elpa
 swank
 emms
 cache
-lisp
+irony
+projectile-bookmarks.eld
 auto-save-list
 site-lisp/adventur-mode
 *.elc
