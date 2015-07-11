@@ -100,6 +100,7 @@
 		     python-mode
 		     ipython
 		     elpy
+                     flycheck
 		     ;;ob-plantuml
                                         ; uniquify		;
                      epl      ; needed for projectile
@@ -219,6 +220,7 @@
 (require 'auto-complete-clang)
 (require 'org-journal)
 (require 'yasnippet)
+(require 'flycheck)
 (require 'multiple-cursors)
 (require 'dired-x)
 ;(require 'mode-mapping)			;
@@ -231,7 +233,8 @@
 (require 'auto-complete-config)
 (require 'auto-complete-clang-async)
 (require 'cmake-project)
-;(require 'ipython)
+(require 'python)
+;; (require 'ipython)
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
 (require 'ob-plantuml)
@@ -242,14 +245,14 @@
 (require 'flymake-cursor)
 ;; uniquify: unique buffer names
 ;(require 'uniquify) ;; make buffer names more unique
-;; (require 'projectile)
+(require 'projectile)
 ;; (require 'helm-projectile)
 ;------  require setups
 (message "load my setups")
 (require 'setup-electric)		;
 (require 'setup-magit)
 (require 'setup-org-mode)
-;; (require 'setup-helm)
+(require 'setup-helm)
 (require 'flymake-setup)
 (require 'setup-hlinum)
 (message "setups loaded")
@@ -260,14 +263,14 @@
 (show-paren-mode t) ;; will highlight matching parentheses next to cursor.
 (autopair-global-mode) ;; to enable in all buffers
 ;; ----- todo make setup-helm.el
-;; (helm-projectile-on)
-;; (projectile-global-mode)
-;; (setq projectile-enable-caching nil)
-;; (setq projectile-switch-project-action 'projectile-dired)
-;; (setq projectile-remember-window-configs t )
-;; (setq projectile-completion-system 'helm)
-;; (setq projectile-switch-project-action 'helm-projectile)
-;; (setq helm-projectile-fuzzy-match nil)
+(helm-projectile-on)
+(projectile-global-mode)
+(setq projectile-enable-caching nil)
+(setq projectile-switch-project-action 'projectile-dired)
+(setq projectile-remember-window-configs t )
+(setq projectile-completion-system 'helm)
+(setq projectile-switch-project-action 'helm-projectile)
+(setq helm-projectile-fuzzy-match nil)
 ;;-----------------------------
 (setq  electric-pair-mode t)
 
@@ -527,6 +530,11 @@
  "';'.join(module_completion('''%s'''))\n"
  python-shell-completion-string-code
  "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+(defun flycheck-python-setup ()
+  (flycheck-mode))
+(add-hook 'python-mode-hook #'flycheck-python-setup)
+
 
 (setq py-python-command-args '( "--colors=Linux"))
 (setq ansi-color-for-comint-mode t)
