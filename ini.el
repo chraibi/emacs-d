@@ -86,6 +86,7 @@
 		     auto-complete-clang-async
 		     auto-complete-clang
 		     company	;
+                     irony ; needed by company-irony
 		     autopair ;; to enable in all buffers
 		     flymake-cursor
 		     python
@@ -93,15 +94,21 @@
 		     ipython
 		     elpy
 		     ;;ob-plantuml
-		    ; uniquify		;
+                                        ; uniquify		;
+                     epl      ; needed for projectile
+                     async    ; needed for hlem
+                     pkg-info ; needed for projectile
 		     projectile
 		     helm-projectile
 		     undo-tree
 		     )
       )	     
 
+
+
 ; activate all the packages (in particular autoloads)
-(package-initialize)
+
+(setq package-enable-at-startup nil) (package-initialize)
 (message "packages initialized")
 ; fetch the list of packages available 
 (unless package-archive-contents
@@ -109,12 +116,12 @@
 (message "fetch packages")
 ; install the missing packages
 (dolist (package package-list)
-  (message ">> install %s" package)
+  (message ">> load %s" package)
   (unless  (package-installed-p package)
     (package-install package)
     )
 )
-(message "done with installation")
+(message "done with loading pkgs")
 (setq abbrev-file-name             ;; tell emacs where to read abbrev
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
 
@@ -158,10 +165,17 @@
  ;; If there is more than one, they won't work right.
  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
 
+;; use smart line
+(setq sml/no-confirm-load-theme t)
+(add-hook 'after-init-hook 'display-time)  
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
 
+
+(setq custom-safe-themes t)
 (cond (( >= emacs-major-version 24)
          (message "load zenburn")
-       (load-theme 'zenburn t)
+       (load-theme 'zenburn)
        (if (member "Monaco" (font-family-list))
            (set-face-attribute
             'default nil :font "Monaco 18")
@@ -220,17 +234,16 @@
 (require 'helm-projectile)
 ;------  require setups
 (message "load my setups")
+(require 'setup-electric)		;
+(require 'setup-magit)
+(require 'setup-org-mode)
+(require 'setup-helm)
+(require 'flymake-setup)
+(require 'setup-hlinum)
 (cscope-setup)
-; todo
-;(require 'setup-electric)		;
-;(require 'setup-magit)
-;(require 'setup-org-mode)
-;(require 'setup-helm)
-;(require 'flymake-setup)
-;; (cscope-setup)
 ;;setup-electric
 
-;-----------------------------
+;----------------------------
 (show-paren-mode t) ;; will highlight matching parentheses next to cursor.
 (autopair-global-mode) ;; to enable in all buffers
 ;; ----- todo make setup-helm.el
@@ -422,7 +435,7 @@
 
 
 (setq linum-format "%4d  ")
-(global-linum-mode 1)
+;; (global-linum-mode 1)
 
 (defun nolinum ()
   (global-linum-mode 0)
@@ -440,12 +453,6 @@
 
 
 (find-file "~/Orgfiles/org-files/master.org")
-;; use smart line
-(setq sml/no-confirm-load-theme t)
-(add-hook 'after-init-hook 'display-time)  
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-
 
 ;; python-setup
 ;; ;;----------------------- PYTHON
