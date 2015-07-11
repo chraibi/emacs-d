@@ -11,7 +11,9 @@
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 
-
+(setq is-mac (equal system-type 'darwin))
+(when is-mac
+  (message "in mac"))
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 
@@ -42,10 +44,9 @@
 (add-to-list 'load-path py-install-directory)
 (setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
 
-(transient-mark-mode 1)
-(global-visual-line-mode 1) ; 1 for on, 0 for off.
-;(global-hl-line-mode 1) ; turn on highlighting current line
-;(set-face-background hl-line-face "gray35")
+;; (transient-mark-mode 1)
+;; (global-visual-line-mode 1) ; 1 for on, 0 for off.
+
                                         ; ELPA package support
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -65,6 +66,8 @@
 		     zenburn-theme
 		     highlight-indentation
 		     org-journal
+                     org-fstree
+                     color-theme
                      auctex
 		     yasnippet
                      expand-region
@@ -72,12 +75,16 @@
 		     dired+
 		     sx
 		     linum
+                     hlinum
 		     server
 		     nav
 		     recentf
+                     fill-column-indicator
+                     browse-kill-ring
 		     ;mode-mapping
 		     semantic
 		     ido
+                     magit
 		     xcscope
 		     cmake-project
 		     cpputils-cmake
@@ -86,6 +93,7 @@
 		     auto-complete-clang-async
 		     auto-complete-clang
 		     company	;
+                     irony ; needed by company-irony
 		     autopair ;; to enable in all buffers
 		     flymake-cursor
 		     python
@@ -93,15 +101,21 @@
 		     ipython
 		     elpy
 		     ;;ob-plantuml
-		    ; uniquify		;
+                                        ; uniquify		;
+                     epl      ; needed for projectile
+                     async    ; needed for hlem
+                     pkg-info ; needed for projectile
 		     projectile
 		     helm-projectile
 		     undo-tree
 		     )
       )	     
 
+
+
 ; activate all the packages (in particular autoloads)
-(package-initialize)
+
+(setq package-enable-at-startup nil) (package-initialize)
 (message "packages initialized")
 ; fetch the list of packages available 
 (unless package-archive-contents
@@ -109,17 +123,23 @@
 (message "fetch packages")
 ; install the missing packages
 (dolist (package package-list)
-  (message ">> install %s" package)
+  (message ">> load %s" package)
   (unless  (package-installed-p package)
     (package-install package)
     )
 )
-(message "done with installation")
+(message "done with loading pkgs")
 (setq abbrev-file-name             ;; tell emacs where to read abbrev
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
 
 (setq save-abbrevs t)              ;; save abbrevs when files are saved
                                      ;; you will be asked before the abbreviations are saved
+
+
+;; Keep emacs Custom-settings in separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+;; Set up appearance early
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -129,9 +149,7 @@
  '(ag-executable "/usr/local/bin/ag")
  '(c-basic-offset 6)
  '(c-default-style (quote ((c-mode . "stroustrup") (c++-mode . "stroustrup"))))
- '(custom-safe-themes
-   (quote
-    ("ace9f12e0c00f983068910d9025eefeb5ea7a711e774ee8bb2af5f7376018ad2" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" default)))
+ 
  '(ecb-options-version "2.40")
  '(org-agenda-files
    (quote
@@ -149,8 +167,9 @@
  '(python-indent-guess-indent-offset nil)
  '(sml/battery-format " [%p] ")
  '(sml/show-client t)
-)
-(add-hook 'after-init-hook 'sml/setup) ;todo
+ )
+
+;; (add-hook 'after-init-hook 'sml/setup) ;todo
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -158,7 +177,14 @@
  ;; If there is more than one, they won't work right.
  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
 
+;; use smart line
+(setq sml/no-confirm-load-theme t)
+(add-hook 'after-init-hook 'display-time)  
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
 
+
+(setq custom-safe-themes t)
 (cond (( >= emacs-major-version 24)
          (message "load zenburn")
        (load-theme 'zenburn t)
@@ -216,32 +242,32 @@
 (require 'flymake-cursor)
 ;; uniquify: unique buffer names
 ;(require 'uniquify) ;; make buffer names more unique
-(require 'projectile)
-(require 'helm-projectile)
+;; (require 'projectile)
+;; (require 'helm-projectile)
 ;------  require setups
 (message "load my setups")
-(cscope-setup)
-; todo
-;(require 'setup-electric)		;
-;(require 'setup-magit)
-;(require 'setup-org-mode)
-;(require 'setup-helm)
-;(require 'flymake-setup)
+(require 'setup-electric)		;
+(require 'setup-magit)
+(require 'setup-org-mode)
+;; (require 'setup-helm)
+(require 'flymake-setup)
+(require 'setup-hlinum)
+(message "setups loaded")
 ;; (cscope-setup)
 ;;setup-electric
 
-;-----------------------------
+;----------------------------
 (show-paren-mode t) ;; will highlight matching parentheses next to cursor.
 (autopair-global-mode) ;; to enable in all buffers
 ;; ----- todo make setup-helm.el
-(helm-projectile-on)
-(projectile-global-mode)
-(setq projectile-enable-caching nil)
-(setq projectile-switch-project-action 'projectile-dired)
-(setq projectile-remember-window-configs t )
-(setq projectile-completion-system 'helm)
-(setq projectile-switch-project-action 'helm-projectile)
-(setq helm-projectile-fuzzy-match nil)
+;; (helm-projectile-on)
+;; (projectile-global-mode)
+;; (setq projectile-enable-caching nil)
+;; (setq projectile-switch-project-action 'projectile-dired)
+;; (setq projectile-remember-window-configs t )
+;; (setq projectile-completion-system 'helm)
+;; (setq projectile-switch-project-action 'helm-projectile)
+;; (setq helm-projectile-fuzzy-match nil)
 ;;-----------------------------
 (setq  electric-pair-mode t)
 
@@ -407,9 +433,19 @@
 
 ;; (nav-disable-overeager-window-splitting)
 
+;; https://github.com/magnars/.emacs.d/blob/master/init.el
+(require 'fill-column-indicator)
+(setq fci-rule-color "#111122")
+;; Browse kill ring
+(require 'browse-kill-ring)
+(setq browse-kill-ring-quit-action 'save-and-restore)
+(setq browse-kill-ring-highlight-current-entry t)
+(global-set-key "\C-cy" 'browse-kill-ring)
 
-(or (server-running-p)
-    (server-start))
+;; Emacs server
+(unless (server-running-p)
+  (server-start))
+
 
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
@@ -422,7 +458,7 @@
 
 
 (setq linum-format "%4d  ")
-(global-linum-mode 1)
+;; (global-linum-mode 1)
 
 (defun nolinum ()
   (global-linum-mode 0)
@@ -440,12 +476,6 @@
 
 
 (find-file "~/Orgfiles/org-files/master.org")
-;; use smart line
-(setq sml/no-confirm-load-theme t)
-(add-hook 'after-init-hook 'display-time)  
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-
 
 ;; python-setup
 ;; ;;----------------------- PYTHON
@@ -684,7 +714,7 @@
 
 (setq-default truncate-lines t) ;; will trucate lines if they are too long.
 (transient-mark-mode t) ;; will highlight region between point and mark. 
-(setq-default global-visual-line-mode t)
+;; (setq-default global-visual-line-mode t)
 (setq show-paren-style 'parenthesis) ; highlight just brackets
                                         ;(setq show-paren-style 'expression) ; highlight entire bracket expression
 
@@ -940,5 +970,7 @@
         (LaTeX-newline)))
     (set-marker to-marker nil)))
 (ad-activate 'LaTeX-fill-region-as-paragraph)
+
+(message "finish loading emacs")
 
 ;; (global-set-key (kbd "C-c d") 'osx-dictionary-search-pointer)

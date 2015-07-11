@@ -1,9 +1,9 @@
 (require 'hlinum)
 ;; (hlinum-activate)
-(defface my-linum-hl
-  `((t :inherit linum :background ,(face-background 'hl-line nil t)))
-  "Face for the current line number."
-  :group 'linum)
+;; (defface my-linum-hl
+;;   `((t :inherit linum :background ,(face-background 'hl-line nil t)))
+;;   "Face for the current line number."
+;;   :group 'linum)
 
 (defvar my-linum-format-string "%3d")
 
