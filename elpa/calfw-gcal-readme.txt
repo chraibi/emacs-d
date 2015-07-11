@@ -1,1 +1,0 @@
-- Peer has closed the GnuTLS connection
