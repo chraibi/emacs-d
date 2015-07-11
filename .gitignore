@@ -7,6 +7,9 @@ tramp
 elpa
 swank
 emms
+cache
+lisp
+auto-save-list
 site-lisp/adventur-mode
 *.elc
 .DS_Store
@@ -15,4 +18,9 @@ site-lisp/adventur-mode
 /url/
 /var/
 /.sx/
-lisp
+org-clock-save.el
+.mc-lists.el
+.org-id-locations
+ac-comphist.dat
+org-clock-save.el
+recentf
