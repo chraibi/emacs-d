@@ -1,4 +1,11 @@
 (require 'org)
+(require 'org-journal)
+(require 'org-fstree)
+(require 'remember)
+(require 'color-theme)
+(require 'org-crypt)
+                                        ; todo ~/.emacs.d/plantuml.jar
+
                                         ;(require 'org-latex)
 ;; (setq org-startup-with-beamer-mode t)
 (global-set-key "\C-cl" 'org-store-link)
@@ -72,12 +79,12 @@
            )
          )
        )
-(load-org-agenda-files-recursively "~/Orgfiles/org-files/" ) ; trailing slash required
+(load-org-agenda-files-recursively "~/Dropbox/Orgfiles/org-files/" ) ; trailing slash required
 
 ;;------------ journal
-(setq org-journal-dir "~/Orgfiles/org-files/journal/")
+(setq org-journal-dir "~/Dropbox/Orgfiles/org-files/journal/")
 ;; (setq org-agenda-file-regexp "\`[^.].*\.org'\|[0-9]+")
-(defvar org-journal-file "~/Orgfiles/org-files/journal.org"  
+(defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"  
   "Path to OrgMode journal file.")  
 (defvar org-journal-date-format "%Y-%m-%d"  
   "Date format string for journal headings.")  
@@ -143,7 +150,7 @@
                  (trans . "<span class=\"task-in-progress\">[-]</span>"))))
 
 
-(require 'org-fstree)
+
 ;; (use-package org-fstree
 ;;              :ensure t
 ;;              :defer t
@@ -163,7 +170,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
-(setq org-directory "~/Orgfiles/org-files/")
+(setq org-directory "~/Dropbox/Orgfiles/org-files/")
 
 (setq org-agenda-files `(,org-directory))
 
@@ -184,13 +191,15 @@
 (defun notes ()
   "Switch to my work dir."
    (interactive)
-   (find-file "~/Orgfiles/org-files/notes.org")
+   (find-file "~/Dropbox/Orgfiles/org-files/notes.org")
    )
 
-(setq org-default-notes-file (concat org-directory "~/Orgfiles/org-files/notes.org"))
+(setq org-default-notes-file (concat org-directory "~/Dropbox/Orgfiles/org-files/notes.org"))
 
 (custom-set-variables
- '(org-time-stamp-custom-formats (quote ("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>")))) 
+ '(org-time-stamp-custom-formats (quote ("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>")))
+
+ ) 
 ;--------------------------
 
 ;; Resume clocking task when emacs is restarted
@@ -231,7 +240,7 @@
 
 
 ;; (require 'org-remember)
-(require 'remember)
+
 
 ;;(setq bh/keep-clock-running nil)
 ;;-----------
@@ -296,19 +305,19 @@
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/Orgfiles/org-files/notes.org")
+      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("r" "respond" entry (file "~/Orgfiles/org-files/notes.org")
+              ("r" "respond" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-              ("n" "note" entry (file "~/Orgfiles/org-files/notes.org")
+              ("n" "note" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("j" "Journal entry" plain (file+datetree+prompt "~/Orgfiles/org-files/journal.org")
+              ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/journal.org")
                "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)
                ;; "* %?\n%U\n" :clock-in t :clock-resume t)
               
-              ("w" "org-protocol" entry (file "~/Orgfiles/org-files/notes.org")
+              ("w" "org-protocol" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
                "* TODO Review %c\n%U\n" :immediate-finish t)
-              ("m" "Meeting" entry (file "~/Orgfiles/org-files/meeting.org")
+              ("m" "Meeting" entry (file "~/Dropbox/Orgfiles/org-files/meeting.org")
                "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
 )))
 
@@ -333,7 +342,6 @@
 ;;   ;; If you edit it by hand, you could mess it up, so be careful.
 ;;   ;; Your init file should contain only one such instance.
 ;;   ;; If there is more than one, they won't work right.
- '(ecb-options-version "2.40")
  '(org-agenda-ndays 7)
  '(org-agenda-show-all-dates t)
  '(org-agenda-skip-deadline-if-done t)
@@ -412,7 +420,7 @@
         )
       ) 
  
-(require 'color-theme)
+
 (color-theme-initialize)
 
 (setq org-latex-listings 'minted)
@@ -514,7 +522,6 @@
 (setq org-startup-indented t)
 ;;--------------- crypt
 
-(require 'org-crypt)
      (org-crypt-use-before-save-magic)
      (setq org-tags-exclude-from-inheritance (quote ("crypt")))
      
@@ -540,6 +547,16 @@
    (plantuml . t)))
 (setq org-plantuml-jar-path
       (expand-file-name "~/.emacs.d/plantuml.jar"))
+
+
+(defun org-find-dangling-clock ()
+  "Find a dangling clock entry in an org-mode buffer"
+  (interactive)
+  (re-search-forward "CLOCK: \\[[^]]*\\] *$")
+  )
+
+
+
 
 
 (provide 'setup-org-mode)

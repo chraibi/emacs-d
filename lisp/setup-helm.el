@@ -25,5 +25,15 @@
 
 (helm-mode 1)
 
+(helm-projectile-on)
+(projectile-global-mode)
+(setq projectile-enable-caching nil)
+(setq projectile-switch-project-action 'projectile-dired)
+(setq projectile-remember-window-configs t )
+(setq projectile-completion-system 'helm)
+(setq projectile-switch-project-action 'helm-projectile)
+(setq helm-projectile-fuzzy-match nil)
+
+
 (provide 'setup-helm)
 ;;; setup-helm.el ends here

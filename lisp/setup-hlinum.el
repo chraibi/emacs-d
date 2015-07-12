@@ -5,6 +5,9 @@
 ;;   "Face for the current line number."
 ;;   :group 'linum)
 
+(setq linum-format "%4d  ")
+;; (global-linum-mode 1)
+
 (defvar my-linum-format-string "%3d")
 
 (add-hook 'linum-before-numbering-hook 'my-linum-get-format-string)
