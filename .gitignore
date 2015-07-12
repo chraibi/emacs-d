@@ -8,6 +8,9 @@ elpa
 swank
 emms
 cache
+custom.el
+projectile.cache
+cache/ido.last
 irony
 projectile-bookmarks.eld
 auto-save-list

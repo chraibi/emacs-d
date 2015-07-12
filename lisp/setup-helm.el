@@ -5,6 +5,9 @@
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
+(defalias 'helm-buffer-match-major-mode 'helm-buffers-match-function)
+(defalias 'helm-buffers-match-function 'helm-buffers-list--match-fn)
+; helm-buffers-match-function
 (global-unset-key (kbd "C-x c"))
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
