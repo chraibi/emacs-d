@@ -2,7 +2,7 @@
 (require 'org-journal)
 (require 'org-fstree)
 (require 'remember)
-(require 'color-theme)
+;; (require 'color-theme)
 (require 'org-crypt)
                                         ; todo ~/.emacs.d/plantuml.jar
 
@@ -322,14 +322,6 @@
 )))
 
 
-; Use IDO for both buffer and file completion and ido-everywhere to t
-
-(setq ido-everywhere t)
-(setq ido-max-directory-size 100000)
-(ido-mode (quote both))
-; Use the current window when visiting files and buffers with ido
-(setq ido-default-file-method 'selected-window)
-(setq ido-default-buffer-method 'selected-window)
 ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
 
@@ -420,8 +412,6 @@
         )
       ) 
  
-
-(color-theme-initialize)
 
 (setq org-latex-listings 'minted)
 (setq org-latex-minted-options
@@ -539,7 +529,7 @@
        ;; To turn it off only locally, you can insert this:
        ;;
        ;; # -*- buffer-auto-save-file-name: nil; -*-
-(setq epg-gpg-program "/usr/local/bin/gpg")
+
 ;; active Org-babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages

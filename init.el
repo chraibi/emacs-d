@@ -1,7 +1,9 @@
-
 ;;; Code:
-
 ;; Turn off mouse interface early in startup to avoid momentary display
+(add-to-list 'load-path "/Users/chraibi/bin/benchmark-init-el")
+(require 'benchmark-init-loaddefs)
+(benchmark-init/activate)
+
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -10,7 +12,6 @@
 (setq inhibit-startup-echo-area-message t)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
-
 (setenv "ESHELL" (expand-file-name "~/bin/eshell"))
 (setq custom-safe-themes t)
 ;; use smart line
@@ -18,7 +19,7 @@
 (add-hook 'after-init-hook 'display-time)  
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
-
+(setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
 ;; Setting English Font
 
@@ -41,8 +42,7 @@
 
 
 (setq is-mac (equal system-type 'darwin))
-(when is-mac
-  (message "in mac"))
+
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 
@@ -54,8 +54,6 @@
 (global-set-key "\C-z" 'nil)
 ;; ;;; Make all yes-or-no questions as y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
-
-
 
 (getenv "PATH")
 (setenv "PATH"
@@ -87,13 +85,15 @@
   (package-initialize)
   )
 
-
+;; Setup packages
+(require 'setup-package)
 ; list the packages
 (setq package-list '(
 		     cl
 		     sml-modeline 
 		     zenburn-theme
 		     highlight-indentation
+                     ag
 		     org-journal
                      org-fstree
                      remember
@@ -139,6 +139,7 @@
 		     projectile
 		     helm-projectile
 		     undo-tree
+                     exec-path-from-shell
 		     )
       )	     
 
@@ -160,6 +161,11 @@
     )
 )
 (message "done with loading pkgs")
+;; Setup environment variables from the user's shell.
+;; (when is-mac
+;;   (require 'exec-path-from-shell)
+;;   (exec-path-from-shell-initialize))
+
 (setq abbrev-file-name             ;; tell emacs where to read abbrev
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
 
@@ -217,17 +223,19 @@
 (message "load packages")
 ;; -------------------- require
 (require 'cl)
+;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
 (require 'yasnippet)
 (require 'flycheck)
-(require 'multiple-cursors)
-(require 'dired-x)
+(autoload 'flycheck "flycheck" "load flycheck" t)
+(autoload 'multiple-cursors "multiple-cursors" "load multiple-cursors" t)
+;; (require 'dired-x)
 ;(require 'mode-mapping)			;
 (require 'semantic/ia)
 (require 'xcscope)
 (require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
-(require 'ob-plantuml)
+;; (require 'ob-plantuml)
 (require 'linum)
 (require 'server)
 (require 'nav)
@@ -235,17 +243,16 @@
 (require 'flymake-cursor)
 ;; uniquify: unique buffer names
 ;(require 'uniquify) ;; make buffer names more unique
-(require 'projectile)
-(require 'helm-projectile)
 ;----------------  load setups ----------------------------
 (message "load my setups")
 (require 'setup-electric)		;
-(require 'setup-magit)
+(autoload 'setup-magit "setup-magit" "load magit")
 (require 'setup-org-mode)
-(require 'setup-helm)
+(autoload 'setup-helm "setup-helm" "load helm")
 (require 'flymake-setup)
 (require 'setup-hlinum)
 (require 'setup-python)
+;; (autoload 'setup-python "setup-python" "load python")
 (require 'setup-cc)
 (require 'setup-ido)
 (message "setups loaded")
@@ -694,6 +701,10 @@
         (LaTeX-newline)))
     (set-marker to-marker nil)))
 (ad-activate 'LaTeX-fill-region-as-paragraph)
+
+
+;profile:
+;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
 
 (message "emacs loaded!")
 

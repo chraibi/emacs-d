@@ -1,7 +1,10 @@
 (require 'python)
+
+(package-initialize)
+(elpy-enable)
+
+
 ;; (require 'ipython)
-(provide 'setup-python)
-;;; setup-hlinum.el ends here
                                         ; http://www.masteringemacs.org/articles/2013/03/11/whats-new-emacs-24-3
 (add-hook 'python-mode-hook
           (lambda ()
@@ -15,8 +18,6 @@
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 ;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
-(package-initialize)
-(elpy-enable)
 
 
 (setq ipython-command "/usr/local/bin/ipython")
@@ -40,3 +41,4 @@
 
 
 (setq py-python-command-args '( "--colors=Linux"))
+(provide 'setup-python)
