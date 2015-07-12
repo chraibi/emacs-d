@@ -86,9 +86,10 @@
   )
 
 ;; Setup packages
-(require 'setup-package)
+;(require 'setup-package)
 ; list the packages
 (setq package-list '(
+ ;            dash
 		     cl
 		     sml-modeline 
 		     zenburn-theme
