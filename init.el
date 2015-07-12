@@ -1,6 +1,8 @@
 ;;; Code:
 ;; Turn off mouse interface early in startup to avoid momentary display
-(add-to-list 'load-path "/Users/chraibi/bin/benchmark-init-el")
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+(add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
+(add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 (require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
 
@@ -49,8 +51,6 @@
 (defvar *emacs-load-start* (current-time))
 ;; My location for external packages.
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (global-set-key "\C-z" 'nil)
 ;; ;;; Make all yes-or-no questions as y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
