@@ -95,6 +95,7 @@
 		     zenburn-theme
 		     highlight-indentation
                      ag
+		     auctex-latexmk
 		     org-journal
                      org-fstree
                      remember
