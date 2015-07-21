@@ -1,0 +1,1084 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("_MACROS_H" variable (:constant-flag t) nil [936 945])
+            ("cstdlib" include (:system-flag t) nil [947 965])
+            ("vector" include (:system-flag t) nil [966 983])
+            ("map" include (:system-flag t) nil [984 998])
+            ("string.h" include (:system-flag t) nil [999 1018])
+            ("algorithm" include (:system-flag t) nil [1019 1039])
+            ("sstream" include (:system-flag t) nil [1040 1058])
+            ("iostream" include (:system-flag t) nil [1059 1078])
+            ("limits" include (:system-flag t) nil [1079 1096])
+            ("M_PI" variable (:constant-flag t) nil [1120 1124])
+            ("_SIMULATOR" variable (:constant-flag t) nil [1233 1243])
+            ("JPS_OLD_VERSION" variable (:constant-flag t) nil [1288 1303])
+            ("JPS_VERSION_MINOR" variable (:constant-flag t) nil [1353 1370])
+            ("JPS_VERSION_MAJOR" variable (:constant-flag t) nil [1383 1400])
+            ("JPS_VERSION" variable (:constant-flag t) nil [1414 1425])
+            ("J_EPS" variable (:constant-flag t) nil [1566 1571])
+            ("J_EPS_EVENT" variable (:constant-flag t) nil [1586 1597])
+            ("J_EPS_DIST" variable (:constant-flag t) nil [1667 1677])
+            ("J_EPS_GOAL" variable (:constant-flag t) nil [1698 1708])
+            ("J_TOLERANZ" variable (:constant-flag t) nil [1792 1802])
+            ("J_EPS_V" variable (:constant-flag t) nil [1860 1867])
+            ("J_QUEUE_VEL_THRESHOLD_NEW_ROOM" variable (:constant-flag t) nil [1944 1974])
+            ("J_QUEUE_VEL_THRESHOLD_JAM" variable (:constant-flag t) nil [2082 2107])
+            ("CBA_THRESHOLD" variable (:constant-flag t) nil [2220 2233])
+            ("OBSTRUCTION" variable (:constant-flag t) nil [2247 2258])
+            ("CLENGTH" variable (:constant-flag t) nil [2289 2296])
+            ("FAKTOR" variable (:constant-flag t) nil [2336 2342])
+            ("FINAL_DEST_OUT" variable (:constant-flag t) nil [2403 2417])
+            ("LIST_EMPTY" variable (:constant-flag t) nil [2446 2456])
+            ("J_NAN" variable (:constant-flag t) nil [2492 2497])
+            ("RoomState" type
+               (:members 
+                  ( ("ROOM_CLEAN" variable
+                       (:constant-flag t
+                        :default-value (2573 2574)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2562 2574])
+                    ("ROOM_SMOKED" variable
+                       (:constant-flag t
+                        :default-value (2593 2594)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2581 2594]))                  
+                :type "enum")
+                nil [2540 2597])
+            ("AgentType" type
+               (:members 
+                  ( ("MALE" variable
+                       (:constant-flag t
+                        :default-value (2626 2627)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2621 2627])
+                    ("FEMALE" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2634 2641])
+                    ("CHILD" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2647 2653])
+                    ("ELDERLY" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2659 2668]))                  
+                :type "enum")
+                nil [2599 2669])
+            ("FileFormat" type
+               (:members 
+                  ( ("FORMAT_XML_PLAIN" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2694 2711])
+                    ("FORMAT_XML_BIN" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2717 2732])
+                    ("FORMAT_PLAIN" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2738 2751])
+                    ("FORMAT_VTK" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2757 2768])
+                    ("FORMAT_XML_PLAIN_WITH_MESH" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2774 2802]))                  
+                :type "enum")
+                nil [2671 2803])
+            ("RoutingStrategy" type
+               (:members 
+                  ( ("ROUTING_LOCAL_SHORTEST" variable
+                       (:constant-flag t
+                        :default-value (2856 2857)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2833 2857])
+                    ("ROUTING_GLOBAL_SHORTEST" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2864 2888])
+                    ("ROUTING_QUICKEST" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2894 2911])
+                    ("ROUTING_FROM_FILE" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2917 2935])
+                    ("ROUTING_NAV_MESH" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2941 2958])
+                    ("ROUTING_DUMMY" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2964 2978])
+                    ("ROUTING_SAFEST" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [2984 2999])
+                    ("ROUTING_COGNITIVEMAP" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3005 3026])
+                    ("ROUTING_UNDEFINED" variable
+                       (:constant-flag t
+                        :default-value (3051 3053)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3032 3053]))                  
+                :type "enum")
+                nil [2805 3056])
+            ("OperativModels" type
+               (:members 
+                  ( ("MODEL_GFCM" variable
+                       (:constant-flag t
+                        :default-value (3095 3096)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3084 3096])
+                    ("MODEL_GOMPERTZ" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3102 3117]))                  
+                :type "enum")
+                nil [3058 3188])
+            ("AgentColorMode" type
+               (:members 
+                  ( ("BY_VELOCITY" variable
+                       (:constant-flag t
+                        :default-value (3229 3230)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3217 3230])
+                    ("BY_KNOWLEDGE" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3237 3250])
+                    ("BY_ROUTE" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3256 3265])
+                    ("BY_ROUTER" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3271 3281])
+                    ("BY_SPOTLIGHT" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3287 3300])
+                    ("BY_GROUP" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3306 3315])
+                    ("BY_FINAL_GOAL" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3321 3335])
+                    ("BY_INTERMEDIATE_GOAL" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3341 3363]))                  
+                :type "enum")
+                nil [3190 3364])
+            ("LineIntersectType" type
+               (:members 
+                  ( ("NO_INTERSECTION" variable
+                       (:constant-flag t
+                        :default-value (3410 3411)
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3392 3411])
+                    ("INTERSECTION" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3414 3427])
+                    ("OVERLAP" variable
+                       (:constant-flag t
+                        :type "int")
+                        (reparse-symbol enumsubparts) [3429 3476]))                  
+                :type "enum")
+                nil [3366 3477])
+            ("xmltob" function
+               (:arguments 
+                  ( ("t" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3533 3548])
+                    ("v" variable
+                       (:default-value "0"
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3549 3559]))                  
+                :type "char")
+                nil [3521 3622])
+            ("xmltoi" function
+               (:arguments 
+                  ( ("t" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3641 3656])
+                    ("v" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol arg-sub-list) [3657 3666]))                  
+                :type "int")
+                nil [3630 3722])
+            ("xmltol" function
+               (:arguments 
+                  ( ("t" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3742 3757])
+                    ("v" variable
+                       (:default-value "0"
+                        :type "long")
+                        (reparse-symbol arg-sub-list) [3758 3768]))                  
+                :type "long")
+                nil [3730 3824])
+            ("xmltof" function
+               (:arguments 
+                  ( ("t" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3846 3861])
+                    ("v" variable
+                       (:default-value "0.0"
+                        :type "double")
+                        (reparse-symbol arg-sub-list) [3862 3876]))                  
+                :type "double")
+                nil [3832 3932])
+            ("xmltoa" function
+               (:pointer 1
+                :constant-flag t
+                :arguments 
+                  ( ("t" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3960 3975])
+                    ("v" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :default-value "\"\""
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3976 3995]))                  
+                :type "char")
+                nil [3940 4037])
+            ("xmltoc" function
+               (:arguments 
+                  ( ("t" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [4057 4072])
+                    ("v" variable
+                       (:constant-flag t
+                        :default-value "'\\0'"
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [4073 4092]))                  
+                :type "char")
+                nil [4045 4143])
+            ("IsElementInVector" function
+               (:arguments 
+                  ( ("vec" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("A" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol arg-sub-list) [4260 4286])
+                    ("el" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("A" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4287 4299]))                  
+                :type "bool")
+                nil [4237 4495])
+            ("GetWithDef" function
+               (:arguments 
+                  ( ("m" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("std::map" type
+                             (:template-specifier 
+                                ( ("K" type nil nil nil)
+                                  ("V" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol arg-sub-list) [4677 4703])
+                    ("key" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("K" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4704 4718])
+                    ("defval" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("V" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4719 4737]))                  
+                :type ("V" type (:type "class") nil nil))
+                nil [4664 4908])
+            ("concatenate" function
+               (:arguments 
+                  ( ("name" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4941 4965])
+                    ("i" variable (:type "int") (reparse-symbol arg-sub-list) [4966 4972]))                  
+                :type ("std::string" type (:type "class") nil nil))
+                nil [4917 5044])
+            ("OFF" variable (:constant-flag t) nil [5244 5247])
+            ("BRIGHT" variable (:constant-flag t) nil [5289 5295])
+            ("BLINK" variable (:constant-flag t) nil [5386 5391])
+            ("BLACK" variable (:constant-flag t) nil [5503 5508])
+            ("CYAN" variable (:constant-flag t) nil [5524 5528])
+            ("WHITE" variable (:constant-flag t) nil [5545 5550])
+            ("RED" variable (:constant-flag t) nil [5566 5569])
+            ("GREEN" variable (:constant-flag t) nil [5587 5592])
+            ("YELLOW" variable (:constant-flag t) nil [5608 5614])
+            ("BLUE" variable (:constant-flag t) nil [5629 5633])
+            ("MAGENTA" variable (:constant-flag t) nil [5650 5657])
+            ("BG_BLACK" variable (:constant-flag t) nil [5696 5704])
+            ("BG_RED" variable (:constant-flag t) nil [5717 5723])
+            ("BG_GREEN" variable (:constant-flag t) nil [5738 5746])
+            ("BG_YELLOW" variable (:constant-flag t) nil [5759 5768])
+            ("BG_BLUE" variable (:constant-flag t) nil [5780 5787])
+            ("BG_CYAN" variable (:constant-flag t) nil [5801 5808])
+            ("BG_WHITE" variable (:constant-flag t) nil [5822 5830])
+            ("HOME" variable (:constant-flag t) nil [5865 5869])
+            ("CLEAR" variable (:constant-flag t) nil [5919 5924])
+            ("RED_LINE" variable (:constant-flag t) nil [5970 5978])
+            ("GREEN_LINE" variable (:constant-flag t) nil [6040 6050])
+            ("BLUE_LINE" variable (:constant-flag t) nil [6114 6123])
+            ("MAGENTA_LINE" variable (:constant-flag t) nil [6186 6198])
+            ("YELLOW_LINE" variable (:constant-flag t) nil [6264 6275])
+            ("OFF_LINE" variable (:constant-flag t) nil [6340 6348])
+            ("dtrace" variable (:constant-flag t) nil [7160 7166])
+            ("derror" variable (:constant-flag t) nil [7194 7200]))          
+      :file "Macros.h"
+      :pointmax 7336
+      :fsize 7339
+      :lastmodtime '(21925 38889 0 0)
+      :unmatched-syntax '((symbol "__inline" 4910 . 4916) (symbol "__inline" 4657 . 4663) (punctuation 4655 . 4656) (symbol 4654 . 4655) (TYPENAME 4645 . 4653) (punctuation 4643 . 4644) (symbol 4642 . 4643) (TYPENAME 4633 . 4641) (punctuation 4632 . 4633) (TEMPLATE 4623 . 4631) (symbol "__inline" 4230 . 4236) (punctuation 4228 . 4229) (symbol 4227 . 4228) (TYPENAME 4218 . 4226) (punctuation 4217 . 4218) (TEMPLATE 4209 . 4217) (symbol "__inline" 4038 . 4044) (symbol "__inline" 3933 . 3939) (symbol "__inline" 3825 . 3831) (symbol "__inline" 3723 . 3729) (symbol "__inline" 3623 . 3629) (symbol "__inline" 3514 . 3520))
+      :lexical-table 
+        '(("J_EPS" . ((number "0.001" 1572 . 1577)))
+          ("OBSTRUCTION" . ((number "4" 2259 . 2260)))
+          ("MAGENTA" . ((number "35" 5660 . 5662)))
+          ("JPS_VERSION" . 
+              ((symbol "JPS_VERSION_MAJOR" 1426 . 1443) (string "\".\"" 1444 . 1447) (symbol "JPS_VERSION_MINOR" 1448 . 1465)))
+          ("GREEN_LINE" . 
+              ((symbol "printf" 6052 . 6058) (semantic-list "(\"\\t%c[%d;%d;%dm\",0x1B, BRIGHT,GREEN,BG_BLACK)" 6058 . 6104) (punctuation ";" 6104 . 6105)))
+          ("CBA_THRESHOLD" . ((number "0.15" 2234 . 2238)))
+          ("BLUE_LINE" . 
+              ((symbol "printf" 6125 . 6131) (semantic-list "(\"\\t%c[%d;%d;%dm\",0x1B, BRIGHT,BLUE,BG_BLACK)" 6131 . 6176) (punctuation ";" 6176 . 6177)))
+          ("JPS_VERSION_MAJOR" . ((string "\"0\"" 1401 . 1404)))
+          ("LIST_EMPTY" . ((punctuation "-" 2458 . 2459) (number "1" 2459 . 2460)))
+          ("OFF" . ((number "0" 5254 . 5255)))
+          ("J_EPS_DIST" . ((number "0.05" 1678 . 1682)))
+          ("J_QUEUE_VEL_THRESHOLD_NEW_ROOM" . ((number "0.7" 1975 . 1978)))
+          ("FINAL_DEST_OUT" . ((punctuation "-" 2418 . 2419) (number "1" 2419 . 2420)))
+          ("BLACK" . ((number "30" 5513 . 5515)))
+          ("BG_RED" . ((number "41" 5727 . 5729)))
+          ("BG_YELLOW" . ((number "43" 5769 . 5771)))
+          ("BG_WHITE" . ((number "47" 5832 . 5834)))
+          ("HOME" . 
+              ((symbol "printf" 5871 . 5877) (semantic-list "(\"\\033[1;1H\")" 5877 . 5890) (punctuation ";" 5890 . 5891)))
+          ("JPS_OLD_VERSION" . ((string "\"0.5\"" 1304 . 1309)))
+          ("J_NAN" . 
+              ((symbol "std" 2498 . 2501) (punctuation ":" 2501 . 2502) (punctuation ":" 2502 . 2503) (symbol "numeric_limits" 2503 . 2517) (punctuation "<" 2517 . 2518) (DOUBLE "double" 2518 . 2524) (punctuation ">" 2524 . 2525) (punctuation ":" 2525 . 2526) (punctuation ":" 2526 . 2527) (symbol "quiet_NaN" 2527 . 2536) (semantic-list "()" 2536 . 2538)))
+          ("BLINK" . ((number "5" 5398 . 5399)))
+          ("GREEN" . ((number "32" 5597 . 5599)))
+          ("CLEAR" . 
+              ((symbol "printf" 5927 . 5933) (semantic-list "(\" \\033[2J\")" 5933 . 5945) (punctuation ";" 5945 . 5946)))
+          ("BRIGHT" . ((number "1" 5301 . 5302)))
+          ("J_EPS_EVENT" . ((number "0.00001" 1598 . 1605)))
+          ("J_EPS_V" . ((number "0.1" 1868 . 1871)))
+          ("dtrace" (spp-arg-list ("...") 7166 . 7171) . ((semantic-list "((void) 0)" 7175 . 7185)))
+          ("_SIMULATOR" . ((number "1" 1244 . 1245)))
+          ("JPS_VERSION_MINOR" . ((string "\"7\"" 1371 . 1374)))
+          ("BLUE" . ((number "34" 5639 . 5641)))
+          ("MAGENTA_LINE" . 
+              ((symbol "printf" 6200 . 6206) (semantic-list "(\"\\t%c[%d;%d;%dm\",0x1B, BRIGHT,MAGENTA,BG_BLACK)" 6206 . 6254) (punctuation ";" 6254 . 6255)))
+          ("derror" (spp-arg-list ("...") 7200 . 7205) . ((semantic-list "(fprintf(stderr, __VA_ARGS__)           \\
+    )" 7236 . 7283)))
+          ("J_TOLERANZ" . ((number "0.03" 1803 . 1807)))
+          ("J_QUEUE_VEL_THRESHOLD_JAM" . ((number "0.2" 2108 . 2111)))
+          ("OFF_LINE" . 
+              ((symbol "printf" 6349 . 6355) (semantic-list "(\"%c[%dm\\n\", 0x1B, OFF)" 6355 . 6378) (punctuation ";" 6378 . 6379)))
+          ("M_PI" . ((number "3.14159265358979323846" 1125 . 1147)))
+          ("CLENGTH" . ((number "1000" 2297 . 2301)))
+          ("CYAN" . ((number "36" 5534 . 5536)))
+          ("BG_BLACK" . ((number "40" 5706 . 5708)))
+          ("BG_BLUE" . ((number "44" 5790 . 5792)))
+          ("_MACROS_H")
+          ("WHITE" . ((number "37" 5555 . 5557)))
+          ("BG_GREEN" . ((number "42" 5748 . 5750)))
+          ("J_EPS_GOAL" . ((number "0.005" 1709 . 1714)))
+          ("FAKTOR" . ((number "1" 2343 . 2344)))
+          ("RED" . ((number "31" 5576 . 5578)))
+          ("YELLOW" . ((number "33" 5618 . 5620)))
+          ("BG_CYAN" . ((number "47" 5811 . 5813)))
+          ("RED_LINE" . 
+              ((symbol "printf" 5980 . 5986) (semantic-list "(\"%c[%d;%d;%dm\\n\",0x1B, BRIGHT,RED,BG_BLACK)" 5986 . 6030) (punctuation ";" 6030 . 6031)))
+          ("YELLOW_LINE" . 
+              ((symbol "printf" 6277 . 6283) (semantic-list "(\"\\t%c[%d;%d;%dm\",0x1B, BRIGHT,YELLOW,BG_BLACK)" 6283 . 6330) (punctuation ";" 6330 . 6331)))
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("ARGUMENTPARSER_H_" variable (:constant-flag t) nil [930 947])
+            ("string" include (:system-flag t) nil [949 966])
+            ("vector" include (:system-flag t) nil [967 984])
+            ("map" include (:system-flag t) nil [985 999])
+            ("cstdlib" include (:system-flag t) nil [1000 1018])
+            ("Macros.h" include nil nil [1019 1038])
+            ("../routing/DirectionStrategy.h" include nil nil [1039 1080])
+            ("../math/OperationalModel.h" include nil nil [1081 1118])
+            ("../math/ODESolver.h" include nil nil [1119 1149])
+            ("../routing/RoutingEngine.h" include nil nil [1150 1187])
+            ("memory" include (:system-flag t) nil [1188 1205])
+            ("std::string" using (:type ("std::string" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1207 1225])
+            ("std::vector" using (:type ("std::vector" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1226 1244])
+            ("std::pair" using (:type ("std::pair" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1245 1261])
+            ("OutputHandler" type
+               (:prototype t
+                :type "class")
+                nil [1263 1283])
+            ("TiXmlElement" type
+               (:prototype t
+                :type "class")
+                nil [1284 1303])
+            ("TiXmlNode" type
+               (:prototype t
+                :type "class")
+                nil [1304 1320])
+            ("AgentsParameters" type
+               (:prototype t
+                :type "class")
+                nil [1321 1344])
+            ("HybridSimulationManager" type
+               (:prototype t
+                :type "class")
+                nil [1345 1375])
+            ("Log" variable
+               (:pointer 1
+                :typemodifiers ("extern")
+                :type ("OutputHandler" type (:type "class") nil nil))
+                nil [1378 1404])
+            ("ArgumentParser" type
+               (:members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1429 1437])
+                    ("_hostname" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1444 1461])
+                    ("pTrajectoriesFile" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1467 1492])
+                    ("pErrorLogFile" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1498 1519])
+                    ("pNavMeshFilename" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1525 1549])
+                    ("_projectFile" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1555 1575])
+                    ("_projectRootDir" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1581 1604])
+                    ("pTmax" variable (:type "double") (reparse-symbol classsubparts) [1610 1623])
+                    ("pdt" variable (:type "double") (reparse-symbol classsubparts) [1657 1668])
+                    ("pfps" variable (:type "double") (reparse-symbol classsubparts) [1689 1701])
+                    ("pLinkedCells" variable (:type "bool") (reparse-symbol classsubparts) [1720 1738])
+                    ("pLinkedCellSize" variable (:type "double") (reparse-symbol classsubparts) [1786 1809])
+                    ("pV0Mu" variable (:type "double") (reparse-symbol classsubparts) [1864 1877])
+                    ("pV0Sigma" variable (:type "double") (reparse-symbol classsubparts) [1921 1937])
+                    ("pBmaxMu" variable (:type "double") (reparse-symbol classsubparts) [1984 1999])
+                    ("pBmaxSigma" variable (:type "double") (reparse-symbol classsubparts) [2046 2064])
+                    ("pBminMu" variable (:type "double") (reparse-symbol classsubparts) [2114 2129])
+                    ("pBminSigma" variable (:type "double") (reparse-symbol classsubparts) [2176 2194])
+                    ("pAtauMu" variable (:type "double") (reparse-symbol classsubparts) [2244 2259])
+                    ("pAtauSigma" variable (:type "double") (reparse-symbol classsubparts) [2306 2324])
+                    ("pAminMu" variable (:type "double") (reparse-symbol classsubparts) [2374 2389])
+                    ("pAminSigma" variable (:type "double") (reparse-symbol classsubparts) [2436 2454])
+                    ("pTauMu" variable (:type "double") (reparse-symbol classsubparts) [2504 2518])
+                    ("pTauSigma" variable (:type "double") (reparse-symbol classsubparts) [2524 2541])
+                    ("pNuPed" variable (:type "double") (reparse-symbol classsubparts) [2547 2561])
+                    ("pNuWall" variable (:type "double") (reparse-symbol classsubparts) [2567 2582])
+                    ("paPed" variable (:type "double") (reparse-symbol classsubparts) [2588 2601])
+                    ("pbPed" variable (:type "double") (reparse-symbol classsubparts) [2607 2620])
+                    ("pcPed" variable (:type "double") (reparse-symbol classsubparts) [2626 2639])
+                    ("paWall" variable (:type "double") (reparse-symbol classsubparts) [2645 2659])
+                    ("pbWall" variable (:type "double") (reparse-symbol classsubparts) [2665 2679])
+                    ("pcWall" variable (:type "double") (reparse-symbol classsubparts) [2685 2699])
+                    ("pIntPWidthPed" variable (:type "double") (reparse-symbol classsubparts) [2705 2726])
+                    ("pIntPWidthWall" variable (:type "double") (reparse-symbol classsubparts) [2732 2754])
+                    ("pMaxFPed" variable (:type "double") (reparse-symbol classsubparts) [2760 2776])
+                    ("pMaxFWall" variable (:type "double") (reparse-symbol classsubparts) [2782 2799])
+                    ("pDistEffMaxPed" variable (:type "double") (reparse-symbol classsubparts) [2805 2827])
+                    ("pDistEffMaxWall" variable (:type "double") (reparse-symbol classsubparts) [2833 2856])
+                    ("pSeed" variable (:type "unsigned int") (reparse-symbol classsubparts) [2862 2881])
+                    ("pSolver" variable (:type "int") (reparse-symbol classsubparts) [2887 2899])
+                    ("pExitStrategy" variable (:type "int") (reparse-symbol classsubparts) [2946 2964])
+                    ("pLog" variable (:type "int") (reparse-symbol classsubparts) [3006 3015])
+                    ("pPort" variable (:type "int") (reparse-symbol classsubparts) [3021 3031])
+                    ("_embedMesh" variable (:type "int") (reparse-symbol classsubparts) [3037 3052])
+                    ("_maxOpenMPThreads" variable (:type "int") (reparse-symbol classsubparts) [3058 3080])
+                    ("pModel" variable (:type "int") (reparse-symbol classsubparts) [3086 3097])
+                    ("pFormat" variable (:type ("FileFormat" type (:type "class") nil nil)) (reparse-symbol classsubparts) [3103 3122])
+                    ("pRoutingStrategies" variable (:type ("vector" type
+                         (:template-specifier 
+                            ( ("pair" type (:template-specifier 
+                                ( ("int" type nil nil nil)
+                                  ("RoutingStrategy" type nil nil nil))                                ) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3128 3183])
+                    ("_profilingFlag" variable (:type "bool") (reparse-symbol classsubparts) [3189 3209])
+                    ("_showStatistics" variable (:type "bool") (reparse-symbol classsubparts) [3215 3236])
+                    ("_hpcFlag" variable (:type "int") (reparse-symbol classsubparts) [3242 3255])
+                    ("_agentsParameters" variable (:type ("std::map" type
+                         (:template-specifier 
+                            ( ("int" type nil nil nil)
+                              ("std::shared_ptr" type (:template-specifier 
+                                ( ("AgentsParameters" type nil nil nil))                                ) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3320 3388])
+                    ("p_exit_strategy" variable (:type ("std::shared_ptr" type
+                         (:template-specifier 
+                            ( ("DirectionStrategy" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3472 3523])
+                    ("p_op_model" variable (:type ("std::shared_ptr" type
+                         (:template-specifier 
+                            ( ("OperationalModel" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3529 3574])
+                    ("_routingengine" variable (:type ("std::shared_ptr" type
+                         (:template-specifier 
+                            ( ("RoutingEngine" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3580 3626])
+                    ("_hybridSimManager" variable
+                       (:default-value "nullptr"
+                        :type ("std::shared_ptr" type
+                             (:template-specifier 
+                                ( ("HybridSimulationManager" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [3632 3699])
+                    ("private" label nil (reparse-symbol classsubparts) [3702 3710])
+                    ("ParseGCFMModel" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("xGCFM" variable
+                               (:pointer 1
+                                :type ("TiXmlElement" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3736 3756]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3716 3757])
+                    ("ParseGompertzModel" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("xGompertz" variable
+                               (:pointer 1
+                                :type ("TiXmlElement" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3787 3811]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3763 3812])
+                    ("ParseAgentParameters" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("operativModel" variable
+                               (:pointer 1
+                                :type ("TiXmlElement" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3844 3872]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3818 3873])
+                    ("Usage" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("file" variable
+                               (:constant-flag t
+                                :type ("std::string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3890 3913]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3879 3914])
+                    ("ParseStrategyNodeToObject" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("strategyNode" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("TiXmlNode" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4091 4121]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4060 4122])
+                    ("ParseNodeToSolver" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("solverNode" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("TiXmlNode" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4248 4276]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4225 4277])
+                    ("ParseRoutingStrategies" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("routingNode" variable
+                               (:pointer 1
+                                :type ("TiXmlNode" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4441 4464]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4413 4465])
+                    ("ParseCogMapOpts" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("routingNode" variable
+                               (:pointer 1
+                                :type ("TiXmlNode" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4730 4753]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4709 4754])
+                    ("ParseLinkedCells" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("linkedCellNode" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("TiXmlNode" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4783 4815]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4761 4816])
+                    ("ParseStepSize" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("stepNode" variable
+                               (:reference 1
+                                :type ("TiXmlNode" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4842 4862]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4823 4863])
+                    ("public" label nil (reparse-symbol classsubparts) [4865 4872])
+                    ("ArgumentParser" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :type ("ArgumentParser" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [4898 4915])
+                    ("IsOnline" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4948 4970])
+                    ("GetLinkedCells" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4976 5004])
+                    ("GetSolver" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5011 5033])
+                    ("GetRoutingEngine" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("std::shared_ptr" type
+                             (:template-specifier 
+                                ( ("RoutingEngine" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [5039 5095])
+                    ("GetExitStrategy" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("std::shared_ptr" type
+                             (:template-specifier 
+                                ( ("DirectionStrategy" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [5101 5160])
+                    ("GetRandomize" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5166 5191])
+                    ("GetMaxOpenMPThreads" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5197 5229])
+                    ("GetLog" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5235 5254])
+                    ("GetTravisto" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5260 5284])
+                    ("GetTrajektorien" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5290 5318])
+                    ("GetPort" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5324 5344])
+                    ("GetEmbededMesh" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5350 5377])
+                    ("GetSeed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "unsigned int")
+                        (reparse-symbol classsubparts) [5383 5412])
+                    ("Getfps" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5419 5441])
+                    ("GetLinkedCellSize" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5447 5480])
+                    ("GetModel" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("std::shared_ptr" type
+                             (:template-specifier 
+                                ( ("OperationalModel" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [5486 5537])
+                    ("GetTmax" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5543 5566])
+                    ("Getdt" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5572 5593])
+                    ("GetV0Mu" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5599 5622])
+                    ("GetV0Sigma" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5628 5654])
+                    ("GetBmaxMu" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5660 5685])
+                    ("GetBmaxSigma" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5691 5719])
+                    ("GetBminMu" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5725 5750])
+                    ("GetBminSigma" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5756 5784])
+                    ("GetAtauMu" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5790 5815])
+                    ("GetAtauSigma" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5821 5849])
+                    ("GetAminMu" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5855 5880])
+                    ("GetAminSigma" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5886 5914])
+                    ("GetNuPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5920 5944])
+                    ("GetNuWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5950 5975])
+                    ("GetaPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5981 6004])
+                    ("GetbPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6010 6033])
+                    ("GetcPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6039 6062])
+                    ("GetaWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6068 6092])
+                    ("GetbWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6098 6122])
+                    ("GetcWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6128 6152])
+                    ("GetIntPWidthPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6158 6189])
+                    ("GetIntPWidthWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6195 6227])
+                    ("GetMaxFPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6233 6259])
+                    ("GetMaxFWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6265 6292])
+                    ("GetDistEffMaxPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6298 6330])
+                    ("GetDistEffMaxWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6336 6369])
+                    ("GetTauMu" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6375 6399])
+                    ("GetTauSigma" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6405 6432])
+                    ("SetHostname" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("hostname" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6455 6478]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [6438 6479])
+                    ("SetPort" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("port" variable (:type "int") (reparse-symbol arg-sub-list) [6498 6507]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [6485 6508])
+                    ("SetTrajectoriesFile" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("trajectoriesFile" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6539 6570]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [6514 6571])
+                    ("GetHostname" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6578 6612])
+                    ("GetTrajectoriesFile" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6618 6660])
+                    ("GetErrorLogFile" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6666 6704])
+                    ("GetTrafficFile" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6710 6747])
+                    ("GetRoutingFile" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6753 6790])
+                    ("GetPersonsFilename" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6796 6837])
+                    ("GetPathwayFile" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6843 6880])
+                    ("GetGeometryFilename" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6886 6928])
+                    ("GetNavigationMesh" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6934 6974])
+                    ("GetProjectFile" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6980 7017])
+                    ("GetProjectRootDir" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [7023 7063])
+                    ("GetProfileFlag" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7069 7091])
+                    ("GetHPCFlag" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [7097 7120])
+                    ("ShowStatistics" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7126 7153])
+                    ("GetHybridSimManager" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("std::shared_ptr" type
+                             (:template-specifier 
+                                ( ("HybridSimulationManager" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [7160 7229])
+                    ("GetRoutingStrategy" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("vector" type
+                             (:template-specifier 
+                                ( ("pair" type (:template-specifier 
+                                    ( ("int" type nil nil nil)
+                                      ("RoutingStrategy" type nil nil nil))                                    ) nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [7236 7299])
+                    ("GetFileFormat" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("FileFormat" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [7305 7345])
+                    ("GetAgentsParameters" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::map" type
+                             (:template-specifier 
+                                ( ("int" type nil nil nil)
+                                  ("std::shared_ptr" type (:template-specifier 
+                                    ( ("AgentsParameters" type nil nil nil))                                    ) nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [7352 7437])
+                    ("ParseArgs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [7583 7592])
+                            ("argv" variable
+                               (:pointer 2
+                                :type "char")
+                                (reparse-symbol arg-sub-list) [7593 7605]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7568 7606])
+                    ("ParseIniFile" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("inifile" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7710 7725]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7692 7726]))                  
+                :type "class")
+                nil [1406 7730]))          
+      :file "ArgumentParser.h"
+      :pointmax 7756
+      :fsize 7766
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("ARGUMENTPARSER_H_")
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!general!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,1336 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("CDT_H" variable (:constant-flag t) nil [1645 1650])
+            ("advancing_front.h" include nil nil [1652 1680])
+            ("sweep_context.h" include nil nil [1681 1707])
+            ("sweep.h" include nil nil [1708 1726])
+            ("p2t" type
+               (:members 
+                  ( ("CDT" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [1819 1826])
+                            ("CDT" function
+                               (:prototype-flag t
+                                :constructor-flag t
+                                :arguments 
+                                  ( ("polyline" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("Point" type (:pointer 1) nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [1930 1966]))                                  
+                                :type ("CDT" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [1926 1967])
+                            ("CDT" function
+                               (:prototype-flag t
+                                :destructor-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [2018 2025])
+                            ("AddHole" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("polyline" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("Point" type (:pointer 1) nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [2096 2132]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2083 2133])
+                            ("AddPoint" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("point" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2211 2224]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2197 2225])
+                            ("Triangulate" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [2327 2346])
+                            ("GetTriangles" function
+                               (:prototype-flag t
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Triangle" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol classsubparts) [2385 2423])
+                            ("GetMap" function
+                               (:prototype-flag t
+                                :type ("std::list" type
+                                     (:template-specifier 
+                                        ( ("Triangle" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol classsubparts) [2461 2491])
+                            ("private" label nil (reparse-symbol classsubparts) [2495 2503])
+                            ("sweep_context_" variable
+                               (:pointer 1
+                                :type ("SweepContext" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2535 2564])
+                            ("sweep_" variable
+                               (:pointer 1
+                                :type ("Sweep" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2567 2581]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [1807 2585]))                  
+                :type "namespace")
+                nil [1790 2588]))          
+      :file "cdt.h"
+      :pointmax 2596
+      :fsize 2595
+      :lastmodtime '(21723 18038 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("CDT_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("ADVANCED_FRONT_H" variable (:constant-flag t) nil [1656 1672])
+            ("../common/shapes.h" include nil nil [1674 1703])
+            ("p2t" type
+               (:members 
+                  ( ("Node" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1722 1734])
+                    ("Node" type
+                       (:members 
+                          ( ("point" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [1776 1789])
+                            ("triangle" variable
+                               (:pointer 1
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [1792 1811])
+                            ("next" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [1815 1826])
+                            ("prev" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [1829 1840])
+                            ("value" variable (:type "double") (reparse-symbol classsubparts) [1844 1857])
+                            ("Node" function
+                               (:constructor-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [1866 1875]))                                  
+                                :type ("Node" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [1861 1947])
+                            ("Node" function
+                               (:constructor-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [1956 1965])
+                                    ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [1966 1978]))                                  
+                                :type ("Node" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [1951 2048]))                          
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1760 2052])
+                    ("AdvancingFront" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [2096 2103])
+                            ("AdvancingFront" function
+                               (:prototype-flag t
+                                :constructor-flag t
+                                :arguments 
+                                  ( ("head" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2120 2131])
+                                    ("tail" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2132 2143]))                                  
+                                :type ("AdvancingFront" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2105 2144])
+                            ("AdvancingFront" function
+                               (:prototype-flag t
+                                :destructor-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [2159 2177])
+                            ("head" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2179 2192])
+                            ("set_head" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2207 2218]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2193 2219])
+                            ("tail" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2220 2233])
+                            ("set_tail" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2248 2259]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2234 2260])
+                            ("search" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2261 2276])
+                            ("set_search" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2293 2304]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2277 2305])
+                            ("LocateNode" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("x" variable (:type "double") (reparse-symbol arg-sub-list) [2373 2382]))                                  
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2356 2383])
+                            ("LocatePoint" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("point" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2403 2422]))                                  
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2385 2423])
+                            ("private" label nil (reparse-symbol classsubparts) [2425 2433])
+                            ("head_" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2435 2470])
+                            ("tail_" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2435 2470])
+                            ("search_node_" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2435 2470])
+                            ("FindSearchNode" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("x" variable (:type "double") (reparse-symbol arg-sub-list) [2493 2502]))                                  
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2472 2503]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [2073 2506])
+                    ("head" function
+                       (:pointer 1
+                        :parent "AdvancingFront"
+                        :type ("Node" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [2515 2563])
+                    ("set_head" function
+                       (:parent "AdvancingFront"
+                        :arguments 
+                          ( ("node" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2601 2612]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [2571 2632])
+                    ("tail" function
+                       (:pointer 1
+                        :parent "AdvancingFront"
+                        :type ("Node" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [2641 2689])
+                    ("set_tail" function
+                       (:parent "AdvancingFront"
+                        :arguments 
+                          ( ("node" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2727 2738]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [2697 2758])
+                    ("search" function
+                       (:pointer 1
+                        :parent "AdvancingFront"
+                        :type ("Node" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [2767 2824])
+                    ("set_search" function
+                       (:parent "AdvancingFront"
+                        :arguments 
+                          ( ("node" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2865 2876]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [2833 2903]))                  
+                :type "namespace")
+                nil [1705 2906]))          
+      :file "advancing_front.h"
+      :pointmax 2914
+      :fsize 2913
+      :lastmodtime '(21723 18038 0 0)
+      :unmatched-syntax '((symbol "__inline" 2826 . 2832) (symbol "__inline" 2760 . 2766) (symbol "__inline" 2690 . 2696) (symbol "__inline" 2634 . 2640) (symbol "__inline" 2564 . 2570) (symbol "__inline" 2508 . 2514))
+      :lexical-table 
+        '(("ADVANCED_FRONT_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("SWEEP_CONTEXT_H" variable (:constant-flag t) nil [1655 1670])
+            ("list" include (:system-flag t) nil [1672 1687])
+            ("vector" include (:system-flag t) nil [1688 1705])
+            ("cstddef" include (:system-flag t) nil [1706 1724])
+            ("p2t" type
+               (:members 
+                  ( ("kAlpha" variable
+                       (:constant-flag t
+                        :default-value "0.3"
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [1845 1871])
+                    ("Point" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1873 1886])
+                    ("Triangle" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [1887 1902])
+                    ("Node" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1903 1915])
+                    ("Edge" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1916 1928])
+                    ("AdvancingFront" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [1929 1950])
+                    ("SweepContext" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [1973 1980])
+                            ("SweepContext" function
+                               (:prototype-flag t
+                                :constructor-flag t
+                                :arguments 
+                                  ( ("polyline" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("Point" type (:pointer 1) nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [2011 2047]))                                  
+                                :type ("SweepContext" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [1998 2048])
+                            ("SweepContext" function
+                               (:prototype-flag t
+                                :destructor-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [2064 2080])
+                            ("set_head" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p1" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2096 2106]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2082 2107])
+                            ("head" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2109 2129])
+                            ("set_tail" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p1" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2145 2155]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2131 2156])
+                            ("tail" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2158 2178])
+                            ("point_count" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :type ("size_t" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2180 2207])
+                            ("LocateNode" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("point" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2226 2245]))                                  
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2209 2246])
+                            ("RemoveNode" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2264 2275]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2248 2276])
+                            ("CreateAdvancingFront" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("nodes" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("Node" type (:pointer 1) nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [2304 2336]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2278 2337])
+                            ("MapTriangleToNodes" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2442 2454]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2418 2455])
+                            ("AddToMap" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("triangle" variable
+                                       (:pointer 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2471 2490]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2457 2491])
+                            ("GetPoint" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("index" variable (:type ("size_t" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2509 2522]))                                  
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2493 2523])
+                            ("GetPoints" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2525 2544])
+                            ("RemoveFromMap" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("triangle" variable
+                                       (:pointer 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2565 2584]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2546 2585])
+                            ("AddHole" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("polyline" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("Point" type (:pointer 1) nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [2600 2636]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2587 2637])
+                            ("AddPoint" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("point" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2653 2666]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2639 2667])
+                            ("front" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :pointer 1
+                                :type ("AdvancingFront" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2669 2699])
+                            ("MeshClean" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("triangle" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2716 2735]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2701 2736])
+                            ("GetTriangles" function
+                               (:prototype-flag t
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Triangle" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol classsubparts) [2738 2777])
+                            ("GetMap" function
+                               (:prototype-flag t
+                                :type ("std::list" type
+                                     (:template-specifier 
+                                        ( ("Triangle" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol classsubparts) [2778 2809])
+                            ("edge_list" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Edge" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [2811 2840])
+                            ("Basin" type
+                               (:members 
+                                  ( ("left_node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [2859 2875])
+                                    ("bottom_node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [2878 2896])
+                                    ("right_node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [2899 2916])
+                                    ("width" variable (:type "double") (reparse-symbol classsubparts) [2919 2932])
+                                    ("left_highest" variable (:type "bool") (reparse-symbol classsubparts) [2935 2953])
+                                    ("Basin" function
+                                       (:constructor-flag t
+                                        :type ("Basin" type (:type "struct") nil nil))
+                                        (reparse-symbol classsubparts) [2957 3060])
+                                    ("Clear" function (:type "void") (reparse-symbol classsubparts) [3064 3196]))                                  
+                                :type "struct")
+                                (reparse-symbol classsubparts) [2842 3199])
+                            ("EdgeEvent" type
+                               (:members 
+                                  ( ("constrained_edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [3222 3245])
+                                    ("right" variable (:type "bool") (reparse-symbol classsubparts) [3248 3259])
+                                    ("EdgeEvent" function
+                                       (:constructor-flag t
+                                        :type ("EdgeEvent" type (:type "struct") nil nil))
+                                        (reparse-symbol classsubparts) [3263 3321]))                                  
+                                :type "struct")
+                                (reparse-symbol classsubparts) [3201 3324])
+                            ("basin" variable (:type ("Basin" type (:type "class") nil nil)) (reparse-symbol classsubparts) [3326 3338])
+                            ("edge_event" variable (:type ("EdgeEvent" type (:type "class") nil nil)) (reparse-symbol classsubparts) [3339 3360])
+                            ("private" label nil (reparse-symbol classsubparts) [3362 3370])
+                            ("Sweep" friend nil (reparse-symbol classsubparts) [3372 3390])
+                            ("triangles_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Triangle" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [3393 3427])
+                            ("map_" variable (:type ("std::list" type
+                                 (:template-specifier 
+                                    ( ("Triangle" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [3428 3454])
+                            ("points_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Point" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [3455 3483])
+                            ("front_" variable
+                               (:pointer 1
+                                :type ("AdvancingFront" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3504 3527])
+                            ("head_" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3568 3581])
+                            ("tail_" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3622 3635])
+                            ("af_head_" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3637 3676])
+                            ("af_middle_" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3637 3676])
+                            ("af_tail_" variable
+                               (:pointer 1
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3637 3676])
+                            ("InitTriangulation" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [3678 3703])
+                            ("InitEdges" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("polyline" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("Point" type (:pointer 1) nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [3719 3755]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [3704 3756]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [1952 3760])
+                    ("front" function
+                       (:methodconst-flag t
+                        :pointer 1
+                        :parent "SweepContext"
+                        :type ("AdvancingFront" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [3769 3833])
+                    ("point_count" function
+                       (:methodconst-flag t
+                        :parent "SweepContext"
+                        :type ("size_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [3842 3911])
+                    ("set_head" function
+                       (:parent "SweepContext"
+                        :arguments 
+                          ( ("p1" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3948 3958]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [3920 3976])
+                    ("head" function
+                       (:methodconst-flag t
+                        :pointer 1
+                        :parent "SweepContext"
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [3985 4038])
+                    ("set_tail" function
+                       (:parent "SweepContext"
+                        :arguments 
+                          ( ("p1" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4075 4085]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [4047 4103])
+                    ("tail" function
+                       (:methodconst-flag t
+                        :pointer 1
+                        :parent "SweepContext"
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [4112 4165]))                  
+                :type "namespace")
+                nil [1726 4168]))          
+      :file "sweep_context.h"
+      :pointmax 4177
+      :fsize 4176
+      :lastmodtime '(21723 18038 0 0)
+      :unmatched-syntax '((symbol "__inline" 4105 . 4111) (symbol "__inline" 4040 . 4046) (symbol "__inline" 3978 . 3984) (symbol "__inline" 3913 . 3919) (symbol "__inline" 3835 . 3841) (symbol "__inline" 3762 . 3768) (punctuation 3390 . 3391))
+      :lexical-table 
+        '(("SWEEP_CONTEXT_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("SWEEP_H" variable (:constant-flag t) nil [1962 1969])
+            ("vector" include (:system-flag t) nil [1971 1988])
+            ("p2t" type
+               (:members 
+                  ( ("SweepContext" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [2007 2026])
+                    ("Node" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [2027 2039])
+                    ("Point" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [2040 2053])
+                    ("Edge" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [2054 2066])
+                    ("Triangle" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [2067 2082])
+                    ("Sweep" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [2098 2105])
+                            ("Triangulate" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2176 2194]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2159 2195])
+                            ("Sweep" function
+                               (:prototype-flag t
+                                :destructor-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [2245 2254])
+                            ("private" label nil (reparse-symbol classsubparts) [2256 2264])
+                            ("SweepPoints" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2380 2398]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2363 2399])
+                            ("PointEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2622 2640])
+                                    ("point" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2641 2654]))                                  
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2605 2655])
+                            ("EdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2759 2777])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2778 2789])
+                                    ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2790 2801]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2744 2802])
+                            ("EdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2821 2839])
+                                    ("ep" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2840 2850])
+                                    ("eq" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2851 2861])
+                                    ("triangle" variable
+                                       (:pointer 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2862 2881])
+                                    ("point" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2882 2895]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2806 2896])
+                            ("NewFrontTriangle" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3054 3072])
+                                    ("point" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3073 3086])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3087 3098]))                                  
+                                :type ("Node" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3031 3099])
+                            ("Fill" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3264 3282])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3283 3294]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [3254 3295])
+                            ("Legalize" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3369 3387])
+                                    ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3388 3400]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [3355 3401])
+                            ("Incircle" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("pa" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4229 4245])
+                                    ("pb" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4246 4262])
+                                    ("pc" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4263 4279])
+                                    ("pd" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4280 4296]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4215 4303])
+                            ("RotateTrianglePair" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4748 4760])
+                                    ("p" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4761 4770])
+                                    ("ot" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4771 4784])
+                                    ("op" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4785 4795]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4724 4802])
+                            ("FillAdvancingFront" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4922 4940])
+                                    ("n" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4941 4949]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4898 4950])
+                            ("LargeHole_DontFill" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5060 5077]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [5036 5084])
+                            ("AngleExceeds90Degrees" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("origin" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5114 5134])
+                                    ("pa" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5135 5151])
+                                    ("pb" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5152 5168]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [5087 5175])
+                            ("AngleExceedsPlus90DegreesOrIsNegative" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("origin" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5221 5241])
+                                    ("pa" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5242 5258])
+                                    ("pb" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5259 5275]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [5178 5282])
+                            ("Angle" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("origin" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5298 5318])
+                                    ("pa" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5319 5335])
+                                    ("pb" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5336 5352]))                                  
+                                :type "double")
+                                (reparse-symbol classsubparts) [5285 5359])
+                            ("HoleAngle" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5473 5490]))                                  
+                                :type "double")
+                                (reparse-symbol classsubparts) [5456 5497])
+                            ("BasinAngle" function
+                               (:prototype-flag t
+                                :methodconst-flag t
+                                :arguments 
+                                  ( ("node" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5597 5614]))                                  
+                                :type "double")
+                                (reparse-symbol classsubparts) [5579 5621])
+                            ("FillBasin" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5962 5980])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5981 5992]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [5947 5993])
+                            ("FillBasinReq" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6203 6221])
+                                    ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6222 6233]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6185 6234])
+                            ("IsShallow" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6253 6271])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6272 6283]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [6238 6284])
+                            ("IsEdgeSideOfTriangle" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("triangle" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6314 6333])
+                                    ("ep" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6334 6344])
+                                    ("eq" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6345 6355]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [6288 6356])
+                            ("FillEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6379 6397])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6398 6409])
+                                    ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6410 6421]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6360 6422])
+                            ("FillRightAboveEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6455 6473])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6474 6485])
+                                    ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6486 6497]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6426 6498])
+                            ("FillRightBelowEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6531 6549])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6550 6561])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6562 6573]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6502 6574])
+                            ("FillRightConcaveEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6609 6627])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6628 6639])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6640 6651]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6578 6652])
+                            ("FillRightConvexEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6686 6704])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6705 6716])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6717 6728]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6656 6729])
+                            ("FillLeftAboveEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6761 6779])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6780 6791])
+                                    ("node" variable
+                                       (:pointer 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6792 6803]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6733 6804])
+                            ("FillLeftBelowEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6836 6854])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6855 6866])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6867 6878]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6808 6879])
+                            ("FillLeftConcaveEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6913 6931])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6932 6943])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6944 6955]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6883 6956])
+                            ("FillLeftConvexEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [6989 7007])
+                                    ("edge" variable
+                                       (:pointer 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7008 7019])
+                                    ("node" variable
+                                       (:reference 1
+                                        :type ("Node" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7020 7031]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [6960 7032])
+                            ("FlipEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7055 7073])
+                                    ("ep" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7074 7084])
+                                    ("eq" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7085 7095])
+                                    ("t" variable
+                                       (:pointer 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7096 7108])
+                                    ("p" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7109 7118]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [7036 7119])
+                            ("NextFlipTriangle" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7632 7650])
+                                    ("o" variable (:type "int") (reparse-symbol arg-sub-list) [7651 7657])
+                                    ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7658 7671])
+                                    ("ot" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7672 7685])
+                                    ("p" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7686 7695])
+                                    ("op" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [7696 7706]))                                  
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [7605 7707])
+                            ("NextFlipPoint" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("ep" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8000 8010])
+                                    ("eq" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8011 8021])
+                                    ("ot" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8022 8035])
+                                    ("op" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8036 8046]))                                  
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [7979 8047])
+                            ("FlipScanEdgeEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8572 8590])
+                                    ("ep" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8591 8601])
+                                    ("eq" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8602 8612])
+                                    ("flip_triangle" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8613 8637])
+                                    ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8638 8650])
+                                    ("p" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8651 8660]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [8549 8661])
+                            ("FinalizationPolygon" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("tcx" variable
+                                       (:reference 1
+                                        :type ("SweepContext" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [8690 8708]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [8665 8709])
+                            ("nodes_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Node" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [8713 8739]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [2084 8743]))                  
+                :type "namespace")
+                nil [1990 8746]))          
+      :file "sweep.h"
+      :pointmax 8754
+      :fsize 8753
+      :lastmodtime '(21723 18038 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("SWEEP_H")
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!poly2tri!sweep!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

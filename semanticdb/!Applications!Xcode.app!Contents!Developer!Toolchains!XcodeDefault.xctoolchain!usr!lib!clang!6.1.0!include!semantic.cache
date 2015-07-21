@@ -1,0 +1,116 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("__FLOAT_H" variable (:constant-flag t) nil [1270 1279])
+            ("FLT_EVAL_METHOD" variable (:constant-flag t) nil [2524 2539])
+            ("FLT_ROUNDS" variable (:constant-flag t) nil [2568 2578])
+            ("FLT_RADIX" variable (:constant-flag t) nil [2612 2621])
+            ("FLT_MANT_DIG" variable (:constant-flag t) nil [2645 2657])
+            ("DBL_MANT_DIG" variable (:constant-flag t) nil [2683 2695])
+            ("LDBL_MANT_DIG" variable (:constant-flag t) nil [2721 2734])
+            ("DECIMAL_DIG" variable (:constant-flag t) nil [2762 2773])
+            ("FLT_DIG" variable (:constant-flag t) nil [2799 2806])
+            ("DBL_DIG" variable (:constant-flag t) nil [2827 2834])
+            ("LDBL_DIG" variable (:constant-flag t) nil [2855 2863])
+            ("FLT_MIN_EXP" variable (:constant-flag t) nil [2886 2897])
+            ("DBL_MIN_EXP" variable (:constant-flag t) nil [2922 2933])
+            ("LDBL_MIN_EXP" variable (:constant-flag t) nil [2958 2970])
+            ("FLT_MIN_10_EXP" variable (:constant-flag t) nil [2997 3011])
+            ("DBL_MIN_10_EXP" variable (:constant-flag t) nil [3039 3053])
+            ("LDBL_MIN_10_EXP" variable (:constant-flag t) nil [3081 3096])
+            ("FLT_MAX_EXP" variable (:constant-flag t) nil [3126 3137])
+            ("DBL_MAX_EXP" variable (:constant-flag t) nil [3162 3173])
+            ("LDBL_MAX_EXP" variable (:constant-flag t) nil [3198 3210])
+            ("FLT_MAX_10_EXP" variable (:constant-flag t) nil [3237 3251])
+            ("DBL_MAX_10_EXP" variable (:constant-flag t) nil [3279 3293])
+            ("LDBL_MAX_10_EXP" variable (:constant-flag t) nil [3321 3336])
+            ("FLT_MAX" variable (:constant-flag t) nil [3366 3373])
+            ("DBL_MAX" variable (:constant-flag t) nil [3394 3401])
+            ("LDBL_MAX" variable (:constant-flag t) nil [3422 3430])
+            ("FLT_EPSILON" variable (:constant-flag t) nil [3453 3464])
+            ("DBL_EPSILON" variable (:constant-flag t) nil [3489 3500])
+            ("LDBL_EPSILON" variable (:constant-flag t) nil [3525 3537])
+            ("FLT_MIN" variable (:constant-flag t) nil [3564 3571])
+            ("DBL_MIN" variable (:constant-flag t) nil [3592 3599])
+            ("LDBL_MIN" variable (:constant-flag t) nil [3620 3628]))          
+      :file "float.h"
+      :pointmax 3863
+      :fsize 3862
+      :lastmodtime '(21889 56115 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("LDBL_MAX_10_EXP" . ((symbol "__LDBL_MAX_10_EXP__" 3337 . 3356)))
+          ("FLT_MANT_DIG" . ((symbol "__FLT_MANT_DIG__" 2658 . 2674)))
+          ("FLT_DIG" . ((symbol "__FLT_DIG__" 2807 . 2818)))
+          ("FLT_MIN_EXP" . ((symbol "__FLT_MIN_EXP__" 2898 . 2913)))
+          ("DBL_MAX_EXP" . ((symbol "__DBL_MAX_EXP__" 3174 . 3189)))
+          ("DBL_DIG" . ((symbol "__DBL_DIG__" 2835 . 2846)))
+          ("FLT_MAX_10_EXP" . ((symbol "__FLT_MAX_10_EXP__" 3252 . 3270)))
+          ("LDBL_MIN_10_EXP" . ((symbol "__LDBL_MIN_10_EXP__" 3097 . 3116)))
+          ("LDBL_EPSILON" . ((symbol "__LDBL_EPSILON__" 3538 . 3554)))
+          ("FLT_ROUNDS" . ((semantic-list "(__builtin_flt_rounds())" 2579 . 2603)))
+          ("DBL_MIN_EXP" . ((symbol "__DBL_MIN_EXP__" 2934 . 2949)))
+          ("DECIMAL_DIG" . ((symbol "__DECIMAL_DIG__" 2774 . 2789)))
+          ("FLT_MIN_10_EXP" . ((symbol "__FLT_MIN_10_EXP__" 3012 . 3030)))
+          ("DBL_MAX_10_EXP" . ((symbol "__DBL_MAX_10_EXP__" 3294 . 3312)))
+          ("LDBL_MAX" . ((symbol "__LDBL_MAX__" 3431 . 3443)))
+          ("FLT_EPSILON" . ((symbol "__FLT_EPSILON__" 3465 . 3480)))
+          ("LDBL_MIN" . ((symbol "__LDBL_MIN__" 3629 . 3641)))
+          ("__FLOAT_H")
+          ("FLT_EVAL_METHOD" . ((symbol "__FLT_EVAL_METHOD__" 2540 . 2559)))
+          ("LDBL_MANT_DIG" . ((symbol "__LDBL_MANT_DIG__" 2735 . 2752)))
+          ("DBL_MIN_10_EXP" . ((symbol "__DBL_MIN_10_EXP__" 3054 . 3072)))
+          ("DBL_EPSILON" . ((symbol "__DBL_EPSILON__" 3501 . 3516)))
+          ("LDBL_DIG" . ((symbol "__LDBL_DIG__" 2864 . 2876)))
+          ("LDBL_MAX_EXP" . ((symbol "__LDBL_MAX_EXP__" 3211 . 3227)))
+          ("DBL_MANT_DIG" . ((symbol "__DBL_MANT_DIG__" 2696 . 2712)))
+          ("FLT_MAX" . ((symbol "__FLT_MAX__" 3374 . 3385)))
+          ("FLT_RADIX" . ((symbol "__FLT_RADIX__" 2622 . 2635)))
+          ("FLT_MAX_EXP" . ((symbol "__FLT_MAX_EXP__" 3138 . 3153)))
+          ("DBL_MAX" . ((symbol "__DBL_MAX__" 3402 . 3413)))
+          ("FLT_MIN" . ((symbol "__FLT_MIN__" 3572 . 3583)))
+          ("LDBL_MIN_EXP" . ((symbol "__LDBL_MIN_EXP__" 2971 . 2987)))
+          ("DBL_MIN" . ((symbol "__DBL_MIN__" 3600 . 3611)))
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("__STDARG_H" variable (:constant-flag t) nil [1309 1319])
+            ("va_list" type
+               (:typedef ("__builtin_va_list" type (:type "class") nil nil)
+                :type "typedef")
+                nil [1338 1372])
+            ("_VA_LIST" variable (:constant-flag t) nil [1381 1389])
+            ("va_start" variable (:constant-flag t) nil [1405 1413])
+            ("va_end" variable (:constant-flag t) nil [1463 1469])
+            ("va_arg" variable (:constant-flag t) nil [1512 1518])
+            ("__va_copy" variable (:constant-flag t) nil [1712 1721])
+            ("__GNUC_VA_LIST" variable (:constant-flag t) nil [2004 2018])
+            ("__gnuc_va_list" type
+               (:typedef ("__builtin_va_list" type (:type "class") nil nil)
+                :type "typedef")
+                nil [2028 2069]))          
+      :file "stdarg.h"
+      :pointmax 2095
+      :fsize 2094
+      :lastmodtime '(21889 56116 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("va_start" (spp-arg-list ("ap" "param") 1413 . 1424) . ((symbol "__builtin_va_start" 1425 . 1443) (semantic-list "(ap, param)" 1443 . 1454)))
+          ("va_end" (spp-arg-list ("ap") 1469 . 1473) . ((symbol "__builtin_va_end" 1483 . 1499) (semantic-list "(ap)" 1499 . 1503)))
+          ("_VA_LIST")
+          ("__va_copy" (spp-arg-list ("d" "s") 1721 . 1726) . ((symbol "__builtin_va_copy" 1727 . 1744) (semantic-list "(d,s)" 1744 . 1749)))
+          ("__STDARG_H")
+          ("va_arg" (spp-arg-list ("ap" "type") 1518 . 1528) . ((symbol "__builtin_va_arg" 1532 . 1548) (semantic-list "(ap, type)" 1548 . 1558)))
+          ("__GNUC_VA_LIST" . ((number "1" 2019 . 2020)))
+          )
+))
+  :file "!Applications!Xcode.app!Contents!Developer!Toolchains!XcodeDefault.xctoolchain!usr!lib!clang!6.1.0!include!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

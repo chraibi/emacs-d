@@ -79,7 +79,7 @@
 (my-ac-config)
 
 (setq ac-auto-start nil)
-(setq ac-quick-help-delay 1.5)
+(setq ac-quick-help-delay 0.1)
 
 
 ;; auto-completion with company
@@ -92,7 +92,13 @@
 (define-key c++-mode-map  [(tab)] 'company-complete)
 (add-to-list 'company-backends 'company-c-headers)
 
+(semantic-mode 1)
+(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
 
+;; show definition of functions, variables
+;(semantic-idle-summary-mode t)
+(semantic-mode 1)
 
 
 ;; C-d to kill buffer if process is dead.

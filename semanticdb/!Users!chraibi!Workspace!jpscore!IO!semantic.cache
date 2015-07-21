@@ -1,0 +1,560 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("OUTPUT_HANDLER_H_" variable (:constant-flag t) nil [931 948])
+            ("iostream" include (:system-flag t) nil [950 969])
+            ("fstream" include (:system-flag t) nil [970 988])
+            ("vector" include (:system-flag t) nil [989 1006])
+            ("../general/Macros.h" include nil nil [1008 1038])
+            ("OutputHandler" type
+               (:members 
+                  ( ("protected" label nil (reparse-symbol classsubparts) [1123 1133])
+                    ("_nWarnings" variable (:type "int") (reparse-symbol classsubparts) [1139 1154])
+                    ("_nErrors" variable (:type "int") (reparse-symbol classsubparts) [1160 1173])
+                    ("public" label nil (reparse-symbol classsubparts) [1174 1181])
+                    ("OutputHandler" function
+                       (:constructor-flag t
+                        :type ("OutputHandler" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1187 1236])
+                    ("OutputHandler" function
+                       (:destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1243 1270])
+                    ("GetWarnings" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [1278 1296])
+                    ("incrementWarnings" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [1302 1327])
+                    ("GetErrors" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [1333 1349])
+                    ("incrementErrors" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [1355 1378])
+                    ("ProgressBar" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("TotalPeds" variable (:type "double") (reparse-symbol arg-sub-list) [1401 1418])
+                            ("NowPeds" variable (:type "double") (reparse-symbol arg-sub-list) [1419 1434]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1384 1435])
+                    ("Write" function
+                       (:prototype-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("str" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1461 1484]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1442 1485])
+                    ("Write" function
+                       (:prototype-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("string" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type "char")
+                                (reparse-symbol arg-sub-list) [1510 1529])
+                            ("..." variable (:type "vararg") (reparse-symbol arg-sub-list) [1530 1534]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1491 1535]))                  
+                :type "class")
+                nil [1101 1538])
+            ("STDIOHandler" type
+               (:superclasses 
+                  ( ("OutputHandler" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [1584 1591])
+                    ("Write" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("str" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1608 1631]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1597 1632]))                  
+                :type "class")
+                nil [1540 1635])
+            ("FileHandler" type
+               (:superclasses 
+                  ( ("OutputHandler" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1680 1688])
+                    ("_pfp" variable (:type ("std::ofstream" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1694 1713])
+                    ("public" label nil (reparse-symbol classsubparts) [1714 1721])
+                    ("FileHandler" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("fn" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type "char")
+                                (reparse-symbol arg-sub-list) [1739 1754]))                          
+                        :type ("FileHandler" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1727 1755])
+                    ("FileHandler" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1761 1784])
+                    ("Write" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("str" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1801 1824]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1790 1825])
+                    ("Write" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("string" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type "char")
+                                (reparse-symbol arg-sub-list) [1842 1861])
+                            ("..." variable (:type "vararg") (reparse-symbol arg-sub-list) [1861 1865]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1831 1866]))                  
+                :type "class")
+                nil [1637 1869]))          
+      :file "OutputHandler.h"
+      :pointmax 2221
+      :fsize 2221
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax '((punctuation 1270 . 1271) (punctuation 1236 . 1237))
+      :lexical-table 
+        '(("OUTPUT_HANDLER_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("OutputHandler.h" include nil nil [898 924])
+            ("stdio.h" include (:system-flag t) nil [926 944])
+            ("stdarg.h" include (:system-flag t) nil [945 964])
+            ("cstdlib" include (:system-flag t) nil [965 983])
+            ("cmath" include (:system-flag t) nil [984 1000])
+            ("std" using (:type ("std" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [1002 1022])
+            ("incrementWarnings" function
+               (:parent "OutputHandler"
+                :type "void")
+                nil [1024 1089])
+            ("GetWarnings" function
+               (:parent "OutputHandler"
+                :type "int")
+                nil [1091 1151])
+            ("incrementErrors" function
+               (:parent "OutputHandler"
+                :type "void")
+                nil [1153 1214])
+            ("GetErrors" function
+               (:parent "OutputHandler"
+                :type "int")
+                nil [1216 1272])
+            ("Write" function
+               (:parent "OutputHandler"
+                :arguments 
+                  ( ("str" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1300 1318]))                  
+                :type "void")
+                nil [1274 1347])
+            ("ProgressBar" function
+               (:parent "OutputHandler"
+                :arguments 
+                  ( ("TotalPeds" variable (:type "double") (reparse-symbol arg-sub-list) [1381 1398])
+                    ("NowPeds" variable (:type "double") (reparse-symbol arg-sub-list) [1399 1414]))                  
+                :type "void")
+                nil [1349 2209])
+            ("Write" function
+               (:parent "OutputHandler"
+                :arguments 
+                  ( ("message" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [2237 2257])
+                    ("..." variable (:type "vararg") (reparse-symbol arg-sub-list) [2257 2261]))                  
+                :type "void")
+                nil [2211 2762])
+            ("Write" function
+               (:parent "STDIOHandler"
+                :arguments 
+                  ( ("str" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2789 2807]))                  
+                :type "void")
+                nil [2764 3215])
+            ("FileHandler" function
+               (:constructor-flag t
+                :parent "FileHandler"
+                :arguments 
+                  ( ("fn" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3242 3257]))                  
+                :type ("FileHandler" type (:type "class") nil nil))
+                nil [3217 3471])
+            ("FileHandler" function
+               (:destructor-flag t
+                :parent "FileHandler"
+                :type "void")
+                nil [3473 3523])
+            ("Write" function
+               (:parent "FileHandler"
+                :arguments 
+                  ( ("str" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3549 3567]))                  
+                :type "void")
+                nil [3525 3826])
+            ("Write" function
+               (:parent "FileHandler"
+                :arguments 
+                  ( ("str_msg" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3852 3872])
+                    ("..." variable (:type "vararg") (reparse-symbol arg-sub-list) [3872 3876]))                  
+                :type "void")
+                nil [3828 4249]))          
+      :file "OutputHandler.cpp"
+      :pointmax 5127
+      :fsize 5127
+      :lastmodtime '(21932 10624 0 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("IODispatcher.h" include nil nil [897 922])
+            ("../pedestrian/Pedestrian.h" include nil nil [923 960])
+            ("../routing/NavMesh.h" include nil nil [961 992])
+            ("../tinyxml/tinyxml.h" include nil nil [993 1024])
+            ("../geometry/SubRoom.h" include nil nil [1025 1057])
+            ("../mpi/LCGrid.h" include nil nil [1058 1084])
+            ("_USE_MATH_DEFINES" variable (:constant-flag t) nil [1094 1111])
+            ("math.h" include (:system-flag t) nil [1112 1129])
+            ("std" using (:type ("std" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [1132 1152])
+            ("IODispatcher" function
+               (:constructor-flag t
+                :parent "IODispatcher"
+                :type ("IODispatcher" type (:type "class") nil nil))
+                nil [1155 1235])
+            ("IODispatcher" function
+               (:destructor-flag t
+                :parent "IODispatcher"
+                :type "void")
+                nil [1237 1397])
+            ("AddIO" function
+               (:parent "IODispatcher"
+                :arguments 
+                  ( ("ioh" variable
+                       (:pointer 1
+                        :type ("Trajectories" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1425 1443]))                  
+                :type "void")
+                nil [1400 1484])
+            ("GetIOHandlers" function
+               (:parent "IODispatcher"
+                :constant-flag t
+                :type ("vector" type
+                     (:template-specifier 
+                        ( ("Trajectories" type (:pointer 1) nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [1487 1578])
+            ("WriteHeader" function
+               (:parent "IODispatcher"
+                :arguments 
+                  ( ("nPeds" variable (:type "long") (reparse-symbol arg-sub-list) [1611 1622])
+                    ("fps" variable (:type "double") (reparse-symbol arg-sub-list) [1623 1634])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1635 1654])
+                    ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [1655 1664]))                  
+                :type "void")
+                nil [1580 1782])
+            ("WriteGeometry" function
+               (:parent "IODispatcher"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1816 1835]))                  
+                :type "void")
+                nil [1783 1936])
+            ("WriteFrame" function
+               (:parent "IODispatcher"
+                :arguments 
+                  ( ("frameNr" variable (:type "int") (reparse-symbol arg-sub-list) [1967 1979])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1980 1999]))                  
+                :type "void")
+                nil [1937 2107])
+            ("WriteFooter" function
+               (:parent "IODispatcher"
+                :type "void")
+                nil [2108 2229])
+            ("WritePed" function
+               (:parent "TrajectoriesJPSV04"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2268 2284]))                  
+                :type ("string" type (:type "class") nil nil))
+                nil [2232 3026])
+            ("WriteHeader" function
+               (:parent "TrajectoriesJPSV04"
+                :arguments 
+                  ( ("nPeds" variable (:type "long") (reparse-symbol arg-sub-list) [3065 3076])
+                    ("fps" variable (:type "double") (reparse-symbol arg-sub-list) [3077 3088])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3089 3108])
+                    ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [3109 3118]))                  
+                :type "void")
+                nil [3028 3714])
+            ("WriteGeometry" function
+               (:parent "TrajectoriesJPSV04"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3755 3774]))                  
+                :type "void")
+                nil [3716 10260])
+            ("WriteFrame" function
+               (:parent "TrajectoriesJPSV04"
+                :arguments 
+                  ( ("frameNr" variable (:type "int") (reparse-symbol arg-sub-list) [10298 10310])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [10311 10330]))                  
+                :type "void")
+                nil [10262 11094])
+            ("WriteFooter" function
+               (:parent "TrajectoriesJPSV04"
+                :type "void")
+                nil [11096 11171])
+            ("TrajectoriesFLAT" function
+               (:constructor-flag t
+                :parent "TrajectoriesFLAT"
+                :type ("TrajectoriesFLAT" type (:type "class") nil nil))
+                nil [11212 11269])
+            ("WriteHeader" function
+               (:parent "TrajectoriesFLAT"
+                :arguments 
+                  ( ("nPeds" variable (:type "long") (reparse-symbol arg-sub-list) [11306 11317])
+                    ("fps" variable (:type "double") (reparse-symbol arg-sub-list) [11318 11329])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11330 11349])
+                    ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [11350 11359]))                  
+                :type "void")
+                nil [11271 11805])
+            ("WriteGeometry" function
+               (:parent "TrajectoriesFLAT"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11844 11863]))                  
+                :type "void")
+                nil [11807 11889])
+            ("WriteFrame" function
+               (:parent "TrajectoriesFLAT"
+                :arguments 
+                  ( ("frameNr" variable (:type "int") (reparse-symbol arg-sub-list) [11925 11937])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11938 11957]))                  
+                :type "void")
+                nil [11891 12399])
+            ("WriteFooter" function
+               (:parent "TrajectoriesFLAT"
+                :type "void")
+                nil [12401 12442])
+            ("TrajectoriesVTK" function
+               (:constructor-flag t
+                :parent "TrajectoriesVTK"
+                :type ("TrajectoriesVTK" type (:type "class") nil nil))
+                nil [12511 12549])
+            ("WriteHeader" function
+               (:parent "TrajectoriesVTK"
+                :arguments 
+                  ( ("nPeds" variable (:type "long") (reparse-symbol arg-sub-list) [12585 12596])
+                    ("fps" variable (:type "double") (reparse-symbol arg-sub-list) [12597 12608])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12609 12628])
+                    ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [12629 12638]))                  
+                :type "void")
+                nil [12551 12834])
+            ("WriteGeometry" function
+               (:parent "TrajectoriesVTK"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12872 12891]))                  
+                :type "void")
+                nil [12836 14246])
+            ("WriteFrame" function
+               (:parent "TrajectoriesVTK"
+                :arguments 
+                  ( ("frameNr" variable (:type "int") (reparse-symbol arg-sub-list) [14281 14293])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14294 14313]))                  
+                :type "void")
+                nil [14248 14354])
+            ("WriteFooter" function
+               (:parent "TrajectoriesVTK"
+                :type "void")
+                nil [14356 14395])
+            ("WriteHeader" function
+               (:parent "TrajectoriesJPSV06"
+                :arguments 
+                  ( ("nPeds" variable (:type "long") (reparse-symbol arg-sub-list) [14435 14446])
+                    ("fps" variable (:type "double") (reparse-symbol arg-sub-list) [14447 14458])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14459 14478])
+                    ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [14479 14488]))                  
+                :type "void")
+                nil [14398 15257])
+            ("WriteGeometry" function
+               (:parent "TrajectoriesJPSV06"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15298 15317]))                  
+                :type "void")
+                nil [15259 19412])
+            ("WriteFrame" function
+               (:parent "TrajectoriesJPSV06"
+                :arguments 
+                  ( ("frameNr" variable (:type "int") (reparse-symbol arg-sub-list) [19450 19462])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [19463 19482]))                  
+                :type "void")
+                nil [19414 20906])
+            ("WriteFooter" function
+               (:parent "TrajectoriesJPSV06"
+                :type "void")
+                nil [20908 20983])
+            ("WriteGeometry" function
+               (:parent "TrajectoriesXML_MESH"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [21027 21046]))                  
+                :type "void")
+                nil [20986 21367])
+            ("WriteHeader" function
+               (:parent "TrajectoriesJPSV05"
+                :arguments 
+                  ( ("nPeds" variable (:type "long") (reparse-symbol arg-sub-list) [21407 21418])
+                    ("fps" variable (:type "double") (reparse-symbol arg-sub-list) [21419 21430])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [21431 21450])
+                    ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [21451 21460]))                  
+                :type "void")
+                nil [21370 22237])
+            ("WriteGeometry" function
+               (:parent "TrajectoriesJPSV05"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [22278 22297]))                  
+                :type "void")
+                nil [22239 23776])
+            ("WriteFrame" function
+               (:parent "TrajectoriesJPSV05"
+                :arguments 
+                  ( ("frameNr" variable (:type "int") (reparse-symbol arg-sub-list) [23814 23826])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [23827 23846]))                  
+                :type "void")
+                nil [23778 25071])
+            ("WriteFooter" function
+               (:parent "TrajectoriesJPSV05"
+                :type "void")
+                nil [25073 25164]))          
+      :file "IODispatcher.cpp"
+      :pointmax 25166
+      :fsize 25166
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("_USE_MATH_DEFINES")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :file "IODispatcher.h"
+      :fsize 4915
+      :lastmodtime '(21923 56748 0 0)))
+  :file "!Users!chraibi!Workspace!jpscore!IO!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

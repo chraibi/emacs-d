@@ -1,0 +1,3181 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("AGENTSSOURCESMANAGER_H_" variable (:constant-flag t) nil [1218 1241])
+            ("vector" include (:system-flag t) nil [1243 1260])
+            ("memory" include (:system-flag t) nil [1261 1278])
+            ("atomic" include (:system-flag t) nil [1279 1296])
+            ("AgentsSource" type
+               (:prototype t
+                :type "class")
+                nil [1321 1340])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [1341 1356])
+            ("Pedestrian" type
+               (:prototype t
+                :type "class")
+                nil [1357 1374])
+            ("Point" type
+               (:prototype t
+                :type "class")
+                nil [1375 1387])
+            ("AgentsSourcesManager" type
+               (:members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [1418 1425])
+                    ("AgentsSourcesManager" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :type ("AgentsSourcesManager" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1469 1492])
+                    ("AgentsSourcesManager" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1645 1677])
+                    ("()" function
+                       (:prototype-flag t
+                        :operator-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [1785 1803])
+                    ("Run" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [1836 1847])
+                    ("AddSource" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("src" variable (:type ("std::shared_ptr" type
+                                 (:template-specifier 
+                                    ( ("AgentsSource" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol arg-sub-list) [1919 1953]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1904 1954])
+                    ("GetSources" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("std::shared_ptr" type (:template-specifier 
+                                    ( ("AgentsSource" type nil nil nil))                                    ) nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [2007 2077])
+                    ("SetBuilding" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2151 2170]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2134 2171])
+                    ("IsCompleted" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [2291 2316])
+                    ("GetBuilding" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2389 2419])
+                    ("ProcessAllSources" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [2540 2571])
+                    ("GenerateAgents" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [2694 2716])
+                    ("GetMaxAgentNumber" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "long")
+                        (reparse-symbol classsubparts) [2855 2886])
+                    ("private" label nil (reparse-symbol classsubparts) [2889 2897])
+                    ("ComputeBestPositionVoronoi" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("src" variable
+                               (:pointer 1
+                                :type ("AgentsSource" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3053 3071])
+                            ("agent" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3072 3090]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3021 3097])
+                    ("ComputeBestPositionRandom" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("src" variable
+                               (:pointer 1
+                                :type ("AgentsSource" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3239 3257])
+                            ("peds" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [3258 3289]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3208 3296])
+                    ("AdjustVelocityUsingWeidmann" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3439 3455]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3406 3462])
+                    ("AdjustVelocityByNeighbour" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3623 3639]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3592 3646])
+                    ("SortPositionByDensity" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("positions" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Point" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [3901 3931])
+                            ("extra_positions" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Point" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [3932 3968]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3874 3975])
+                    ("private" label nil (reparse-symbol classsubparts) [3978 3986])
+                    ("_sources" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("std::shared_ptr" type (:template-specifier 
+                                ( ("AgentsSource" type nil nil nil))                                ) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [4021 4074])
+                    ("_lastUpdateTime" variable
+                       (:default-value "0"
+                        :type "long int")
+                        (reparse-symbol classsubparts) [4125 4154])
+                    ("_building" variable
+                       (:pointer 1
+                        :default-value "nullptr"
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [4185 4213])
+                    ("_isCompleted" variable
+                       (:typemodifiers ("static")
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4268 4293]))                  
+                :type "class")
+                nil [1389 4340]))          
+      :file "AgentsSourcesManager.h"
+      :pointmax 4379
+      :fsize 4379
+      :lastmodtime '(21932 61283 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("AGENTSSOURCESMANAGER_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("cassert" include (:system-flag t) nil [895 913])
+            ("../geometry/Building.h" include nil nil [914 947])
+            ("../geometry/NavLine.h" include nil nil [948 980])
+            ("../routing/Router.h" include nil nil [981 1011])
+            ("../geometry/SubRoom.h" include nil nil [1012 1044])
+            ("../IO/OutputHandler.h" include nil nil [1045 1077])
+            ("Knowledge.h" include nil nil [1078 1100])
+            ("Pedestrian.h" include nil nil [1101 1124])
+            ("std" using (:type ("std" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [1126 1146])
+            ("Pedestrian::_globalTime" variable
+               (:default-value "0.0"
+                :type "double")
+                nil [1183 1220])
+            ("Pedestrian::_agentsCreated" variable
+               (:default-value "1"
+                :type "int")
+                nil [1221 1254])
+            ("Pedestrian::_colorMode" variable
+               (:default-value "BY_VELOCITY"
+                :type ("AgentColorMode" type (:type "class") nil nil))
+                nil [1255 1305])
+            ("Pedestrian" function
+               (:constructor-flag t
+                :parent "Pedestrian"
+                :type ("Pedestrian" type (:type "class") nil nil))
+                nil [1307 2844])
+            ("Pedestrian" function
+               (:constructor-flag t
+                :parent "Pedestrian"
+                :arguments 
+                  ( ("agentsParameters" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("StartDistribution" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2869 2911])
+                    ("building" variable
+                       (:reference 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2912 2931]))                  
+                :type ("Pedestrian" type (:type "class") nil nil))
+                nil [2846 3528])
+            ("Pedestrian" function
+               (:destructor-flag t
+                :parent "Pedestrian"
+                :type "void")
+                nil [3531 3595])
+            ("SetID" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [3621 3627]))                  
+                :type "void")
+                nil [3598 3720])
+            ("SetRoomID" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [3749 3755])
+                    ("roomCaption" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3756 3775]))                  
+                :type "void")
+                nil [3722 3830])
+            ("SetSubRoomID" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [3862 3868]))                  
+                :type "void")
+                nil [3832 3893])
+            ("SetMass" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("m" variable (:type "double") (reparse-symbol arg-sub-list) [3920 3929]))                  
+                :type "void")
+                nil [3895 3949])
+            ("SetTau" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("tau" variable (:type "double") (reparse-symbol arg-sub-list) [3975 3986]))                  
+                :type "void")
+                nil [3951 4007])
+            ("SetEllipse" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("e" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("JEllipse" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4037 4055]))                  
+                :type "void")
+                nil [4009 4078])
+            ("SetExitIndex" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [4110 4116]))                  
+                :type "void")
+                nil [4080 4256])
+            ("SetExitLine" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("l" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("NavLine" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4287 4304]))                  
+                :type "void")
+                nil [4258 4413])
+            ("SetPos" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("pos" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4439 4456])
+                    ("initial" variable (:type "bool") (reparse-symbol arg-sub-list) [4457 4470]))                  
+                :type "void")
+                nil [4415 4806])
+            ("SetCellPos" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("cp" variable (:type "int") (reparse-symbol arg-sub-list) [4836 4843]))                  
+                :type "void")
+                nil [4808 4876])
+            ("SetV" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("v" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4900 4915]))                  
+                :type "void")
+                nil [4878 5238])
+            ("SetV0Norm" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("v0" variable (:type "double") (reparse-symbol arg-sub-list) [5267 5277])
+                    ("v0UpStairs" variable (:type "double") (reparse-symbol arg-sub-list) [5278 5296])
+                    ("v0DownStairs" variable (:type "double") (reparse-symbol arg-sub-list) [5297 5317])
+                    ("escalatorUp" variable (:type "double") (reparse-symbol arg-sub-list) [5318 5337])
+                    ("escalatorDown" variable (:type "double") (reparse-symbol arg-sub-list) [5338 5359])
+                    ("v0IdleEscalatorUp" variable (:type "double") (reparse-symbol arg-sub-list) [5360 5385])
+                    ("v0IdleEscalatorDown" variable (:type "double") (reparse-symbol arg-sub-list) [5386 5413]))                  
+                :type "void")
+                nil [5240 5684])
+            ("Setdt" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("dt" variable (:type "double") (reparse-symbol arg-sub-list) [5709 5719]))                  
+                :type "void")
+                nil [5686 5742])
+            ("Getdt" function
+               (:parent "Pedestrian"
+                :type "double")
+                nil [5743 5794])
+            ("SetTrip" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("trip" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("vector" type
+                             (:template-specifier 
+                                ( ("int" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol arg-sub-list) [5821 5845]))                  
+                :type "void")
+                nil [5796 5868])
+            ("GetID" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [5871 5921])
+            ("GetRoomID" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [5923 5981])
+            ("GetSubRoomID" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [5983 6047])
+            ("GetMass" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [6049 6106])
+            ("GetTau" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [6108 6163])
+            ("GetEllipse" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("JEllipse" type (:type "class") nil nil))
+                nil [6165 6237])
+            ("GetExitIndex" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [6239 6303])
+            ("GetExitLine" function
+               (:methodconst-flag t
+                :pointer 1
+                :parent "Pedestrian"
+                :type ("NavLine" type (:type "class") nil nil))
+                nil [6305 6371])
+            ("GetTrip" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("vector" type
+                     (:template-specifier 
+                        ( ("int" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [6373 6442])
+            ("GetUniqueRoomID" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [6485 6569])
+            ("GetRoutingStrategy" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type ("RoutingStrategy" type (:type "class") nil nil))
+                nil [6571 6659])
+            ("GetNextDestination" function
+               (:parent "Pedestrian"
+                :type "int")
+                nil [6735 6918])
+            ("GetLastDestination" function
+               (:parent "Pedestrian"
+                :type "int")
+                nil [6921 7065])
+            ("ChangedSubRoom" function
+               (:parent "Pedestrian"
+                :type "bool")
+                nil [7067 7303])
+            ("GetDestinationCount" function
+               (:parent "Pedestrian"
+                :type "int")
+                nil [7305 7379])
+            ("ClearMentalMap" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [7381 7465])
+            ("AddKnownClosedDoor" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("door" variable (:type "int") (reparse-symbol arg-sub-list) [7503 7512])
+                    ("time" variable (:type "double") (reparse-symbol arg-sub-list) [7513 7525]))                  
+                :type "void")
+                nil [7467 7613])
+            ("ClearKnowledge" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [7615 7678])
+            ("GetKnownledge" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("map" type
+                     (:template-specifier 
+                        ( ("int" type nil nil nil)
+                          ("Knowledge" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [7680 7770])
+            ("GetKnowledgeAsString" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("std::string" type (:type "class") nil nil))
+                nil [7772 8103])
+            ("GetPos" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("Point" type (:type "class") nil nil))
+                nil [8105 8182])
+            ("GetCellPos" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [8184 8253])
+            ("GetV" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("Point" type (:type "class") nil nil))
+                nil [8255 8325])
+            ("GetV0" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("Point" type (:type "class") nil nil))
+                nil [8327 8386])
+            ("GetV0Norm" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [8389 12290])
+            ("GetLargerAxis" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [12328 12402])
+            ("GetSmallerAxis" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [12479 12554])
+            ("SetPhiPed" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [12556 13019])
+            ("InitV0" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("target" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [13046 13066]))                  
+                :type "void")
+                nil [13022 13274])
+            ("GetV0" function
+               (:parent "Pedestrian"
+                :constant-flag t
+                :arguments 
+                  ( ("target" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [13308 13328]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [13277 14616])
+            ("GetTimeInJam" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [14618 14685])
+            ("SetSmoothTurning" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [15119 15189])
+            ("IsFeelingLikeInJam" function
+               (:parent "Pedestrian"
+                :type "bool")
+                nil [15192 15295])
+            ("ResetTimeInJam" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [15335 15421])
+            ("UpdateTimeInJam" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [15423 15489])
+            ("UpdateJamData" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [15505 15683])
+            ("UpdateReroutingTime" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [15685 15765])
+            ("RerouteIn" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("time" variable (:type "double") (reparse-symbol arg-sub-list) [15794 15806]))                  
+                :type "void")
+                nil [15767 15875])
+            ("IsReadyForRerouting" function
+               (:parent "Pedestrian"
+                :type "bool")
+                nil [15877 15983])
+            ("GetReroutingTime" function
+               (:parent "Pedestrian"
+                :type "double")
+                nil [15986 16061])
+            ("GetNewEventFlag" function
+               (:parent "Pedestrian"
+                :type "bool")
+                nil [16063 16128])
+            ("GetNewOrientationFlag" function
+               (:parent "Pedestrian"
+                :type "bool")
+                nil [16130 16208])
+            ("SetDistToBlockade" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("dist" variable (:type "double") (reparse-symbol arg-sub-list) [16245 16257]))                  
+                :type "void")
+                nil [16210 16290])
+            ("GetDistToBlockade" function
+               (:parent "Pedestrian"
+                :type "double")
+                nil [16291 16362])
+            ("SetNewOrientationFlag" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("flag" variable (:type "bool") (reparse-symbol arg-sub-list) [16404 16414]))                  
+                :type "void")
+                nil [16365 16449])
+            ("SetNewEventFlag" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("flag" variable (:type "bool") (reparse-symbol arg-sub-list) [16484 16494]))                  
+                :type "void")
+                nil [16451 16523])
+            ("GetAge" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [16525 16580])
+            ("SetAge" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("age" variable (:type "double") (reparse-symbol arg-sub-list) [16606 16617]))                  
+                :type "void")
+                nil [16582 16638])
+            ("GetGender" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type ("string" type (:type "class") nil nil))
+                nil [16640 16701])
+            ("SetGender" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("gender" variable (:type ("string" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [16730 16744]))                  
+                :type "void")
+                nil [16703 16771])
+            ("GetHeight" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [16773 16834])
+            ("GetGroup" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [16836 16892])
+            ("SetGroup" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("group" variable (:type "int") (reparse-symbol arg-sub-list) [16920 16930]))                  
+                :type "void")
+                nil [16894 16955])
+            ("SetHeight" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("height" variable (:type "double") (reparse-symbol arg-sub-list) [16984 16998]))                  
+                :type "void")
+                nil [16957 17025])
+            ("ResetRerouting" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [17027 17131])
+            ("SetRecordingTime" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("timeInSec" variable (:type "double") (reparse-symbol arg-sub-list) [17167 17184]))                  
+                :type "void")
+                nil [17133 17221])
+            ("GetRecordingTime" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [17223 17298])
+            ("GetMeanVelOverRecTime" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [17300 17546])
+            ("GetDistanceToNextTarget" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [17548 17644])
+            ("SetFinalDestination" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("final" variable (:type "int") (reparse-symbol arg-sub-list) [17683 17693]))                  
+                :type "void")
+                nil [17646 17736])
+            ("GetFinalDestination" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "int")
+                nil [17738 17823])
+            ("GetPath" function
+               (:parent "Pedestrian"
+                :type ("string" type (:type "class") nil nil))
+                nil [18360 18685])
+            ("Dump" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("ID" variable (:type "int") (reparse-symbol arg-sub-list) [18709 18716])
+                    ("pa" variable (:type "int") (reparse-symbol arg-sub-list) [18717 18724]))                  
+                :type "void")
+                nil [18687 20987])
+            ("RecordActualPosition" function
+               (:parent "Pedestrian"
+                :type "void")
+                nil [20989 21063])
+            ("GetDistanceSinceLastRecord" function
+               (:parent "Pedestrian"
+                :type "double")
+                nil [21065 21161])
+            ("GetGlobalTime" function
+               (:parent "Pedestrian"
+                :type "double")
+                nil [21163 21226])
+            ("SetRouter" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("router" variable
+                       (:pointer 1
+                        :type ("Router" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [21255 21270]))                  
+                :type "void")
+                nil [21228 21340])
+            ("GetRouter" function
+               (:methodconst-flag t
+                :pointer 1
+                :parent "Pedestrian"
+                :type ("Router" type (:type "class") nil nil))
+                nil [21342 21404])
+            ("FindRoute" function
+               (:parent "Pedestrian"
+                :type "int")
+                nil [21406 21615])
+            ("GetElevation" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [21617 21749])
+            ("SetGlobalTime" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("time" variable (:type "double") (reparse-symbol arg-sub-list) [21782 21794]))                  
+                :type "void")
+                nil [21751 21823])
+            ("GetPatienceTime" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [21825 21898])
+            ("SetPatienceTime" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("patienceTime" variable (:type "double") (reparse-symbol arg-sub-list) [21933 21953]))                  
+                :type "void")
+                nil [21900 21992])
+            ("SetPremovementTime" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("pretime" variable (:type "double") (reparse-symbol arg-sub-list) [22030 22045]))                  
+                :type "void")
+                nil [21994 22076])
+            ("GetPremovementTime" function
+               (:parent "Pedestrian"
+                :type "double")
+                nil [22078 22147])
+            ("SetRiskTolerance" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("tol" variable (:type "double") (reparse-symbol arg-sub-list) [22183 22194]))                  
+                :type "void")
+                nil [22149 22268])
+            ("GetRiskTolerance" function
+               (:methodconst-flag t
+                :parent "Pedestrian"
+                :type "double")
+                nil [22270 22345])
+            ("GetBuilding" function
+               (:pointer 1
+                :parent "Pedestrian"
+                :constant-flag t
+                :type ("Building" type (:type "class") nil nil))
+                nil [22347 22415])
+            ("SetBuilding" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [22446 22465]))                  
+                :type "void")
+                nil [22417 22496])
+            ("SetSpotlight" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("spotlight" variable (:type "bool") (reparse-symbol arg-sub-list) [22528 22543]))                  
+                :type "void")
+                nil [22498 22576])
+            ("SetColorMode" function
+               (:parent "Pedestrian"
+                :arguments 
+                  ( ("mode" variable (:type ("AgentColorMode" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [22608 22628]))                  
+                :type "void")
+                nil [22578 22654])
+            ("GetAgentsCreated" function
+               (:parent "Pedestrian"
+                :type "int")
+                nil [22656 22722])
+            ("GetColor" function
+               (:parent "Pedestrian"
+                :type "int")
+                nil [22724 23876]))          
+      :file "Pedestrian.cpp"
+      :pointmax 23880
+      :fsize 23869
+      :lastmodtime '(21930 49616 0 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "semanticdb-table"
+      :file "Knowledge.h"
+      :fsize 1548
+      :lastmodtime '(21923 56748 0 0))
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("_PEDESTRIAN_H" variable (:constant-flag t) nil [923 936])
+            ("vector" include (:system-flag t) nil [938 955])
+            ("queue" include (:system-flag t) nil [956 972])
+            ("map" include (:system-flag t) nil [973 987])
+            ("set" include (:system-flag t) nil [988 1002])
+            ("time.h" include (:system-flag t) nil [1003 1020])
+            ("Ellipse.h" include nil nil [1022 1042])
+            ("../general/Macros.h" include nil nil [1043 1073])
+            ("../geometry/NavLine.h" include nil nil [1074 1106])
+            ("AgentsParameters.h" include nil nil [1107 1136])
+            ("PedDistributor.h" include nil nil [1137 1164])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [1166 1181])
+            ("NavLine" type
+               (:prototype t
+                :type "class")
+                nil [1182 1196])
+            ("Router" type
+               (:prototype t
+                :type "class")
+                nil [1197 1210])
+            ("Knowledge" type
+               (:prototype t
+                :type "class")
+                nil [1211 1227])
+            ("Pedestrian" type
+               (:members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1248 1256])
+                    ("_id" variable (:type "int") (reparse-symbol classsubparts) [1313 1321])
+                    ("_exitIndex" variable (:type "int") (reparse-symbol classsubparts) [1345 1360])
+                    ("_group" variable (:type "int") (reparse-symbol classsubparts) [1382 1393])
+                    ("_desiredFinalDestination" variable (:type "int") (reparse-symbol classsubparts) [1399 1428])
+                    ("_height" variable (:type "double") (reparse-symbol classsubparts) [1434 1449])
+                    ("_age" variable (:type "double") (reparse-symbol classsubparts) [1455 1467])
+                    ("_premovement" variable
+                       (:default-value "0"
+                        :type "double")
+                        (reparse-symbol classsubparts) [1473 1497])
+                    ("_riskTolerance" variable
+                       (:default-value "0"
+                        :type "double")
+                        (reparse-symbol classsubparts) [1503 1527])
+                    ("_gender" variable (:type ("std::string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1533 1553])
+                    ("_mass" variable (:type "double") (reparse-symbol classsubparts) [1592 1605])
+                    ("_tau" variable (:type "double") (reparse-symbol classsubparts) [1622 1634])
+                    ("_deltaT" variable (:type "double") (reparse-symbol classsubparts) [1662 1677])
+                    ("_ellipse" variable (:type ("JEllipse" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1696 1714])
+                    ("_V0" variable (:type ("Point" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1751 1761])
+                    ("_V0UpStairs" variable (:type "double") (reparse-symbol classsubparts) [1799 1818])
+                    ("_V0DownStairs" variable (:type "double") (reparse-symbol classsubparts) [1824 1845])
+                    ("_EscalatorUpStairs" variable (:type "double") (reparse-symbol classsubparts) [1851 1877])
+                    ("_EscalatorDownStairs" variable (:type "double") (reparse-symbol classsubparts) [1883 1911])
+                    ("_V0IdleEscalatorUpStairs" variable (:type "double") (reparse-symbol classsubparts) [1917 1949])
+                    ("_V0IdleEscalatorDownStairs" variable (:type "double") (reparse-symbol classsubparts) [1955 1989])
+                    ("_roomCaption" variable (:type ("std::string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2022 2047])
+                    ("_roomID" variable (:type "int") (reparse-symbol classsubparts) [2053 2065])
+                    ("_subRoomID" variable (:type "int") (reparse-symbol classsubparts) [2071 2086])
+                    ("_oldRoomID" variable (:type "int") (reparse-symbol classsubparts) [2092 2107])
+                    ("_oldSubRoomID" variable (:type "int") (reparse-symbol classsubparts) [2113 2131])
+                    ("_navLine" variable
+                       (:pointer 1
+                        :type ("NavLine" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2139 2157])
+                    ("_mentalMap" variable (:type ("std::map" type
+                         (:template-specifier 
+                            ( ("int" type nil nil nil)
+                              ("int" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [2184 2213])
+                    ("_destHistory" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("int" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [2259 2289])
+                    ("_trip" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("int" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [2295 2318])
+                    ("_lastPosition" variable (:type ("Point" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2325 2345])
+                    ("_lastCellPosition" variable (:type "int") (reparse-symbol classsubparts) [2351 2373])
+                    ("_knownDoors" variable (:type ("std::map" type
+                         (:template-specifier 
+                            ( ("int" type nil nil nil)
+                              ("Knowledge" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [2420 2457])
+                    ("_distToBlockade" variable (:type "double") (reparse-symbol classsubparts) [2532 2555])
+                    ("_reroutingThreshold" variable (:type "double") (reparse-symbol classsubparts) [2629 2656])
+                    ("_timeBeforeRerouting" variable (:type "double") (reparse-symbol classsubparts) [2712 2740])
+                    ("_timeInJam" variable (:type "double") (reparse-symbol classsubparts) [2774 2792])
+                    ("_patienceTime" variable (:type "double") (reparse-symbol classsubparts) [2851 2872])
+                    ("_recordingTime" variable (:type "double") (reparse-symbol classsubparts) [2944 2966])
+                    ("_lastPositions" variable (:type ("std::queue" type
+                         (:template-specifier 
+                            ( ("Point" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3006 3040])
+                    ("_lastVelocites" variable (:type ("std::queue" type
+                         (:template-specifier 
+                            ( ("Point" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3081 3115])
+                    ("_routingStrategy" variable (:type ("RoutingStrategy" type (:type "class") nil nil)) (reparse-symbol classsubparts) [3156 3189])
+                    ("_newOrientationDelay" variable (:type "int") (reparse-symbol classsubparts) [3196 3221])
+                    ("_updateRate" variable (:type "int") (reparse-symbol classsubparts) [3302 3318])
+                    ("_turninAngle" variable (:type "double") (reparse-symbol classsubparts) [3324 3344])
+                    ("_reroutingEnabled" variable (:type "bool") (reparse-symbol classsubparts) [3350 3373])
+                    ("_tmpFirstOrientation" variable (:type "bool") (reparse-symbol classsubparts) [3379 3405])
+                    ("_newOrientationFlag" variable (:type "bool") (reparse-symbol classsubparts) [3454 3479])
+                    ("_newEventFlag" variable (:type "bool") (reparse-symbol classsubparts) [3537 3556])
+                    ("_globalTime" variable
+                       (:typemodifiers ("static")
+                        :type "double")
+                        (reparse-symbol classsubparts) [3606 3632])
+                    ("_colorMode" variable
+                       (:typemodifiers ("static")
+                        :type ("AgentColorMode" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3638 3671])
+                    ("_spotlight" variable (:type "bool") (reparse-symbol classsubparts) [3677 3693])
+                    ("_router" variable
+                       (:pointer 1
+                        :type ("Router" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3752 3768])
+                    ("_building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3818 3839])
+                    ("_agentsCreated" variable
+                       (:typemodifiers ("static")
+                        :type "int")
+                        (reparse-symbol classsubparts) [3846 3872])
+                    ("public" label nil (reparse-symbol classsubparts) [3874 3881])
+                    ("Pedestrian" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3908 3921])
+                    ("Pedestrian" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("agentsParameters" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("StartDistribution" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3947 3989])
+                            ("building" variable
+                               (:reference 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3990 4009]))                          
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3936 4010])
+                    ("Pedestrian" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [4016 4038])
+                    ("SetID" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [4082 4088]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4071 4089])
+                    ("SetRoomID" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [4110 4116])
+                            ("roomCaption" variable (:type ("std::string" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [4117 4141]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4095 4142])
+                    ("SetSubRoomID" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [4166 4172]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4148 4173])
+                    ("SetMass" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("m" variable (:type "double") (reparse-symbol arg-sub-list) [4192 4201]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4179 4202])
+                    ("SetTau" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("tau" variable (:type "double") (reparse-symbol arg-sub-list) [4220 4231]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4208 4232])
+                    ("SetEllipse" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("e" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("JEllipse" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4254 4272]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4238 4273])
+                    ("SetExitIndex" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("i" variable (:type "int") (reparse-symbol arg-sub-list) [4336 4342]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4318 4343])
+                    ("SetExitLine" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("l" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("NavLine" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4366 4383]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4349 4384])
+                    ("Setdt" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("dt" variable (:type "double") (reparse-symbol arg-sub-list) [4402 4412]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4391 4413])
+                    ("Getdt" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4419 4434])
+                    ("SetDistToBlockade" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("dist" variable (:type "double") (reparse-symbol arg-sub-list) [4464 4476]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4441 4477])
+                    ("GetDistToBlockade" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4483 4510])
+                    ("SetPos" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("pos" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4568 4585])
+                            ("initial" variable
+                               (:default-value "false"
+                                :type "bool")
+                                (reparse-symbol arg-sub-list) [4586 4604]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4556 4606])
+                    ("SetCellPos" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("cp" variable (:type "int") (reparse-symbol arg-sub-list) [4657 4664]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4641 4665])
+                    ("SetV" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("v" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4681 4696]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4671 4697])
+                    ("SetV0Norm" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("v0" variable (:type "double") (reparse-symbol arg-sub-list) [4767 4777])
+                            ("v0UpStairs" variable (:type "double") (reparse-symbol arg-sub-list) [4778 4796])
+                            ("v0DownStairs" variable (:type "double") (reparse-symbol arg-sub-list) [4797 4817])
+                            ("escalatorUp" variable (:type "double") (reparse-symbol arg-sub-list) [4818 4837])
+                            ("escalatorDown" variable (:type "double") (reparse-symbol arg-sub-list) [4838 4859])
+                            ("v0IdleEscalatorUp" variable (:type "double") (reparse-symbol arg-sub-list) [4860 4885])
+                            ("v0IdleEscalatorDown" variable (:type "double") (reparse-symbol arg-sub-list) [4886 4913]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4752 4914])
+                    ("SetSmoothTurning" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [4920 4944])
+                    ("SetPhiPed" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [5003 5020])
+                    ("SetFinalDestination" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("UID" variable (:type "int") (reparse-symbol arg-sub-list) [5051 5059]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [5026 5060])
+                    ("SetTrip" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("trip" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("int" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [5079 5108]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [5066 5109])
+                    ("SetRouter" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("router" variable
+                               (:pointer 1
+                                :type ("Router" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5130 5145]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [5115 5146])
+                    ("GetTrip" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("int" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [5179 5219])
+                    ("GetID" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5225 5243])
+                    ("GetRoomID" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5249 5271])
+                    ("GetSubRoomID" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5277 5302])
+                    ("GetMass" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5308 5331])
+                    ("GetTau" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5337 5359])
+                    ("GetEllipse" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("JEllipse" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5365 5400])
+                    ("GetExitIndex" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5406 5431])
+                    ("GetRouter" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :pointer 1
+                        :type ("Router" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5437 5463])
+                    ("GetExitLine" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :pointer 1
+                        :type ("NavLine" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5469 5498])
+                    ("GetPos" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5539 5567])
+                    ("GetCellPos" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [5573 5596])
+                    ("GetV" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5602 5628])
+                    ("GetV0" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5634 5661])
+                    ("GetV0" function
+                       (:prototype-flag t
+                        :constant-flag t
+                        :arguments 
+                          ( ("target" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5686 5706]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5667 5707])
+                    ("InitV0" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("target" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5725 5745]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [5713 5746])
+                    ("GetV0Norm" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5900 5925])
+                    ("GetLargerAxis" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5974 6003])
+                    ("GetSmallerAxis" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6090 6120])
+                    ("GetTimeInJam" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6126 6153])
+                    ("GetFinalDestination" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [6159 6191])
+                    ("ClearMentalMap" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [6197 6219])
+                    ("AddKnownClosedDoor" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("door" variable (:type "int") (reparse-symbol arg-sub-list) [6360 6369])
+                            ("time" variable (:type "double") (reparse-symbol arg-sub-list) [6370 6382]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [6336 6383])
+                    ("GetKnownledge" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::map" type
+                             (:template-specifier 
+                                ( ("int" type nil nil nil)
+                                  ("Knowledge" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [6428 6482])
+                    ("GetKnowledgeAsString" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6588 6635])
+                    ("ClearKnowledge" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [6734 6756])
+                    ("GetRoutingStrategy" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("RoutingStrategy" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [6763 6806])
+                    ("GetUniqueRoomID" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [6812 6840])
+                    ("GetNextDestination" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [6846 6871])
+                    ("GetLastDestination" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [6877 6902])
+                    ("GetDestinationCount" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [6908 6934])
+                    ("GetDistanceToNextTarget" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6940 6979])
+                    ("GetDisTanceToPreviousTarget" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [6985 7028])
+                    ("SetNewOrientationFlag" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("flag" variable (:type "bool") (reparse-symbol arg-sub-list) [7061 7071]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [7034 7072])
+                    ("GetNewOrientationFlag" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7078 7107])
+                    ("GetNewEventFlag" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7113 7136])
+                    ("SetNewEventFlag" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("flag" variable (:type "bool") (reparse-symbol arg-sub-list) [7163 7173]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [7142 7174])
+                    ("ChangedSubRoom" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [7180 7202])
+                    ("RecordActualPosition" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [7208 7236])
+                    ("GetDistanceSinceLastRecord" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [7242 7278])
+                    ("GetElevation" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [7445 7473])
+                    ("FindRoute" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [7712 7728])
+                    ("WritePath" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("file" variable
+                               (:reference 1
+                                :type ("std::ofstream" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [7815 7835])
+                            ("building" variable
+                               (:pointer 1
+                                :default-value "NULL"
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [7836 7859]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [7800 7861])
+                    ("GetPath" function
+                       (:prototype-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [7980 8002])
+                    ("Dump" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("ID" variable (:type "int") (reparse-symbol arg-sub-list) [8197 8204])
+                            ("pa" variable
+                               (:default-value "0"
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [8205 8215]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [8187 8217])
+                    ("Observe" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("maxObservationTime" variable
+                               (:default-value "-1"
+                                :type "double")
+                                (reparse-symbol arg-sub-list) [8527 8555]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [8514 8557])
+                    ("IsObserving" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [8695 8714])
+                    ("GetObservationData" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("exitID" variable (:type "int") (reparse-symbol arg-sub-list) [8914 8925])
+                            ("data" variable
+                               (:pointer 1
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [8926 8938]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [8890 8939])
+                    ("IsFeelingLikeInJam" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [9064 9090])
+                    ("GetPatienceTime" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [9310 9341])
+                    ("SetPatienceTime" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("patienceTime" variable (:type "double") (reparse-symbol arg-sub-list) [9582 9602]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [9561 9603])
+                    ("SetSpotlight" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("spotlight" variable (:type "bool") (reparse-symbol arg-sub-list) [9822 9837]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [9804 9838])
+                    ("GetSpotlight" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [10039 10059])
+                    ("SetPremovementTime" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("time" variable (:type "double") (reparse-symbol arg-sub-list) [10189 10201]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [10165 10202])
+                    ("GetPremovementTime" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [10308 10336])
+                    ("SetRiskTolerance" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("tol" variable (:type "double") (reparse-symbol arg-sub-list) [10553 10564]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [10531 10565])
+                    ("GetRiskTolerance" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [10760 10792])
+                    ("GetColor" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [10955 10970])
+                    ("ResetTimeInJam" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [10977 10999])
+                    ("UpdateTimeInJam" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [11005 11028])
+                    ("UpdateJamData" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [11034 11055])
+                    ("UpdateReroutingTime" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [11061 11088])
+                    ("GetReroutingTime" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [11094 11120])
+                    ("RerouteIn" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("time" variable (:type "double") (reparse-symbol arg-sub-list) [11141 11153]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [11126 11154])
+                    ("IsReadyForRerouting" function
+                       (:prototype-flag t
+                        :type "bool")
+                        (reparse-symbol classsubparts) [11160 11187])
+                    ("ResetRerouting" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [11266 11288])
+                    ("SetRecordingTime" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("timeInSec" variable (:type "double") (reparse-symbol arg-sub-list) [11477 11494]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [11455 11495])
+                    ("GetRecordingTime" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [11661 11693])
+                    ("GetMeanVelOverRecTime" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [11781 11818])
+                    ("GetAge" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [11825 11847])
+                    ("SetAge" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("age" variable (:type "double") (reparse-symbol arg-sub-list) [11865 11876]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [11853 11877])
+                    ("GetGender" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [11883 11913])
+                    ("SetGender" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("gender" variable (:type ("std::string" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [11934 11953]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [11919 11954])
+                    ("GetHeight" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [11960 11985])
+                    ("SetHeight" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("height" variable (:type "double") (reparse-symbol arg-sub-list) [12006 12020]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [11991 12021])
+                    ("GetGroup" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [12027 12048])
+                    ("SetGroup" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("group" variable (:type "int") (reparse-symbol arg-sub-list) [12068 12078]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [12054 12079])
+                    ("GetGlobalTime" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :type "double")
+                        (reparse-symbol classsubparts) [12086 12116])
+                    ("SetGlobalTime" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :arguments 
+                          ( ("time" variable (:type "double") (reparse-symbol arg-sub-list) [12148 12160]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [12122 12161])
+                    ("GetAgentsCreated" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :type "int")
+                        (reparse-symbol classsubparts) [12403 12433])
+                    ("SetColorMode" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :arguments 
+                          ( ("mode" variable (:type ("AgentColorMode" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [12551 12571]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [12526 12572])
+                    ("GetBuilding" function
+                       (:prototype-flag t
+                        :pointer 1
+                        :constant-flag t
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [12633 12663])
+                    ("SetBuilding" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [12741 12760]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [12724 12761]))                  
+                :type "class")
+                nil [1229 12765]))          
+      :file "Pedestrian.h"
+      :pointmax 12795
+      :fsize 12795
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax '((EXPLICIT 3927 . 3935))
+      :lexical-table 
+        '(("_PEDESTRIAN_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("_ELLIPSE_H" variable (:constant-flag t) nil [917 927])
+            ("../geometry/Line.h" include nil nil [929 958])
+            ("../general/Macros.h" include nil nil [959 989])
+            ("../math/Mathematics.h" include nil nil [990 1022])
+            ("JEllipse" type
+               (:members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1041 1049])
+                    ("_vel" variable (:type ("Point" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1055 1066])
+                    ("_center" variable (:type ("Point" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1091 1105])
+                    ("_cosPhi" variable (:type "double") (reparse-symbol classsubparts) [1144 1159])
+                    ("_sinPhi" variable (:type "double") (reparse-symbol classsubparts) [1177 1192])
+                    ("_Xp" variable (:type "double") (reparse-symbol classsubparts) [1210 1221])
+                    ("_Amin" variable (:type "double") (reparse-symbol classsubparts) [1280 1293])
+                    ("_Av" variable (:type "double") (reparse-symbol classsubparts) [1320 1331])
+                    ("_Bmin" variable (:type "double") (reparse-symbol classsubparts) [1337 1350])
+                    ("_Bmax" variable (:type "double") (reparse-symbol classsubparts) [1394 1407])
+                    ("_vel0" variable (:type "double") (reparse-symbol classsubparts) [1413 1426])
+                    ("public" label nil (reparse-symbol classsubparts) [1447 1454])
+                    ("JEllipse" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :type ("JEllipse" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1461 1472])
+                    ("JEllipse" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("orig" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("JEllipse" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1487 1508]))                          
+                        :type ("JEllipse" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1478 1509])
+                    ("SetV" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("v" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1527 1542]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1517 1543])
+                    ("SetCenter" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("pos" variable (:type ("Point" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1564 1574]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1549 1575])
+                    ("SetCosPhi" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("c" variable (:type "double") (reparse-symbol arg-sub-list) [1596 1605]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1581 1606])
+                    ("SetSinPhi" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("s" variable (:type "double") (reparse-symbol arg-sub-list) [1627 1636]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1612 1637])
+                    ("SetXp" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("xp" variable (:type "double") (reparse-symbol arg-sub-list) [1654 1664]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1643 1665])
+                    ("SetAmin" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("a_min" variable (:type "double") (reparse-symbol arg-sub-list) [1684 1697]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1671 1698])
+                    ("SetAv" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("a_v" variable (:type "double") (reparse-symbol arg-sub-list) [1715 1726]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1704 1727])
+                    ("SetBmin" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("b_min" variable (:type "double") (reparse-symbol arg-sub-list) [1746 1759]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1733 1760])
+                    ("SetBmax" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("b_max" variable (:type "double") (reparse-symbol arg-sub-list) [1779 1792]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1766 1793])
+                    ("SetV0" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("v0" variable (:type "double") (reparse-symbol arg-sub-list) [1810 1820]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1799 1821])
+                    ("GetV" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1829 1855])
+                    ("GetCenter" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1861 1892])
+                    ("GetCosPhi" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [1898 1923])
+                    ("GetSinPhi" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [1929 1954])
+                    ("GetXp" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [1960 1981])
+                    ("GetAmin" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [1987 2010])
+                    ("GetAv" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2016 2037])
+                    ("GetBmin" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2043 2066])
+                    ("GetBmax" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2072 2095])
+                    ("GetV0" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2101 2122])
+                    ("GetEA" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2129 2149])
+                    ("GetEB" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2208 2228])
+                    ("GetMaxEA" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2298 2321])
+                    ("GetMaxEB" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2327 2350])
+                    ("GetArea" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2356 2378])
+                    ("EffectiveDistanceToEllipse" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("other" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("JEllipse" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2468 2490])
+                            ("dist" variable
+                               (:pointer 1
+                                :type "double")
+                                (reparse-symbol arg-sub-list) [2491 2504]))                          
+                        :type "double")
+                        (reparse-symbol classsubparts) [2434 2511])
+                    ("EffectiveDistanceToLine" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("l" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Line" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2608 2622]))                          
+                        :type "double")
+                        (reparse-symbol classsubparts) [2577 2629])
+                    ("PointOnEllipse" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("p" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2740 2755]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2719 2762])
+                    ("PointOnEllipse" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("line" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Line" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2849 2866])
+                            ("P" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2867 2882]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2828 2889])
+                    ("IsInside" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("p" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3228 3243]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3214 3250])
+                    ("IsOutside" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("p" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3319 3334]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3304 3341])
+                    ("IsOn" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("p" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3400 3415]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3390 3422])
+                    ("IntersectionWithLine" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("line" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Line" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3455 3472]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3429 3473]))                  
+                :type "class")
+                nil [1024 3478]))          
+      :file "Ellipse.h"
+      :pointmax 3506
+      :fsize 3508
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("_ELLIPSE_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("AGENTSPARAMETERS_H_" variable (:constant-flag t) nil [1196 1215])
+            ("random" include (:system-flag t) nil [1217 1234])
+            ("AgentsParameters" type
+               (:members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [1261 1268])
+                    ("AgentsParameters" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("id" variable (:type "int") (reparse-symbol arg-sub-list) [1325 1332])
+                            ("seed" variable
+                               (:default-value "1234"
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [1333 1346]))                          
+                        :type ("AgentsParameters" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1308 1348])
+                    ("AgentsParameters" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1388 1416])
+                    ("GetID" function
+                       (:prototype-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [1491 1503])
+                    ("SetID" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("id" variable (:type "int") (reparse-symbol arg-sub-list) [1592 1599]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1581 1600])
+                    ("InitV0" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [1772 1784])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [1785 1796]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1760 1797])
+                    ("InitV0UpStairs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [1978 1990])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [1991 2002]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1958 2003])
+                    ("InitV0DownStairs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [2187 2199])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [2200 2211]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2165 2212])
+                    ("InitEscalatorUpStairs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [2395 2407])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [2408 2419]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2368 2420])
+                    ("InitEscalatorDownStairs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [2607 2619])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [2620 2631]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2578 2632])
+                    ("InitV0IdleEscalatorUpStairs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [2839 2851])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [2852 2863]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2806 2864])
+                    ("InitV0IdleEscalatorDownStairs" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3075 3087])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [3088 3099]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3040 3100])
+                    ("InitBmax" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3264 3276])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [3277 3288]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3250 3289])
+                    ("InitBmin" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3448 3460])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [3461 3472]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3434 3473])
+                    ("InitAmin" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3632 3644])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [3645 3656]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3618 3657])
+                    ("InitAtau" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3798 3810])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [3811 3822]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3784 3823])
+                    ("InitTau" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3963 3975])
+                            ("stv" variable (:type "double") (reparse-symbol arg-sub-list) [3976 3987]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3950 3988])
+                    ("GetV0" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4068 4083])
+                    ("GetV0UpStairs" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4163 4186])
+                    ("GetV0DownStairs" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4266 4291])
+                    ("GetEscalatorUpStairs" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4372 4402])
+                    ("GetEscalatorDownStairs" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4482 4514])
+                    ("GetV0IdleEscalatorUpStairs" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4594 4630])
+                    ("GetV0IdleEscalatorDownStairs" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4710 4748])
+                    ("GetBmax" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4828 4845])
+                    ("GetBmin" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4925 4942])
+                    ("GetAtau" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5022 5039])
+                    ("GetAmin" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5119 5136])
+                    ("GetTau" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [5216 5232])
+                    ("writeParameter" function
+                       (:prototype-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [5295 5324])
+                    ("private" label nil (reparse-symbol classsubparts) [5326 5334])
+                    ("_id" variable (:type "int") (reparse-symbol classsubparts) [5339 5347])
+                    ("_generator" variable (:type ("std::default_random_engine" type (:type "class") nil nil)) (reparse-symbol classsubparts) [5382 5420])
+                    ("_V0" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5425 5462])
+                    ("_V0UpStairs" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5467 5512])
+                    ("_V0DownStairs" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5517 5564])
+                    ("_EscalatorUpStairs" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5569 5621])
+                    ("_EscalatorDownStairs" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5626 5680])
+                    ("_V0IdleEscalatorUpStairs" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5685 5743])
+                    ("_V0IdleEscalatorDownStairs" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5748 5808])
+                    ("_Bmax" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5813 5852])
+                    ("_Bmin" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5857 5896])
+                    ("_Atau" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5901 5940])
+                    ("_Amin" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5945 5984])
+                    ("_Tau" variable (:type ("std::normal_distribution" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [5989 6027]))                  
+                :type "class")
+                nil [1236 6031]))          
+      :file "AgentsParameters.h"
+      :pointmax 6066
+      :fsize 6066
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("AGENTSPARAMETERS_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("_PEDDISTRIBUTOR_H" variable (:constant-flag t) nil [930 947])
+            ("vector" include (:system-flag t) nil [949 966])
+            ("string" include (:system-flag t) nil [967 984])
+            ("memory" include (:system-flag t) nil [985 1002])
+            ("../routing/Router.h" include nil nil [1004 1034])
+            ("../geometry/Building.h" include nil nil [1035 1068])
+            ("AgentsParameters.h" include nil nil [1069 1098])
+            ("AgentsSource.h" include nil nil [1099 1124])
+            ("StartDistribution.h" include nil nil [1125 1155])
+            ("../general/ArgumentParser.h" include nil nil [1156 1194])
+            ("PedDistributor" type
+               (:members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1292 1300])
+                    ("_start_dis" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("std::shared_ptr" type (:template-specifier 
+                                ( ("StartDistribution" type nil nil nil))                                ) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [1306 1366])
+                    ("_start_dis_sub" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("std::shared_ptr" type (:template-specifier 
+                                ( ("StartDistribution" type nil nil nil))                                ) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [1405 1469])
+                    ("_start_dis_sources" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("std::shared_ptr" type (:template-specifier 
+                                ( ("AgentsSource" type nil nil nil))                                ) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [1508 1571])
+                    ("InitDistributor" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1750 1764])
+                            ("" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::map" type
+                                     (:template-specifier 
+                                        ( ("int" type nil nil nil)
+                                          ("std::shared_ptr" type (:template-specifier 
+                                            ( ("AgentsParameters" type nil nil nil))                                            ) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [1765 1822])
+                            ("" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [1838 1851]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [1729 1852])
+                    ("PositionsOnFixX" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :arguments 
+                          ( ("max_x" variable (:type "double") (reparse-symbol arg-sub-list) [1900 1913])
+                            ("min_x" variable (:type "double") (reparse-symbol arg-sub-list) [1914 1927])
+                            ("max_y" variable (:type "double") (reparse-symbol arg-sub-list) [1928 1941])
+                            ("min_y" variable (:type "double") (reparse-symbol arg-sub-list) [1957 1970])
+                            ("r" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("SubRoom" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1971 1988])
+                            ("bufx" variable (:type "double") (reparse-symbol arg-sub-list) [1989 2001])
+                            ("bufy" variable (:type "double") (reparse-symbol arg-sub-list) [2002 2014])
+                            ("dy" variable (:type "double") (reparse-symbol arg-sub-list) [2015 2025]))                          
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("Point" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [1858 2026])
+                    ("PositionsOnFixY" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :arguments 
+                          ( ("max_x" variable (:type "double") (reparse-symbol arg-sub-list) [2074 2087])
+                            ("min_x" variable (:type "double") (reparse-symbol arg-sub-list) [2088 2101])
+                            ("max_y" variable (:type "double") (reparse-symbol arg-sub-list) [2102 2115])
+                            ("min_y" variable (:type "double") (reparse-symbol arg-sub-list) [2131 2144])
+                            ("r" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("SubRoom" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2145 2162])
+                            ("bufx" variable (:type "double") (reparse-symbol arg-sub-list) [2163 2175])
+                            ("bufy" variable (:type "double") (reparse-symbol arg-sub-list) [2176 2188])
+                            ("dx" variable (:type "double") (reparse-symbol arg-sub-list) [2189 2199]))                          
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("Point" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [2032 2200])
+                    ("public" label nil (reparse-symbol classsubparts) [2202 2209])
+                    ("PedDistributor" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("fileName" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2268 2291])
+                            ("agentPars" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::map" type
+                                     (:template-specifier 
+                                        ( ("int" type nil nil nil)
+                                          ("std::shared_ptr" type (:template-specifier 
+                                            ( ("AgentsParameters" type nil nil nil))                                            ) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [2307 2374])
+                            ("seed" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [2390 2408]))                          
+                        :type ("PedDistributor" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2253 2409])
+                    ("PedDistributor" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [2454 2480])
+                    ("PossiblePositions" function
+                       (:prototype-flag t
+                        :typemodifiers ("static")
+                        :arguments 
+                          ( ("r" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("SubRoom" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2625 2642]))                          
+                        :type ("vector" type
+                             (:template-specifier 
+                                ( ("Point" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [2586 2643])
+                    ("DistributeInSubRoom" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("r" variable
+                               (:pointer 1
+                                :type ("SubRoom" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2769 2780])
+                            ("N" variable (:type "int") (reparse-symbol arg-sub-list) [2781 2787])
+                            ("positions" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Point" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [2788 2818])
+                            ("pid" variable
+                               (:pointer 1
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [2819 2828])
+                            ("parameters" variable
+                               (:pointer 1
+                                :type ("StartDistribution" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2844 2874])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2875 2894]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2744 2901])
+                    ("Distribute" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3062 3081]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [3046 3088])
+                    ("GetAgentsSources" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("std::shared_ptr" type (:template-specifier 
+                                    ( ("AgentsSource" type nil nil nil))                                    ) nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [3147 3223]))                  
+                :type "class")
+                nil [1269 3226]))          
+      :file "PedDistributor.h"
+      :pointmax 3261
+      :fsize 3261
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("_PEDDISTRIBUTOR_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("AGENTSOURCE_H_" variable (:constant-flag t) nil [1176 1190])
+            ("string" include (:system-flag t) nil [1192 1209])
+            ("vector" include (:system-flag t) nil [1210 1227])
+            ("memory" include (:system-flag t) nil [1228 1245])
+            ("Pedestrian" type
+               (:prototype t
+                :type "class")
+                nil [1247 1264])
+            ("OutputHandler" type
+               (:prototype t
+                :type "class")
+                nil [1265 1285])
+            ("StartDistribution" type
+               (:prototype t
+                :type "class")
+                nil [1286 1310])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [1311 1326])
+            ("Log" variable
+               (:pointer 1
+                :typemodifiers ("extern")
+                :type ("OutputHandler" type (:type "class") nil nil))
+                nil [1350 1376])
+            ("AgentsSource" type
+               (:members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [1400 1407])
+                    ("AgentsSource" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("id" variable (:type "int") (reparse-symbol arg-sub-list) [1464 1471])
+                            ("caption" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1472 1499])
+                            ("max_agents" variable (:type "int") (reparse-symbol arg-sub-list) [1499 1514])
+                            ("group_id" variable (:type "int") (reparse-symbol arg-sub-list) [1514 1527])
+                            ("frequency" variable (:type "int") (reparse-symbol arg-sub-list) [1527 1541]))                          
+                        :type ("AgentsSource" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1451 1542])
+                    ("AgentsSource" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1586 1610])
+                    ("AddToPool" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1708 1724]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1693 1725])
+                    ("GenerateAgentsAndAddToPool" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("count" variable (:type "int") (reparse-symbol arg-sub-list) [1987 1997])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1998 2017]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1955 2018])
+                    ("GenerateAgents" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("peds" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [2282 2313])
+                            ("count" variable (:type "int") (reparse-symbol arg-sub-list) [2314 2324])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2325 2344]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2262 2345])
+                    ("RemoveAgentsFromPool" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("peds" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [2558 2589])
+                            ("count" variable (:type "int") (reparse-symbol arg-sub-list) [2590 2600]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2532 2601])
+                    ("GetPoolSize" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2673 2697])
+                    ("Dump" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [2757 2775])
+                    ("GetGroupID" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2782 2805])
+                    ("GetAgentsGenerated" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2811 2842])
+                    ("SetAgentsGenerated" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("agentsGenerated" variable (:type "int") (reparse-symbol arg-sub-list) [2872 2892]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2848 2893])
+                    ("GetBoundaries" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :pointer 1
+                        :constant-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2899 2935])
+                    ("Setboundaries" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("bounds" variable
+                               (:pointer 1
+                                :type "double")
+                                (reparse-symbol arg-sub-list) [2960 2976]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2941 2977])
+                    ("GetCaption" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2983 3021])
+                    ("GetFrequency" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [3027 3052])
+                    ("GetGroupId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [3058 3081])
+                    ("GetId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [3087 3105])
+                    ("GetMaxAgents" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [3111 3136])
+                    ("SetStartDistribution" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("" variable (:type ("std::shared_ptr" type
+                                 (:template-specifier 
+                                    ( ("StartDistribution" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol arg-sub-list) [3168 3203]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3142 3204])
+                    ("GetStartDistribution" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::shared_ptr" type
+                             (:template-specifier 
+                                ( ("StartDistribution" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [3210 3280])
+                    ("private" label nil (reparse-symbol classsubparts) [3283 3291])
+                    ("_id" variable
+                       (:default-value "-1"
+                        :type "int")
+                        (reparse-symbol classsubparts) [3297 3308])
+                    ("_frequency" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol classsubparts) [3314 3331])
+                    ("_maxAgents" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol classsubparts) [3337 3354])
+                    ("_agentsGenerated" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol classsubparts) [3360 3383])
+                    ("_groupID" variable
+                       (:default-value "-1"
+                        :type "int")
+                        (reparse-symbol classsubparts) [3389 3405])
+                    ("_boundaries" variable
+                       (:dereference 1
+                        :default-value "{0,0,0,0}"
+                        :type "double")
+                        (reparse-symbol classsubparts) [3411 3446])
+                    ("_caption" variable
+                       (:default-value "\"no caption\""
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3452 3486])
+                    ("_agents" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("Pedestrian" type (:pointer 1) nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3492 3525])
+                    ("_startDistribution" variable (:type ("std::shared_ptr" type
+                         (:template-specifier 
+                            ( ("StartDistribution" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol classsubparts) [3531 3585]))                  
+                :type "class")
+                nil [1379 3589]))          
+      :file "AgentsSource.h"
+      :pointmax 3620
+      :fsize 3620
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("AGENTSOURCE_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("STARTDISTRIBUTION_H_" variable (:constant-flag t) nil [936 956])
+            ("vector" include (:system-flag t) nil [958 975])
+            ("string" include (:system-flag t) nil [976 993])
+            ("random" include (:system-flag t) nil [994 1011])
+            ("AgentsParameters" type
+               (:prototype t
+                :type "class")
+                nil [1037 1060])
+            ("Pedestrian" type
+               (:prototype t
+                :type "class")
+                nil [1061 1078])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [1079 1094])
+            ("Point" type
+               (:prototype t
+                :type "class")
+                nil [1095 1107])
+            ("StartDistribution" type
+               (:members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1135 1143])
+                    ("_roomID" variable (:type "int") (reparse-symbol classsubparts) [1149 1161])
+                    ("_nPeds" variable (:type "int") (reparse-symbol classsubparts) [1167 1178])
+                    ("_groupID" variable (:type "int") (reparse-symbol classsubparts) [1184 1197])
+                    ("_goalID" variable (:type "int") (reparse-symbol classsubparts) [1203 1215])
+                    ("_routerID" variable (:type "int") (reparse-symbol classsubparts) [1221 1235])
+                    ("_routeID" variable (:type "int") (reparse-symbol classsubparts) [1241 1254])
+                    ("_subroomID" variable (:type "int") (reparse-symbol classsubparts) [1260 1275])
+                    ("_gender" variable (:type ("std::string" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1376 1396])
+                    ("_age" variable (:type "int") (reparse-symbol classsubparts) [1402 1411])
+                    ("_height" variable (:type "int") (reparse-symbol classsubparts) [1417 1429])
+                    ("_patience" variable (:type "double") (reparse-symbol classsubparts) [1435 1452])
+                    ("_groupParameters" variable
+                       (:pointer 1
+                        :type ("AgentsParameters" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1489 1524])
+                    ("_startX" variable (:type "double") (reparse-symbol classsubparts) [1577 1592])
+                    ("_startY" variable (:type "double") (reparse-symbol classsubparts) [1625 1640])
+                    ("_startZ" variable (:type "double") (reparse-symbol classsubparts) [1673 1688])
+                    ("_xMin" variable (:type "double") (reparse-symbol classsubparts) [1765 1778])
+                    ("_xMax" variable (:type "double") (reparse-symbol classsubparts) [1784 1797])
+                    ("_yMin" variable (:type "double") (reparse-symbol classsubparts) [1803 1816])
+                    ("_yMax" variable (:type "double") (reparse-symbol classsubparts) [1822 1835])
+                    ("_premovementTime" variable
+                       (:typemodifiers ("mutable")
+                        :type ("std::normal_distribution" type
+                             (:template-specifier 
+                                ( ("double" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [1880 1938])
+                    ("_riskTolerance" variable
+                       (:typemodifiers ("mutable")
+                        :type ("std::normal_distribution" type
+                             (:template-specifier 
+                                ( ("double" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol classsubparts) [1980 2036])
+                    ("_generator" variable
+                       (:typemodifiers ("mutable")
+                        :type ("std::default_random_engine" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2081 2127])
+                    ("public" label nil (reparse-symbol classsubparts) [2129 2136])
+                    ("StartDistribution" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("seed" variable (:type "int") (reparse-symbol arg-sub-list) [2160 2169]))                          
+                        :type ("StartDistribution" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2142 2170])
+                    ("StartDistribution" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [2176 2205])
+                    ("GetAgentsNumber" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2212 2240])
+                    ("SetRoomID" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("id" variable (:type "int") (reparse-symbol arg-sub-list) [2261 2268]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2246 2269])
+                    ("SetAgentsNumber" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("N" variable (:type "int") (reparse-symbol arg-sub-list) [2296 2302]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2275 2303])
+                    ("GetAge" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2309 2328])
+                    ("SetAge" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("age" variable (:type "int") (reparse-symbol arg-sub-list) [2346 2354]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2334 2355])
+                    ("GetGender" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :constant-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2361 2398])
+                    ("SetGender" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("gender" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::string" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2419 2445]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2404 2446])
+                    ("GetGoalId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2452 2474])
+                    ("SetGoalId" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("goalId" variable (:type "int") (reparse-symbol arg-sub-list) [2495 2506]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2480 2507])
+                    ("GetGroupId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2513 2536])
+                    ("SetGroupId" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("groupId" variable (:type "int") (reparse-symbol arg-sub-list) [2558 2570]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2542 2571])
+                    ("GetHeight" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2577 2599])
+                    ("SetHeight" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("height" variable (:type "int") (reparse-symbol arg-sub-list) [2620 2631]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2605 2632])
+                    ("GetRoomId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2638 2660])
+                    ("SetRoomId" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("roomId" variable (:type "int") (reparse-symbol arg-sub-list) [2681 2692]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2666 2693])
+                    ("GetSubroomID" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2699 2724])
+                    ("SetSubroomID" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("subroomID" variable (:type "int") (reparse-symbol arg-sub-list) [2748 2762]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2730 2763])
+                    ("GetRouteId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2769 2792])
+                    ("SetRouteId" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("routeId" variable (:type "int") (reparse-symbol arg-sub-list) [2814 2826]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2798 2827])
+                    ("GetRouterId" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "int")
+                        (reparse-symbol classsubparts) [2833 2857])
+                    ("SetRouterId" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("routerId" variable (:type "int") (reparse-symbol arg-sub-list) [2880 2893]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2863 2894])
+                    ("SetStartPosition" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("x" variable (:type "double") (reparse-symbol arg-sub-list) [2922 2931])
+                            ("y" variable (:type "double") (reparse-symbol arg-sub-list) [2932 2941])
+                            ("z" variable (:type "double") (reparse-symbol arg-sub-list) [2942 2951]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2900 2952])
+                    ("GetStartPosition" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2958 2989])
+                    ("GetPatience" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2995 3022])
+                    ("SetPatience" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("patience" variable (:type "double") (reparse-symbol arg-sub-list) [3045 3061]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3028 3062])
+                    ("SetBounds" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("xMin" variable (:type "double") (reparse-symbol arg-sub-list) [3083 3095])
+                            ("xMax" variable (:type "double") (reparse-symbol arg-sub-list) [3096 3108])
+                            ("yMin" variable (:type "double") (reparse-symbol arg-sub-list) [3109 3121])
+                            ("yMax" variable (:type "double") (reparse-symbol arg-sub-list) [3122 3134]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3068 3135])
+                    ("Getbounds" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("bounds" variable
+                               (:dereference 1
+                                :type "double")
+                                (reparse-symbol arg-sub-list) [3156 3173]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3141 3174])
+                    ("Setbounds" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("bounds" variable
+                               (:dereference 1
+                                :type "double")
+                                (reparse-symbol arg-sub-list) [3195 3212]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3180 3213])
+                    ("GetGroupParameters" function
+                       (:prototype-flag t
+                        :pointer 1
+                        :type ("AgentsParameters" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3219 3258])
+                    ("SetGroupParameters" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("groupParameters" variable
+                               (:pointer 1
+                                :type ("AgentsParameters" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3288 3322]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3264 3323])
+                    ("InitPremovementTime" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3354 3366])
+                            ("stdv" variable (:type "double") (reparse-symbol arg-sub-list) [3367 3379]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3329 3380])
+                    ("GetPremovementTime" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3386 3420])
+                    ("InitRiskTolerance" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("mean" variable (:type "double") (reparse-symbol arg-sub-list) [3449 3461])
+                            ("stdv" variable (:type "double") (reparse-symbol arg-sub-list) [3462 3474]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3426 3475])
+                    ("GetRiskTolerance" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3481 3507])
+                    ("GenerateAgent" function
+                       (:prototype-flag t
+                        :pointer 1
+                        :arguments 
+                          ( ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3540 3559])
+                            ("pid" variable
+                               (:pointer 1
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [3560 3569])
+                            ("positions" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Point" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [3570 3600]))                          
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3514 3601]))                  
+                :type "class")
+                nil [1109 3604]))          
+      :file "StartDistribution.h"
+      :pointmax 3640
+      :fsize 3640
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("STARTDISTRIBUTION_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("Ellipse.h" include nil nil [892 912])
+            ("_USE_MATH_DEFINES" variable (:constant-flag t) nil [922 939])
+            ("math.h" include (:system-flag t) nil [940 957])
+            ("M_PI" variable (:constant-flag t) nil [979 983])
+            ("std" using (:type ("std" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [1025 1045])
+            ("JEllipse" function
+               (:constructor-flag t
+                :parent "JEllipse"
+                :type ("JEllipse" type (:type "class") nil nil))
+                nil [1190 1679])
+            ("JEllipse" function
+               (:constructor-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("orig" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("JEllipse" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1700 1721]))                  
+                :type ("JEllipse" type (:type "class") nil nil))
+                nil [1681 2230])
+            ("SetV" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("v" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2399 2414]))                  
+                :type "void")
+                nil [2379 2433])
+            ("SetCenter" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("pos" variable (:type ("Point" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2460 2470]))                  
+                :type "void")
+                nil [2435 2494])
+            ("SetCosPhi" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("c" variable (:type "double") (reparse-symbol arg-sub-list) [2521 2530]))                  
+                :type "void")
+                nil [2496 2552])
+            ("SetSinPhi" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("s" variable (:type "double") (reparse-symbol arg-sub-list) [2579 2588]))                  
+                :type "void")
+                nil [2554 2610])
+            ("SetXp" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("xp" variable (:type "double") (reparse-symbol arg-sub-list) [2633 2643]))                  
+                :type "void")
+                nil [2612 2662])
+            ("SetAmin" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("a_min" variable (:type "double") (reparse-symbol arg-sub-list) [2687 2700]))                  
+                :type "void")
+                nil [2664 2724])
+            ("SetAv" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("a_v" variable (:type "double") (reparse-symbol arg-sub-list) [2747 2758]))                  
+                :type "void")
+                nil [2726 2778])
+            ("SetBmin" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("b_min" variable (:type "double") (reparse-symbol arg-sub-list) [2803 2816]))                  
+                :type "void")
+                nil [2780 2840])
+            ("SetBmax" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("b_max" variable (:type "double") (reparse-symbol arg-sub-list) [2865 2878]))                  
+                :type "void")
+                nil [2842 2902])
+            ("SetV0" function
+               (:parent "JEllipse"
+                :arguments 
+                  ( ("v0" variable (:type "double") (reparse-symbol arg-sub-list) [2925 2935]))                  
+                :type "void")
+                nil [2904 2956])
+            ("GetV" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :constant-flag t
+                :type ("Point" type (:type "class") nil nil))
+                nil [3104 3161])
+            ("GetCenter" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :constant-flag t
+                :type ("Point" type (:type "class") nil nil))
+                nil [3163 3228])
+            ("GetCosPhi" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3230 3289])
+            ("GetSinPhi" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3291 3350])
+            ("GetXp" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3352 3403])
+            ("GetAmin" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3405 3460])
+            ("GetAv" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3462 3513])
+            ("GetBmin" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3515 3570])
+            ("GetBmax" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3572 3627])
+            ("GetV0" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3629 3682])
+            ("GetArea" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3683 3911])
+            ("GetEA" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [3968 4041])
+            ("GetEB" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :type "double")
+                nil [4108 4623])
+            ("EffectiveDistanceToEllipse" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("E2" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("JEllipse" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [7342 7361])
+                    ("dist" variable
+                       (:pointer 1
+                        :type "double")
+                        (reparse-symbol arg-sub-list) [7362 7375]))                  
+                :type "double")
+                nil [7298 8190])
+            ("PointOnEllipse" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("P" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [8492 8507]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [8461 9111])
+            ("EffectiveDistanceToLine" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("l" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Line" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [9154 9168]))                  
+                :type "double")
+                nil [9113 9313])
+            ("IsInside" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("p" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14504 14519]))                  
+                :type "bool")
+                nil [14480 14794])
+            ("IsOutside" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("p" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14894 14909]))                  
+                :type "bool")
+                nil [14869 15184])
+            ("IsOn" function
+               (:methodconst-flag t
+                :parent "JEllipse"
+                :arguments 
+                  ( ("p" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15274 15289]))                  
+                :type "bool")
+                nil [15254 15618]))          
+      :file "Ellipse.cpp"
+      :pointmax 16851
+      :fsize 16859
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("_USE_MATH_DEFINES")
+          ("M_PI" . ((number "3.14159265358979323846" 995 . 1017)))
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!pedestrian!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

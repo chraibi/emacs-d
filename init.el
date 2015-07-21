@@ -1,3 +1,4 @@
+
 ;;; Code:
 ;; Turn off mouse interface early in startup to avoid momentary display
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -682,9 +683,9 @@
 ;; https://github.com/magnars/multiple-cursors.el
 
 (global-set-key (kbd "C-c z") 'mc/edit-lines)
-(global-set-key (kbd "C-c n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c p") 'mc/mark-previous-like-this)
-
+(global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
 
 (defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
   "Start each sentence on a new line."

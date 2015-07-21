@@ -1,0 +1,178 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("LCGRID_H_" variable (:constant-flag t) nil [1378 1387])
+            ("vector" include (:system-flag t) nil [1389 1406])
+            ("string" include (:system-flag t) nil [1407 1424])
+            ("../geometry/Point.h" include nil nil [1425 1455])
+            ("Pedestrian" type
+               (:prototype t
+                :type "class")
+                nil [1477 1494])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [1495 1510])
+            ("LCGrid" type
+               (:members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1528 1536])
+                    ("_cellHead" variable
+                       (:pointer 2
+                        :type "int")
+                        (reparse-symbol classsubparts) [1588 1604])
+                    ("_list" variable
+                       (:pointer 1
+                        :type "int")
+                        (reparse-symbol classsubparts) [1686 1697])
+                    ("_gridSizeX" variable (:type "int") (reparse-symbol classsubparts) [1828 1855])
+                    ("_gridSizeY" variable (:type "int") (reparse-symbol classsubparts) [1828 1855])
+                    ("_cellSize" variable (:type "double") (reparse-symbol classsubparts) [1906 1923])
+                    ("_gridXmin" variable (:type "double") (reparse-symbol classsubparts) [2004 2054])
+                    ("_gridXmax" variable (:type "double") (reparse-symbol classsubparts) [2004 2054])
+                    ("_gridYmin" variable (:type "double") (reparse-symbol classsubparts) [2004 2054])
+                    ("_gridYmax" variable (:type "double") (reparse-symbol classsubparts) [2004 2054])
+                    ("_localPedsCopy" variable
+                       (:pointer 2
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2126 2154])
+                    ("_nPeds" variable (:type "int") (reparse-symbol classsubparts) [2196 2207])
+                    ("public" label nil (reparse-symbol classsubparts) [2209 2216])
+                    ("LCGrid" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("boundaries" variable
+                               (:dereference 1
+                                :type "double")
+                                (reparse-symbol arg-sub-list) [2427 2448])
+                            ("cellsize" variable (:type "double") (reparse-symbol arg-sub-list) [2449 2465])
+                            ("nPeds" variable (:type "int") (reparse-symbol arg-sub-list) [2466 2476]))                          
+                        :type ("LCGrid" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2420 2477])
+                    ("LCGrid" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [2522 2532])
+                    ("GetCellSize" function
+                       (:prototype-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [2578 2599])
+                    ("Update" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("peds" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [2671 2708]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2659 2709])
+                    ("Update" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2797 2813]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2785 2814])
+                    ("ShallowCopy" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("peds" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [2924 2961]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2907 2962])
+                    ("ClearGrid" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [3011 3028])
+                    ("Dump" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [3147 3159])
+                    ("dumpCellsOnly" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [3217 3238])
+                    ("GetNeighbourhood" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("position" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3412 3434])
+                            ("neighbourhood" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [3435 3475]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3390 3476])
+                    ("GetNeighbourhood" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3624 3646])
+                            ("neighbourhood" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("Pedestrian" type (:pointer 1) nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [3647 3687]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3602 3688])
+                    ("HighlightNeighborhood" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("pedID" variable (:type "int") (reparse-symbol arg-sub-list) [3820 3830])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [3831 3850]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3793 3851])
+                    ("ToXML" function
+                       (:prototype-flag t
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3963 3983]))                  
+                :type "class")
+                nil [1512 3987]))          
+      :file "LCGrid.h"
+      :pointmax 4011
+      :fsize 4010
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("LCGRID_H_")
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!mpi!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

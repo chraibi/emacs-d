@@ -1,0 +1,699 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("SHAPES_H" variable (:constant-flag t) nil [1665 1673])
+            ("vector" include (:system-flag t) nil [1675 1692])
+            ("cstddef" include (:system-flag t) nil [1693 1711])
+            ("assert.h" include (:system-flag t) nil [1712 1731])
+            ("cmath" include (:system-flag t) nil [1732 1748])
+            ("p2t" type
+               (:members 
+                  ( ("Edge" type
+                       (:prototype t
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1767 1779])
+                    ("Point" type
+                       (:members 
+                          ( ("x" variable (:type "double") (reparse-symbol classsubparts) [1799 1811])
+                            ("y" variable (:type "double") (reparse-symbol classsubparts) [1799 1811])
+                            ("Point" function
+                               (:constructor-flag t
+                                :type ("Point" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [1873 1914])
+                            ("edge_list" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Edge" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [1979 2008])
+                            ("Point" function
+                               (:constructor-flag t
+                                :arguments 
+                                  ( ("x0" variable (:type "double") (reparse-symbol arg-sub-list) [2053 2063])
+                                    ("y0" variable (:type "double") (reparse-symbol arg-sub-list) [2064 2074]))                                  
+                                :type ("Point" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [2047 2092])
+                            ("set_zero" function (:type "void") (reparse-symbol classsubparts) [2131 2180])
+                            ("set" function
+                               (:arguments 
+                                  ( ("x_" variable (:type "double") (reparse-symbol arg-sub-list) [2245 2255])
+                                    ("y_" variable (:type "double") (reparse-symbol arg-sub-list) [2256 2266]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2236 2298])
+                            ("-" function
+                               (:methodconst-flag t
+                                :operator-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [2327 2405])
+                            ("+=" function
+                               (:operator-flag t
+                                :arguments 
+                                  ( ("v" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2459 2474]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2442 2510])
+                            ("-=" function
+                               (:operator-flag t
+                                :arguments 
+                                  ( ("v" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [2571 2586]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2554 2622])
+                            ("=" function
+                               (:operator-flag t
+                                :function-pointer t
+                                :arguments 
+                                  ( ("a" variable (:type "double") (reparse-symbol arg-sub-list) [2682 2691]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [2665 2723])
+                            ("Length" function
+                               (:methodconst-flag t
+                                :type "double")
+                                (reparse-symbol classsubparts) [2774 2835])
+                            ("Normalize" function (:type "double") (reparse-symbol classsubparts) [2903 3006]))                          
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [1781 3010])
+                    ("Edge" type
+                       (:members 
+                          ( ("p" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3067 3080])
+                            ("q" variable
+                               (:pointer 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3067 3080])
+                            ("Edge" function
+                               (:constructor-flag t
+                                :arguments 
+                                  ( ("p1" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3107 3117])
+                                    ("p2" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3118 3128]))                                  
+                                :type ("Edge" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [3102 3426]))                          
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [3050 3429])
+                    ("Triangle" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [3676 3683])
+                            ("Triangle" function
+                               (:prototype-flag t
+                                :constructor-flag t
+                                :arguments 
+                                  ( ("a" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3710 3719])
+                                    ("b" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3720 3729])
+                                    ("c" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3730 3739]))                                  
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3701 3740])
+                            ("constrained_edge" variable
+                               (:dereference 1
+                                :type "bool")
+                                (reparse-symbol classsubparts) [3798 3823])
+                            ("delaunay_edge" variable
+                               (:dereference 1
+                                :type "bool")
+                                (reparse-symbol classsubparts) [3877 3899])
+                            ("GetPoint" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("index" variable (:type "int") (reparse-symbol arg-sub-list) [3917 3927]))                                  
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3901 3928])
+                            ("PointCW" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("point" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3944 3963]))                                  
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3929 3964])
+                            ("PointCCW" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("point" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [3981 4000]))                                  
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [3965 4001])
+                            ("OppositePoint" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4023 4035])
+                                    ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4036 4051]))                                  
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [4002 4052])
+                            ("GetNeighbor" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("index" variable (:type "int") (reparse-symbol arg-sub-list) [4076 4086]))                                  
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [4054 4087])
+                            ("MarkNeighbor" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p1" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4106 4116])
+                                    ("p2" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4117 4127])
+                                    ("t" variable
+                                       (:pointer 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4128 4140]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4088 4141])
+                            ("MarkNeighbor" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("t" variable
+                                       (:reference 1
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4160 4172]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4142 4173])
+                            ("MarkConstrainedEdge" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("index" variable (:type "int") (reparse-symbol arg-sub-list) [4200 4210]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4175 4211])
+                            ("MarkConstrainedEdge" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("edge" variable
+                                       (:reference 1
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4237 4248]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4212 4249])
+                            ("MarkConstrainedEdge" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4275 4284])
+                                    ("q" variable
+                                       (:pointer 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4285 4294]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4250 4295])
+                            ("Index" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4307 4322]))                                  
+                                :type "int")
+                                (reparse-symbol classsubparts) [4297 4323])
+                            ("EdgeIndex" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p1" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4338 4354])
+                                    ("p2" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4355 4371]))                                  
+                                :type "int")
+                                (reparse-symbol classsubparts) [4324 4372])
+                            ("NeighborCW" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("point" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4395 4414]))                                  
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [4374 4415])
+                            ("NeighborCCW" function
+                               (:prototype-flag t
+                                :pointer 1
+                                :arguments 
+                                  ( ("point" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4438 4457]))                                  
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [4416 4458])
+                            ("GetConstrainedEdgeCCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4486 4501]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4459 4502])
+                            ("GetConstrainedEdgeCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4529 4544]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4503 4545])
+                            ("SetConstrainedEdgeCCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4573 4588])
+                                    ("ce" variable (:type "bool") (reparse-symbol arg-sub-list) [4589 4597]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4546 4598])
+                            ("SetConstrainedEdgeCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4625 4640])
+                                    ("ce" variable (:type "bool") (reparse-symbol arg-sub-list) [4641 4649]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4599 4650])
+                            ("GetDelunayEdgeCCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4674 4689]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4651 4690])
+                            ("GetDelunayEdgeCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4713 4728]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4691 4729])
+                            ("SetDelunayEdgeCCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4753 4768])
+                                    ("e" variable (:type "bool") (reparse-symbol arg-sub-list) [4769 4776]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4730 4777])
+                            ("SetDelunayEdgeCW" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4800 4815])
+                                    ("e" variable (:type "bool") (reparse-symbol arg-sub-list) [4816 4823]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4778 4824])
+                            ("Contains" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4840 4855]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4826 4856])
+                            ("Contains" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("e" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Edge" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4871 4885]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4857 4886])
+                            ("Contains" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("p" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4901 4916])
+                                    ("q" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4917 4932]))                                  
+                                :type "bool")
+                                (reparse-symbol classsubparts) [4887 4933])
+                            ("Legalize" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("point" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4948 4961]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4934 4962])
+                            ("Legalize" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("opoint" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4977 4991])
+                                    ("npoint" variable
+                                       (:reference 1
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [4992 5006]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [4963 5007])
+                            ("Clear" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [5075 5088])
+                            ("ClearNeighbor" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("triangle" variable
+                                       (:pointer 1
+                                        :constant-flag t
+                                        :type ("Triangle" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5108 5133]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [5089 5134])
+                            ("ClearNeighbors" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [5135 5157])
+                            ("ClearDelunayEdges" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [5158 5183])
+                            ("IsInterior" function
+                               (:prototype-flag t
+                                :type "bool")
+                                (reparse-symbol classsubparts) [5192 5210])
+                            ("IsInterior" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("b" variable (:type "bool") (reparse-symbol arg-sub-list) [5234 5241]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [5218 5242])
+                            ("NeighborAcross" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("opoint" variable
+                                       (:reference 1
+                                        :constant-flag t
+                                        :type ("Point" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [5269 5289]))                                  
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [5244 5290])
+                            ("DebugPrint" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [5292 5310])
+                            ("private" label nil (reparse-symbol classsubparts) [5312 5320])
+                            ("points_" variable
+                               (:pointer 1
+                                :dereference 1
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [5342 5360])
+                            ("neighbors_" variable
+                               (:pointer 1
+                                :dereference 1
+                                :type ("Triangle" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [5379 5403])
+                            ("interior_" variable (:type "bool") (reparse-symbol classsubparts) [5464 5479]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [3659 5482])
+                    ("cmp" function
+                       (:arguments 
+                          ( ("a" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5500 5515])
+                            ("b" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5516 5531]))                          
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [5491 5719])
+                    ("+" function
+                       (:operator-flag t
+                        :arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5781 5796])
+                            ("b" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5797 5812]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [5764 5854])
+                    ("-" function
+                       (:operator-flag t
+                        :arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5921 5936])
+                            ("b" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [5937 5952]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [5904 5994])
+                    ("" function
+                       (:operator-flag t
+                        :function-pointer t
+                        :arguments 
+                          ( ("s" variable (:type "double") (reparse-symbol arg-sub-list) [6049 6058])
+                            ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6059 6074]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [6032 6112])
+                    ("==" function
+                       (:operator-flag t
+                        :arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6138 6153])
+                            ("b" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6154 6169]))                          
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [6121 6208])
+                    ("!=" function
+                       (:operator-flag t
+                        :arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6234 6249])
+                            ("b" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6250 6265]))                          
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [6217 6310])
+                    ("Dot" function
+                       (:arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6373 6388])
+                            ("b" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6389 6404]))                          
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [6362 6440])
+                    ("Cross" function
+                       (:arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6538 6553])
+                            ("b" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6554 6569]))                          
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [6525 6605])
+                    ("Cross" function
+                       (:arguments 
+                          ( ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6714 6729])
+                            ("s" variable (:type "double") (reparse-symbol arg-sub-list) [6730 6739]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [6702 6778])
+                    ("Cross" function
+                       (:arguments 
+                          ( ("s" variable (:type "double") (reparse-symbol arg-sub-list) [6887 6896])
+                            ("a" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [6897 6912]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [6875 6951])
+                    ("GetPoint" function
+                       (:pointer 1
+                        :parent "Triangle"
+                        :arguments 
+                          ( ("index" variable (:type "int") (reparse-symbol arg-sub-list) [6986 6996]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [6960 7025])
+                    ("GetNeighbor" function
+                       (:pointer 1
+                        :parent "Triangle"
+                        :arguments 
+                          ( ("index" variable (:type "int") (reparse-symbol arg-sub-list) [7066 7076]))                          
+                        :type ("Triangle" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [7034 7108])
+                    ("Contains" function
+                       (:parent "Triangle"
+                        :arguments 
+                          ( ("p" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [7141 7156]))                          
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [7117 7224])
+                    ("Contains" function
+                       (:parent "Triangle"
+                        :arguments 
+                          ( ("e" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Edge" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [7257 7271]))                          
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [7233 7316])
+                    ("Contains" function
+                       (:parent "Triangle"
+                        :arguments 
+                          ( ("p" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [7349 7364])
+                            ("q" variable
+                               (:pointer 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [7365 7380]))                          
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [7325 7421])
+                    ("IsInterior" function
+                       (:parent "Triangle"
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [7430 7481])
+                    ("IsInterior" function
+                       (:parent "Triangle"
+                        :arguments 
+                          ( ("b" variable (:type "bool") (reparse-symbol arg-sub-list) [7516 7523]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [7490 7544]))                  
+                :type "namespace")
+                nil [1750 7547]))          
+      :file "shapes.h"
+      :pointmax 7556
+      :fsize 7555
+      :lastmodtime '(21928 15349 0 0)
+      :unmatched-syntax '((symbol "__inline" 7483 . 7489) (symbol "__inline" 7423 . 7429) (symbol "__inline" 7318 . 7324) (symbol "__inline" 7226 . 7232) (symbol "__inline" 7110 . 7116) (symbol "__inline" 7027 . 7033) (symbol "__inline" 6953 . 6959) (symbol "__inline" 6868 . 6874) (symbol "__inline" 6695 . 6701) (symbol "__inline" 6518 . 6524) (symbol "__inline" 6355 . 6361) (symbol "__inline" 6210 . 6216) (symbol "__inline" 6114 . 6120) (symbol "__inline" 6025 . 6031) (symbol "__inline" 5897 . 5903) (symbol "__inline" 5757 . 5763) (symbol "__inline" 5484 . 5490) (symbol "__inline" 5211 . 5217) (symbol "__inline" 5185 . 5191))
+      :lexical-table 
+        '(("SHAPES_H")
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!poly2tri!common!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

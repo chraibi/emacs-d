@@ -1,0 +1,23 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("POLY2TRI_H" variable (:constant-flag t) nil [1650 1660])
+            ("common/shapes.h" include nil nil [1662 1688])
+            ("sweep/cdt.h" include nil nil [1689 1711]))          
+      :file "poly2tri.h"
+      :pointmax 1719
+      :fsize 1718
+      :lastmodtime '(21723 18038 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("POLY2TRI_H")
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!poly2tri!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

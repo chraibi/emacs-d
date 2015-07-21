@@ -1,0 +1,98 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'python-mode
+      :tags 
+        '( ("xml.dom" include nil nil [1 28])
+            ("logging" include nil nil [29 43])
+            ("numpy" include nil nil [44 62])
+            ("SUCCESS" variable nil nil [64 75])
+            ("FAILURE" code nil nil [76 88])
+            ("is_inside" function
+               (:documentation "
+    up --> . _____.
+           |      |
+  down --> . -----.
+           ^      ^
+          left   right
+    "
+                :arguments 
+                  ( ("trajectories" variable nil (reparse-symbol function_parameters) [105 117])
+                    ("left" variable nil (reparse-symbol function_parameters) [119 123])
+                    ("right" variable nil (reparse-symbol function_parameters) [125 130])
+                    ("down" variable nil (reparse-symbol function_parameters) [132 136])
+                    ("up" variable nil (reparse-symbol function_parameters) [138 140]))                  )
+                nil [91 476])
+            ("PassedLine" function
+               (:documentation "
+    check if pedestrian (given by matrix p) passed the line [x1, x2, y1, y2] with x1<x2 and  y1<y2
+    "
+                :arguments 
+                  ( ("p" variable nil (reparse-symbol function_parameters) [492 493])
+                    ("e" variable nil (reparse-symbol function_parameters) [495 496]))                  )
+                nil [477 1080])
+            ("PassedLineX" function
+               (:documentation "
+    check if pedestrian (given by matrix p) passed the vertical line x, [y1, y2] y1<y2
+    "
+                :arguments 
+                  ( ("p" variable nil (reparse-symbol function_parameters) [1098 1099])
+                    ("exit" variable nil (reparse-symbol function_parameters) [1101 1105]))                  )
+                nil [1082 1352])
+            ("PassedLineY" function
+               (:documentation "
+    check if pedestrian (given by matrix p) passed the horizontal line y, [x1, x2] x1<x2
+    "
+                :arguments 
+                  ( ("p" variable nil (reparse-symbol function_parameters) [1370 1371])
+                    ("exit" variable nil (reparse-symbol function_parameters) [1373 1377]))                  )
+                nil [1354 1626])
+            ("get_maxtime" function
+               (:documentation "
+    get max sim time
+    "
+                :arguments 
+                  ( ("filename" variable nil (reparse-symbol function_parameters) [1644 1652]))                  )
+                nil [1628 1993])
+            ("parse_file" function
+               (:documentation "
+    parse trajectories in Travisto-format and output results
+    in the following  format: id    frame    x    y
+    (no sorting of the data is performed)
+    returns:
+    fps: frames per second
+    N: number of pedestrians
+    data: trajectories (numpy.array) [id fr x y]
+    "
+                :arguments 
+                  ( ("filename" variable nil (reparse-symbol function_parameters) [2010 2018]))                  )
+                nil [1995 3338])
+            ("flow" function
+               (:documentation "
+    measure the flow at a vertical line given by <x0>
+    trajectories are given by <data> in the following format: id    frame    x    y
+    input:
+    - fps: frame per second
+    - N: number of peds
+    - data: trajectories
+    - x0: x-coordinate of the vertical measurement line
+    output:
+    - flow
+    "
+                :arguments 
+                  ( ("fps" variable nil (reparse-symbol function_parameters) [3349 3352])
+                    ("N" variable nil (reparse-symbol function_parameters) [3354 3355])
+                    ("data" variable nil (reparse-symbol function_parameters) [3357 3361])
+                    ("x0" variable nil (reparse-symbol function_parameters) [3363 3365]))                  )
+                nil [3340 4558]))          
+      :file "utils.py"
+      :pointmax 4562
+      :fsize 4561
+      :lastmodtime '(21932 12772 0 0)
+      :unmatched-syntax nil))
+  :file "!Users!chraibi!Workspace!jpscore!Utest!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

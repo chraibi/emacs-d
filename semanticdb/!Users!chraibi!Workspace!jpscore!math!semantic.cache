@@ -1,0 +1,853 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("../pedestrian/Pedestrian.h" include nil nil [1016 1053])
+            ("../routing/DirectionStrategy.h" include nil nil [1054 1095])
+            ("../mpi/LCGrid.h" include nil nil [1096 1122])
+            ("../geometry/Wall.h" include nil nil [1123 1152])
+            ("../geometry/SubRoom.h" include nil nil [1153 1185])
+            ("GompertzModel.h" include nil nil [1187 1213])
+            ("omp_get_thread_num" variable (:constant-flag t) nil [1261 1279])
+            ("omp_get_max_threads" variable (:constant-flag t) nil [1292 1311])
+            ("std::vector" using (:type ("std::vector" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1325 1343])
+            ("std::string" using (:type ("std::string" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1344 1362])
+            ("GompertzModel" function
+               (:constructor-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("dir" variable
+                       (:pointer 1
+                        :type ("DirectionStrategy" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1393 1416])
+                    ("nuped" variable (:type "double") (reparse-symbol arg-sub-list) [1417 1430])
+                    ("aped" variable (:type "double") (reparse-symbol arg-sub-list) [1431 1443])
+                    ("bped" variable (:type "double") (reparse-symbol arg-sub-list) [1444 1456])
+                    ("cped" variable (:type "double") (reparse-symbol arg-sub-list) [1457 1469])
+                    ("nuwall" variable (:type "double") (reparse-symbol arg-sub-list) [1499 1513])
+                    ("awall" variable (:type "double") (reparse-symbol arg-sub-list) [1514 1527])
+                    ("bwall" variable (:type "double") (reparse-symbol arg-sub-list) [1528 1541])
+                    ("cwall" variable (:type "double") (reparse-symbol arg-sub-list) [1542 1555]))                  
+                :type ("GompertzModel" type (:type "class") nil nil))
+                nil [1364 1811])
+            ("GompertzModel" function
+               (:destructor-flag t
+                :parent "GompertzModel"
+                :type "void")
+                nil [1814 1850])
+            ("Init" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1878 1897]))                  
+                :type "bool")
+                nil [1852 3162])
+            ("ComputeNextTimeStep" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("current" variable (:type "double") (reparse-symbol arg-sub-list) [3204 3219])
+                    ("deltaT" variable (:type "double") (reparse-symbol arg-sub-list) [3220 3234])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3235 3254]))                  
+                :type "void")
+                nil [3164 8588])
+            ("ForceDriv" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [8621 8637])
+                    ("room" variable
+                       (:pointer 1
+                        :type ("Room" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [8638 8649]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [8590 10212])
+            ("ForceRepPed" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("ped1" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [10247 10264])
+                    ("ped2" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [10265 10282]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [10214 14012])
+            ("ForceRepRoom" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14076 14092])
+                    ("subroom" variable
+                       (:pointer 1
+                        :type ("SubRoom" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14093 14110]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [14042 15538])
+            ("ForceRepWall" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15574 15590])
+                    ("w" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Line" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15591 15605])
+                    ("centroid" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15606 15628])
+                    ("inside" variable (:type "bool") (reparse-symbol arg-sub-list) [15629 15641]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [15540 19817])
+            ("GetDescription" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type ("string" type (:type "class") nil nil))
+                nil [19819 20304])
+            ("GetDirection" function
+               (:methodconst-flag t
+                :pointer 1
+                :parent "GompertzModel"
+                :type ("DirectionStrategy" type (:type "class") nil nil))
+                nil [20306 20388])
+            ("GetNuPed" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20390 20452])
+            ("GetaPed" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20454 20514])
+            ("GetbPed" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20516 20576])
+            ("GetcPed" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20578 20638])
+            ("GetNuWall" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20640 20704])
+            ("GetaWall" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20707 20769])
+            ("GetbWall" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20771 20833])
+            ("GetcWall" function
+               (:methodconst-flag t
+                :parent "GompertzModel"
+                :type "double")
+                nil [20835 20897]))          
+      :file "GompertzModel.cpp"
+      :pointmax 20899
+      :fsize 20899
+      :lastmodtime '(21933 27561 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("omp_get_max_threads" (spp-arg-list nil 1311 . 1313) . ((number "1" 1315 . 1316)))
+          ("omp_get_thread_num" (spp-arg-list nil 1279 . 1281) . ((number "0" 1282 . 1283)))
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("GOMPERTZMODEL_H_" variable (:constant-flag t) nil [1047 1063])
+            ("vector" include (:system-flag t) nil [1065 1082])
+            ("../geometry/Building.h" include nil nil [1084 1117])
+            ("OperationalModel.h" include nil nil [1118 1147])
+            ("Pedestrian" type
+               (:prototype t
+                :type "class")
+                nil [1172 1189])
+            ("DirectionStrategy" type
+               (:prototype t
+                :type "class")
+                nil [1190 1214])
+            ("GompertzModel" type
+               (:superclasses 
+                  ( ("OperationalModel" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("private" label nil (reparse-symbol classsubparts) [1265 1273])
+                    ("_direction" variable
+                       (:pointer 1
+                        :type ("DirectionStrategy" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1369 1399])
+                    ("_nuPed" variable (:type "double") (reparse-symbol classsubparts) [1431 1445])
+                    ("_aPed" variable (:type "double") (reparse-symbol classsubparts) [1451 1464])
+                    ("_bPed" variable (:type "double") (reparse-symbol classsubparts) [1470 1483])
+                    ("_cPed" variable (:type "double") (reparse-symbol classsubparts) [1489 1502])
+                    ("_nuWall" variable (:type "double") (reparse-symbol classsubparts) [1509 1524])
+                    ("_aWall" variable (:type "double") (reparse-symbol classsubparts) [1530 1544])
+                    ("_bWall" variable (:type "double") (reparse-symbol classsubparts) [1550 1564])
+                    ("_cWall" variable (:type "double") (reparse-symbol classsubparts) [1570 1584])
+                    ("ForceDriv" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1871 1887])
+                            ("room" variable
+                               (:pointer 1
+                                :type ("Room" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1888 1899]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1855 1906])
+                    ("ForceRepPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("ped1" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2223 2240])
+                            ("ped2" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2241 2258]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2205 2265])
+                    ("ForceRepRoom" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2607 2623])
+                            ("subroom" variable
+                               (:pointer 1
+                                :type ("SubRoom" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2624 2641]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2588 2648])
+                    ("ForceRepWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :arguments 
+                          ( ("ped" variable
+                               (:pointer 1
+                                :type ("Pedestrian" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2867 2883])
+                            ("l" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Line" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2884 2898])
+                            ("centroid" variable
+                               (:reference 1
+                                :constant-flag t
+                                :type ("Point" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2899 2921])
+                            ("inside" variable (:type "bool") (reparse-symbol arg-sub-list) [2922 2934]))                          
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2848 2941])
+                    ("public" label nil (reparse-symbol classsubparts) [2943 2950])
+                    ("GompertzModel" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("dir" variable
+                               (:pointer 1
+                                :type ("DirectionStrategy" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2971 2994])
+                            ("nuped" variable (:type "double") (reparse-symbol arg-sub-list) [2995 3008])
+                            ("aped" variable (:type "double") (reparse-symbol arg-sub-list) [3009 3021])
+                            ("bped" variable (:type "double") (reparse-symbol arg-sub-list) [3022 3034])
+                            ("cped" variable (:type "double") (reparse-symbol arg-sub-list) [3035 3047])
+                            ("nuwall" variable (:type "double") (reparse-symbol arg-sub-list) [3067 3081])
+                            ("awall" variable (:type "double") (reparse-symbol arg-sub-list) [3082 3095])
+                            ("bwall" variable (:type "double") (reparse-symbol arg-sub-list) [3096 3109])
+                            ("cwall" variable (:type "double") (reparse-symbol arg-sub-list) [3110 3123]))                          
+                        :type ("GompertzModel" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [2957 3124])
+                    ("GompertzModel" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [3153 3158]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [3130 3159])
+                    ("GetDirection" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :pointer 1
+                        :type ("DirectionStrategy" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [3166 3206])
+                    ("GetNuPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3336 3360])
+                    ("GetaPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3460 3483])
+                    ("GetbPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3583 3606])
+                    ("GetcPed" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3706 3729])
+                    ("GetNuWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3853 3878])
+                    ("GetaWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [3978 4002])
+                    ("GetbWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4102 4126])
+                    ("GetcWall" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :type "double")
+                        (reparse-symbol classsubparts) [4226 4250])
+                    ("GetDescription" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [4341 4384])
+                    ("Init" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4485 4504]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [4466 4511])
+                    ("ComputeNextTimeStep" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("current" variable (:type "double") (reparse-symbol arg-sub-list) [4814 4829])
+                            ("deltaT" variable (:type "double") (reparse-symbol arg-sub-list) [4830 4844])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [4845 4864]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [4781 4871]))                  
+                :type "class")
+                nil [1217 4874]))          
+      :file "GompertzModel.h"
+      :pointmax 4907
+      :fsize 4907
+      :lastmodtime '(21928 14979 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("GOMPERTZMODEL_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("GCFMModel.h" include nil nil [1033 1055])
+            ("../pedestrian/Pedestrian.h" include nil nil [1056 1093])
+            ("../routing/DirectionStrategy.h" include nil nil [1094 1135])
+            ("../mpi/LCGrid.h" include nil nil [1136 1162])
+            ("../geometry/SubRoom.h" include nil nil [1163 1195])
+            ("../geometry/Wall.h" include nil nil [1196 1225])
+            ("omp_get_thread_num" variable (:constant-flag t) nil [1273 1291])
+            ("omp_get_max_threads" variable (:constant-flag t) nil [1304 1323])
+            ("std::vector" using (:type ("std::vector" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1338 1356])
+            ("std::string" using (:type ("std::string" type
+                 (:prototype t
+                  :type "class")
+                  nil nil)) nil [1357 1375])
+            ("GCFMModel" function
+               (:constructor-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("dir" variable
+                       (:pointer 1
+                        :type ("DirectionStrategy" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1398 1421])
+                    ("nuped" variable (:type "double") (reparse-symbol arg-sub-list) [1422 1435])
+                    ("nuwall" variable (:type "double") (reparse-symbol arg-sub-list) [1436 1450])
+                    ("dist_effPed" variable (:type "double") (reparse-symbol arg-sub-list) [1451 1470])
+                    ("dist_effWall" variable (:type "double") (reparse-symbol arg-sub-list) [1492 1512])
+                    ("intp_widthped" variable (:type "double") (reparse-symbol arg-sub-list) [1513 1534])
+                    ("intp_widthwall" variable (:type "double") (reparse-symbol arg-sub-list) [1535 1557])
+                    ("maxfped" variable (:type "double") (reparse-symbol arg-sub-list) [1558 1573])
+                    ("maxfwall" variable (:type "double") (reparse-symbol arg-sub-list) [1595 1611]))                  
+                :type ("GCFMModel" type (:type "class") nil nil))
+                nil [1377 1883])
+            ("GCFMModel" function
+               (:destructor-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [1907 1912]))                  
+                :type "void")
+                nil [1885 1917])
+            ("Init" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1942 1961]))                  
+                :type "bool")
+                nil [1920 3085])
+            ("ComputeNextTimeStep" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("current" variable (:type "double") (reparse-symbol arg-sub-list) [3123 3138])
+                    ("deltaT" variable (:type "double") (reparse-symbol arg-sub-list) [3139 3153])
+                    ("building" variable
+                       (:pointer 1
+                        :type ("Building" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3154 3173]))                  
+                :type "void")
+                nil [3087 8413])
+            ("ForceDriv" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [8451 8467])
+                    ("room" variable
+                       (:pointer 1
+                        :type ("Room" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [8468 8479]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [8424 9009])
+            ("ForceRepPed" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("ped1" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [9040 9057])
+                    ("ped2" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [9058 9075]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [9011 14360])
+            ("ForceRepRoom" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14686 14702])
+                    ("subroom" variable
+                       (:pointer 1
+                        :type ("SubRoom" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14703 14720]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [14656 15905])
+            ("ForceRepWall" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15945 15961])
+                    ("w" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Line" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15962 15976]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [15915 16909])
+            ("ForceRepStatPoint" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("ped" variable
+                       (:pointer 1
+                        :type ("Pedestrian" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [17324 17340])
+                    ("p" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [17341 17356])
+                    ("l" variable (:type "double") (reparse-symbol arg-sub-list) [17357 17366])
+                    ("vn" variable (:type "double") (reparse-symbol arg-sub-list) [17367 17377]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [17289 18807])
+            ("ForceInterpolation" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :arguments 
+                  ( ("v0" variable (:type "double") (reparse-symbol arg-sub-list) [18845 18855])
+                    ("K_ij" variable (:type "double") (reparse-symbol arg-sub-list) [18856 18868])
+                    ("e" variable
+                       (:reference 1
+                        :constant-flag t
+                        :type ("Point" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [18869 18884])
+                    ("vn" variable (:type "double") (reparse-symbol arg-sub-list) [18885 18895])
+                    ("d" variable (:type "double") (reparse-symbol arg-sub-list) [18896 18905])
+                    ("r" variable (:type "double") (reparse-symbol arg-sub-list) [18906 18915])
+                    ("l" variable (:type "double") (reparse-symbol arg-sub-list) [18916 18925]))                  
+                :type ("Point" type (:type "class") nil nil))
+                nil [18809 20775])
+            ("GetDirection" function
+               (:methodconst-flag t
+                :pointer 1
+                :parent "GCFMModel"
+                :type ("DirectionStrategy" type (:type "class") nil nil))
+                nil [20803 20881])
+            ("GetNuPed" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [20883 20941])
+            ("GetNuWall" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [20943 21003])
+            ("GetIntpWidthPed" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [21005 21078])
+            ("GetIntpWidthWall" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [21080 21155])
+            ("GetMaxFPed" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [21157 21219])
+            ("GetMaxFWall" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [21221 21285])
+            ("GetDistEffMaxPed" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [21287 21361])
+            ("GetDistEffMaxWall" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type "double")
+                nil [21363 21439])
+            ("GetDescription" function
+               (:methodconst-flag t
+                :parent "GCFMModel"
+                :type ("string" type (:type "class") nil nil))
+                nil [21441 21986]))          
+      :file "GCFMModel.cpp"
+      :pointmax 21987
+      :fsize 22006
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("omp_get_max_threads" (spp-arg-list nil 1323 . 1325) . ((number "1" 1327 . 1328)))
+          ("omp_get_thread_num" (spp-arg-list nil 1291 . 1293) . ((number "0" 1294 . 1295)))
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :file "GCFMModel.h"
+      :fsize 4264
+      :lastmodtime '(21923 56748 0 0))
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("OPERATIONALMODEL_H_" variable (:constant-flag t) nil [1091 1110])
+            ("string" include (:system-flag t) nil [1112 1129])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [1131 1146])
+            ("OperationalModel" type
+               (:members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [1173 1180])
+                    ("OperationalModel" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :type ("OperationalModel" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1224 1243])
+                    ("OperationalModel" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1287 1315])
+                    ("Init" function
+                       (:pure-virtual-flag t
+                        :prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1583 1602]))                          
+                        :type "bool")
+                        (reparse-symbol classsubparts) [1564 1613])
+                    ("GetDescription" function
+                       (:pure-virtual-flag t
+                        :prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :type ("std::string" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1745 1792])
+                    ("ComputeNextTimeStep" function
+                       (:pure-virtual-flag t
+                        :prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("current" variable (:type "double") (reparse-symbol arg-sub-list) [2190 2205])
+                            ("deltaT" variable (:type "double") (reparse-symbol arg-sub-list) [2206 2220])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [2221 2240]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [2157 2252]))                  
+                :type "class")
+                nil [1148 2255]))          
+      :file "OperationalModel.h"
+      :pointmax 2290
+      :fsize 2290
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("OPERATIONALMODEL_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("MATHEMATICS_H_" variable (:constant-flag t) nil [1007 1021])
+            ("complex" include (:system-flag t) nil [1023 1041])
+            ("cmath" include (:system-flag t) nil [1042 1058])
+            ("almostEqual" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("a" variable (:type "double") (reparse-symbol arg-sub-list) [1079 1088])
+                    ("b" variable (:type "double") (reparse-symbol arg-sub-list) [1089 1098])
+                    ("eps" variable (:type "double") (reparse-symbol arg-sub-list) [1099 1110]))                  
+                :type "bool")
+                nil [1060 1111])
+            ("sign" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("x" variable (:type "double") (reparse-symbol arg-sub-list) [1125 1134]))                  
+                :type "double")
+                nil [1113 1135])
+            ("sigmoid" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("a" variable (:type "double") (reparse-symbol arg-sub-list) [1152 1161])
+                    ("b" variable (:type "double") (reparse-symbol arg-sub-list) [1162 1171])
+                    ("x" variable (:type "double") (reparse-symbol arg-sub-list) [1172 1181]))                  
+                :type "double")
+                nil [1137 1182])
+            ("hermite_interp" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("x" variable (:type "double") (reparse-symbol arg-sub-list) [1205 1214])
+                    ("x1" variable (:type "double") (reparse-symbol arg-sub-list) [1215 1225])
+                    ("x2" variable (:type "double") (reparse-symbol arg-sub-list) [1226 1236])
+                    ("y1" variable (:type "double") (reparse-symbol arg-sub-list) [1237 1247])
+                    ("y2" variable (:type "double") (reparse-symbol arg-sub-list) [1248 1258])
+                    ("dy1" variable (:type "double") (reparse-symbol arg-sub-list) [1281 1292])
+                    ("dy2" variable (:type "double") (reparse-symbol arg-sub-list) [1293 1304]))                  
+                :type "double")
+                nil [1183 1305])
+            ("c_cbrt" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("x" variable (:type ("std::complex" type
+                         (:template-specifier 
+                            ( ("double" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol arg-sub-list) [1335 1358]))                  
+                :type ("std::complex" type
+                     (:template-specifier 
+                        ( ("double" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [1307 1359]))          
+      :file "Mathematics.h"
+      :pointmax 1388
+      :fsize 1388
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("MATHEMATICS_H_")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c-mode
+      :tags 
+        '( ("_ODESOLVER_H" variable (:constant-flag t) nil [921 933])
+            ("ForceModel" type
+               (:prototype t
+                :type "class")
+                nil [959 976])
+            ("Building" type
+               (:prototype t
+                :type "class")
+                nil [977 992])
+            ("ODESolver" type
+               (:members 
+                  ( ("protected" label nil (reparse-symbol classsubparts) [1057 1067])
+                    ("model" variable
+                       (:pointer 1
+                        :type ("ForceModel" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1073 1091])
+                    ("public" label nil (reparse-symbol classsubparts) [1092 1099])
+                    ("ODESolver" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("model" variable
+                               (:pointer 1
+                                :type ("ForceModel" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1115 1133]))                          
+                        :type ("ODESolver" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1105 1134])
+                    ("ODESolver" function
+                       (:destructor-flag t
+                        :typemodifiers ("virtual")
+                        :type "void")
+                        (reparse-symbol classsubparts) [1140 1163])
+                    ("solveODE" function
+                       (:pure-virtual-flag t
+                        :prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("t" variable (:type "double") (reparse-symbol arg-sub-list) [1192 1201])
+                            ("tp" variable (:type "double") (reparse-symbol arg-sub-list) [1202 1212])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1213 1232]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1170 1243]))                  
+                :type "class")
+                nil [1039 1246])
+            ("EulerSolver" type
+               (:superclasses 
+                  ( ("ODESolver" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [1378 1385])
+                    ("EulerSolver" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("model" variable
+                               (:pointer 1
+                                :type ("ForceModel" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1403 1421]))                          
+                        :type ("EulerSolver" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1391 1422])
+                    ("solveODE" function
+                       (:prototype-flag t
+                        :methodconst-flag t
+                        :typemodifiers ("virtual")
+                        :arguments 
+                          ( ("t" variable (:type "double") (reparse-symbol arg-sub-list) [1450 1459])
+                            ("tp" variable (:type "double") (reparse-symbol arg-sub-list) [1460 1470])
+                            ("building" variable
+                               (:pointer 1
+                                :type ("Building" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1471 1490]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [1428 1497]))                  
+                :type "class")
+                nil [1339 1500]))          
+      :file "ODESolver.h"
+      :pointmax 1532
+      :fsize 1532
+      :lastmodtime '(21923 56748 0 0)
+      :unmatched-syntax '((punctuation 1163 . 1164))
+      :lexical-table 
+        '(("_ODESOLVER_H")
+          )
+))
+  :file "!Users!chraibi!Workspace!jpscore!math!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

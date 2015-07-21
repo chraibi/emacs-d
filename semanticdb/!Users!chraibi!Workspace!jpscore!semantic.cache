@@ -1,0 +1,36 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("geometry/Building.h" include nil nil [905 935])
+            ("general/ArgumentParser.h" include nil nil [936 971])
+            ("./Simulation.h" include nil nil [972 997])
+            ("pedestrian/AgentsSourcesManager.h" include nil nil [998 1042])
+            ("thread" include (:system-flag t) nil [1124 1141])
+            ("functional" include (:system-flag t) nil [1142 1163])
+            ("iomanip" include (:system-flag t) nil [1164 1182])
+            ("main" function
+               (:arguments 
+                  ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [1193 1202])
+                    ("argv" variable
+                       (:pointer 2
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [1203 1215]))                  
+                :type "int")
+                nil [1184 4226]))          
+      :file "main.cpp"
+      :pointmax 4227
+      :fsize 4227
+      :lastmodtime '(21925 38867 0 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "semanticdb-table"
+      :file "Simulation.h"
+      :fsize 4387
+      :lastmodtime '(21923 56748 0 0)))
+  :file "!Users!chraibi!Workspace!jpscore!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

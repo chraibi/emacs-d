@@ -1,0 +1,51 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode 'html-mode
+      :tags 
+        '( ("README" section nil nil [240 2103])
+            ("><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = \"code-highlighted\";
+     elem.className   = \"code-highlighted\";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->" section nil nil [2103 2723])
+            ("README" section (:members 
+              ( ("README" section (:members 
+                  ( ("Table of Contents" section (:members 
+                      ( ("1 Introduction" anchor nil nil [2910 2913])
+                        ("2 Install" anchor nil nil [2956 2959])
+                        ("3 Screenshot" anchor nil nil [2997 3000])
+                        ("4 Note" anchor nil nil [3041 3044])
+                        ("5 Troubleshooting" anchor nil nil [3079 3082]))                      ) nil [2840 3194])
+                    ("1" section nil nil [3194 3687])
+                    ("2" section nil nil [3687 5000])
+                    ("3" section nil nil [5000 5223])
+                    ("4" section nil nil [5223 5745])
+                    ("5" section (:members 
+                      ( ("Validate XHTML 1.0" anchor nil nil [7416 7419]))                      ) nil [5745 7515]))                  ) nil [2779 7515]))              ) nil [2723 7515]))          
+      :file "README.html"
+      :pointmax 7515
+      :fsize 7518
+      :lastmodtime '(21909 47025 0 0)
+      :unmatched-syntax nil))
+  :file "!Users!chraibi!.emacs.d!auto-complete-clang!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
