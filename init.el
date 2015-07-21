@@ -216,6 +216,7 @@
  ;; If there is more than one, they won't work right.
  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
 
+(set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
 
 ;; ;; this variable
 ;;(setq auto-indent-on-visit-file t) ;; If you want auto-indent on for files
@@ -255,7 +256,6 @@
 (require 'flymake-setup)
 (require 'setup-hlinum)
 (require 'setup-python)
-;; (autoload 'setup-python "setup-python" "load python")
 (require 'setup-cc)
 (require 'setup-ido)
 (message "setups loaded")
@@ -389,7 +389,7 @@
 (global-set-key "\C-cy" 'browse-kill-ring)
 
 
-
+   (global-linum-mode 1)
 
 (defun nolinum ()
   (global-linum-mode 0)
