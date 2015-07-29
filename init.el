@@ -204,7 +204,7 @@
  '(c-default-style (quote ((c-mode . "stroustrup") (c++-mode . "stroustrup"))))
  '(ecb-options-version "2.40")
  '(python-indent-guess-indent-offset nil)
- '(sml/battery-format " [%p] ")
+ '(sml/battery-format " [ %p ] ")
  '(sml/show-client t)
  )
 
@@ -230,10 +230,10 @@
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
 (require 'yasnippet)
 (require 'flycheck)
-(autoload 'flycheck "flycheck" "load flycheck" t)
-(autoload 'multiple-cursors "multiple-cursors" "load multiple-cursors" t)
-;; (require 'dired-x)
-;(require 'mode-mapping)			;
+;; (autoload 'flycheck "flycheck" "load flycheck" t)
+;(autoload 'multiple-cursors "multiple-cursors" "load multiple-cursors" t)
+(require 'flycheck)
+(require 'multiple-cursors)
 (require 'semantic/ia)
 (require 'xcscope)
 (require 'paren)
@@ -252,7 +252,8 @@
 (require 'setup-electric)		;
 (autoload 'setup-magit "setup-magit" "load magit")
 (require 'setup-org-mode)
-(autoload 'setup-helm "setup-helm" "load helm")
+;; (autoload 'setup-helm "setup-helm" "load helm")
+(require 'setup-helm)
 (require 'flymake-setup)
 (require 'setup-hlinum)
 (require 'setup-python)

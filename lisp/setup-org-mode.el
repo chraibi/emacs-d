@@ -390,11 +390,10 @@
      ;; (reftex-set-cite-format "** [[papers:%l][%l]]: %t \n"
      ;;                         )
          (reftex-set-cite-format
-          '((?c . "\\citet{%l}") ; natbib inline text
-            (?i . "\\citep{%l}") ; natbib with parens
+          '((?c . "\\cite{%l}") ; natbib inline text
+            (?i . "** [[papers:%l][%l]]: %t \n") ; natbib with parens
             )
           )
-     
          )
        )
   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)

@@ -1,3 +1,4 @@
+semanticdb/*
 auto-save-list
 backups
 *~
@@ -28,3 +29,6 @@ org-clock-save.el
 ac-comphist.dat
 org-clock-save.el
 recentf
+semanticdb/!*
+semantic
+sematic*
