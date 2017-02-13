@@ -2,9 +2,19 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "~/Dropbox/Orgfiles/org-files/journal.org")
- (front-context-string . "**** Review Mars")
- (rear-context-string . "5-07-21 Tuesday\n")
- (position . 21343))
+(("org-capture-last-stored-marker"
+ (filename . "~/Dropbox/Orgfiles/org-files/meeting.org")
+ (front-context-string . "* MEETING with 5")
+ (rear-context-string . " Too expansive.\n")
+ (position . 436))
+("org-refile-last-stored"
+ (filename . "~/Dropbox/Orgfiles/org-files/meeting.org")
+ (front-context-string . "* MEETING with 5")
+ (rear-context-string . " Too expansive.\n")
+ (position . 436))
+("org-capture-last-stored"
+ (filename . "~/Dropbox/Orgfiles/org-files/meeting.org")
+ (front-context-string . "* MEETING with A")
+ (rear-context-string . "1-12 Thu 10:44]\n")
+ (position . 6821))
 )

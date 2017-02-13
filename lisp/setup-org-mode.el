@@ -7,6 +7,30 @@
                                         ; todo ~/.emacs.d/plantuml.jar
 
                                         ;(require 'org-latex)
+(add-to-list 'org-modules 'org-mac-message)
+(setq org-mac-mail-account "Juelich")
+(defun my-mail-import ()
+  (let ((org-mac-mail-account "Juelich"))
+    (org-mac-message-insert-flagged "jsc.org" "Flagged mail")))
+
+
+(setq org-agenda-custom-commands 
+      '(
+        ("M" "Desk Work" tags-todo "MAIL" ;; (1) (2) (3) (4)
+         ((org-agenda-files '(" ~/Dropbox/Orgfiles/org-files/jsc.org")) ;; (5)
+          ((org-agenda-mode-hook           (my-mail-import)))
+          ;; (org-agenda-sorting-strategy '(priority-up effort-down))) ;; (5) cont.
+         ("~/computer.html")
+         ) ;; (6)
+        )
+        )
+      )
+
+
+
+
+;; (setcar (nthcdr 4 org-emphasis-regexp-components) 30)
+
 ;; (setq org-startup-with-beamer-mode t)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -25,6 +49,9 @@
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
 ; global Effort estimate values
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
+
+(eval-after-load 'org-bullets
+  '(setq org-bullets-bullet-list '("✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▲" "●" )))
 
 ; Use IDO for target completion
 (setq org-completion-use-ido t)
@@ -374,9 +401,9 @@
 ;;- ORG REFTEX
 (setq reftex-default-bibliography
       (quote
-       ("~/LitDB/ped.bib")))
+       ("~/sciebo/CST/30_Literature/LitDB/ped.bib")))
 (setq reftex-bibpath-environment-variables
-                '("~/LitDB/"))
+                '("~/sciebo/CST/30_Literature/LitDB/"))
 
 (defun org-mode-reftex-setup ()
   (setq TeX-master t)
@@ -407,7 +434,7 @@
   
 (setq org-link-abbrev-alist
       '(
-        ("papers" . "~/LitDB/pdf/%s.pdf")
+        ("papers" . "~/sciebo/CST/30_Literature/LitDB/pdf/%s.pdf")
         )
       ) 
  

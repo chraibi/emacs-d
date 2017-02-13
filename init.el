@@ -1,4 +1,3 @@
-
 ;;; Code:
 ;; Turn off mouse interface early in startup to avoid momentary display
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -6,6 +5,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 (require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
+
 
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -26,6 +26,7 @@
 ;; frame font
 ;; Setting English Font
 
+
 ;; ;;--------------------------  Backup
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq delete-old-versions t
@@ -33,6 +34,11 @@
       kept-old-versions 2
       version-control t)
 
+(require 'ansi-color)
+(defun my/ansi-colorize-buffer ()
+  (let ((buffer-read-only nil))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
 (find-file "~/Dropbox/Orgfiles/org-files/master.org")
 
@@ -56,17 +62,18 @@
 ;; ;;; Make all yes-or-no questions as y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(getenv "PATH")
-(setenv "PATH"
-        (concat
-         "/usr/texbin" ":"
-         "/usr/local/bin/" ":"
-         (getenv "PATH")))
+;; (getenv "PATH")
+;; (setenv "PATH"
+;;         (concat
+;;          "/usr/texbin" ":"
+;;          "/usr/local/bin/" ":"
+;;          (getenv "PATH")))
 
-(add-to-list 'exec-path "/usr/local/bin")
+
 
 (global-set-key (kbd "M-2") #'er/expand-region)
 
+(setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
 
 (setq py-install-directory "~/.emacs.d/lisp/pdee-master") 
 (add-to-list 'load-path py-install-directory)
@@ -85,6 +92,23 @@
   (add-to-list 'package-archives '("MELPA" . "http://melpa.milkbox.net/packages/"))
   (package-initialize)
   )
+
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+;; (getenv "PATH")
+;;  (setenv "PATH"
+;;          (concat
+;;           "/usr/texbin" ":"
+;;           (getenv "PATH")
+;;           )
+;;          )
+
+
+;; ;; (setenv "PATH" (concat (getenv "PATH") ":/path/to/gs/folder")) 
+
+;; (add-to-list 'exec-path "/usr/local/bin")
+
 
 ;; Setup packages
 ;(require 'setup-package)
@@ -117,6 +141,7 @@
 		     ;mode-mapping
 		     semantic
 		     ido
+                     ido-vertical-mode
                      magit
 		     xcscope
 		     cmake-project
@@ -143,6 +168,7 @@
 		     helm-projectile
 		     undo-tree
                      exec-path-from-shell
+                     gitlab
 		     )
       )	     
 
@@ -176,7 +202,9 @@
                                      ;; you will be asked before the abbreviations are saved
 
 (cond (( >= emacs-major-version 24)
-         (message "load zenburn")
+       ;; (message "load solarized-light") ;zenburn
+       (message "load zenburn") ;zenburn
+       ;; (load-theme 'solarized-light t)
        (load-theme 'zenburn t)
        (if (member "Monaco" (font-family-list))
            (set-face-attribute
@@ -187,7 +215,19 @@
        )
       );Version 24
 
+;(defun on-after-init ()
+;  (unless (display-graphic-p (selected-frame))
+;    (set-face-background 'default "unspecified-bg" (selected-frame))))
 
+;; (add-hook 'window-setup-hook 'on-after-init)
+
+(require 'helm-git-grep) ;; Not necessary if installed by package.el
+(global-set-key (kbd "C-c n") 'helm-git-grep)
+;; Invoke `helm-git-grep' from isearch.
+(define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)
+;; Invoke `helm-git-grep' from other helm.
+(eval-after-load 'helm
+  '(define-key helm-map (kbd "C-c n") 'helm-git-grep-from-helm))
 
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -234,7 +274,7 @@
 ;(autoload 'multiple-cursors "multiple-cursors" "load multiple-cursors" t)
 (require 'flycheck)
 (require 'multiple-cursors)
-(require 'semantic/ia)
+;; (require 'semantic/ia)
 (require 'xcscope)
 (require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
@@ -250,7 +290,11 @@
 ;----------------  load setups ----------------------------
 (message "load my setups")
 (require 'setup-electric)		;
+;(require 'setup-mu4e)		;
 (autoload 'setup-magit "setup-magit" "load magit")
+
+
+
 (require 'setup-org-mode)
 ;; (autoload 'setup-helm "setup-helm" "load helm")
 (require 'setup-helm)
@@ -259,10 +303,59 @@
 (require 'setup-python)
 (require 'setup-cc)
 (require 'setup-ido)
-(message "setups loaded")
-;; (cscope-setup)
-;;setup-electric
+(require 'org-inlinetask)
 
+;; overwrite selected text
+(delete-selection-mode t)
+
+(require 'git-gutter)
+
+;; If you enable global minor mode
+(global-git-gutter-mode t)
+(custom-set-variables
+ '(git-gutter:update-interval 2))
+(custom-set-variables
+ '(git-gutter:window-width 2)
+  '(git-gutter:modified-sign "☁")
+  '(git-gutter:added-sign "☀")
+  '(git-gutter:deleted-sign "☂"))
+ 
+(set-face-background 'git-gutter:modified "blue") ;; background color
+(set-face-foreground 'git-gutter:added "green")
+(set-face-foreground 'git-gutter:deleted "red")
+
+;; (require 'gitlab)
+;; (setq gitlab-host "https://cst.version.fz-juelich.de"
+;;         gitlab-username "chraibi"
+;;         )
+;; (require 'gitlab)
+;; (setq gitlab-host "https://cst.version.fz-juelich.de"
+;;       gitlab-username "chraibi"
+;;       gitlab-password "")
+
+;;(require 'thingatpt)
+;; When popping the mark, continue popping until the cursor
+;; actually moves
+(defadvice pop-to-mark-command (around ensure-new-position activate)
+  (let ((p (point)))
+    (dotimes (i 10)
+      (when (= p (point)) ad-do-it))))
+
+(setq set-mark-command-repeat-pop t)
+
+
+;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+
+
+;;store link to message if in header view, not to header query
+;(setq org-mu4e-link-query-in-headers-mode nil)
+
+(message "setups loaded")
+(cscope-setup)
+;;setup-electric
+(package-initialize)
+(elpy-enable)
 ;----------------------------
 (show-paren-mode t) ;; will highlight matching parentheses next to cursor.
 (autopair-global-mode) ;; to enable in all buffers
@@ -271,7 +364,7 @@
 
 (yas-global-mode 1)
 
-
+(setq dired-dwim-target t)
 
 ;; I hate tabs!
 (setq-default indent-tabs-mode nil)
@@ -290,11 +383,11 @@
     (next-line)))
 (global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
 
+;; MC
+;; (add-hook 'after-init-hook #'global-flycheck-mode) ;
 
-;(add-hook 'after-init-hook #'global-flycheck-mode) ;
-
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(modify-frame-parameters nil '((wait-for-wm . nil)))
+;; (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;; (modify-frame-parameters nil '((wait-for-wm . nil)))
 
 ;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
 (setq x-select-enable-clipboard t)
@@ -413,7 +506,10 @@
 (global-set-key [(M C i)] 'aj-toggle-fold)
 
 (setq ansi-color-for-comint-mode t)
-(setq  flyspell-make t)
+;; (setq  flyspell-make t)
+
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ;; ;; KEYBINDINGS
 (global-set-key "\C-cg" 'goto-line)
@@ -490,6 +586,39 @@
 (global-set-key (kbd "C-<f8>") 'flyspell-mode)
 (global-set-key (kbd "C-<f9>") 'reftex-mode)
 
+;;---------
+;; AucTeX
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+(setq TeX-PDF-mode t)
+(add-hook 'LaTeX-mode-hook
+          (lambda () (local-set-key (kbd "<S-s-mouse-1>") #'TeX-view))
+          )
+;; Use Skim as viewer, enable source <-> PDF sync
+;; make latexmk available via C-c C-c
+;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
+(add-hook 'LaTeX-mode-hook (lambda ()
+  (push
+    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
+      :help "Run latexmk on file")
+    TeX-command-list)))
+(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
+
+;; use Skim as default pdf viewer
+;; Skim's displayline is used for forward search (from .tex to .pdf)
+;; option -b highlights the current line; option -g opens Skim in the background  
+(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
+(setq TeX-view-program-list
+     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+;;---------
+
+
 ;;--------------------------------------- PAREN
 
 (setq-default truncate-lines t) ;; will trucate lines if they are too long.
@@ -498,6 +627,11 @@
 (setq show-paren-style 'parenthesis) ; highlight just brackets
                                         ;(setq show-paren-style 'expression) ; highlight entire bracket expression
 
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;(load-file "~/.emacs.d/lisp/xcscope.el")
 
@@ -684,6 +818,7 @@
 ;; https://github.com/magnars/multiple-cursors.el
 
 (global-set-key (kbd "C-c z") 'mc/edit-lines)
+(global-set-key (kbd "C-c i") 'mc/insert-numbers)
 (global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)

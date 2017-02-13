@@ -19,6 +19,27 @@
                   (call-interactively 'self-insert-command))))))
 
 
+;; -----------------------------------------
+(require 'ido-vertical-mode)
+(ido-mode 1)
+(ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+(setq ido-vertical-show-count t)
+
+(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
+
+(setq ido-use-faces t)
+(set-face-attribute 'ido-vertical-first-match-face nil
+                    :background nil
+                    :foreground "orange")
+(set-face-attribute 'ido-vertical-only-match-face nil
+                    :background nil
+                    :foreground nil)
+(set-face-attribute 'ido-vertical-match-face nil
+                    :foreground nil)
+(ido-vertical-mode 1)
+;;-----------------------------------
+
 (ido-mode t) ;; for buffers and files  t
 (setq ido-default-file-method 'selected-window)
 (setq ido-default-buffer-method 'selected-window)

@@ -1,7 +1,7 @@
 (require 'python)
 
-(package-initialize)
-(elpy-enable)
+;(package-initialize)
+;(elpy-enable)
 
 
 ;; (require 'ipython)
@@ -38,6 +38,20 @@
   (flycheck-mode)
   )
 (add-hook 'python-mode-hook #'flycheck-python-setup)
+
+;; Remove trailing whitespace manually by typing C-t C-w.
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-t C-w")
+                           'delete-trailing-whitespace)))
+
+;; Automatically remove trailing whitespace when file is saved.
+(add-hook 'python-mode-hook
+          (lambda()
+        ((and )dd-hook 'local-write-file-hooks
+         '(lambda()
+            (save-excursion
+              (delete-trailing-whitespace))))))
 
 
 (setq py-python-command-args '( "--colors=Linux"))

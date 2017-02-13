@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: figure2
+# key: figure
+# --
+#+begin_center
+\includegraphics[${1:scale=0.4}]{${2}}
+#+end_center
+
+

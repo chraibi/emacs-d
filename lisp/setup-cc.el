@@ -79,7 +79,7 @@
 (my-ac-config)
 
 (setq ac-auto-start nil)
-(setq ac-quick-help-delay 0.1)
+(setq ac-quick-help-delay 0.5)
 
 
 ;; auto-completion with company
