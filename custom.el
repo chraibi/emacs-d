@@ -32,8 +32,9 @@
  '(org-time-stamp-custom-formats (quote ("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>")))
  '(package-selected-packages
    (quote
-    (ztree org-mac-link git-commit-insert-issue smart-mode-line-powerline-theme powerline-evil powerline exec-path-from-shell undo-tree helm-projectile projectile async flycheck elpy ipython python-mode flymake-cursor autopair irony company auto-complete-clang auto-complete-clang-async auto-complete cpputils-cmake cmake-project zenburn-theme yasnippet xcscope sx sml-modeline org-journal org-fstree nav multiple-cursors magit hlinum highlight-indentation fill-column-indicator expand-region dired+ color-theme browse-kill-ring auctex-latexmk ag)))
+    (better-defaults cmake-ide rtags popup stickyfunc-enhance flycheck-irony ztree org-mac-link git-commit-insert-issue smart-mode-line-powerline-theme powerline-evil powerline exec-path-from-shell undo-tree helm-projectile projectile async flycheck elpy ipython python-mode flymake-cursor autopair irony company auto-complete-clang auto-complete-clang-async auto-complete cpputils-cmake cmake-project zenburn-theme yasnippet xcscope sx sml-modeline org-journal org-fstree nav multiple-cursors magit hlinum highlight-indentation fill-column-indicator expand-region dired+ color-theme browse-kill-ring auctex-latexmk ag)))
  '(python-indent-guess-indent-offset nil)
+ '(safe-local-variable-values (quote ((cmake-ide-build-dir . "build"))))
  '(sml/battery-format " [ %p ] ")
  '(sml/show-client t))
 (custom-set-faces

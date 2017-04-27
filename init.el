@@ -3,8 +3,10 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs")
 (require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
+
 
 
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -40,7 +42,7 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
-(find-file "~/Dropbox/Orgfiles/org-files/master.org")
+;; (find-file "~/Dropbox/Orgfiles/org-files/master.org") ;
 
 (setq user-full-name "M. Chraibi")
 (setq user-mail-address "m.chraibi@gmail.com")
@@ -151,7 +153,7 @@
 		     auto-complete-clang-async
 		     auto-complete-clang
 		     company	;
-                     irony ; needed by company-irony
+                     ;; irony ; needed by company-irony
 		     autopair ;; to enable in all buffers
 		     flymake-cursor
 		     python
@@ -168,7 +170,7 @@
 		     helm-projectile
 		     undo-tree
                      exec-path-from-shell
-                     gitlab
+                     ;; gitlab
 		     )
       )	     
 
@@ -269,10 +271,12 @@
 (require 'cl)
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
 (require 'yasnippet)
-(require 'flycheck)
+;;(require 'flycheck)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/snippets")
+
 ;; (autoload 'flycheck "flycheck" "load flycheck" t)
 ;(autoload 'multiple-cursors "multiple-cursors" "load multiple-cursors" t)
-(require 'flycheck)
 (require 'multiple-cursors)
 ;; (require 'semantic/ia)
 (require 'xcscope)
@@ -280,11 +284,11 @@
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
 ;; (require 'ob-plantuml)
-(require 'linum)
+;;(require 'linum)
 (require 'server)
 (require 'nav)
 (require 'recentf)
-(require 'flymake-cursor)
+;;(require 'flymake-cursor)
 ;; uniquify: unique buffer names
 ;(require 'uniquify) ;; make buffer names more unique
 ;----------------  load setups ----------------------------
@@ -298,8 +302,8 @@
 (require 'setup-org-mode)
 ;; (autoload 'setup-helm "setup-helm" "load helm")
 (require 'setup-helm)
-(require 'flymake-setup)
-(require 'setup-hlinum)
+;;(require 'flymake-setup)
+;;(require 'setup-hlinum)
 (require 'setup-python)
 (require 'setup-cc)
 (require 'setup-ido)
@@ -308,30 +312,22 @@
 ;; overwrite selected text
 (delete-selection-mode t)
 
-(require 'git-gutter)
+;;(require 'git-gutter)
 
 ;; If you enable global minor mode
-(global-git-gutter-mode t)
-(custom-set-variables
- '(git-gutter:update-interval 2))
-(custom-set-variables
- '(git-gutter:window-width 2)
-  '(git-gutter:modified-sign "☁")
-  '(git-gutter:added-sign "☀")
-  '(git-gutter:deleted-sign "☂"))
+;; (global-git-gutter-mode t)
+;; (custom-set-variables
+;;  '(git-gutter:update-interval 2))
+;; (custom-set-variables
+;;  '(git-gutter:window-width 2)
+;;   '(git-gutter:modified-sign "☁")
+;;   '(git-gutter:added-sign "☀")
+;;   '(git-gutter:deleted-sign "☂"))
  
-(set-face-background 'git-gutter:modified "blue") ;; background color
-(set-face-foreground 'git-gutter:added "green")
-(set-face-foreground 'git-gutter:deleted "red")
+;; (set-face-background 'git-gutter:modified "blue") ;; background color
+;; (set-face-foreground 'git-gutter:added "green")
+;; (set-face-foreground 'git-gutter:deleted "red")
 
-;; (require 'gitlab)
-;; (setq gitlab-host "https://cst.version.fz-juelich.de"
-;;         gitlab-username "chraibi"
-;;         )
-;; (require 'gitlab)
-;; (setq gitlab-host "https://cst.version.fz-juelich.de"
-;;       gitlab-username "chraibi"
-;;       gitlab-password "")
 
 ;;(require 'thingatpt)
 ;; When popping the mark, continue popping until the cursor
@@ -508,8 +504,10 @@
 (setq ansi-color-for-comint-mode t)
 ;; (setq  flyspell-make t)
 
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+;(setq flyspell-mode 0)
+
+;(add-hook 'text-mode-hook 'flyspell-mode) ;
+;(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ;; ;; KEYBINDINGS
 (global-set-key "\C-cg" 'goto-line)
@@ -592,7 +590,7 @@
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+;(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
@@ -735,6 +733,21 @@
 
 (global-set-key (kbd "M-.") 'find-tag)
 (global-set-key (kbd "M-*") 'pop-tag-mark)
+
+
+;; (add-hook 'c++-mode-hook 'irony-mode)
+;; (add-hook 'c-mode-hook 'irony-mode)
+;; (add-hook 'objc-mode-hook 'irony-mode)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+;; (defun my-irony-mode-hook ()
+;;   (define-key irony-mode-map [remap completion-at-point]
+;;     'irony-completion-at-point-async)
+;;   (define-key irony-mode-map [remap complete-symbol]
+;;     'irony-completion-at-point-async))
+;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;;------------ irony
 ;; (add-hook 'c++-mode-hook 'irony-mode)
