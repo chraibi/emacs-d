@@ -21,14 +21,16 @@
 (setq custom-safe-themes t)
 ;; use smart line
 (setq sml/no-confirm-load-theme t)
-(add-hook 'after-init-hook 'display-time)  
+(add-hook 'after-init-hook 'display-time)
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
 ;; Setting English Font
 
-
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
+  
 ;; ;;--------------------------  Backup
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq delete-old-versions t
@@ -77,12 +79,12 @@
 
 (setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
 
-(setq py-install-directory "~/.emacs.d/lisp/pdee-master") 
+(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
 (add-to-list 'load-path py-install-directory)
 (setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
 
 ;; (transient-mark-mode 1)
-;; (global-visual-line-mode 1) ; 1 for on, 0 for off.
+ (global-visual-line-mode 1) ; 1 for on, 0 for off.
 
                                         ; ELPA package support
 (when (>= emacs-major-version 24)
@@ -107,7 +109,7 @@
 ;;          )
 
 
-;; ;; (setenv "PATH" (concat (getenv "PATH") ":/path/to/gs/folder")) 
+;; ;; (setenv "PATH" (concat (getenv "PATH") ":/path/to/gs/folder"))
 
 ;; (add-to-list 'exec-path "/usr/local/bin")
 
@@ -118,7 +120,7 @@
 (setq package-list '(
  ;            dash
 		     cl
-		     sml-modeline 
+		     sml-modeline
 		     zenburn-theme
 		     highlight-indentation
                      ag
@@ -172,7 +174,7 @@
                      exec-path-from-shell
                      ;; gitlab
 		     )
-      )	     
+      )
 
 
 
@@ -180,7 +182,7 @@
 
 (setq package-enable-at-startup nil) (package-initialize)
 (message "packages initialized")
-; fetch the list of packages available 
+; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
 (message "fetch packages")
@@ -213,7 +215,7 @@
             'default nil :font "Monaco 18")
          (message "set Monaco")
          )
-       
+
        )
       );Version 24
 
@@ -284,13 +286,16 @@
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
 ;; (require 'ob-plantuml)
-;;(require 'linum)
+(require 'linum)
 (require 'server)
 (require 'nav)
 (require 'recentf)
 ;;(require 'flymake-cursor)
 ;; uniquify: unique buffer names
-;(require 'uniquify) ;; make buffer names more unique
+                                        ;(require 'uniquify) ;; make buffer names more unique
+
+(require 'org-alert)
+(setq alert-default-style 'libnotify)
 ;----------------  load setups ----------------------------
 (message "load my setups")
 (require 'setup-electric)		;
@@ -303,7 +308,7 @@
 ;; (autoload 'setup-helm "setup-helm" "load helm")
 (require 'setup-helm)
 ;;(require 'flymake-setup)
-;;(require 'setup-hlinum)
+(require 'setup-hlinum)
 (require 'setup-python)
 (require 'setup-cc)
 (require 'setup-ido)
@@ -323,7 +328,7 @@
 ;;   '(git-gutter:modified-sign "☁")
 ;;   '(git-gutter:added-sign "☀")
 ;;   '(git-gutter:deleted-sign "☂"))
- 
+
 ;; (set-face-background 'git-gutter:modified "blue") ;; background color
 ;; (set-face-foreground 'git-gutter:added "green")
 ;; (set-face-foreground 'git-gutter:deleted "red")
@@ -351,7 +356,6 @@
 (cscope-setup)
 ;;setup-electric
 (package-initialize)
-(elpy-enable)
 ;----------------------------
 (show-paren-mode t) ;; will highlight matching parentheses next to cursor.
 (autopair-global-mode) ;; to enable in all buffers
@@ -360,13 +364,13 @@
 
 (yas-global-mode 1)
 
-(setq dired-dwim-target t)
 
 ;; I hate tabs!
 (setq-default indent-tabs-mode nil)
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
 
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
@@ -377,7 +381,21 @@
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)
     (next-line)))
-(global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
+
+(global-set-key "\C-c\C-c" 'comment-region)
+
+(defun comment-region-lines (beg end &optional arg)
+  "Like `comment-region', but comment/uncomment whole lines."
+  (interactive "*r\nP")
+  (if (> beg end) (let (mid) (setq mid beg beg end end mid)))
+  (let ((bol  (save-excursion (goto-char beg) (line-beginning-position)))
+        (eol  (save-excursion (goto-char end) (line-end-position))))
+    (comment-region bol end arg)))
+
+ (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
+
+;; (global-set-key (kbd "M-;") 'comment-region-lines)
+
 
 ;; MC
 ;; (add-hook 'after-init-hook #'global-flycheck-mode) ;
@@ -584,6 +602,55 @@
 (global-set-key (kbd "C-<f8>") 'flyspell-mode)
 (global-set-key (kbd "C-<f9>") 'reftex-mode)
 
+
+
+;;---------------------- ispell
+(define-key ctl-x-map "\C-i"
+  #'endless/ispell-word-then-abbrev)
+
+(defun endless/simple-get-word ()
+  (car-safe (save-excursion (ispell-get-word nil))))
+
+(defun endless/ispell-word-then-abbrev (p)
+  "Call `ispell-word', then create an abbrev for it.
+With prefix P, create local abbrev. Otherwise it will
+be global.
+If there's nothing wrong with the word at point, keep
+looking for a typo until the beginning of buffer. You can
+skip typos you don't want to fix with `SPC', and you can
+abort completely with `C-g'."
+  (interactive "P")
+  (let (bef aft)
+    (save-excursion
+      (while (if (setq bef (endless/simple-get-word))
+                 ;; Word was corrected or used quit.
+                 (if (ispell-word nil 'quiet)
+                     nil ; End the loop.
+                   ;; Also end if we reach `bob'.
+                   (not (bobp)))
+               ;; If there's no word at point, keep looking
+               ;; until `bob'.
+               (not (bobp)))
+        (backward-word)
+        (backward-char))
+      (setq aft (endless/simple-get-word)))
+    (if (and aft bef (not (equal aft bef)))
+        (let ((aft (downcase aft))
+              (bef (downcase bef)))
+          (define-abbrev
+            (if p local-abbrev-table global-abbrev-table)
+            bef aft)
+          (message "\"%s\" now expands to \"%s\" %sally"
+                   bef aft (if p "loc" "glob")))
+      (user-error "No typo at or before point"))))
+
+(setq save-abbrevs 'silently)
+(setq-default abbrev-mode t)
+
+;;-----------------------
+
+
+
 ;;---------
 ;; AucTeX
 (setq TeX-auto-save t)
@@ -610,7 +677,7 @@
 
 ;; use Skim as default pdf viewer
 ;; Skim's displayline is used for forward search (from .tex to .pdf)
-;; option -b highlights the current line; option -g opens Skim in the background  
+;; option -b highlights the current line; option -g opens Skim in the background
 (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
 (setq TeX-view-program-list
      '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
@@ -620,8 +687,8 @@
 ;;--------------------------------------- PAREN
 
 (setq-default truncate-lines t) ;; will trucate lines if they are too long.
-(transient-mark-mode t) ;; will highlight region between point and mark. 
-;; (setq-default global-visual-line-mode t)
+(transient-mark-mode t) ;; will highlight region between point and mark.
+(setq-default global-visual-line-mode t)
 (setq show-paren-style 'parenthesis) ; highlight just brackets
                                         ;(setq show-paren-style 'expression) ; highlight entire bracket expression
 
@@ -652,87 +719,93 @@
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
 
+;;--------------------- highlight line
+;; https://stackoverflow.com/questions/2718189/emacshighlight-the-current-line-by-underline-it
+(global-hl-line-mode 1)
+(set-face-background 'highlight "#222")
+(set-face-foreground 'highlight nil)
+(set-face-underline-p 'highlight t)
 
 ;; ------------------------------ TAGS
 
-(setq tags-revert-without-query t)                                                                                                                                                                                                          
-(global-set-key (kbd "<f7>") 'ctags-create-or-update-tags-table)
+;; (setq tags-revert-without-query t)
+;; (global-set-key (kbd "<f7>") 'ctags-create-or-update-tags-table)
 
 
-(defun my-semantic-hook ()
-  (imenu-add-to-menubar "TAGS"))
+;; (defun my-semantic-hook ()
+;;   (imenu-add-to-menubar "TAGS"))
 
 
 ;; ;;----------------------------- Ctags   How to use ctags in Emacs effectively blog.binchen.org
-(defun my-project-name-contains-substring (REGEX)
-  (let ((dir (if (buffer-file-name)
-                 (file-name-directory (buffer-file-name))
-               "")))
-    (string-match-p REGEX dir)))
+;; (defun my-project-name-contains-substring (REGEX)
+;;   (let ((dir (if (buffer-file-name)
+;;                  (file-name-directory (buffer-file-name))
+;;                "")))
+;;     (string-match-p REGEX dir)))
 
-(defun my-create-tags-if-needed (SRC-DIR &optional FORCE)
-  "return the full path of tags file"
-  (let ((dir (file-name-as-directory (file-truename SRC-DIR)) )
-        file)
-    (setq file (concat dir "TAGS"))
-    (when (or FORCE (not (file-exists-p file)))
-      (message "Creating TAGS in %s ..." dir)
-      (shell-command
-       (format "ctags-exuberant --extra=+fq --exclude=_flymake --exclude=db --exclude=test --exclude=doc --exclude=log --exclude=Utest --exclude=.git --exclude=public -f %s -e -R %s" file dir))
-      )
-    file
-    ))
+;; (defun my-create-tags-if-needed (SRC-DIR &optional FORCE)
+;;   "return the full path of tags file"
+;;   (let ((dir (file-name-as-directory (file-truename SRC-DIR)) )
+;;         file)
+;;     (setq file (concat dir "TAGS"))
+;;     (when (or FORCE (not (file-exists-p file)))
+;;       (message "Creating TAGS in %s ..." dir)
+;;       (shell-command
+;;        (format "ctags-exuberant --extra=+fq --exclude=_flymake --exclude=db --exclude=test --exclude=doc --exclude=log --exclude=Utest --exclude=.git --exclude=public -f %s -e -R %s" file dir))
+;;       )
+;;     file
+;;     ))
 
-(defvar my-tags-updated-time nil)
+;; (defvar my-tags-updated-time nil)
 
-(defun my-update-tags ()
-  (interactive)
-  "check the tags in tags-table-list and re-create it"
-  (dolist (tag tags-table-list)
-    (my-create-tags-if-needed (file-name-directory tag) t)
-    ))
+;; (defun my-update-tags ()
+;;   (interactive)
+;;   "check the tags in tags-table-list and re-create it"
+;;   (dolist (tag tags-table-list)
+;;     (my-create-tags-if-needed (file-name-directory tag) t)
+;;     ))
 
-(defun my-auto-update-tags-when-save ()
-  (interactive)
-  (cond
-   ((not my-tags-updated-time)
-    (setq my-tags-updated-time (current-time)))
-   ((< (- (float-time (current-time)) (float-time my-tags-updated-time)) 300)
-    ;; < 300 seconds
-    ;; do nothing
-    )
-   (t
-    (setq my-tags-updated-time (current-time))
-    (my-update-tags)
-    (message "updated tags after %d seconds." (- (float-time (current-time))  (float-time my-tags-updated-time)))
-    )
-   ))
+;; (defun my-auto-update-tags-when-save ()
+;;   (interactive)
+;;   (cond
+;;    ((not my-tags-updated-time)
+;;     (setq my-tags-updated-time (current-time)))
+;;    ((< (- (float-time (current-time)) (float-time my-tags-updated-time)) 300)
+;;     ;; < 300 seconds
+;;     ;; do nothing
+;;     )
+;;    (t
+;;     (setq my-tags-updated-time (current-time))
+;;     (my-update-tags)
+;;     (message "updated tags after %d seconds." (- (float-time (current-time))  (float-time my-tags-updated-time)))
+;;     )
+;;    ))
 
 
-(defun my-setup-develop-environment ()
-  (when (my-project-name-contains-substring "chraibi")
-    (cond
-     ((my-project-name-contains-substring "Workspace/")
-      ;; C++ project don't need html tags
-      (setq tags-table-list (list
-                             (my-create-tags-if-needed "~/Workspace/jpscore")
-                             
-                             (my-create-tags-if-needed "~/Workspace/jpsvis")
-                             );list
-            );setq
-      )
-     ) ;cond
-    ) ;when
-  ) ;fun
+;; (defun my-setup-develop-environment ()
+;;   (when (my-project-name-contains-substring "chraibi")
+;;     (cond
+;;      ((my-project-name-contains-substring "Workspace/")
+;;       ;; C++ project don't need html tags
+;;       (setq tags-table-list (list
+;;                              (my-create-tags-if-needed "~/Workspace/jpscore")
 
-(add-hook 'after-save-hook 'my-auto-update-tags-when-save)
-;; (add-hook 'js2-mode-hook 'my-setup-develop-environment)
-;; (add-hook 'web-mode-hook 'my-setup-develop-environment)
-(add-hook 'c++-mode-hook 'my-setup-develop-environment)
-(add-hook 'c-mode-hook 'my-setup-develop-environment)
+;;                              (my-create-tags-if-needed "~/Workspace/jpsvis")
+;;                              );list
+;;             );setq
+;;       )
+;;      ) ;cond
+;;     ) ;when
+;;   ) ;fun
 
-(global-set-key (kbd "M-.") 'find-tag)
-(global-set-key (kbd "M-*") 'pop-tag-mark)
+;; (add-hook 'after-save-hook 'my-auto-update-tags-when-save)
+;; ;; (add-hook 'js2-mode-hook 'my-setup-develop-environment)
+;; ;; (add-hook 'web-mode-hook 'my-setup-develop-environment)
+;; (add-hook 'c++-mode-hook 'my-setup-develop-environment)
+;; (add-hook 'c-mode-hook 'my-setup-develop-environment)
+
+;; (global-set-key (kbd "M-.") 'find-tag)
+;; (global-set-key (kbd "M-*") 'pop-tag-mark)
 
 
 ;; (add-hook 'c++-mode-hook 'irony-mode)
@@ -770,8 +843,48 @@
 
 
 ;; ;; dired
+(setq dired-dwim-target t)
+(require 'dired-details)
+(setq-default dired-details-hidden-string "--- ")
+(dired-details-install)
+;; Move files between split panes
+(setq dired-dwim-target t)
+
+;; (use-package dired-quick-sort
+;;   :ensure t
+;;   :config
+;;   (dired-quick-sort-setup))
+
+
+;; (require 'dired-quick-sort)
+;; (dired-quick-sort-setup)
+
+
+;; using ls-lisp with these settings gives case-insensitve
+;; sorting on OS X
+;; using ls-lisp with these settings gives case-insensitve
+;; sorting on OS X
+(require 'ls-lisp)
+(setq dired-listing-switches "-alhG")
+(setq ls-lisp-use-insert-directory-program nil)
+(setq ls-lisp-ignore-case t)
+(setq ls-lisp-use-string-collate nil)
+;; customise the appearance of the listing
+(setq ls-lisp-verbosity '(links uid))
+(setq ls-lisp-format-time-list '("%b %e %H:%M" "%b %e  %Y"))
+(setq ls-lisp-use-localized-time-format t)
+
+;; (require 'ls-lisp)
+;; (setq dired-listing-switches "-alhG")
+;; (setq ls-lisp-use-insert-directory-program nil)
+;; (setq ls-lisp-ignore-case t)
+;; (setq ls-lisp-use-string-collate nil)
+;; ;; customise the appearance of the listing
+;; (setq ls-lisp-verbosity '(links uid))
+;; (setq ls-lisp-format-time-list '("%b %e %H:%M" "%b %e  %Y"))
+;; (setq ls-lisp-use-localized-time-format t)
+
 ;; (setq dired-listing-switches "-Al --si --time-style long-iso")
-;; (setq dired-dwim-target t)
 
 
 
@@ -816,7 +929,7 @@
 ;;     (setq doIt (if (<= (length myFileList) 5)
 ;;                    t
 ;;                  (y-or-n-p "Open more than 5 files? ") ) )
-    
+
 ;;     (when doIt
 ;;       (cond
 ;;        ((string-equal system-type "windows-nt")
