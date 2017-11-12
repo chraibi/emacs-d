@@ -1,14 +1,14 @@
-(require 'cmake-project)
-(require 'cpputils-cmake)
+;(require 'cmake-project)
+;(require 'cpputils-cmake)
 (require 'rtags)
 ;; https://github.com/Andersbakken/rtags
-(cmake-ide-setup)
+;(cmake-ide-setup)
 
 
 
 (require 'popup)
 (require 'rtags-ac)
-(rtags-start-process-unless-running)
+;(rtags-start-process-unless-running)
 
  (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
  (add-hook 'c++-mode-common-hook 'rtags-start-process-unless-running)
@@ -22,6 +22,40 @@
 ;(rtags-location-stack-forward)
 ;(rtags-symbol-type)
 (rtags-print-dependencies)
+
+
+(eval-after-load 'cc-mode
+  '(progn
+     (require 'rtags)
+     (mapc (lambda (x)
+             (define-key c-mode-base-map
+               (kbd (concat "C-c r " (car x))) (cdr x)))
+           '(("." . rtags-find-symbol-at-point)
+             ("," . rtags-find-references-at-point)
+             ("v" . rtags-find-virtuals-at-point)
+             ("V" . rtags-print-enum-value-at-point)
+             ("/" . rtags-find-all-references-at-point)
+             ("Y" . rtags-cycle-overlays-on-screen)
+             (">" . rtags-find-symbol)
+             ("<" . rtags-find-references)
+             ("-" . rtags-location-stack-back)
+             ("+" . rtags-location-stack-forward)
+             ("D" . rtags-diagnostics)
+             ("G" . rtags-guess-function-at-point)
+             ("p" . rtags-set-current-project)
+             ("P" . rtags-print-dependencies)
+             ("e" . rtags-reparse-file)
+             ("E" . rtags-preprocess-file)
+             ("R" . rtags-rename-symbol)
+             ("M" . rtags-symbol-info)
+             ("S" . rtags-display-summary)
+             ("O" . rtags-goto-offset)
+             (";" . rtags-find-file)
+             ("F" . rtags-fixit)
+             ("X" . rtags-fix-fixit-at-point)
+             ("B" . rtags-show-rtags-buffer)
+             ("I" . rtags-imenu)
+             ("T" . rtags-taglist)))))
 
 
 ;; (setq rtags-autostart-diagnostics t)
@@ -107,7 +141,7 @@
 
 ;-------------------------------
 
-(c-add-style "my-style" 
+(c-add-style "my-style"
              '("stroustrup"
                (indent-tabs-mode . nil)        ; use spaces rather than tabs
                (c-basic-offset . 5)            ; indent by four spaces
@@ -117,7 +151,7 @@
 
 (defun my-c++-mode-hook ()
   (c-set-style "my-style")        ; use my-style defined above
-  (auto-fill-mode)         
+  (auto-fill-mode)
   (c-toggle-auto-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
@@ -180,9 +214,9 @@
   (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 
 
-(defun my-javadoc-return () 
-  "Advanced C-m for Javadoc multiline comments.   
-Inserts `*' at the beggining of the new line if 
+(defun my-javadoc-return ()
+  "Advanced C-m for Javadoc multiline comments.
+Inserts `*' at the beggining of the new line if
 unless return was pressed outside the comment"
   (interactive)
   (setq last (point))
@@ -204,12 +238,12 @@ unless return was pressed outside the comment"
   (goto-char last)
   ;; the point is inside some comment, insert `*'
   (if is-inside
-      (progn 
+      (progn
 	(insert "\n*")
 	(indent-for-tab-command))
     ;; else insert only new-line
     (insert "\n")))
-(add-hook 'c++-mode-hook (lambda () 
+(add-hook 'c++-mode-hook (lambda ()
   (local-set-key "\r" 'my-javadoc-return)))
 
 ;; probleme mit python

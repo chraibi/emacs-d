@@ -251,7 +251,12 @@
  '(sml/battery-format " [ %p ] ")
  '(sml/show-client t)
  )
-
+;; hide modes
+;(diminish 'projectile-mode)
+;(diminish 'undo-tree-mode)
+(diminish 'abbrev-mode)
+;(diminish 'auto-fill-function-mode)
+;(diminish 'pair-mode)
 ;; (add-hook 'after-init-hook 'sml/setup) ;todo
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
