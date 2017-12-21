@@ -224,10 +224,22 @@
 (autoload 'setup-magit "setup-magit" "load magit")
 (require 'setup-org-mode)
 (require 'setup-helm)
-(require 'core-settings)
+(require 'my-core-settings)
+
+(defun python-mode-setup ()
+  (message "Custom python hook run")
+  (load-library "setup-python"))
 (add-hook 'python-mode-hook 'python-mode-setup)
-(require 'setup-python)
-(require 'setup-cc)
+
+;; install your hook so it is called when python-mode is invoked
+(add-hook 'python-mode-hook 'python-mode-setup)
+
+
+(defun cc-mode-setup ()
+  (message "Custom cc hook run")
+  (load-library "setup-cc"))
+(add-hook 'c++-mode 'cc-mode-setup)
+
 (require 'setup-ido)
 (require 'setup-tex)
 ;(require 'yasnippet)

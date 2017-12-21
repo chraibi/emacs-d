@@ -32,3 +32,5 @@ recentf
 semanticdb/!*
 semantic
 sematic*
+*_defs
+custom.el

@@ -1,10 +1,16 @@
+(message "Enter setup-cc")
+
 ;(require 'cmake-project)
 ;(require 'cpputils-cmake)
 (require 'rtags)
 ;; https://github.com/Andersbakken/rtags
 ;(cmake-ide-setup)
 
+(global-flycheck-mode)
 
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
 (require 'popup)
 (require 'rtags-ac)
@@ -197,7 +203,6 @@
 (global-set-key [f9] 'compile)
 (setq compilation-scroll-output 'first-error)
 
-(winner-mode 1)
 
                                         ; --- doxymacs
 

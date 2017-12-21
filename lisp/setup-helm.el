@@ -1,7 +1,7 @@
 (require 'helm)
 (require 'helm-config)
 (require 'projectile)
-(require 'helm-projectile)
+;(require 'helm-projectile)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -27,14 +27,14 @@
 
 (helm-mode 1)
 
-(helm-projectile-on)
+;(helm-projectile-on)
 (projectile-global-mode)
 (setq projectile-enable-caching nil)
 (setq projectile-switch-project-action 'projectile-dired)
 (setq projectile-remember-window-configs t )
 (setq projectile-completion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
-(setq helm-projectile-fuzzy-match nil)
+;(setq helm-projectile-fuzzy-match nil)
 
 
 (require 'helm-git-grep) ;; Not necessary if installed by package.el
