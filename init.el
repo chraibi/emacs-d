@@ -58,7 +58,8 @@
 
 (if (equal system-type 'darwin)
     (setq locate-command "mdfind")
-  )
+  (global-set-key (kbd "M-s") 'locate)
+ )
 
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
@@ -209,7 +210,7 @@
 (setq save-abbrevs t)              ;; save abbrevs when files are saved
                                      ;; you will be asked before the abbreviations are saved
 
-(cond (( >= emacs-major-version 24)
+(cond (( >= emacs-major-version 24) 
        ;; (message "load solarized-light") ;zenburn
        (message "load zenburn") ;zenburn
        ;; (load-theme 'solarized-light t)
