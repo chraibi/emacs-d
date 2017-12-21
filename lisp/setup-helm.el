@@ -37,5 +37,14 @@
 (setq helm-projectile-fuzzy-match nil)
 
 
+(require 'helm-git-grep) ;; Not necessary if installed by package.el
+(global-set-key (kbd "C-c n") 'helm-git-grep)
+;; Invoke `helm-git-grep' from isearch.
+(define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)
+;; Invoke `helm-git-grep' from other helm.
+(eval-after-load 'helm
+  '(define-key helm-map (kbd "C-c n") 'helm-git-grep-from-helm))
+
+
 (provide 'setup-helm)
 ;;; setup-helm.el ends here
