@@ -11,7 +11,6 @@
 (benchmark-init/activate)
 
 
-
 (setenv "ESHELL" (expand-file-name "~/bin/eshell"))
 (setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
@@ -214,16 +213,62 @@
 ;; -------------------- require
 (require 'cl)
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
-(require 'multiple-cursors)
-(require 'paren)
+;(require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
-(require 'server)
-(require 'recentf)
+;(require 'server)
+;(require 'recentf)
 (require 'setup-electric)
 (autoload 'setup-magit "setup-magit" "load magit")
-(require 'setup-org-mode)
-(require 'setup-helm)
+
+(use-package setup-org-mode
+  ;; Loads after 2 second of idle time.
+  :defer 3)
+
+;(global-auto-revert-mode t)
+(use-package autorevert
+  ;; Loads after 2 second of idle time.
+  :defer 2)
+
+
+;(require 'setup-org-mode)
+
+(use-package setup-helm
+  ;; Loads after 2 second of idle time.
+  :defer 2)
+
+(use-package recentf
+  ;; Loads after 2 second of idle time.
+  :defer 2
+  :config
+  (setq recentf-exclude
+        (append recentf-exclude
+                '("~$"
+                  "\\.emacs.d*")))
+  (setq
+   recentf-max-saved-items 30
+   recentf-max-menu-items 15)      ;; max 15 in menu
+  )
+
+(use-package server
+  ;; Loads after 2 second of idle time.
+  :defer 2
+  
+  :config
+  (unless (server-running-p)
+  (server-start))
+)
+
+
+(use-package multiple-cursors
+  ;; Loads after 2 second of idle time.
+  :defer 5)
+(use-package paren
+  ;; Loads after 2 second of idle time.
+  :defer 1)
+
+;(require 'multiple-cursors)
+
 (require 'my-core-settings)
 
 (defun python-mode-setup ()
@@ -241,7 +286,14 @@
 (add-hook 'c++-mode 'cc-mode-setup)
 
 (require 'setup-ido)
-(require 'setup-tex)
+
+(use-package setup-tex
+  ;; Loads after 2 second of idle time.
+  :defer 3)
+
+;(require 'setup-tex)
+
+
 ;(require 'yasnippet)
 ;; (yas/initialize)
 ;; (yas/load-directory "~/.emacs.d/snippets")
@@ -325,7 +377,7 @@
 (setq x-select-enable-primary t)
 
 
-(global-auto-revert-mode t)
+
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 (put 'upcase-region 'disabled nil)
@@ -357,8 +409,6 @@
  uniquify-ignore-buffers-re "^\\*")
 
 ;; Emacs server
-(unless (server-running-p)
-  (server-start))
 
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
@@ -372,17 +422,6 @@
 ;; ;; more useful.
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
-;; ;; enable recent files mode.
-(recentf-mode t)
-(setq recentf-exclude
-      (append recentf-exclude
-              '("~$"
-                "\\.emacs.d*")))
-
-
-(setq
- recentf-max-saved-items 30
- recentf-max-menu-items 15)      ;; max 15 in menu
 
 
 

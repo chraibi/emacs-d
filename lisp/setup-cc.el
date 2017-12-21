@@ -16,6 +16,15 @@
 (require 'rtags-ac)
 ;(rtags-start-process-unless-running)
 
+(setq c-auto-newline nil)
+
+(require 'linum)
+(setq linum-format "%d")
+(global-linumProcess *esup-child* exited abnormally with code 1
+-mode 1)
+(require 'setup-hlinum)
+
+
  (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
  (add-hook 'c++-mode-common-hook 'rtags-start-process-unless-running)
 
