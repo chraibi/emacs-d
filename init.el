@@ -981,6 +981,7 @@ abort completely with `C-g'."
 ;profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
 
-(message "emacs loaded!")
+(message "emacs loaded in %s"  (emacs-init-time))
+
 
 ;; (global-set-key (kbd "C-c d") 'osx-dictionary-search-pointer)
