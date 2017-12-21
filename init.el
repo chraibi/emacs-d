@@ -1,3 +1,6 @@
+;; Make startup faster by reducing the frequency of garbage
+;; collection.  The default is 0.8MB.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
 ;;; Code:
 ;; Turn off mouse interface early in startup to avoid momentary display
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -9,21 +12,7 @@
 
 
 
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(setq inhibit-splash-screen t);; Disable splash screen
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message t)
-(setq inhibit-startup-screen t)
-(setq initial-scratch-message nil)
 (setenv "ESHELL" (expand-file-name "~/bin/eshell"))
-(setq custom-safe-themes t)
-;; use smart line
-(setq sml/no-confirm-load-theme t)
-(add-hook 'after-init-hook 'display-time)
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
 (setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
 ;; Setting English Font
@@ -46,30 +35,16 @@
 
 ;; (find-file "~/Dropbox/Orgfiles/org-files/master.org") ;
 
-(setq user-full-name "M. Chraibi")
-(setq user-mail-address "m.chraibi@gmail.com")
-(set-default 'cursor-type 'bar)
-(setq cursor-type 'bar)
-(blink-cursor-mode 1)
-(setq-default cursor-type '(hbar . 1))
-
-
 (setq is-mac (equal system-type 'darwin))
-
 (if (equal system-type 'darwin)
     (setq locate-command "mdfind")
   (global-set-key (kbd "M-s") 'locate)
  )
 
-;; Use Emacs terminfo, not system terminfo
-(setq system-uses-terminfo nil)
 
 (defvar *emacs-load-start* (current-time))
 ;; My location for external packages.
 
-(global-set-key "\C-z" 'nil)
-;; ;;; Make all yes-or-no questions as y-or-n
-(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; (getenv "PATH")
 ;; (setenv "PATH"
@@ -88,10 +63,11 @@
 (add-to-list 'load-path py-install-directory)
 (setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
 
-;; (transient-mark-mode 1)
- (global-visual-line-mode 1) ; 1 for on, 0 for off.
 
-                                        ; ELPA package support
+;; Always load the newer .el or .elc file.
+(setq load-prefer-newer t)
+
+; ELPA package support
 (when (>= emacs-major-version 24)
   (require 'package)
   (message "add repos")
@@ -104,19 +80,6 @@
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
-
-;; (getenv "PATH")
-;;  (setenv "PATH"
-;;          (concat
-;;           "/usr/texbin" ":"
-;;           (getenv "PATH")
-;;           )
-;;          )
-
-
-;; ;; (setenv "PATH" (concat (getenv "PATH") ":/path/to/gs/folder"))
-
-;; (add-to-list 'exec-path "/usr/local/bin")
 
 
 ;; Setup packages
@@ -139,9 +102,9 @@
                      expand-region
 		     multiple-cursors
 		     dired+
-		     sx
-		     linum
-                     hlinum
+		     ;sx
+		     ;linum
+                     ;hlinum
 		     server
 		     nav
 		     recentf
@@ -169,7 +132,7 @@
 		     elpy
                      flycheck
 		     ;;ob-plantuml
-                                        ; uniquify		;
+                     ;uniquify		;
                      epl      ; needed for projectile
                      async    ; needed for hlem
                      pkg-info ; needed for projectile
@@ -199,11 +162,6 @@
     )
 )
 (message "done with loading pkgs")
-;; Setup environment variables from the user's shell.
-;; (when is-mac
-;;   (require 'exec-path-from-shell)
-;;   (exec-path-from-shell-initialize))
-
 (setq abbrev-file-name             ;; tell emacs where to read abbrev
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
 
@@ -211,10 +169,11 @@
                                      ;; you will be asked before the abbreviations are saved
 
 (cond (( >= emacs-major-version 24) 
-       ;; (message "load solarized-light") ;zenburn
-       (message "load zenburn") ;zenburn
+       (message "load solarized-light") ;zenburn
+       ;; (message "load zenburn") ;zenburn
        ;; (load-theme 'solarized-light t)
-       (load-theme 'zenburn t)
+       ;;(load-theme 'zenburn t)
+       (load-theme 'solarized-light t)
        (if (member "Monaco" (font-family-list))
            (set-face-attribute
             'default nil :font "Monaco 18")
@@ -224,19 +183,6 @@
        )
       );Version 24
 
-;(defun on-after-init ()
-;  (unless (display-graphic-p (selected-frame))
-;    (set-face-background 'default "unspecified-bg" (selected-frame))))
-
-;; (add-hook 'window-setup-hook 'on-after-init)
-
-(require 'helm-git-grep) ;; Not necessary if installed by package.el
-(global-set-key (kbd "C-c n") 'helm-git-grep)
-;; Invoke `helm-git-grep' from isearch.
-(define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)
-;; Invoke `helm-git-grep' from other helm.
-(eval-after-load 'helm
-  '(define-key helm-map (kbd "C-c n") 'helm-git-grep-from-helm))
 
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -263,88 +209,55 @@
 ;(diminish 'auto-fill-function-mode)
 ;(diminish 'pair-mode)
 ;; (add-hook 'after-init-hook 'sml/setup) ;todo
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(show-paren-match ((((class color) (background light)) (:background "blue")))))
-
-(set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
-
-;; ;; this variable
-;;(setq auto-indent-on-visit-file t) ;; If you want auto-indent on for files
-;; (require 'auto-indent-mode)
-;; (auto-indent-global-mode)
-
 
 (message "load packages")
 ;; -------------------- require
 (require 'cl)
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
-(require 'yasnippet)
-;;(require 'flycheck)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/snippets")
-
-;; (autoload 'flycheck "flycheck" "load flycheck" t)
-;(autoload 'multiple-cursors "multiple-cursors" "load multiple-cursors" t)
 (require 'multiple-cursors)
-;; (require 'semantic/ia)
-(require 'xcscope)
 (require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
-;; (require 'ob-plantuml)
-(require 'linum)
 (require 'server)
-(require 'nav)
 (require 'recentf)
-;;(require 'flymake-cursor)
-;; uniquify: unique buffer names
-                                        ;(require 'uniquify) ;; make buffer names more unique
-
-(require 'org-alert)
-(setq alert-default-style 'libnotify)
-;----------------  load setups ----------------------------
-(message "load my setups")
-(require 'setup-electric)		;
-;(require 'setup-mu4e)		;
+(require 'setup-electric)
 (autoload 'setup-magit "setup-magit" "load magit")
-
-
-
 (require 'setup-org-mode)
-;; (autoload 'setup-helm "setup-helm" "load helm")
 (require 'setup-helm)
-;;(require 'flymake-setup)
-(require 'setup-hlinum)
+(require 'core-settings)
+(add-hook 'python-mode-hook 'python-mode-setup)
 (require 'setup-python)
 (require 'setup-cc)
 (require 'setup-ido)
-(require 'org-inlinetask)
+(require 'setup-tex)
+;(require 'yasnippet)
+;; (yas/initialize)
+;; (yas/load-directory "~/.emacs.d/snippets")
+
+;; (require 'semantic/ia)
+;(require 'xcscope)
+;(require 'org-inlinetask)
+;;(require 'flycheck)
+;; (autoload 'flycheck "flycheck" "load flycheck" t)
+;; (require 'flymake-setup)
+;; (require 'setup-hlinum)
+;; (require 'flymake-cursor)
+;; uniquify: unique buffer names
+;; (require 'uniquify) ;; make buffer names more unique
+;; (require 'org-alert)
+;; (setq alert-default-style 'libnotify)
+;; (require 'setup-mu4e)
+;; (require 'ob-plantuml)
+;; (require 'linum)
+;; (require 'nav)
+;----------------  load setups ----------------------------
+(message "load my setups")
 
 ;; overwrite selected text
 (delete-selection-mode t)
 
-;;(require 'git-gutter)
-
-;; If you enable global minor mode
-;; (global-git-gutter-mode t)
-;; (custom-set-variables
-;;  '(git-gutter:update-interval 2))
-;; (custom-set-variables
-;;  '(git-gutter:window-width 2)
-;;   '(git-gutter:modified-sign "☁")
-;;   '(git-gutter:added-sign "☀")
-;;   '(git-gutter:deleted-sign "☂"))
-
-;; (set-face-background 'git-gutter:modified "blue") ;; background color
-;; (set-face-foreground 'git-gutter:added "green")
-;; (set-face-foreground 'git-gutter:deleted "red")
 
 
-;;(require 'thingatpt)
 ;; When popping the mark, continue popping until the cursor
 ;; actually moves
 (defadvice pop-to-mark-command (around ensure-new-position activate)
@@ -363,23 +276,11 @@
 ;(setq org-mu4e-link-query-in-headers-mode nil)
 
 (message "setups loaded")
-(cscope-setup)
+;(cscope-setup)
 ;;setup-electric
-(package-initialize)
+;;(package-initialize)
 ;----------------------------
-(show-paren-mode t) ;; will highlight matching parentheses next to cursor.
-(autopair-global-mode) ;; to enable in all buffers
 ;;-----------------------------
-(setq  electric-pair-mode t)
-
-(yas-global-mode 1)
-
-
-;; I hate tabs!
-(setq-default indent-tabs-mode nil)
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 
 (defun comment-or-uncomment-region-or-line ()
@@ -392,7 +293,7 @@
     (comment-or-uncomment-region beg end)
     (next-line)))
 
-(global-set-key "\C-c\C-c" 'comment-region)
+;(global-set-key "\C-c\C-c" 'comment-region)
 
 (defun comment-region-lines (beg end &optional arg)
   "Like `comment-region', but comment/uncomment whole lines."
@@ -404,14 +305,6 @@
 
  (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
 
-;; (global-set-key (kbd "M-;") 'comment-region-lines)
-
-
-;; MC
-;; (add-hook 'after-init-hook #'global-flycheck-mode) ;
-
-;; (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-;; (modify-frame-parameters nil '((wait-for-wm . nil)))
 
 ;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
 (setq x-select-enable-clipboard t)
@@ -420,26 +313,15 @@
 (setq x-select-enable-primary t)
 
 
-
 (global-auto-revert-mode t)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
-                                        ;(global-set-key "\C-x\C-c" 'kill-emacs) ;; STRANGE
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
 
 ;; ;;-------------------------- Macros
 
-;; ;; scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time
-
-;; ;;    split vertically
-(setq split-height-threshold nil)
-(setq split-width-threshold 0)
 (defadvice compile (around split-horizontally activate)
   (let ((split-width-threshold 0)
         (split-height-threshold nil))
@@ -474,9 +356,7 @@
   (kill-emacs)
   )
 
-
-
-;; ;; get rid of `find-file-read-only' and replace it with something
+;;get rid of `find-file-read-only' and replace it with something
 ;; ;; more useful.
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
@@ -507,7 +387,7 @@
 (global-set-key "\C-cy" 'browse-kill-ring)
 
 
-   (global-linum-mode 1)
+;(global-linum-mode 1)
 
 (defun nolinum ()
   (global-linum-mode 0)
@@ -604,15 +484,9 @@
       )
 
 
-;; ;; LATEX----------------------
-(add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.88")
-(setq reftex-plug-into-AUCTeX t)
-(setq  reftex-mode t)
 (global-set-key (kbd "<f8>") 'ispell-word)
 (global-set-key (kbd "C-<f8>") 'flyspell-mode)
 (global-set-key (kbd "C-<f9>") 'reftex-mode)
-
-
 
 ;;---------------------- ispell
 (define-key ctl-x-map "\C-i"
@@ -657,43 +531,6 @@ abort completely with `C-g'."
 (setq save-abbrevs 'silently)
 (setq-default abbrev-mode t)
 
-;;-----------------------
-
-
-
-;;---------
-;; AucTeX
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-;(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(setq reftex-plug-into-AUCTeX t)
-(setq TeX-PDF-mode t)
-(add-hook 'LaTeX-mode-hook
-          (lambda () (local-set-key (kbd "<S-s-mouse-1>") #'TeX-view))
-          )
-;; Use Skim as viewer, enable source <-> PDF sync
-;; make latexmk available via C-c C-c
-;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (push
-    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
-      :help "Run latexmk on file")
-    TeX-command-list)))
-(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
-
-;; use Skim as default pdf viewer
-;; Skim's displayline is used for forward search (from .tex to .pdf)
-;; option -b highlights the current line; option -g opens Skim in the background
-(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
-(setq TeX-view-program-list
-     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
-;;---------
-
-
 ;;--------------------------------------- PAREN
 
 (setq-default truncate-lines t) ;; will trucate lines if they are too long.
@@ -708,11 +545,9 @@ abort completely with `C-g'."
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;(load-file "~/.emacs.d/lisp/xcscope.el")
-
 
 ;; ;;------ cmake support
-;;                                         ; Add cmake listfile names to the mode list.
+;; Add cmake listfile names to the mode list.
 (setq auto-mode-alist
       (append
        '(("CMakeLists\\.txt\\'" . cmake-mode))
@@ -729,127 +564,7 @@ abort completely with `C-g'."
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
 
-;;--------------------- highlight line
-;; https://stackoverflow.com/questions/2718189/emacshighlight-the-current-line-by-underline-it
-(global-hl-line-mode 1)
-(set-face-background 'highlight "#222")
-(set-face-foreground 'highlight nil)
-(set-face-underline-p 'highlight t)
 
-;; ------------------------------ TAGS
-
-;; (setq tags-revert-without-query t)
-;; (global-set-key (kbd "<f7>") 'ctags-create-or-update-tags-table)
-
-
-;; (defun my-semantic-hook ()
-;;   (imenu-add-to-menubar "TAGS"))
-
-
-;; ;;----------------------------- Ctags   How to use ctags in Emacs effectively blog.binchen.org
-;; (defun my-project-name-contains-substring (REGEX)
-;;   (let ((dir (if (buffer-file-name)
-;;                  (file-name-directory (buffer-file-name))
-;;                "")))
-;;     (string-match-p REGEX dir)))
-
-;; (defun my-create-tags-if-needed (SRC-DIR &optional FORCE)
-;;   "return the full path of tags file"
-;;   (let ((dir (file-name-as-directory (file-truename SRC-DIR)) )
-;;         file)
-;;     (setq file (concat dir "TAGS"))
-;;     (when (or FORCE (not (file-exists-p file)))
-;;       (message "Creating TAGS in %s ..." dir)
-;;       (shell-command
-;;        (format "ctags-exuberant --extra=+fq --exclude=_flymake --exclude=db --exclude=test --exclude=doc --exclude=log --exclude=Utest --exclude=.git --exclude=public -f %s -e -R %s" file dir))
-;;       )
-;;     file
-;;     ))
-
-;; (defvar my-tags-updated-time nil)
-
-;; (defun my-update-tags ()
-;;   (interactive)
-;;   "check the tags in tags-table-list and re-create it"
-;;   (dolist (tag tags-table-list)
-;;     (my-create-tags-if-needed (file-name-directory tag) t)
-;;     ))
-
-;; (defun my-auto-update-tags-when-save ()
-;;   (interactive)
-;;   (cond
-;;    ((not my-tags-updated-time)
-;;     (setq my-tags-updated-time (current-time)))
-;;    ((< (- (float-time (current-time)) (float-time my-tags-updated-time)) 300)
-;;     ;; < 300 seconds
-;;     ;; do nothing
-;;     )
-;;    (t
-;;     (setq my-tags-updated-time (current-time))
-;;     (my-update-tags)
-;;     (message "updated tags after %d seconds." (- (float-time (current-time))  (float-time my-tags-updated-time)))
-;;     )
-;;    ))
-
-
-;; (defun my-setup-develop-environment ()
-;;   (when (my-project-name-contains-substring "chraibi")
-;;     (cond
-;;      ((my-project-name-contains-substring "Workspace/")
-;;       ;; C++ project don't need html tags
-;;       (setq tags-table-list (list
-;;                              (my-create-tags-if-needed "~/Workspace/jpscore")
-
-;;                              (my-create-tags-if-needed "~/Workspace/jpsvis")
-;;                              );list
-;;             );setq
-;;       )
-;;      ) ;cond
-;;     ) ;when
-;;   ) ;fun
-
-;; (add-hook 'after-save-hook 'my-auto-update-tags-when-save)
-;; ;; (add-hook 'js2-mode-hook 'my-setup-develop-environment)
-;; ;; (add-hook 'web-mode-hook 'my-setup-develop-environment)
-;; (add-hook 'c++-mode-hook 'my-setup-develop-environment)
-;; (add-hook 'c-mode-hook 'my-setup-develop-environment)
-
-;; (global-set-key (kbd "M-.") 'find-tag)
-;; (global-set-key (kbd "M-*") 'pop-tag-mark)
-
-
-;; (add-hook 'c++-mode-hook 'irony-mode)
-;; (add-hook 'c-mode-hook 'irony-mode)
-;; (add-hook 'objc-mode-hook 'irony-mode)
-
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-;; (defun my-irony-mode-hook ()
-;;   (define-key irony-mode-map [remap completion-at-point]
-;;     'irony-completion-at-point-async)
-;;   (define-key irony-mode-map [remap complete-symbol]
-;;     'irony-completion-at-point-async))
-;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-;;------------ irony
-;; (add-hook 'c++-mode-hook 'irony-mode)
-;; (add-hook 'c-mode-hook 'irony-mode)
-;; (add-hook 'objc-mode-hook 'irony-mode)
-
-;; ;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; ;; irony-mode's buffers by irony-mode's function
-;; (defun my-irony-mode-hook ()
-;;   (define-key irony-mode-map [remap completion-at-point]
-;;     'irony-completion-at-point-async)
-;;   (define-key irony-mode-map [remap complete-symbol]
-;;     'irony-completion-at-point-async))
-;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-;; -----------------------------------------------------------------------
-;; auto-mode-alist
-;; -----------------------------------------------------------------------
 
 
 ;; ;; dired
@@ -860,128 +575,27 @@ abort completely with `C-g'."
 ;; Move files between split panes
 (setq dired-dwim-target t)
 
-;; (use-package dired-quick-sort
-;;   :ensure t
-;;   :config
-;;   (dired-quick-sort-setup))
-
-
-;; (require 'dired-quick-sort)
-;; (dired-quick-sort-setup)
-
-
-;; using ls-lisp with these settings gives case-insensitve
-;; sorting on OS X
-;; using ls-lisp with these settings gives case-insensitve
-;; sorting on OS X
-(require 'ls-lisp)
-(setq dired-listing-switches "-alhG")
-(setq ls-lisp-use-insert-directory-program nil)
-(setq ls-lisp-ignore-case t)
-(setq ls-lisp-use-string-collate nil)
-;; customise the appearance of the listing
-(setq ls-lisp-verbosity '(links uid))
-(setq ls-lisp-format-time-list '("%b %e %H:%M" "%b %e  %Y"))
-(setq ls-lisp-use-localized-time-format t)
-
-;; (require 'ls-lisp)
-;; (setq dired-listing-switches "-alhG")
-;; (setq ls-lisp-use-insert-directory-program nil)
-;; (setq ls-lisp-ignore-case t)
-;; (setq ls-lisp-use-string-collate nil)
-;; ;; customise the appearance of the listing
-;; (setq ls-lisp-verbosity '(links uid))
-;; (setq ls-lisp-format-time-list '("%b %e %H:%M" "%b %e  %Y"))
-;; (setq ls-lisp-use-localized-time-format t)
-
-;; (setq dired-listing-switches "-Al --si --time-style long-iso")
-
-
-
-;; (defun ergoemacs-open-in-external-app ()
-;;   "Open the current file or dired marked files in external app."
-;;   (interactive)
-;;   (let ( doIt
-;;          (myFileList
-;;           (cond
-;;            ((string-equal major-mode "dired-mode") (dired-get-marked-files))
-;;            (t (list (buffer-file-name))) ) ) )
-
-;;     (setq doIt (if (<= (length myFileList) 5)
-;;                    t
-;;                  (y-or-n-p "Open more than 5 files?") ) )
-
-;;     (when doIt
-;;       (cond
-;;        ((string-equal system-type "windows-nt")
-;;         (mapc (lambda (fPath) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" fPath t t)) ) myFileList)
-;;         )
-;;        ((string-equal system-type "darwin")
-;;         (mapc (lambda (fPath) (shell-command (format "open \"%s\"" fPath)) )  myFileList) )
-;;        ((string-equal system-type "gnu/linux")
-;;         (mapc (lambda (fPath) (let ((process-connection-type nil)) (start-process "" nil "xdg-open" fPath)) ) myFileList) ) ) ) ) )
-
-
-
-
-;; (defun xah-open-in-external-app (&optional file)
-;;   "Open the current file or dired marked files in external app.
-
-;; The app is chosen from your OS's preference."
-;;   (interactive)
-;;   (let ( doIt
-;;          (myFileList
-;;           (cond
-;;            ((string-equal major-mode "dired-mode") (dired-get-marked-files))
-;;            ((not file) (list (buffer-file-name)))
-;;            (file (list file)))))
-
-;;     (setq doIt (if (<= (length myFileList) 5)
-;;                    t
-;;                  (y-or-n-p "Open more than 5 files? ") ) )
-
-;;     (when doIt
-;;       (cond
-;;        ((string-equal system-type "windows-nt")
-;;         (mapc (lambda (fPath) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" fPath t t)) ) myFileList))
-;;        ((string-equal system-type "darwin")
-;;         (mapc (lambda (fPath) (shell-command (format "open \"%s\"" fPath)) )  myFileList) )
-;;        ((string-equal system-type "gnu/linux")
-;;         (mapc (lambda (fPath) (let ((process-connection-type nil)) (start-process "" nil "xdg-open" fPath)) ) myFileList) ) ) ) ) )
-
-
-
 ;; https://github.com/magnars/multiple-cursors.el
-
 (global-set-key (kbd "C-c z") 'mc/edit-lines)
 (global-set-key (kbd "C-c i") 'mc/insert-numbers)
 (global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
 
-(defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
-  "Start each sentence on a new line."
-  (let ((from (ad-get-arg 0))
-        (to-marker (set-marker (make-marker) (ad-get-arg 1)))
-        tmp-end)
-    (while (< from (marker-position to-marker))
-      (forward-sentence)
-      ;; might have gone beyond to-marker --- use whichever is smaller:
-      (ad-set-arg 1 (setq tmp-end (min (point) (marker-position to-marker))))
-      ad-do-it
-      (ad-set-arg 0 (setq from (point)))
-      (unless (or
-               (bolp)
-               (looking-at "\\s *$"))
-        (LaTeX-newline)))
-    (set-marker to-marker nil)))
-(ad-activate 'LaTeX-fill-region-as-paragraph)
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
 
 
-;profile:
+;; Use a hook so the message doesn't get clobbered by other messages.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+
+; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
-
-(message "emacs loaded in %s"  (emacs-init-time))
-
-
-;; (global-set-key (kbd "C-c d") 'osx-dictionary-search-pointer)
