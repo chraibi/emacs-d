@@ -56,6 +56,10 @@
 
 (setq is-mac (equal system-type 'darwin))
 
+(if (equal system-type 'darwin)
+    (setq locate-command "mdfind")
+  )
+
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 
