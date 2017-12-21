@@ -140,6 +140,7 @@
 		     undo-tree
                      exec-path-from-shell
                      ;; gitlab
+                     use-package
 		     )
       )
 
