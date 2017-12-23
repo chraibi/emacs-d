@@ -141,6 +141,7 @@
                      exec-path-from-shell
                      ;; gitlab
                      use-package
+                     guide-key
 		     )
       )
 
@@ -505,14 +506,35 @@
 
 (global-set-key [f11] 'toggle-fullscreen)
 
-(when (locate-library "windmove")
-  (global-set-key (kbd "C-x <left>") 'windmove-left)
-  (global-set-key (kbd "C-x <right>") 'windmove-right)
-  (global-set-key (kbd "C-x <up>") 'windmove-up)
-  (global-set-key (kbd "C-x <down>") 'windmove-down)
-  )
+(use-package winner
+  :defer t)
 
-(global-undo-tree-mode)
+(use-package windmove
+  :bind
+  (("C-x <right>" . windmove-right)
+   ("C-x <left>" . windmove-left)
+   ("C-x <up>" . windmove-up)
+   ("C-x <down>" . windmove-down)
+   ))
+
+(bind-key "C-x p" 'pop-to-mark-command)
+(setq set-mark-command-repeat-pop t)
+
+(use-package guide-key
+  :defer t
+  :diminish guide-key-mode
+  :config
+  (progn
+  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
+  (guide-key-mode 1)))  ; Enable guide-key-mode
+
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)))
 
 ;; ;; DICCTIONARIES
 (let ((langs '("american" "francais" "german")))
