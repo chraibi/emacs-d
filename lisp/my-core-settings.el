@@ -32,6 +32,7 @@
 ;; (transient-mark-mode 1)
  (global-visual-line-mode 1) ; 1 for on, 0 for off.
 
+(column-number-mode 1) ; show column number
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

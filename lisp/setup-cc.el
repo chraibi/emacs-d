@@ -1,3 +1,7 @@
+;;; Package --- summary
+;;; Code:
+;;; Commentary:
+
 (message "Enter setup-cc")
 
 ;(require 'cmake-project)
@@ -18,11 +22,11 @@
 
 (setq c-auto-newline nil)
 
-(require 'linum)
-(setq linum-format "%d")
-(global-linumProcess *esup-child* exited abnormally with code 1
--mode 1)
-(require 'setup-hlinum)
+
+(require 'hlinum)
+(hlinum-activate)
+(setq linum-format "%3d \u2502 ")
+
 
 
  (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
@@ -106,6 +110,7 @@
 
 ;;  ;-------------------------------
 (defun use-rtags (&optional useFileManager)
+  "Use rtags.  USEFILEMANAGER."
   (and (rtags-executable-find "rc")
        (cond ((not (gtags-get-rootpath)) t)
              ((and (not (eq major-mode 'c++-mode))
@@ -165,6 +170,7 @@
                                    (statement-case-open . +)))))
 
 (defun my-c++-mode-hook ()
+  "My style."
   (c-set-style "my-style")        ; use my-style defined above
   (auto-fill-mode)
   (c-toggle-auto-hungry-state 1))
@@ -172,7 +178,7 @@
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
 (defun my-recompile ()
-  "Run compile and resize the compile window closing the old one if necessary"
+  "Run compile and resize the compile window closing the old one if necessary."
   (interactive)
   (progn
     (if (get-buffer "*compilation*") ; If old compile window exists
@@ -187,7 +193,7 @@
   )
 
 (defun my-next-error ()
-  "Move point to next error and highlight it"
+  "Move point to next error and highlight it."
   (interactive)
   (progn
     (next-error)
@@ -197,7 +203,7 @@
   )
 
 (defun my-previous-error ()
-  "Move point to previous error and highlight it"
+  "Move point to previous error and highlight it."
   (interactive)
   (progn
     (previous-error)
@@ -208,24 +214,24 @@
 
 (global-set-key (kbd "C-n") 'my-next-error)
 (global-set-key (kbd "C-p") 'my-previous-error)
-(global-set-key (kbd "C-x <f9>") 'my-recompile)
+;; (global-set-key (kbd "C-x <f9>") 'my-recompile)
 (global-set-key [f9] 'compile)
 (setq compilation-scroll-output 'first-error)
 
 
                                         ; --- doxymacs
 
-(require 'doxymacs)
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
-(defun my-doxymacs-font-lock-hook ()
-    (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-        (doxymacs-font-lock)))
-(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+;; (require 'doxymacs)
+;; (add-hook 'c-mode-common-hook 'doxymacs-mode)
+;; (defun my-doxymacs-font-lock-hook ()
+;;     (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;;         (doxymacs-font-lock)))
+;; (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 
-(defun my-doxymacs-font-lock-hook ()
-    (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-        (doxymacs-font-lock)))
-  (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+;; (defun my-doxymacs-font-lock-hook ()
+;;     (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;;         (doxymacs-font-lock)))
+;;   (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 
 
 (defun my-javadoc-return ()
@@ -265,6 +271,6 @@ unless return was pressed outside the comment"
 ;; (semantic-mode 1)
 ;; (require 'stickyfunc-enhance)
 
-
+(message "Provide setup-cc")
 (provide 'setup-cc)
 ;;; setup-cc.el ends here

@@ -1,3 +1,7 @@
+;;; package ---- summary
+;;; Commentary:
+
+
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -28,6 +32,7 @@
 
 (require 'ansi-color)
 (defun my/ansi-colorize-buffer ()
+  "Comments."
   (let ((buffer-read-only nil))
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
@@ -169,7 +174,7 @@
 (setq save-abbrevs t)              ;; save abbrevs when files are saved
                                      ;; you will be asked before the abbreviations are saved
 
-(cond (( >= emacs-major-version 24) 
+(cond (( >= emacs-major-version 24)
        (message "load solarized-light") ;zenburn
        ;; (message "load zenburn") ;zenburn
        ;; (load-theme 'solarized-light t)
@@ -221,7 +226,11 @@
 ;(require 'server)
 ;(require 'recentf)
 (require 'setup-electric)
-(autoload 'setup-magit "setup-magit" "load magit")
+;(autoload 'setup-magit "setup-magit" "load magit")
+
+(use-package setup-magit
+  ;; Loads after 2 second of idle time.
+  :defer 3)
 
 (use-package setup-org-mode
   ;; Loads after 2 second of idle time.
@@ -231,9 +240,6 @@
 (use-package autorevert
   ;; Loads after 2 second of idle time.
   :defer 2)
-
-
-;(require 'setup-org-mode)
 
 (use-package setup-helm
   ;; Loads after 2 second of idle time.
@@ -282,10 +288,15 @@
 (add-hook 'python-mode-hook 'python-mode-setup)
 
 
-(defun cc-mode-setup ()
-  (message "Custom cc hook run")
-  (load-library "setup-cc"))
-(add-hook 'c++-mode 'cc-mode-setup)
+;; (defun cc-mode-setup ()
+;;   (message "Custom cc hook run")
+;;   (load-library "setup-cc"))
+;; (add-hook 'c++-mode 'cc-mode-setup)
+
+(use-package setup-cc
+  ;; Loads after 2 second of idle time.
+  :defer 2)
+
 
 (require 'setup-ido)
 
@@ -293,12 +304,43 @@
   ;; Loads after 2 second of idle time.
   :defer 3)
 
-;(require 'setup-tex)
+
+(use-package yasnippet
+  ;; Loads after 2 second of idle time.
+  :defer t
+  :config
+  (yas/load-directory "~/.emacs.d/snippets")
+)
+
+(use-package winner
+  :defer t)
+
+(use-package windmove
+  :bind
+  (("C-x <right>" . windmove-right)
+   ("C-x <left>" . windmove-left)
+   ("C-x <up>" . windmove-up)
+   ("C-x <down>" . windmove-down)
+   ))
 
 
-;(require 'yasnippet)
-;; (yas/initialize)
-;; (yas/load-directory "~/.emacs.d/snippets")
+(use-package guide-key
+  :defer t
+  :diminish guide-key-mode
+  :config
+  (progn
+  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
+  (guide-key-mode 1)))  ; Enable guide-key-mode
+
+
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)))
+
 
 ;; (require 'semantic/ia)
 ;(require 'xcscope)
@@ -309,7 +351,7 @@
 ;; (require 'setup-hlinum)
 ;; (require 'flymake-cursor)
 ;; uniquify: unique buffer names
-;; (require 'uniquify) ;; make buffer names more unique
+(require 'uniquify) ;; make buffer names more unique
 ;; (require 'org-alert)
 ;; (setq alert-default-style 'libnotify)
 ;; (require 'setup-mu4e)
@@ -414,7 +456,7 @@
 
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
-  "Save buffers, Quit, and Shutdown (kill) server"
+  "Save buffers, Quit, and Shutdown (kill) server."
   (interactive)
   (save-some-buffers)
   (kill-emacs)
@@ -443,6 +485,7 @@
 ;(global-linum-mode 1)
 
 (defun nolinum ()
+  "No lines."
   (global-linum-mode 0)
   )
 (add-hook 'org-mode-hook 'nolinum)
@@ -452,7 +495,7 @@
 
 
 (defun aj-toggle-fold ()
-  "Toggle fold all lines larger than indentation on current line"
+  "Toggle fold all lines larger than indentation on current line."
   (interactive)
   (let ((col 1))
     (save-excursion
@@ -506,35 +549,11 @@
 
 (global-set-key [f11] 'toggle-fullscreen)
 
-(use-package winner
-  :defer t)
 
-(use-package windmove
-  :bind
-  (("C-x <right>" . windmove-right)
-   ("C-x <left>" . windmove-left)
-   ("C-x <up>" . windmove-up)
-   ("C-x <down>" . windmove-down)
-   ))
 
 (bind-key "C-x p" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
 
-(use-package guide-key
-  :defer t
-  :diminish guide-key-mode
-  :config
-  (progn
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
-  (guide-key-mode 1)))  ; Enable guide-key-mode
-
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
 
 ;; ;; DICCTIONARIES
 (let ((langs '("american" "francais" "german")))

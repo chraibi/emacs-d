@@ -1,3 +1,7 @@
+;;; Package --- summary
+;;; Code:
+;;; Commentary:
+
 (require 'hlinum)
 (hlinum-activate)
 (setq linum-format "%3d \u2502 ")
