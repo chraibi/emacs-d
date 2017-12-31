@@ -14,7 +14,6 @@
 (require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
 
-
 (setenv "ESHELL" (expand-file-name "~/bin/eshell"))
 (setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
@@ -140,13 +139,16 @@
                      epl      ; needed for projectile
                      async    ; needed for hlem
                      pkg-info ; needed for projectile
-		     projectile
-		     helm-projectile
+		     ;;projectile
+		     ;;helm-projectile
 		     undo-tree
                      exec-path-from-shell
                      ;; gitlab
                      use-package
                      guide-key
+                     ivy
+                     swiper
+                     counsel
 		     )
       )
 
@@ -241,9 +243,14 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-(use-package setup-helm
-  ;; Loads after 2 second of idle time.
-  :defer 2)
+;; (use-package setup-helm
+;;   ;; Loads after 2 second of idle time.
+;;   :defer 2)
+
+;
+(use-package setup-ivy
+  :defer 1
+  )
 
 (use-package recentf
   ;; Loads after 2 second of idle time.
@@ -279,13 +286,14 @@
 
 (require 'my-core-settings)
 
-(defun python-mode-setup ()
-  (message "Custom python hook run")
-  (load-library "setup-python"))
-(add-hook 'python-mode-hook 'python-mode-setup)
+;; (defun python-mode-setup ()
+;;   (message "Custom python hook run")
+;;   (load-library "setup-python"))
+;; (add-hook 'python-mode-hook 'python-mode-setup)
 
-;; install your hook so it is called when python-mode is invoked
-(add-hook 'python-mode-hook 'python-mode-setup)
+(use-package python-cc
+  ;; Loads after 2 second of idle time.
+  :defer 2)
 
 
 ;; (defun cc-mode-setup ()
@@ -297,8 +305,8 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-
-(require 'setup-ido)
+(use-package setup-ido
+  :defer 1)
 
 (use-package setup-tex
   ;; Loads after 2 second of idle time.
@@ -307,13 +315,13 @@
 
 (use-package yasnippet
   ;; Loads after 2 second of idle time.
-  :defer t
+  :defer 5
   :config
   (yas/load-directory "~/.emacs.d/snippets")
 )
 
 (use-package winner
-  :defer t)
+  :defer 2)
 
 (use-package windmove
   :bind
@@ -325,7 +333,7 @@
 
 
 (use-package guide-key
-  :defer t
+  :defer 3
   :diminish guide-key-mode
   :config
   (progn
@@ -473,8 +481,8 @@
 ;; (nav-disable-overeager-window-splitting)
 
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
-(require 'fill-column-indicator)
-(setq fci-rule-color "white")
+
+
 ;; Browse kill ring
 (require 'browse-kill-ring)
 (setq browse-kill-ring-quit-action 'save-and-restore)
@@ -675,6 +683,9 @@ abort completely with `C-g'."
 (global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
 
+
+;;-----
+(make-variable-buffer-local 'compile-command)
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))

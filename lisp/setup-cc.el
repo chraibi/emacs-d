@@ -99,8 +99,8 @@
 ;; (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
 
 
-(require 'rtags-helm)			;
-(setq rtags-use-helm t)
+;; (require 'rtags-helm)			;
+;; (setq rtags-use-helm t)
 
 
 ;; (setq mf--source-file-extension "cpp")
@@ -109,14 +109,14 @@
 
 
 ;;  ;-------------------------------
-(defun use-rtags (&optional useFileManager)
-  "Use rtags.  USEFILEMANAGER."
-  (and (rtags-executable-find "rc")
-       (cond ((not (gtags-get-rootpath)) t)
-             ((and (not (eq major-mode 'c++-mode))
-                   (not (eq major-mode 'c-mode))) (rtags-has-filemanager))
-             (useFileManager (rtags-has-filemanager))
-             (t (rtags-is-indexed)))))
+;; (defun use-rtags (&optional useFileManager)
+;;   "Use rtags.  USEFILEMANAGER."
+;;   (and (rtags-executable-find "rc")
+;;        (cond ((not (gtags-get-rootpath)) t)
+;;              ((and (not (eq major-mode 'c++-mode))
+;;                    (not (eq major-mode 'c-mode))) (rtags-has-filemanager))
+;;              (useFileManager (rtags-has-filemanager))
+;;              (t (rtags-is-indexed)))))
 
 ;; (defun tags-find-symbol-at-point (&optional prefix)
 ;;   (interactive "P")
@@ -139,21 +139,21 @@
 ;;   (interactive)
 ;;   (call-interactively (if (use-rtags t) 'rtags-imenu 'idomenu)))
 
-(define-key c-mode-base-map (kbd "M-.") (function tags-find-symbol-at-point))
-(define-key c-mode-base-map (kbd "M-,") (function tags-find-references-at-point))
-(define-key c-mode-base-map (kbd "M-;") (function tags-find-file))
-(define-key c-mode-base-map (kbd "C-.") (function tags-find-symbol))
-(define-key c-mode-base-map (kbd "C-,") (function tags-find-references))
-(define-key c-mode-base-map (kbd "C-<") (function rtags-find-virtuals-at-point))
-(define-key c-mode-base-map (kbd "M-i") (function tags-imenu))
+;; (define-key c-mode-base-map (kbd "M-.") (function tags-find-symbol-at-point))
+;; (define-key c-mode-base-map (kbd "M-,") (function tags-find-references-at-point))
+;; (define-key c-mode-base-map (kbd "M-;") (function tags-find-file))
+;; (define-key c-mode-base-map (kbd "C-.") (function tags-find-symbol))
+;; (define-key c-mode-base-map (kbd "C-,") (function tags-find-references))
+;; (define-key c-mode-base-map (kbd "C-<") (function rtags-find-virtuals-at-point))
+;; (define-key c-mode-base-map (kbd "M-i") (function tags-imenu))
 
-(define-key global-map (kbd "M-.") (function tags-find-symbol-at-point))
-(define-key global-map (kbd "M-,") (function tags-find-references-at-point))
-(define-key global-map (kbd "M-;") (function tags-find-file))
-(define-key global-map (kbd "C-.") (function tags-find-symbol))
-(define-key global-map (kbd "C-,") (function tags-find-references))
-(define-key global-map (kbd "C-<") (function rtags-find-virtuals-at-point))
-(define-key global-map (kbd "M-i") (function tags-imenu))
+;; (define-key global-map (kbd "M-.") (function tags-find-symbol-at-point))
+;; (define-key global-map (kbd "M-,") (function tags-find-references-at-point))
+;; (define-key global-map (kbd "M-;") (function tags-find-file))
+;; (define-key global-map (kbd "C-.") (function tags-find-symbol))
+;; (define-key global-map (kbd "C-,") (function tags-find-references))
+;; (define-key global-map (kbd "C-<") (function rtags-find-virtuals-at-point))
+;; (define-key global-map (kbd "M-i") (function tags-imenu))
 
 
 
@@ -212,8 +212,8 @@
     )
   )
 
-(global-set-key (kbd "C-n") 'my-next-error)
-(global-set-key (kbd "C-p") 'my-previous-error)
+;; (global-set-key (kbd "C-n") 'my-next-error)
+;; (global-set-key (kbd "C-p") 'my-previous-error)
 ;; (global-set-key (kbd "C-x <f9>") 'my-recompile)
 (global-set-key [f9] 'compile)
 (setq compilation-scroll-output 'first-error)

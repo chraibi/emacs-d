@@ -85,4 +85,4 @@
 
 
 (provide 'my-core-settings)
-;;; core-settings.el ends here
+;;; my-core-settings.el ends here

@@ -32,7 +32,7 @@
  ido-save-directory-list-file "~/.emacs.d/cache/ido.last"
  ido-ignore-buffers ;; ignore these guys
  '("\\` " "^\*Mess" "^*log*" "^\*back" ".*Completion" "^\*ido" "^\*trace"
-   "^\*compilation" "^\*GTAGS" "*.el" "*.last" "^session\.*" "^\*")
+   "^\*compilation" "^\*GTAGS" "*.el" "*.last" "^session\.*" "^\*" "*^.aux*")
  ido-work-directory-list '("~/" "~/Desktop" "~/Documents" "~/Workspace")
  ido-case-fold  t                 ; be case-insensitive
  ido-enable-last-directory-history t ; remember last used dirs
