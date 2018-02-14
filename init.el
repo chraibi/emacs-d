@@ -14,10 +14,13 @@
 (require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
 
-(setenv "ESHELL" (expand-file-name "~/bin/eshell"))
+;;("/usr/local/bin/osx-notifier" )
+;(setenv "ESHELL" (expand-file-name "~/bin/eshell"))
 (setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
 ;; Setting English Font
+(setq multi-term-program "/bin/zsh")
+
 
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
@@ -49,12 +52,12 @@
 ;; My location for external packages.
 
 
-;; (getenv "PATH")
-;; (setenv "PATH"
-;;         (concat
-;;          "/usr/texbin" ":"
-;;          "/usr/local/bin/" ":"
-;;          (getenv "PATH")))
+(getenv "PATH")
+(setenv "PATH"
+        (concat
+         "/usr/texbin" ":"
+         "/usr/local/bin/" ":"
+         (getenv "PATH")))
 
 
 
@@ -80,10 +83,6 @@
   (add-to-list 'package-archives '("MELPA" . "http://melpa.milkbox.net/packages/"))
   (package-initialize)
   )
-
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
-
 
 ;; Setup packages
 ;(require 'setup-package)
@@ -191,6 +190,9 @@
        )
       );Version 24
 
+(when (memq window-system '(mac ns))
+  (message "init exec-path")
+  (exec-path-from-shell-initialize))
 
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -281,6 +283,8 @@
 (use-package paren
   ;; Loads after 2 second of idle time.
   :defer 1)
+(global-unset-key (kbd "M-<down-mouse-1>"))
+(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
 ;(require 'multiple-cursors)
 
@@ -360,8 +364,39 @@
 ;; (require 'flymake-cursor)
 ;; uniquify: unique buffer names
 (require 'uniquify) ;; make buffer names more unique
-;; (require 'org-alert)
-;; (setq alert-default-style 'libnotify)
+(use-package alert
+  :defer t
+  :config
+  (alert-add-rule)
+  (alert-log-notify nil)
+  (alert--log-enable-logging)
+  (setq alert-default-style (quote notifier))
+  (setq alert-user-configuration (quote ((nil notifier nil))))
+  ;(setq alert-default-style 'terminal-notifier)
+  )
+(require 'org-alert)
+(setq org-alert-interval 3600)
+;; (alert "This is an alert")
+;; (message "HUHU")
+;; You can adjust the severity for more important messages
+;; (alert "This is an alert" :severity 'high)
+
+;; Or decrease it for purely informative ones
+;; (alert "This is an alert" :severity 'trivial)
+
+;; Alerts can have optional titles.  Otherwise, the title is the
+;; buffer-name of the (current-buffer) where the alert originated.
+;; (alert "This is an alert" :title "My Alert")
+
+;; Further, alerts can have categories.  This allows users to
+;; selectively filter on them.
+;; (alert "This is an alert" :title "My Alert" :category 'debug)
+
+;; If a backend allows replacing alerts, you may pass an id
+;; to your alert; then the next one with the same id will replace the
+;; first one:
+;; This avoids piling up lots of alerts, when only the last one is
+;; relevant.
 ;; (require 'setup-mu4e)
 ;; (require 'ob-plantuml)
 ;; (require 'linum)

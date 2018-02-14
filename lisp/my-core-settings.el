@@ -1,7 +1,10 @@
+;;; Package --- Summary
 ;;; --- Editor defaults
+;;; Code:
+;;; Commentary:
 
 (yas-global-mode 0)
-
+(add-hook 'before-save-hook 'whitespace-cleanup)
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
