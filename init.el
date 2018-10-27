@@ -10,9 +10,9 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs")
-(require 'benchmark-init-loaddefs)
-(benchmark-init/activate)
+;(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs")
+;; (require 'benchmark-init-loaddefs)
+;; (benchmark-init/activate)
 
 ;;("/usr/local/bin/osx-notifier" )
 ;(setenv "ESHELL" (expand-file-name "~/bin/eshell"))
@@ -24,7 +24,7 @@
 
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
-  
+
 ;; ;;--------------------------  Backup
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq delete-old-versions t
@@ -61,7 +61,7 @@
 
 
 
-(global-set-key (kbd "M-2") #'er/expand-region)
+
 
 (setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
 
@@ -89,58 +89,58 @@
 ; list the packages
 (setq package-list '(
  ;            dash
-		     cl
-		     sml-modeline
-		     zenburn-theme
-		     highlight-indentation
+                     cl
+                     sml-modeline
+                     zenburn-theme
+                     highlight-indentation
                      ag
-		     auctex-latexmk
-		     org-journal
+                     auctex-latexmk
+                     org-journal
                      org-fstree
                      remember
                      color-theme
                      auctex
-		     yasnippet
+                     yasnippet
                      expand-region
-		     multiple-cursors
-		     dired+
-		     ;sx
-		     ;linum
+                     multiple-cursors
+                     dired+
+                     ;sx
+                     ;linum
                      ;hlinum
-		     server
-		     nav
-		     recentf
+                     server
+                     nav
+                     recentf
                      fill-column-indicator
                      browse-kill-ring
-		     ;mode-mapping
-		     semantic
-		     ido
+                     ;mode-mapping
+                     semantic
+                     ido
                      ido-vertical-mode
                      magit
-		     xcscope
-		     cmake-project
-		     cpputils-cmake
-		     paren ;; will highlight matching parentheses next to cursor.
-		     auto-complete
-		     auto-complete-clang-async
-		     auto-complete-clang
-		     company	;
+                     xcscope
+                     cmake-project
+                     cpputils-cmake
+                     paren ;; will highlight matching parentheses next to cursor.
+                     auto-complete
+                     auto-complete-clang-async
+                     auto-complete-clang
+                     company	;
                      ;; irony ; needed by company-irony
-		     autopair ;; to enable in all buffers
-		     flymake-cursor
-		     python
-		     python-mode
-		     ipython
-		     elpy
+                     autopair ;; to enable in all buffers
+                     flymake-cursor
+                     python
+                     python-mode
+                     ipython
+                     elpy
                      flycheck
-		     ;;ob-plantuml
+                     ;;ob-plantuml
                      ;uniquify		;
                      epl      ; needed for projectile
                      async    ; needed for hlem
                      pkg-info ; needed for projectile
-		     ;;projectile
-		     ;;helm-projectile
-		     undo-tree
+                     ;projectile
+                     ;;helm-projectile
+                     undo-tree
                      exec-path-from-shell
                      ;; gitlab
                      use-package
@@ -148,7 +148,11 @@
                      ivy
                      swiper
                      counsel
-		     )
+                     company-lsp
+                     lsp-ui
+                     ace-window
+
+                     )
       )
 
 
@@ -176,11 +180,11 @@
                                      ;; you will be asked before the abbreviations are saved
 
 (cond (( >= emacs-major-version 24)
-       (message "load solarized-light") ;zenburn
+       (message "load zenburn") ;zenburn
        ;; (message "load zenburn") ;zenburn
        ;; (load-theme 'solarized-light t)
        ;;(load-theme 'zenburn t)
-       (load-theme 'solarized-light t)
+       (load-theme 'zenburn t)
        (if (member "Monaco" (font-family-list))
            (set-face-attribute
             'default nil :font "Monaco 18")
@@ -198,6 +202,9 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 ;; Set up appearance early
+
+;; (require 'sb-imenu)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -221,6 +228,125 @@
 ;; (add-hook 'after-init-hook 'sml/setup) ;todo
 
 (message "load packages")
+
+                                        ;-------------------------------------------------
+(use-package company-lsp
+  :ensure t
+  :config
+  (require 'company-lsp)
+  (setq company-clang-executable "/usr/local/opt/llvm/bin/clang")
+  (push 'company-lsp company-backends)
+  (add-hook 'after-init-hook 'global-company-mode)
+  )
+
+(use-package lsp-mode
+  :ensure t
+  :config
+  (require 'lsp-mode)
+  (setq lsp-message-project-root-warning t)
+  )
+
+(use-package lsp-ui
+  :ensure t
+  :config
+  (require 'lsp-ui)
+  (setq lsp-ui-doc-enable nil
+        lsp-ui-peek-enable nil
+        lsp-ui-sideline-enable nil
+        lsp-ui-imenu-enable t
+        lsp-ui-flycheck-enable nil
+        lsp-ui-flycheck-live-reporting nil
+        )
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  )
+
+;; (use-package lsp-python
+;;   :ensure t
+;;   :config
+;;   (require 'lsp-python)
+;;   (add-hook 'python-mode-hook #'lsp-python-enable)
+;;   (add-hook 'python-mode-hook 'flycheck-mode)
+;;   )
+
+(defun clangd-xref-manual ()
+  (setq-local xref-backend-functions (list #'lsp--xref-backend))
+  )
+
+(use-package lsp-clangd
+  :ensure t
+  :config
+  (when (equal system-type 'darwin)
+    (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd"))
+  (when (string= (system-name) "proton")
+    (setq lsp-clangd-executable "/usr/bin/clangd"))
+  (when (string= (system-name) "muon")
+    (setq lsp-clangd-executable "/usr/bin/clangd"))
+  (when (string= (system-name) "centon")
+    (setq lsp-clangd-executable "/home/ddavis/Software/llvm/installs/7.0.0/bin/clangd"))
+  (when (string= (system-name) "grads-18.internal.phy.duke.edu")
+    (setq lsp-clangd-executable "/bin/clangd"))
+  (add-hook 'c++-mode-hook 'lsp-clangd-c++-enable)
+  (add-hook 'c++-mode-hook 'clangd-xref-manual)
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  )
+(setq flycheck-idle-change-delay 10)
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
+
+
+(require 'lsp-imenu)
+(add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+                                        ;-------------------------------------------------
+(eval-after-load 'counsel-etags
+  '(progn
+     ;; counsel-etags-ignore-directories does NOT support wildcast
+     (add-to-list 'counsel-etags-ignore-directories "build")
+     (add-to-list 'counsel-etags-ignore-directories "lib")
+     (add-to-list 'counsel-etags-ignore-directories "demos")
+     (add-to-list 'counsel-etags-ignore-directories "inifiles")
+     (add-to-list 'counsel-etags-ignore-directories "scripts")
+     (add-to-list 'counsel-etags-ignore-directories "visiLibity")
+     (add-to-list 'counsel-etags-ignore-directories "Utest")
+     (add-to-list 'counsel-etags-ignore-directories "poly2tri")
+     (add-to-list 'counsel-etags-ignore-directories "bin")
+     (add-to-list 'counsel-etags-ignore-directories "cnpy")
+     (add-to-list 'counsel-etags-ignore-directories "xsd")
+     (add-to-list 'counsel-etags-ignore-directories "cmake_build_debug")
+     (add-to-list 'counsel-etags-ignore-directories "doc")
+     (add-to-list 'counsel-etags-ignore-directories "cmake_modules")
+     ;; counsel-etags-ignore-filenames supports wildcast
+     (add-to-list 'counsel-etags-ignore-filenames "TAGS")
+     (add-to-list 'counsel-etags-ignore-filenames "compile_commands.json")
+     (add-to-list 'counsel-etags-ignore-filenames "LICENSE")
+     (add-to-list 'counsel-etags-ignore-filenames "Makefile.pgi")
+     (add-to-list 'counsel-etags-ignore-filenames "*.txt")
+     (add-to-list 'counsel-etags-ignore-filenames "packages.config")
+     (add-to-list 'counsel-etags-ignore-filenames "*.md")
+     (add-to-list 'counsel-etags-ignore-filenames "*.json")))
+;; Don't ask before rereading the TAGS files if they have changed
+(setq tags-revert-without-query t)
+;; Don't warn when TAGS files are large
+(setq large-file-warning-threshold nil)
+;; Setup auto update now
+(add-hook 'prog-mode-hook
+  (lambda ()
+    (add-hook 'after-save-hook
+              'counsel-etags-virtual-update-tags 'append 'local)))
+                                        ;DEFINE
+
+;;   "M-x counsel-etags-scan-code" to create tags file
+;;   "M-x counsel-etags-grep" to grep
+;;   "M-x counsel-etags-grep-symbol-at-point" to grep the symbol at point
+;;   "M-x counsel-etags-recent-tag" to open recent tag
+;;   "M-x counsel-etags-find-tag" to two step tag matching use regular expression and filter
+;;   "M-x counsel-etags-list-tag" to list all tags
+
+                                        ;-------------------------------------------------------------------
+
+(message "load packages")
+(projectile-mode +1)
+(projectile-global-mode +1)
+;(setq projectile-completion-system 'ivy)
+
 ;; -------------------- require
 (require 'cl)
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
@@ -245,11 +371,11 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-;; (use-package setup-helm
-;;   ;; Loads after 2 second of idle time.
-;;   :defer 2)
+(use-package setup-helm
+  ;; Loads after 2 second of idle time.
+  :defer 2)
 
-;
+
 (use-package setup-ivy
   :defer 1
   )
@@ -270,7 +396,7 @@
 (use-package server
   ;; Loads after 2 second of idle time.
   :defer 2
-  
+
   :config
   (unless (server-running-p)
   (server-start))
@@ -290,10 +416,10 @@
 
 (require 'my-core-settings)
 
-;; (defun python-mode-setup ()
-;;   (message "Custom python hook run")
-;;   (load-library "setup-python"))
-;; (add-hook 'python-mode-hook 'python-mode-setup)
+(defun python-mode-setup ()
+  (message "Custom python hook run")
+  (load-library "setup-python"))
+(add-hook 'python-mode-hook 'python-mode-setup)
 
 (use-package python-cc
   ;; Loads after 2 second of idle time.
@@ -309,7 +435,7 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-(use-package setup-ido
+'(use-package setup-ido
   :defer 1)
 
 (use-package setup-tex
@@ -364,18 +490,18 @@
 ;; (require 'flymake-cursor)
 ;; uniquify: unique buffer names
 (require 'uniquify) ;; make buffer names more unique
-(use-package alert
-  :defer t
-  :config
-  (alert-add-rule)
-  (alert-log-notify nil)
-  (alert--log-enable-logging)
-  (setq alert-default-style (quote notifier))
-  (setq alert-user-configuration (quote ((nil notifier nil))))
-  ;(setq alert-default-style 'terminal-notifier)
-  )
-(require 'org-alert)
-(setq org-alert-interval 3600)
+;; (use-package alert
+;;   :defer t
+;;   :config
+;;   (alert-add-rule)
+;;   (alert-log-notify nil)
+;;   (alert--log-enable-logging)
+;;   (setq alert-default-style (quote notifier))
+;;   (setq alert-user-configuration (quote ((nil notifier nil))))
+;;   ;(setq alert-default-style 'terminal-notifier)
+;;   )
+;; (require 'org-alert)
+;; (setq org-alert-interval 3600)
 ;; (alert "This is an alert")
 ;; (message "HUHU")
 ;; You can adjust the severity for more important messages
@@ -454,7 +580,7 @@
         (eol  (save-excursion (goto-char end) (line-end-position))))
     (comment-region bol end arg)))
 
- (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
+
 
 
 ;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
@@ -465,8 +591,6 @@
 
 
 
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -497,6 +621,30 @@
 
 ;; Emacs server
 
+                                        ; avy
+                                        ;-----------------------------
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+;; you can select the key you prefer to
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;
+;; enable a more powerful jump back function from ace jump mode
+;;
+(autoload
+  'ace-jump-mode-pop-mark
+  "ace-jump-mode"
+  "Ace jump back:-)"
+  t)
+(eval-after-load "ace-jump-mode"
+  '(ace-jump-mode-enable-mark-sync))
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+
+;------------------------------
+
+
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
   "Save buffers, Quit, and Shutdown (kill) server."
@@ -505,11 +653,56 @@
   (kill-emacs)
   )
 
+
+(defun ido-goto-symbol (&optional symbol-list)
+  "Refresh imenu and jump to a place in the buffer using Ido."
+  (interactive)
+  (unless (featurep 'imenu)
+    (require 'imenu nil t))
+  (cond
+   ((not symbol-list)
+    (let ((ido-mode ido-mode)
+          (ido-enable-flex-matching
+           (if (boundp 'ido-enable-flex-matching)
+               ido-enable-flex-matching t))
+          name-and-pos symbol-names position)
+      (unless ido-mode
+        (ido-mode 1)
+        (setq ido-enable-flex-matching t))
+      (while (progn
+               (imenu--cleanup)
+               (setq imenu--index-alist nil)
+               (ido-goto-symbol (imenu--make-index-alist))
+               (setq selected-symbol
+                     (ido-completing-read "Symbol? " symbol-names))
+                   (string= (car imenu--rescan-item) selected-symbol)))
+          (unless (and (boundp 'mark-active) mark-active)
+            (push-mark nil t nil))
+          (setq position (cdr (assoc selected-symbol name-and-pos)))
+          (cond
+           ((overlayp position)
+            (goto-char (overlay-start position)))
+           (t
+            (goto-char position)))))
+       ((listp symbol-list)
+        (dolist (symbol symbol-list)
+          (let (name position)
+            (cond
+             ((and (listp symbol) (imenu--subalist-p symbol))
+              (ido-goto-symbol symbol))
+             ((listp symbol)
+              (setq name (car symbol))
+              (setq position (cdr symbol)))
+             ((stringp symbol)
+              (setq name symbol)
+              (setq position
+                    (get-text-property 1 'org-imenu-marker symbol))))
+            (unless (or (null position) (null name)
+                        (string= (car imenu--rescan-item) name))
+              (add-to-list 'symbol-names name)
+              (add-to-list 'name-and-pos (cons name position))))))))
 ;;get rid of `find-file-read-only' and replace it with something
 ;; ;; more useful.
-(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
-
-
 
 
 
@@ -522,7 +715,6 @@
 (require 'browse-kill-ring)
 (setq browse-kill-ring-quit-action 'save-and-restore)
 (setq browse-kill-ring-highlight-current-entry t)
-(global-set-key "\C-cy" 'browse-kill-ring)
 
 
 ;(global-linum-mode 1)
@@ -557,30 +749,6 @@
 ;(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ;; ;; KEYBINDINGS
-(global-set-key "\C-cg" 'goto-line)
-                                        ;(global-set-key [f4] 'speedbar-get-focus)
-                                        ;(global-set-key [f4] 'speedbar-get-focus)
-(global-set-key (kbd "\C-cm") 'magit-status)   ;; ...git mode
-(global-set-key (kbd "<f4>") 'nav-toggle)
-(global-set-key [f5] 'buffer-menu)
-
-(global-set-key [end] 'end-of-line)
-(global-set-key [home] 'beginning-of-line)
-
-(global-set-key [next]    'pager-page-down)
-(global-set-key [prior]   'pager-page-up)
-;; Page down/up move the point, not the screen.
-;; In practice, this means that they can move the
-;; point to the beginning or end of the buffer.
-(global-set-key [next]
-                (lambda () (interactive)
-                  (condition-case nil (scroll-up)
-                    (end-of-buffer (goto-char (point-max))))))
-
-(global-set-key [prior]
-                (lambda () (interactive)
-                  (condition-case nil (scroll-down)
-                    (beginning-of-buffer (goto-char (point-min))))))
 (defun toggle-fullscreen (&optional f)
   (interactive)
   (let ((current-value (frame-parameter nil 'fullscreen)))
@@ -590,12 +758,9 @@
                            (progn (setq old-fullscreen current-value)
                                   'fullboth)))))
 
-(global-set-key [f11] 'toggle-fullscreen)
 
 
 
-(bind-key "C-x p" 'pop-to-mark-command)
-(setq set-mark-command-repeat-pop t)
 
 
 ;; ;; DICCTIONARIES
@@ -618,11 +783,6 @@
 (setq ebib-preload-bib-files
       (list "~/LitDB/ped.bib")
       )
-
-
-(global-set-key (kbd "<f8>") 'ispell-word)
-(global-set-key (kbd "C-<f8>") 'flyspell-mode)
-(global-set-key (kbd "C-<f9>") 'reftex-mode)
 
 ;;---------------------- ispell
 (define-key ctl-x-map "\C-i"
@@ -694,7 +854,6 @@ abort completely with `C-g'."
 
 
 ;; ;;--------------------------------- ibuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (setq ibuffer-default-sorting-mode 'major-mode)
 (setq ibuffer-expert t)
@@ -712,11 +871,6 @@ abort completely with `C-g'."
 (setq dired-dwim-target t)
 
 ;; https://github.com/magnars/multiple-cursors.el
-(global-set-key (kbd "C-c z") 'mc/edit-lines)
-(global-set-key (kbd "C-c i") 'mc/insert-numbers)
-(global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
 
 
 ;;-----
@@ -765,6 +919,38 @@ abort completely with `C-g'."
     (my-test-emacs)))
 
 (add-hook 'after-save-hook 'auto-test-emacs)
+
+(setq current-theme "dark")
+(defconst light-theme 'solarized-light)
+(defconst dark-theme 'zenburn)
+
+;(global-unset-key (kbd "C-c ."))
+
+
+;; Get the backtrace when uncaught errors occur.
+;(setq debug-on-error t)               ; Will be unset at the end.
+
+;; Hit `C-g' while it's frozen to get an Emacs Lisp backtrace.
+;(setq debug-on-quit t)                ; Will be unset at the end.
+
+;; will apply a dark theme if the room is dark, and a light theme if the room is
+;; bright
+;; (defun change-theme-for-lighting ()
+;;   (let* ((current-light-sensor-reading
+;;           (string-to-number
+;;            (shell-command-to-string "~/.emacs.d/lmutracker"))))
+;;     (if (< current-light-sensor-reading 100000)
+;;         (when (not (string-equal current-theme "dark"))
+;;           (load-theme dark-theme 1)
+;;           (setq current-theme "dark"))
+;;       (when (not (string-equal current-theme "light"))
+;;         (load-theme light-theme 1)
+;;         (setq current-theme "light")))))
+
+;; ;; probably want to run this less frequently than every second
+;; (run-with-timer 0 1 #'change-theme-for-lighting)
+
+
 
 ; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs

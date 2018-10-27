@@ -7,14 +7,14 @@
                                         ; todo ~/.emacs.d/plantuml.jar
 
                                         ;(require 'org-latex)
-(add-to-list 'org-modules 'org-mac-message)
-(setq org-mac-mail-account "Juelich")
-(defun my-mail-import ()
-  (let ((org-mac-mail-account "Juelich"))
-    (org-mac-message-insert-flagged "jsc.org" "Flagged mail")))
+;;(add-to-list 'org-modules 'org-mac-message)
+;;(setq org-mac-mail-account "Juelich")
+;; (defun my-mail-import ()
+;;   (let ((org-mac-mail-account "Juelich"))
+;;     (org-mac-message-insert-flagged "jsc.org" "Flagged mail")))
 
 
-(setq org-agenda-custom-commands 
+(setq org-agenda-custom-commands
       '(
         ("M" "Desk Work" tags-todo "MAIL" ;; (1) (2) (3) (4)
          ((org-agenda-files '(" ~/Dropbox/Orgfiles/org-files/jsc.org")) ;; (5)

@@ -20,6 +20,10 @@
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 
+;; powerline
+;(powerline-default-theme)
+;(setq powerline-arrow-shape 'curve)
+
 (setq user-full-name "M. Chraibi")
 (setq user-mail-address "m.chraibi@gmail.com")
 (set-default 'cursor-type 'bar)
@@ -28,12 +32,68 @@
 (setq-default cursor-type '(hbar . 1))
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
+;;----------------- KEYbindings --------------
 (global-set-key "\C-z" 'nil)
+(global-set-key (kbd "M-2") #'er/expand-region)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-c\C-k" 'kill-region)
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+(global-set-key (kbd "M-i") 'ido-goto-symbol)
+(global-set-key "\C-cy" 'browse-kill-ring)
+(global-set-key "\C-cg" 'goto-line)
+                                        ;(global-set-key [f4] 'speedbar-get-focus)
+                                        ;(global-set-key [f4] 'speedbar-get-focus)
+(global-set-key (kbd "\C-cm") 'magit-status)   ;; ...git mode
+                                        ;(global-set-key (kbd "<f4>") 'nav-toggle)
+(global-set-key (kbd "<f4>") 'projectile-speedbar-open-current-buffer-in-tree)
+(global-set-key [f5] 'buffer-menu)
+
+(global-set-key [end] 'end-of-line)
+(global-set-key [home] 'beginning-of-line)
+
+(global-set-key [next]    'pager-page-down)
+(global-set-key [prior]   'pager-page-up)
+;; Page down/up move the point, not the screen.
+;; In practice, this means that they can move the
+;; point to the beginning or end of the buffer.
+(global-set-key [next]
+                (lambda () (interactive)
+                  (condition-case nil (scroll-up)
+                    (end-of-buffer (goto-char (point-max))))))
+
+(global-set-key [prior]
+                (lambda () (interactive)
+                  (condition-case nil (scroll-down)
+                    (beginning-of-buffer (goto-char (point-min))))))
+(global-set-key [f11] 'toggle-fullscreen)
+
+(bind-key "C-x p" 'pop-to-mark-command)
+(setq set-mark-command-repeat-pop t)
+
+(global-set-key (kbd "<f8>") 'ispell-word)
+(global-set-key (kbd "C-<f8>") 'flyspell-mode)
+(global-set-key (kbd "C-<f9>") 'reftex-mode)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-c z") 'mc/edit-lines)
+(global-set-key (kbd "C-c i") 'mc/insert-numbers)
+(global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
+
+
+(global-set-key (kbd "M-o") 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(setq aw-background nil)
+
+;;-------------------------------------------
 ;; ;;; Make all yes-or-no questions as y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; (transient-mark-mode 1)
- (global-visual-line-mode 1) ; 1 for on, 0 for off.
+(global-visual-line-mode 1) ; 1 for on, 0 for off.
 
 (column-number-mode 1) ; show column number
 

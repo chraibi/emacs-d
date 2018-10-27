@@ -6,160 +6,35 @@
 
 ;(require 'cmake-project)
 ;(require 'cpputils-cmake)
-(require 'rtags)
+;(require 'rtags)
 ;; https://github.com/Andersbakken/rtags
 ;(cmake-ide-setup)
 
-(global-flycheck-mode)
+;(auto-complete-mode)
+;(global-flycheck-mode)
+
+(require 'modern-cpp-font-lock)
+(modern-c++-font-lock-global-mode t)
 
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
-(require 'popup)
-(require 'rtags-ac)
-;(rtags-start-process-unless-running)
-
-(setq c-auto-newline nil)
+;; (require 'popup)
+;; (setq c-auto-newline nil)
 
 
 (require 'hlinum)
 (hlinum-activate)
 (setq linum-format "%3d \u2502 ")
 
+                                        ;deactivate reftex
+(reftex-mode 0)
 
-
- (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
- (add-hook 'c++-mode-common-hook 'rtags-start-process-unless-running)
-
-
-;(rtags-find-references)			;
-;(rtags-diagnostics)
-(rtags-enable-standard-keybindings)
-;(rtags-imenu)				;
-;(rtags-location-stack-back)
-;(rtags-location-stack-forward)
-;(rtags-symbol-type)
-(rtags-print-dependencies)
-
-
-(eval-after-load 'cc-mode
-  '(progn
-     (require 'rtags)
-     (mapc (lambda (x)
-             (define-key c-mode-base-map
-               (kbd (concat "C-c r " (car x))) (cdr x)))
-           '(("." . rtags-find-symbol-at-point)
-             ("," . rtags-find-references-at-point)
-             ("v" . rtags-find-virtuals-at-point)
-             ("V" . rtags-print-enum-value-at-point)
-             ("/" . rtags-find-all-references-at-point)
-             ("Y" . rtags-cycle-overlays-on-screen)
-             (">" . rtags-find-symbol)
-             ("<" . rtags-find-references)
-             ("-" . rtags-location-stack-back)
-             ("+" . rtags-location-stack-forward)
-             ("D" . rtags-diagnostics)
-             ("G" . rtags-guess-function-at-point)
-             ("p" . rtags-set-current-project)
-             ("P" . rtags-print-dependencies)
-             ("e" . rtags-reparse-file)
-             ("E" . rtags-preprocess-file)
-             ("R" . rtags-rename-symbol)
-             ("M" . rtags-symbol-info)
-             ("S" . rtags-display-summary)
-             ("O" . rtags-goto-offset)
-             (";" . rtags-find-file)
-             ("F" . rtags-fixit)
-             ("X" . rtags-fix-fixit-at-point)
-             ("B" . rtags-show-rtags-buffer)
-             ("I" . rtags-imenu)
-             ("T" . rtags-taglist)))))
-
-
-;; (setq rtags-autostart-diagnostics t)
-;; (setq rtags-completions-enabled t)
-;; (rtags-enable-standard-keybindings c-mode-base-map)
-;; (add-hook 'c++-mode-hook
-;;           (lambda ()
-;;             (setq ac-sources '(ac-source-rtags)
-;;                   )))
-
-(require 'company)
-(global-company-mode)
-(push 'company-rtags company-backends)
-(define-key c-mode-base-map (kbd "<tab>") (function company-complete))
-
-;; (require 'flycheck-rtags)
-;; (defun my-flycheck-rtags-setup ()
-;;   (flycheck-select-checker 'rtags)
-;;   (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-;;   (setq-local flycheck-check-syntax-automatically nil))
-;; ;; c-mode-common-hook is also called by c++-mode
-;; (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
-
-
-;; (require 'rtags-helm)			;
-;; (setq rtags-use-helm t)
-
-
-;; (setq mf--source-file-extension "cpp")
-
-
-
-
-;;  ;-------------------------------
-;; (defun use-rtags (&optional useFileManager)
-;;   "Use rtags.  USEFILEMANAGER."
-;;   (and (rtags-executable-find "rc")
-;;        (cond ((not (gtags-get-rootpath)) t)
-;;              ((and (not (eq major-mode 'c++-mode))
-;;                    (not (eq major-mode 'c-mode))) (rtags-has-filemanager))
-;;              (useFileManager (rtags-has-filemanager))
-;;              (t (rtags-is-indexed)))))
-
-;; (defun tags-find-symbol-at-point (&optional prefix)
-;;   (interactive "P")
-;;   (if (and (not (rtags-find-symbol-at-point prefix)) rtags-last-request-not-indexed)
-;;       (gtags-find-tag)))
-;; (defun tags-find-references-at-point (&optional prefix)
-;;   (interactive "P")
-;;   (if (and (not (rtags-find-references-at-point prefix)) rtags-last-request-not-indexed)
-;;       (gtags-find-rtag)))
-;; (defun tags-find-symbol ()
-;;   (interactive)
-;;   (call-interactively (if (use-rtags) 'rtags-find-symbol 'gtags-find-symbol)))
-;; (defun tags-find-references ()
-;;   (interactive)
-;;   (call-interactively (if (use-rtags) 'rtags-find-references 'gtags-find-rtag)))
-;; (defun tags-find-file ()
-;;   (interactive)
-;;   (call-interactively (if (use-rtags t) 'rtags-find-file 'gtags-find-file)))
-;; (defun tags-imenu ()
-;;   (interactive)
-;;   (call-interactively (if (use-rtags t) 'rtags-imenu 'idomenu)))
-
-;; (define-key c-mode-base-map (kbd "M-.") (function tags-find-symbol-at-point))
-;; (define-key c-mode-base-map (kbd "M-,") (function tags-find-references-at-point))
-;; (define-key c-mode-base-map (kbd "M-;") (function tags-find-file))
-;; (define-key c-mode-base-map (kbd "C-.") (function tags-find-symbol))
-;; (define-key c-mode-base-map (kbd "C-,") (function tags-find-references))
-;; (define-key c-mode-base-map (kbd "C-<") (function rtags-find-virtuals-at-point))
-;; (define-key c-mode-base-map (kbd "M-i") (function tags-imenu))
-
-;; (define-key global-map (kbd "M-.") (function tags-find-symbol-at-point))
-;; (define-key global-map (kbd "M-,") (function tags-find-references-at-point))
-;; (define-key global-map (kbd "M-;") (function tags-find-file))
-;; (define-key global-map (kbd "C-.") (function tags-find-symbol))
-;; (define-key global-map (kbd "C-,") (function tags-find-references))
-;; (define-key global-map (kbd "C-<") (function rtags-find-virtuals-at-point))
-;; (define-key global-map (kbd "M-i") (function tags-imenu))
-
-
-
-
-
+; activate snippets
+(yas-global-mode +1)
 ;-------------------------------
+;(c-set-offset 'substatement-open 0)
 
 (c-add-style "my-style"
              '("stroustrup"
@@ -241,26 +116,26 @@ unless return was pressed outside the comment"
   (interactive)
   (setq last (point))
   (setq is-inside
-	(if (search-backward "*/" nil t)
-	    ;; there are some comment endings - search forward
-	    (if (search-forward "/*" last t)
-		't
-	      'nil)
-	  ;; it's the only comment - search backward
-	  (goto-char last)
-	  (if (search-backward "/*" nil t)
-	      't
-	    'nil
-	    )
-	  )
-	)
+        (if (search-backward "*/" nil t)
+            ;; there are some comment endings - search forward
+            (if (search-forward "/*" last t)
+                't
+              'nil)
+          ;; it's the only comment - search backward
+          (goto-char last)
+          (if (search-backward "/*" nil t)
+              't
+            'nil
+            )
+          )
+        )
   ;; go to last char position
   (goto-char last)
   ;; the point is inside some comment, insert `*'
   (if is-inside
       (progn
-	(insert "\n*")
-	(indent-for-tab-command))
+        (insert "\n*")
+        (indent-for-tab-command))
     ;; else insert only new-line
     (insert "\n")))
 (add-hook 'c++-mode-hook (lambda ()
@@ -270,6 +145,17 @@ unless return was pressed outside the comment"
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
 ;; (semantic-mode 1)
 ;; (require 'stickyfunc-enhance)
+
+; help on hover
+;(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+;(add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
+;(setq c-eldoc-cpp-command "/usr/bin/clang")
+
+;; turn on semantic
+;(semantic-mode 1)
+
+(global-set-key (kbd "C-c /") 'counsel-etags-grep-symbol-at-point)
+
 
 (message "Provide setup-cc")
 (provide 'setup-cc)
