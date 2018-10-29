@@ -1,7 +1,6 @@
 ;;; package ---- summary
 ;;; Commentary:
 
-
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -20,7 +19,6 @@
 ;; frame font
 ;; Setting English Font
 (setq multi-term-program "/bin/zsh")
-
 
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
@@ -47,10 +45,8 @@
   (global-set-key (kbd "M-s") 'locate)
  )
 
-
 (defvar *emacs-load-start* (current-time))
 ;; My location for external packages.
-
 
 (getenv "PATH")
 (setenv "PATH"
@@ -59,16 +55,11 @@
          "/usr/local/bin/" ":"
          (getenv "PATH")))
 
-
-
-
-
 (setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
 
 (setq py-install-directory "~/.emacs.d/lisp/pdee-master")
 (add-to-list 'load-path py-install-directory)
 (setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
-
 
 ;; Always load the newer .el or .elc file.
 (setq load-prefer-newer t)
@@ -155,8 +146,6 @@
                      )
       )
 
-
-
 ; activate all the packages (in particular autoloads)
 
 (setq package-enable-at-startup nil) (package-initialize)
@@ -205,7 +194,6 @@
 
 ;; (require 'sb-imenu)
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -228,6 +216,25 @@
 ;; (add-hook 'after-init-hook 'sml/setup) ;todo
 
 (message "load packages")
+
+;;-------------------------
+;; (require 'xah-fly-keys)
+;; (xah-fly-keys-set-layout "qwerty") ; required if you use qwerty
+
+;; possible layout values:
+;; "qwerty"
+;; "qwerty-abnt"
+;; "qwertz"
+;; "dvorak"
+;; "programer-dvorak"
+;; "colemak"
+;; "colemak-mod-dh"
+;; "workman"
+;; dvorak is the default
+
+;; (xah-fly-keys 1)
+
+;;-------------------------
 
                                         ;-------------------------------------------------
 (use-package company-lsp
@@ -291,7 +298,6 @@
   )
 (setq flycheck-idle-change-delay 10)
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
-
 
 (require 'lsp-imenu)
 (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
@@ -375,7 +381,6 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-
 (use-package setup-ivy
   :defer 1
   )
@@ -402,7 +407,6 @@
   (server-start))
 )
 
-
 (use-package multiple-cursors
   ;; Loads after 2 second of idle time.
   :defer 5)
@@ -425,7 +429,6 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-
 ;; (defun cc-mode-setup ()
 ;;   (message "Custom cc hook run")
 ;;   (load-library "setup-cc"))
@@ -441,7 +444,6 @@
 (use-package setup-tex
   ;; Loads after 2 second of idle time.
   :defer 3)
-
 
 (use-package yasnippet
   ;; Loads after 2 second of idle time.
@@ -461,7 +463,6 @@
    ("C-x <down>" . windmove-down)
    ))
 
-
 (use-package guide-key
   :defer 3
   :diminish guide-key-mode
@@ -470,7 +471,6 @@
   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
   (guide-key-mode 1)))  ; Enable guide-key-mode
 
-
 (use-package undo-tree
   :diminish undo-tree-mode
   :config
@@ -478,7 +478,6 @@
     (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)))
-
 
 ;; (require 'semantic/ia)
 ;(require 'xcscope)
@@ -533,8 +532,6 @@
 ;; overwrite selected text
 (delete-selection-mode t)
 
-
-
 ;; When popping the mark, continue popping until the cursor
 ;; actually moves
 (defadvice pop-to-mark-command (around ensure-new-position activate)
@@ -544,10 +541,8 @@
 
 (setq set-mark-command-repeat-pop t)
 
-
 ;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
 (setq prettify-symbols-unprettify-at-point 'right-edge)
-
 
 ;;store link to message if in header view, not to header query
 ;(setq org-mu4e-link-query-in-headers-mode nil)
@@ -558,7 +553,6 @@
 ;;(package-initialize)
 ;----------------------------
 ;;-----------------------------
-
 
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
@@ -580,20 +574,14 @@
         (eol  (save-excursion (goto-char end) (line-end-position))))
     (comment-region bol end arg)))
 
-
-
-
 ;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
 (setq x-select-enable-clipboard t)
 
 ;; after mouse selection in X11, you can paste by `yank' in emacs
 (setq x-select-enable-primary t)
 
-
-
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-
 
 ;; ;;-------------------------- Macros
 
@@ -602,14 +590,12 @@
         (split-height-threshold nil))
     ad-do-it))
 
-
 (defvar server-buffer-clients)
 (when (and (fboundp 'server-start) (string-equal (getenv "TERM") 'xterm))
   (server-start)
   (defun fp-kill-server-with-buffer-routine ()
     (and server-buffer-clients (server-done)))
   (add-hook 'kill-buffer-hook 'fp-kill-server-with-buffer-routine))
-
 
 (setq flymake-gui-warnings-enabled nil)
 
@@ -642,8 +628,13 @@
   '(ace-jump-mode-enable-mark-sync))
 (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
 
-;------------------------------
+(autoload
+  'ace-window
+  "ace-window"
+  "Emacs quick move minor mode"
+  t)
 
+;------------------------------
 
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
@@ -652,7 +643,6 @@
   (save-some-buffers)
   (kill-emacs)
   )
-
 
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
@@ -704,18 +694,14 @@
 ;;get rid of `find-file-read-only' and replace it with something
 ;; ;; more useful.
 
-
-
 ;; (nav-disable-overeager-window-splitting)
 
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
-
 
 ;; Browse kill ring
 (require 'browse-kill-ring)
 (setq browse-kill-ring-quit-action 'save-and-restore)
 (setq browse-kill-ring-highlight-current-entry t)
-
 
 ;(global-linum-mode 1)
 
@@ -725,9 +711,7 @@
   )
 (add-hook 'org-mode-hook 'nolinum)
 
-
 (setq ical-pull-list `("https://www.google.com/calendar/ical/s1ilvt2buhj2adrg7363t4k77g%40group.calendar.google.com/private-8ed0f1ebe7b7fcce8ba154c6d823d71c/basic.ics"))
-
 
 (defun aj-toggle-fold ()
   "Toggle fold all lines larger than indentation on current line."
@@ -757,11 +741,6 @@
                              (if (boundp 'old-fullscreen) old-fullscreen nil)
                            (progn (setq old-fullscreen current-value)
                                   'fullboth)))))
-
-
-
-
-
 
 ;; ;; DICCTIONARIES
 (let ((langs '("american" "francais" "german")))
@@ -841,7 +820,6 @@ abort completely with `C-g'."
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-
 ;; ;;------ cmake support
 ;; Add cmake listfile names to the mode list.
 (setq auto-mode-alist
@@ -850,17 +828,13 @@ abort completely with `C-g'."
        '(("\\.cmake\\'" . cmake-mode))
        auto-mode-alist))
 
-(autoload 'cmake-mode "~/.emacs.d/lisp/cmake-mode.el" t)
 
-
+(require 'cmake-mode)
 ;; ;;--------------------------------- ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (setq ibuffer-default-sorting-mode 'major-mode)
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
-
-
-
 
 ;; ;; dired
 (setq dired-dwim-target t)
@@ -872,13 +846,11 @@ abort completely with `C-g'."
 
 ;; https://github.com/magnars/multiple-cursors.el
 
-
 ;;-----
 (make-variable-buffer-local 'compile-command)
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
-
 
 ;; Use a hook so the message doesn't get clobbered by other messages.
 (add-hook 'emacs-startup-hook
@@ -888,8 +860,6 @@ abort completely with `C-g'."
                              (float-time
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
-
-
 
 (defun my-test-emacs ()
   (interactive)
@@ -913,7 +883,6 @@ abort completely with `C-g'."
         (insert output)
         (search-backward "ERROR!")))))
 
-
 (defun auto-test-emacs ()
   (when (eq major-mode 'emacs-lisp-mode)
     (my-test-emacs)))
@@ -925,7 +894,6 @@ abort completely with `C-g'."
 (defconst dark-theme 'zenburn)
 
 ;(global-unset-key (kbd "C-c ."))
-
 
 ;; Get the backtrace when uncaught errors occur.
 ;(setq debug-on-error t)               ; Will be unset at the end.
@@ -949,8 +917,6 @@ abort completely with `C-g'."
 
 ;; ;; probably want to run this less frequently than every second
 ;; (run-with-timer 0 1 #'change-theme-for-lighting)
-
-
 
 ; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
