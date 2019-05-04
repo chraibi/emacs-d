@@ -75,7 +75,7 @@
   (package-initialize)
   )
 
-;; Setup packages
+; Setup packages
 ;(require 'setup-package)
 ; list the packages
 (setq package-list '(
@@ -420,6 +420,13 @@
 
 (require 'my-core-settings)
 
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+(setq doom-modeline-mu4e nil)
+                                        ;----- moodline
+;; (require 'mood-line)
+;; (mood-line-activate)
 (defun python-mode-setup ()
   (message "Custom python hook run")
   (load-library "setup-python"))

@@ -18,8 +18,10 @@
 (setq sml/no-confirm-load-theme t)
 (add-hook 'after-init-hook 'display-time)
 (setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-
+(setq display-time nil)
+(setq display-time-day-and-date nil)
+(setq mode-line-mule-info nil)
+(display-time-mode 0)
 ;; powerline
 ;(powerline-default-theme)
 ;(setq powerline-arrow-shape 'curve)
@@ -145,7 +147,7 @@
 ;; (require 'auto-indent-mode)
 ;; (auto-indent-global-mode)
 
-
+;(global-set-key (kbd "C-SPC") 'set-mark-command)
 
 (provide 'my-core-settings)
 ;;; my-core-settings.el ends here
