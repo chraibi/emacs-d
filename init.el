@@ -169,11 +169,11 @@
                                      ;; you will be asked before the abbreviations are saved
 
 (cond (( >= emacs-major-version 24)
-       (message "load zenburn") ;zenburn
-       ;; (message "load zenburn") ;zenburn
-       ;; (load-theme 'solarized-light t)
+;;       (message "load zenburn") ;zenburn
+       (message "load solarized-light") ;zenburn
+       (load-theme 'solarized-light t)
        ;;(load-theme 'zenburn t)
-       (load-theme 'zenburn t)
+       ;; (load-theme 'zenburn t)
        (if (member "Monaco" (font-family-list))
            (set-face-attribute
             'default nil :font "Monaco 18")
@@ -214,6 +214,10 @@
 ;(diminish 'auto-fill-function-mode)
 ;(diminish 'pair-mode)
 ;; (add-hook 'after-init-hook 'sml/setup) ;todo
+
+(beacon-mode 1)
+(setq beacon-push-mark 35)
+(setq beacon-color "#666600")
 
 (message "load packages")
 
@@ -423,7 +427,7 @@
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
-(setq doom-modeline-mu4e nil)
+;; (setq doom-modeline-mu4e nil)
                                         ;----- moodline
 ;; (require 'mood-line)
 ;; (mood-line-activate)
@@ -815,7 +819,7 @@ abort completely with `C-g'."
 
 ;;--------------------------------------- PAREN
 
-(setq-default truncate-lines t) ;; will trucate lines if they are too long.
+;(setq-default truncate-lines t) ;; will trucate lines if they are too long.
 (transient-mark-mode t) ;; will highlight region between point and mark.
 (setq-default global-visual-line-mode t)
 (setq show-paren-style 'parenthesis) ; highlight just brackets
