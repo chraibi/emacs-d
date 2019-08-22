@@ -15,6 +15,7 @@
 (setq initial-scratch-message nil)
 (setq custom-safe-themes t)
 ;; use smart line
+
 (setq sml/no-confirm-load-theme t)
 (add-hook 'after-init-hook 'display-time)
 (setq display-time-24hr-format t)
@@ -30,8 +31,10 @@
 (setq user-mail-address "m.chraibi@gmail.com")
 (set-default 'cursor-type 'bar)
 (setq cursor-type 'bar)
-(blink-cursor-mode 1)
 (setq-default cursor-type '(hbar . 1))
+(set-cursor-color "#ff0000")
+;; (blink-cursor-mode 1)
+
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 ;;----------------- KEYbindings --------------
@@ -141,11 +144,6 @@
 (set-face-underline-p 'highlight t)
 
 
-
-;; ;; this variable
-;;(setq auto-indent-on-visit-file t) ;; If you want auto-indent on for files
-;; (require 'auto-indent-mode)
-;; (auto-indent-global-mode)
 
 ;(global-set-key (kbd "C-SPC") 'set-mark-command)
 
