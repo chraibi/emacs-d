@@ -32,7 +32,7 @@
 (reftex-mode 0)
 
 ; activate snippets
-(yas-global-mode +1)
+;(yas-global-mode +1)
 ;-------------------------------
 ;(c-set-offset 'substatement-open 0)
 
