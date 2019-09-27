@@ -200,8 +200,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ag-executable "/usr/local/bin/ag")
- '(c-basic-offset 6)
- '(c-default-style (quote ((c-mode . "stroustrup") (c++-mode . "stroustrup"))))
+; '(c-basic-offset 6)
+; '(c-default-style (quote ((c-mode . "stroustrup") (c++-mode . "stroustrup"))))
  '(ecb-options-version "2.40")
  '(python-indent-guess-indent-offset nil)
  '(sml/battery-format " [ %p ] ")
@@ -217,7 +217,7 @@
 
 (beacon-mode 1)
 (setq beacon-push-mark 35)
-(setq beacon-color "#666600")
+(setq beacon-color "#e56911")
 
 (message "load packages")
 
@@ -288,14 +288,6 @@
   :config
   (when (equal system-type 'darwin)
     (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd"))
-  (when (string= (system-name) "proton")
-    (setq lsp-clangd-executable "/usr/bin/clangd"))
-  (when (string= (system-name) "muon")
-    (setq lsp-clangd-executable "/usr/bin/clangd"))
-  (when (string= (system-name) "centon")
-    (setq lsp-clangd-executable "/home/ddavis/Software/llvm/installs/7.0.0/bin/clangd"))
-  (when (string= (system-name) "grads-18.internal.phy.duke.edu")
-    (setq lsp-clangd-executable "/bin/clangd"))
   (add-hook 'c++-mode-hook 'lsp-clangd-c++-enable)
   (add-hook 'c++-mode-hook 'clangd-xref-manual)
   (add-hook 'c++-mode-hook 'flycheck-mode)
@@ -310,6 +302,7 @@
   '(progn
      ;; counsel-etags-ignore-directories does NOT support wildcast
      (add-to-list 'counsel-etags-ignore-directories "build")
+     (add-to-list 'counsel-etags-ignore-directories "build*")
      (add-to-list 'counsel-etags-ignore-directories "lib")
      (add-to-list 'counsel-etags-ignore-directories "demos")
      (add-to-list 'counsel-etags-ignore-directories "inifiles")
@@ -423,6 +416,14 @@
 ;(require 'multiple-cursors)
 
 (require 'my-core-settings)
+
+(load "/usr/local/Cellar/clang-format/2019-01-18/share/clang/clang-format.el")
+;(require 'clang-format)
+(global-set-key (kbd "C-c r") 'clang-format-region)
+(global-set-key (kbd "C-c u") 'clang-format-buffer)
+;(setq clang-format-style-option "llvm")
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
 
 
 (require 'doom-modeline)

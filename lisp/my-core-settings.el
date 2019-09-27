@@ -4,7 +4,8 @@
 ;;; Commentary:
 
 (yas-global-mode 0)
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;https://batsov.com/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/
+;(add-hook 'before-save-hook 'whitespace-cleanup)
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -17,12 +18,12 @@
 ;; use smart line
 
 (setq sml/no-confirm-load-theme t)
-(add-hook 'after-init-hook 'display-time)
-(setq display-time-24hr-format t)
-(setq display-time nil)
-(setq display-time-day-and-date nil)
-(setq mode-line-mule-info nil)
-(display-time-mode 0)
+;(add-hook 'after-init-hook 'display-time)
+;(setq display-time-24hr-format t)
+;(setq display-time nil)
+;(setq display-time-day-and-date nil)
+;(setq mode-line-mule-info nil)
+;(display-time-mode 0)
 ;; powerline
 ;(powerline-default-theme)
 ;(setq powerline-arrow-shape 'curve)
