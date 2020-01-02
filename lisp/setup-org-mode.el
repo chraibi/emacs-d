@@ -1,9 +1,29 @@
 (require 'org)
-(require 'org-journal)
+;(require 'org-journal)
 (require 'org-fstree)
 (require 'remember)
 ;; (require 'color-theme)
 (require 'org-crypt)
+
+
+(use-package org-journal
+  :ensure t
+  :defer t
+  :custom
+  (org-journal-dir "/Users/chraibi/Dropbox/Orgfiles/org-files/journal")
+  (org-journal-date-format "%A, %d %B %Y")
+  )
+
+(setq org-journal-enable-agenda-integration t
+      org-icalendar-store-UID t
+      org-icalendar-include-todo "all"
+      org-icalendar-combined-agenda-file "/Users/chraibi/Dropbox/Orgfiles/org-files/cal_private.ics")
+
+(setq org-journal-file-type "weekly")
+
+
+
+
                                         ; todo ~/.emacs.d/plantuml.jar
 
                                         ;(require 'org-latex)

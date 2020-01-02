@@ -200,10 +200,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ag-executable "/usr/local/bin/ag")
-; '(c-basic-offset 6)
-; '(c-default-style (quote ((c-mode . "stroustrup") (c++-mode . "stroustrup"))))
  '(ecb-options-version "2.40")
- '(python-indent-guess-indent-offset nil)
  '(sml/battery-format " [ %p ] ")
  '(sml/show-client t)
  )
@@ -239,92 +236,22 @@
 ;; (xah-fly-keys 1)
 
 ;;-------------------------
-
-                                        ;-------------------------------------------------
-(use-package company-lsp
-  :ensure t
+(use-package yasnippet
+  ;; Loads after 1 second of idle time.
+  :defer 1
   :config
-  (require 'company-lsp)
-  (setq company-clang-executable "/usr/local/opt/llvm/bin/clang")
-  (push 'company-lsp company-backends)
-  (add-hook 'after-init-hook 'global-company-mode)
-  )
+  (yas/load-directory "~/.emacs.d/snippets")
+)
 
-(use-package lsp-mode
-  :ensure t
-  :config
-  (require 'lsp-mode)
-  (setq lsp-message-project-root-warning t)
-  )
-
-(use-package lsp-ui
-  :ensure t
-  :config
-  (require 'lsp-ui)
-  (setq lsp-ui-doc-enable nil
-        lsp-ui-peek-enable nil
-        lsp-ui-sideline-enable nil
-        lsp-ui-imenu-enable t
-        lsp-ui-flycheck-enable nil
-        lsp-ui-flycheck-live-reporting nil
-        )
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  )
-
-;; (use-package lsp-python
-;;   :ensure t
-;;   :config
-;;   (require 'lsp-python)
-;;   (add-hook 'python-mode-hook #'lsp-python-enable)
-;;   (add-hook 'python-mode-hook 'flycheck-mode)
-;;   )
 
 (defun clangd-xref-manual ()
   (setq-local xref-backend-functions (list #'lsp--xref-backend))
   )
 
-(use-package lsp-clangd
-  :ensure t
-  :config
-  (when (equal system-type 'darwin)
-    (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd"))
-  (add-hook 'c++-mode-hook 'lsp-clangd-c++-enable)
-  (add-hook 'c++-mode-hook 'clangd-xref-manual)
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-  )
-(setq flycheck-idle-change-delay 10)
-(setq flycheck-check-syntax-automatically '(mode-enabled save))
+;-------------------------------------------------
 
-(require 'lsp-imenu)
-(add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
-                                        ;-------------------------------------------------
-(eval-after-load 'counsel-etags
-  '(progn
-     ;; counsel-etags-ignore-directories does NOT support wildcast
-     (add-to-list 'counsel-etags-ignore-directories "build")
-     (add-to-list 'counsel-etags-ignore-directories "build*")
-     (add-to-list 'counsel-etags-ignore-directories "lib")
-     (add-to-list 'counsel-etags-ignore-directories "demos")
-     (add-to-list 'counsel-etags-ignore-directories "inifiles")
-     (add-to-list 'counsel-etags-ignore-directories "scripts")
-     (add-to-list 'counsel-etags-ignore-directories "visiLibity")
-     (add-to-list 'counsel-etags-ignore-directories "Utest")
-     (add-to-list 'counsel-etags-ignore-directories "poly2tri")
-     (add-to-list 'counsel-etags-ignore-directories "bin")
-     (add-to-list 'counsel-etags-ignore-directories "cnpy")
-     (add-to-list 'counsel-etags-ignore-directories "xsd")
-     (add-to-list 'counsel-etags-ignore-directories "cmake_build_debug")
-     (add-to-list 'counsel-etags-ignore-directories "doc")
-     (add-to-list 'counsel-etags-ignore-directories "cmake_modules")
-     ;; counsel-etags-ignore-filenames supports wildcast
-     (add-to-list 'counsel-etags-ignore-filenames "TAGS")
-     (add-to-list 'counsel-etags-ignore-filenames "compile_commands.json")
-     (add-to-list 'counsel-etags-ignore-filenames "LICENSE")
-     (add-to-list 'counsel-etags-ignore-filenames "Makefile.pgi")
-     (add-to-list 'counsel-etags-ignore-filenames "*.txt")
-     (add-to-list 'counsel-etags-ignore-filenames "packages.config")
-     (add-to-list 'counsel-etags-ignore-filenames "*.md")
-     (add-to-list 'counsel-etags-ignore-filenames "*.json")))
+
+
 ;; Don't ask before rereading the TAGS files if they have changed
 (setq tags-revert-without-query t)
 ;; Don't warn when TAGS files are large
@@ -336,13 +263,6 @@
               'counsel-etags-virtual-update-tags 'append 'local)))
                                         ;DEFINE
 
-;;   "M-x counsel-etags-scan-code" to create tags file
-;;   "M-x counsel-etags-grep" to grep
-;;   "M-x counsel-etags-grep-symbol-at-point" to grep the symbol at point
-;;   "M-x counsel-etags-recent-tag" to open recent tag
-;;   "M-x counsel-etags-find-tag" to two step tag matching use regular expression and filter
-;;   "M-x counsel-etags-list-tag" to list all tags
-
                                         ;-------------------------------------------------------------------
 
 (message "load packages")
@@ -351,6 +271,9 @@
 ;(setq projectile-completion-system 'ivy)
 
 ;; -------------------- require
+
+
+
 (require 'cl)
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
 ;(require 'paren)
@@ -417,13 +340,6 @@
 
 (require 'my-core-settings)
 
-(load "/usr/local/Cellar/clang-format/2019-01-18/share/clang/clang-format.el")
-;(require 'clang-format)
-(global-set-key (kbd "C-c r") 'clang-format-region)
-(global-set-key (kbd "C-c u") 'clang-format-buffer)
-;(setq clang-format-style-option "llvm")
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
 
 
 (require 'doom-modeline)
@@ -437,9 +353,9 @@
   (load-library "setup-python"))
 (add-hook 'python-mode-hook 'python-mode-setup)
 
-(use-package python-cc
-  ;; Loads after 2 second of idle time.
-  :defer 2)
+;; (use-package python-cc
+;;   ;; Loads after 2 second of idle time.
+;;   :defer 2)
 
 ;; (defun cc-mode-setup ()
 ;;   (message "Custom cc hook run")
@@ -457,12 +373,6 @@
   ;; Loads after 2 second of idle time.
   :defer 3)
 
-(use-package yasnippet
-  ;; Loads after 2 second of idle time.
-  :defer 5
-  :config
-  (yas/load-directory "~/.emacs.d/snippets")
-)
 
 (use-package winner
   :defer 2)

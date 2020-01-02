@@ -2,7 +2,7 @@
 ;;; Commentary:
 
 (require 'python)
-(require 'setup-hlinum)
+;(require 'setup-hlinum)
 (message "Activate python mode")
 (package-initialize)
 ;;; Code:
@@ -14,7 +14,7 @@
 (setq indetn-tabs-mode nil)
 (setq python-indent-guess-indent-offset 1)
 (linum-mode 1)
-;(elpy-mode 1)
+(elpy-mode 1)
 (auto-complete-mode 1)
 (setq python-indent-offset 4)
 
@@ -26,7 +26,7 @@
 (defun flycheck-python-setup ()
   (flycheck-mode)
   )
-(add-hook 'python-mode-hook #'flycheck-python-setup)
+;(add-hook 'python-mode-hook #'flycheck-python-setup)
 
 
 ;; ;; Automatically remove trailing whitespace when file is saved.
