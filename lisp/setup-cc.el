@@ -4,6 +4,8 @@
 
 (message "Enter setup-cc")
 (reftex-mode 0)
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 (require 'hlinum)
 (linum-mode)
 (setq linum-format "%3d \u2502 ")
@@ -13,7 +15,6 @@
   :ensure t
   :init
   (global-flycheck-mode t)
-  (global-flycheck-mode)
   (setq flycheck-idle-change-delay 10)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   )
@@ -29,6 +30,22 @@
   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
 
 
+;;----------------- ccls
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "ccls")
+  (setq lsp-prefer-flymake nil)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  :hook ((c++-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
+(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.3/bin/ccls")
+
+;;----------------
+
+
+
 ;; ---- lsp-mode
 (use-package lsp-mode
   :ensure t
@@ -36,9 +53,14 @@
   :custom
   (lsp-auto-guess-root nil)
   (lsp-enable-snippet nil)
+  (lsp-enable-file-watchers)
+  (lsp-clients-clangd-executable "/usr/local/Cellar/llvm/9.0.0/bin/clangd")
   (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
   :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
-  :hook ((c-mode c++-mode) . lsp))
+  :hook ((++-mode) . lsp))
+
+
+;; ;; (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=info" "-pretty" "-resource-dir=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0"))
 
 
 (use-package lsp-ui
@@ -69,22 +91,17 @@
   (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
     (setq mode-line-format nil)))
 
+
+
+
+
 (require 'helm-lsp)
 (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
-
-
-;;(setq lsp-clangd-executable "clangd-6.0")
-;;(setq lsp-clients-clangd-executable "clangd-6.0")
-
-
-(use-package ccls
-  :hook ((c-mode c++-mode) .
-         (lambda () (require 'ccls) (lsp))))
-
 (lsp--client-capabilities)
-(setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
-(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.3/bin/ccls")
 
+
+
+(setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
 
 
 
@@ -96,9 +113,9 @@
 :config
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 3)
-;; (setq company-clang-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang")
 (global-company-mode t)
 )
+(add-hook 'after-init-hook 'global-company-mode)
 
 (use-package company-lsp
   :ensure t
@@ -106,57 +123,11 @@
  (push 'company-lsp company-backends)
 )
 
-;; ---------------- counsel-etags
-(use-package counsel-etags
-  :ensure t
-  :bind (("C-]" . counsel-etags-find-tag-at-point))
-  :init
-  (add-hook 'prog-mode-hook
-        (lambda ()
-          (add-hook 'after-save-hook
-            'counsel-etags-virtual-update-tags 'append 'local)))
-  :config
-  (setq counsel-etags-update-interval 60)
-  (add-to-list 'counsel-etags-ignore-directories "build"))
-
-
-(eval-after-load 'counsel-etags
-  '(progn
-     ;; counsel-etags-ignore-directories does NOT support wildcast
-     (add-to-list 'counsel-etags-ignore-directories "build")
-     (add-to-list 'counsel-etags-ignore-directories "lib")
-     (add-to-list 'counsel-etags-ignore-directories "demos")
-     (add-to-list 'counsel-etags-ignore-directories "inifiles")
-     (add-to-list 'counsel-etags-ignore-directories "scripts")
-     (add-to-list 'counsel-etags-ignore-directories "visiLibity")
-     (add-to-list 'counsel-etags-ignore-directories "Utest")
-     (add-to-list 'counsel-etags-ignore-directories "poly2tri")
-     (add-to-list 'counsel-etags-ignore-directories "bin")
-     (add-to-list 'counsel-etags-ignore-directories "cnpy")
-     (add-to-list 'counsel-etags-ignore-directories "xsd")
-     (add-to-list 'counsel-etags-ignore-directories "cmake_build_debug")
-     (add-to-list 'counsel-etags-ignore-directories "doc")
-     (add-to-list 'counsel-etags-ignore-directories "cmake_modules")
-     ;; counsel-etags-ignore-filenames supports wildcast
-     (add-to-list 'counsel-etags-ignore-filenames "TAGS")
-     (add-to-list 'counsel-etags-ignore-filenames "compile_commands.json")
-     (add-to-list 'counsel-etags-ignore-filenames "LICENSE")
-     (add-to-list 'counsel-etags-ignore-filenames "Makefile.pgi")
-     (add-to-list 'counsel-etags-ignore-filenames "*.txt")
-     (add-to-list 'counsel-etags-ignore-filenames "*.xml")
-     (add-to-list 'counsel-etags-ignore-filenames "packages.config")
-     (add-to-list 'counsel-etags-ignore-filenames "*.md")
-     (add-to-list 'counsel-etags-ignore-filenames "*.json")))
-
-
-
 
 (require 'modern-cpp-font-lock)
 (modern-c++-font-lock-global-mode t)
 
 
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
 ;; (require 'popup)
 ;; (setq c-auto-newline nil)
@@ -258,21 +229,6 @@ unless return was pressed outside the comment"
     (insert "\n")))
 (add-hook 'c++-mode-hook (lambda ()
   (local-set-key "\r" 'my-javadoc-return)))
-
-;; probleme mit python
-;; (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-;; (semantic-mode 1)
-;; (require 'stickyfunc-enhance)
-
-; help on hover
-;(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
-;(add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
-;(setq c-eldoc-cpp-command "/usr/bin/clang")
-
-;; turn on semantic
-;(semantic-mode 1)
-
-(global-set-key (kbd "C-c /") 'counsel-etags-grep-symbol-at-point)
 
 
 (message "Provide setup-cc")

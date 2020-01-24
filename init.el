@@ -357,10 +357,6 @@
 ;;   ;; Loads after 2 second of idle time.
 ;;   :defer 2)
 
-;; (defun cc-mode-setup ()
-;;   (message "Custom cc hook run")
-;;   (load-library "setup-cc"))
-;; (add-hook 'c++-mode 'cc-mode-setup)
 
 (use-package setup-cc
   ;; Loads after 2 second of idle time.
