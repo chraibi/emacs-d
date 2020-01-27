@@ -87,14 +87,20 @@
                      ag
                      auctex-latexmk
                      org-journal
-                     org-fstree
+;                     org-fstree
                      remember
                      color-theme
                      auctex
                      yasnippet
                      expand-region
                      multiple-cursors
-                     dired+
+		     solarized-theme
+		     beacon ; highlight cursor
+		     projectile
+		     doom-modeline
+		     dired-details
+		     diminish
+;                     dired+
                      ;sx
                      ;linum
                      ;hlinum
