@@ -102,9 +102,12 @@
 		     diminish
 ;                     dired+
                      ;sx
-                     ;linum
-                     ;hlinum
-                     server
+                                        ;linumber
+                     flycheck
+                     flycheck-clang-tidy
+                     modern-cpp-font-lock
+                     ccls
+                     counsel-etags
                      nav
                      recentf
                      fill-column-indicator
@@ -148,7 +151,7 @@
                      company-lsp
                      lsp-ui
                      ace-window
-
+                     w32-browser
                      )
       )
 
@@ -172,7 +175,9 @@
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
 
 (setq save-abbrevs t)              ;; save abbrevs when files are saved
-                                     ;; you will be asked before the abbreviations are saved
+;; you will be asked before the abbreviations are saved
+
+
 
 (cond (( >= emacs-major-version 24)
 ;;       (message "load zenburn") ;zenburn
@@ -362,6 +367,16 @@
 ;; (use-package python-cc
 ;;   ;; Loads after 2 second of idle time.
 ;;   :defer 2)
+
+(add-hook 'dired-load-hook (lambda () (load "dired-x")))
+(setq dired-guess-shell-alist-user
+      '(
+        ("\\.xls\\'" "open &") ("\\.xlsx\\'" "open &")
+        ("\\.doc\\'" "open &") ("\\.docx\\'" "open &")
+        ("\\.ppt\\'" "open &") ("\\.pptx\\'" "open &")
+        ("\\.pdf\\'" "open &")
+        )
+      )
 
 
 (use-package setup-cc
@@ -816,6 +831,8 @@ abort completely with `C-g'."
 (setq current-theme "dark")
 (defconst light-theme 'solarized-light)
 (defconst dark-theme 'zenburn)
+
+(setq yas-triggers-in-field t)
 
 ;(global-unset-key (kbd "C-c ."))
 
