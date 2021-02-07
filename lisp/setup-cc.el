@@ -10,6 +10,9 @@
 (linum-mode)
 (setq linum-format "%3d \u2502 ")
 
+
+
+
 ;; ----- flycheck
 (use-package flycheck
   :ensure t
@@ -22,12 +25,14 @@
 
 
 ;; ----- clang-tidy
-(load "/usr/local/Cellar/clang-format/2019-01-18/share/clang/clang-format.el")
+(load "/usr/local/Cellar/clang-format/10.0.0/share/clang/clang-format.el")
 ;(require 'clang-format)
 (global-set-key (kbd "C-c r") 'clang-format-region)
 (global-set-key (kbd "C-c u") 'clang-format-buffer)
+
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
+
 
 
 ;;----------------- ccls
@@ -36,11 +41,11 @@
   :config
   (setq ccls-executable "ccls")
   (setq lsp-prefer-flymake nil)
-  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  ;; (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
   :hook ((c++-mode) .
          (lambda () (require 'ccls) (lsp))))
 
-(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.3/bin/ccls")
+(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.5/bin/ccls")
 
 ;;----------------
 
@@ -54,7 +59,7 @@
   (lsp-auto-guess-root nil)
   (lsp-enable-snippet nil)
   (lsp-enable-file-watchers)
-  (lsp-clients-clangd-executable "/usr/local/Cellar/llvm/9.0.0/bin/clangd")
+  (lsp-clients-clangd-executable "/usr/local/Cellar/llvm/9.0.1/bin/clangd")
   (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
   :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
   :hook ((++-mode) . lsp))
@@ -63,33 +68,33 @@
 ;; ;; (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=info" "-pretty" "-resource-dir=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0"))
 
 
-(use-package lsp-ui
-  :after lsp-mode
-  :diminish
-  :commands lsp-ui-mode
-  :custom-face
-  (lsp-ui-doc-background ((t (:background nil))))
-  (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references)
-              ("C-c u" . lsp-ui-imenu))
-  :custom
-  (lsp-ui-doc-enable t)
-  (lsp-ui-doc-header t)
-  (lsp-ui-doc-include-signature t)
-  (lsp-ui-doc-position 'top)
-  (lsp-ui-doc-border (face-foreground 'default))
-  (lsp-ui-sideline-enable nil)
-  (lsp-ui-sideline-ignore-duplicate t)
-  (lsp-ui-sideline-show-code-actions nil)
-  :config
-  ;; Use lsp-ui-doc-webkit only in GUI
-  (setq lsp-ui-doc-use-webkit t)
-  ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-  ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-  (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-    (setq mode-line-format nil)))
+;; (use-package lsp-ui
+;;   :after lsp-mode
+;;   :diminish
+;;   :commands lsp-ui-mode
+;;   :custom-face
+;;   (lsp-ui-doc-background ((t (:background nil))))
+;;   (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+;;   :bind (:map lsp-ui-mode-map
+;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
+;;               ("C-c u" . lsp-ui-imenu))
+;;   :custom
+;;   (lsp-ui-doc-enable t)
+;;   (lsp-ui-doc-header t)
+;;   (lsp-ui-doc-include-signature t)
+;;   (lsp-ui-doc-position 'top)
+;;   (lsp-ui-doc-border (face-foreground 'default))
+;;   (lsp-ui-sideline-enable nil)
+;;   (lsp-ui-sideline-ignore-duplicate t)
+;;   (lsp-ui-sideline-show-code-actions nil)
+;;   :config
+;;   ;; Use lsp-ui-doc-webkit only in GUI
+;;   (setq lsp-ui-doc-use-webkit t)
+;;   ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+;;   ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+;;   (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+;;     (setq mode-line-format nil)))
 
 
 
