@@ -1,70 +1,28 @@
+;;; package --- Summary
+;;; Commentary:
+; settings for calendar, journal, clocks
+
 (require 'org)
 ;(require 'org-journal)
-(require 'org-fstree)
+;(require 'org-fstree)
 (require 'remember)
 ;; (require 'color-theme)
 (require 'org-crypt)
 
+;;================ BEGIN GENERAL ===========================
+(setq org-directory "~/Dropbox/Orgfiles/org-files/")
+(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+(add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
-(use-package org-journal
-  :ensure t
-  :defer t
-  :custom
-  (org-journal-dir "/Users/chraibi/Dropbox/Orgfiles/org-files/journal")
-  (org-journal-date-format "%A, %d %B %Y")
-  )
-
-(setq org-journal-enable-agenda-integration t
-      org-icalendar-store-UID t
-      org-icalendar-include-todo "all"
-      org-icalendar-combined-agenda-file "/Users/chraibi/Dropbox/Orgfiles/org-files/cal_private.ics")
-
-(setq org-journal-file-type "weekly")
-
-
-
-
-                                        ; todo ~/.emacs.d/plantuml.jar
-
-                                        ;(require 'org-latex)
-;;(add-to-list 'org-modules 'org-mac-message)
-;;(setq org-mac-mail-account "Juelich")
-;; (defun my-mail-import ()
-;;   (let ((org-mac-mail-account "Juelich"))
-;;     (org-mac-message-insert-flagged "jsc.org" "Flagged mail")))
-
-
-(setq org-agenda-custom-commands
-      '(
-        ("M" "Desk Work" tags-todo "MAIL" ;; (1) (2) (3) (4)
-         ((org-agenda-files '(" ~/Dropbox/Orgfiles/org-files/jsc.org")) ;; (5)
-          ((org-agenda-mode-hook           (my-mail-import)))
-          ;; (org-agenda-sorting-strategy '(priority-up effort-down))) ;; (5) cont.
-         ("~/computer.html")
-         ) ;; (6)
-        )
-        )
-      )
-
-
-
-
-;; (setcar (nthcdr 4 org-emphasis-regexp-components) 30)
-
-;; (setq org-startup-with-beamer-mode t)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-(define-key global-map "\C-cc" 'org-capture)
-
+;; Allow setting single tags without the menu
+(setq org-fast-tag-selection-single-key (quote expert))
 (setq org-alphabetical-lists t)
 (setq-default org-display-custom-times t)
 (setq org-time-stamp-custom-formats '())
 (custom-set-variables
   '(org-display-custom-times t)
   '(org-time-stamp-custom-formats (quote ("<%d-%m-%Y %a>" . "<%d/%m/%Y  %a>")))
-)
-
+  )
 ; Set default column view headings: Task Effort Clock_Summary
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
 ; global Effort estimate values
@@ -72,10 +30,8 @@
 
 (eval-after-load 'org-bullets
   '(setq org-bullets-bullet-list '("✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▲" "●" )))
-
 ; Use IDO for target completion
 (setq org-completion-use-ido t)
-
 ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
 
@@ -88,49 +44,49 @@
 ; Allow refile to create parent tasks with confirmation
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 
-(setq org-agenda-custom-commands
-      (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-scheduled nil)
-                                                   (org-agenda-todo-ignore-deadlines nil)
-                                                   (org-agenda-todo-ignore-with-date nil)))
-              ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)))
-              ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)
-                                                                       (org-agenda-todo-ignore-deadlines nil)
-                                                                       (org-agenda-todo-ignore-scheduled nil)))
-              ("N" "Notes" tags "NOTE" nil)
-              ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil)
-              ("p" "Projects" tags-todo "LEVEL=2-NEXT-WAITING-CANCELLED/!-DONE" nil)
-              ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil)
-              ("h" "Habits" tags "STYLE=\"habit\"" ((org-agenda-todo-ignore-with-date nil) (org-agenda-todo-ignore-scheduled nil) (org-agenda-todo-ignore-deadlines nil))))))
+;;;;----------------------------- subtasks
+(defun my-org-insert-sub-task ()
+  (interactive)
+  (let ((parent-deadline (org-get-deadline-time nil)))
+    (org-goto-sibling)
+    (org-insert-todo-subheading t)
+    (when parent-deadline
+      (org-deadline nil parent-deadline))))
 
-;; (defun my-org-archive-done-tasks ()
-;;   (interactive)
-;;   (org-map-entries 'org-archive-subtree "/DONE" 'file))
+(define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
+(setq org-enforce-todo-dependencies t)
+(add-hook 'org-mode-hook 
+          \t  (lambda ()
+                \t    'turn-on-font-lock
+                \t    (setq word-wrap 1)
+                \t    (setq truncate-lines nil)
+                \t    (flyspell-mode 1)
+                \t    (org-journal-mode 1)
+                )
+          )
 
 
-;; Collect all .org from my Org directory and subdir
-;; (\\`[^.].*\\.org'\\|[0-9]+).
-;; (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|[0-9]+'") ; default value
-;(\\`[^.].*\\.org'\\|[0-9]+)
-(defun load-org-agenda-files-recursively (dir) "Find all directories in DIR."
-       (unless (file-directory-p dir) (error "Not a directory `%s'" dir))
-       (unless (equal (directory-files dir nil org-agenda-file-regexp t) nil)
-         (add-to-list 'org-agenda-files dir)
-         )
-       (dolist (file (directory-files dir nil nil t))
-         (unless (member file '("." ".."))
-           (let ((file (concat dir file "/")))
-             (when (file-directory-p file)
-               (load-org-agenda-files-recursively file)
-               )
-             )
-           )
-         )
-       )
-(load-org-agenda-files-recursively "~/Dropbox/Orgfiles/org-files/" ) ; trailing slash required
+(setq require-final-newline t)
+;;================ END GENERAL =============================
 
-;;------------ journal
+;;================ STROKES =============================
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+(define-key global-map "\C-cc" 'org-capture)
+
+;;================ STROKES =============================
+
+;;==================== BEGIN JOURNAL ===================
+(use-package org-journal
+  :ensure t
+  :defer t
+  :custom
+  (org-journal-dir "/Users/chraibi/Dropbox/Orgfiles/org-files/journal")
+  (org-journal-date-format "%A, %d %B %Y")
+  )
+(setq org-journal-file-type "weekly")
 (setq org-journal-dir "~/Dropbox/Orgfiles/org-files/journal/")
-;; (setq org-agenda-file-regexp "\`[^.].*\.org'\|[0-9]+")
 (defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"  
   "Path to OrgMode journal file.")  
 (defvar org-journal-date-format "%Y-%m-%d"  
@@ -159,81 +115,90 @@
 (global-set-key "\C-cj" 'org-journal-entry)
 (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
-;;;;----------------------------- subtasks
-(defun my-org-insert-sub-task ()
-  (interactive)
-  (let ((parent-deadline (org-get-deadline-time nil)))
-    (org-goto-sibling)
-    (org-insert-todo-subheading t)
-    (when parent-deadline
-      (org-deadline nil parent-deadline))))
+;;==================== END JOURNAL =====================
 
-(define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
-
-(setq org-enforce-todo-dependencies t)
-;;-------------------------------------------------------
+;;==================== BEGIN AGENDA ===================
+(setq org-agenda-files `(,org-directory))
+(setq org-agenda-window-frame-fractions '(1.0 . 1.0))
 (setq org-agenda-dim-blocked-tasks 'invisible)
-;; ;
+(setq org-journal-enable-agenda-integration t
+      org-icalendar-store-UID t
+      org-icalendar-include-todo "all"
+      org-icalendar-combined-agenda-file "/Users/chraibi/Dropbox/Orgfiles/org-files/cal_private.ics")
+
+;; Customized view for the daily workflow. (Command: "C-c a n")
+(setq org-agenda-custom-commands
+  '(("n" "Agenda / INTR / PROG / NEXT"
+     ((agenda "" nil)
+      (todo "INTR" nil)
+      (todo "PROG" nil)
+      (todo "NEXT" nil))
+     nil))
+  )
+;; TODO keywords.
+(setq org-todo-keywords
+      '(
+        (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "INTR(i)" "|" "DONE(d!/!)")
+        )
+)
+
+;; (custom-set-variables
+;; ;;   ;; custom-set-variables was added by Custom.
+;; ;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;; ;;   ;; Your init file should contain only one such instance.
+;; ;;   ;; If there is more than one, they won't work right.
+;;  ;; '(org-agenda-ndays 7)
+;;  ;; '(org-agenda-show-all-dates t)
+;;  '(org-agenda-skip-deadline-if-done t)
+;;  '(org-agenda-skip-scheduled-if-done t)
+;;  '(org-agenda-start-on-weekday nil)
+;;  '(org-deadline-warning-days 14)
+;;  '(org-fast-tag-selection-single-key (quote expert))
+;;  '(org-reverse-note-order t))
+
+;; Show the daily agenda by default.
+(setq org-agenda-span 'day))
+
+;; Hide tasks that are scheduled in the future.
+(setq org-agenda-todo-ignore-scheduled 'future)
+
+;; Use "second" instead of "day" for time comparison.
+;; It hides tasks with a scheduled time like "<2020-11-15 Sun 11:30>"
+(setq org-agenda-todo-ignore-time-comparison-use-seconds t)
+
+;; Hide the deadline prewarning prior to scheduled date.
+(setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+
+
+
+(defun load-org-agenda-files-recursively (dir) "Find all directories in DIR."
+       (unless (file-directory-p dir) (error "Not a directory `%s'" dir))
+       (unless (equal (directory-files dir nil org-agenda-file-regexp t) nil)
+         (add-to-list 'org-agenda-files dir)
+         )
+       (dolist (file (directory-files dir nil nil t))
+         (unless (member file '("." ".."))
+           (let ((file (concat dir file "/")))
+             (when (file-directory-p file)
+               (load-org-agenda-files-recursively file)
+               )
+             )
+           )
+         )
+       )
+(load-org-agenda-files-recursively "~/Dropbox/Orgfiles/org-files/" ) ; trailing slash required
+;; For tag searches ignore tasks with scheduled and deadline dates
+;(setq org-agenda-tags-todo-honor-ignore-options t)
+;;==================== END AGENDA =====================
+;;-------------------------------------------------------
                                         ; Tags with fast selection keys
 (setq org-tag-alist (quote ((:startgroup)
-                            ("modeling" . ?m)
                             ("journal" . ?j)
                             ("jupedsim" . ?s)
-                            ("@wuppertal" . ?w)
-                            ("@conference" . ?c)
                             (:endgroup)
                             ("NEXT" . ?n)
                             ("WAITING" . ?w)
-                            ("chess" . ?f)
-                            ("HOME" . ?H)
-                            ("meeting" . ?m)
-                            ("talk" . ?t))))
-
-;; todo not working yet
-(setq org-html-checkbox-type 'unicode)
-(setq org-html-checkbox-types
-      '((unicode (on . "<span class=\"task-done\">&#x2611;</span>")
-                 (off . "<span class=\"task-todo\">&#x2610;</span>")
-                 (trans . "<span class=\"task-in-progress\">[-]</span>"))))
-
-
-
-;; (use-package org-fstree
-;;              :ensure t
-;;              :defer t
-;;              :commands (org-fstree-apply-maybe org-fstree-show-entry-maybe)
-;;              :idle
-;;              (progn (add-hook 'org-ctrl-c-ctrl-c-hook 'org-fstree-apply-maybe)
-;;                     (add-hook 'org-pre-cycle-hook 'org-fstree-show-entry-maybe)))
-
-
-
-                                        ; Allow setting single tags without the menu
-(setq org-fast-tag-selection-single-key (quote expert))
-  
-; For tag searches ignore tasks with scheduled and deadline dates
-(setq org-agenda-tags-todo-honor-ignore-options t)
-
-
-(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
-(setq org-directory "~/Dropbox/Orgfiles/org-files/")
-
-(setq org-agenda-files `(,org-directory))
-
-(add-hook 'org-mode-hook 
-          \t  (lambda ()
-                \t    'turn-on-font-lock
-                \t    (setq word-wrap 1)
-                \t    (setq truncate-lines nil)
-                \t    (flyspell-mode 1)
-                \t    (org-journal-mode 1)
-                )
-          )
-
-
-(setq require-final-newline t)
-(setq org-agenda-window-frame-fractions '(1.0 . 1.0))
+                            )))
 
 (defun notes ()
   "Switch to my work dir."
@@ -275,80 +240,6 @@
 ;; Include current clocking task in clock reports
 (setq org-clock-report-include-clocking-task t)
 
-;; Remove empty LOGBOOK drawers on clock out
-;; (defun bh/remove-empty-drawer-on-clock-out ()
-;;   (interactive)
-;;   (save-excursion
-;;     (beginning-of-line 0)
-;;     (org-remove-empty-drawer-at (point))))
-
-;; (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
-
-
-
-;; (require 'org-remember)
-
-
-;;(setq bh/keep-clock-running nil)
-;;-----------
-;; (eval-after-load 'org
-;;   '(progn
-     ;; (defun wicked/org-clock-in-if-starting ()
-     ;;   "Clock in when the task is marked NEXT."
-     ;;   (when (and (string= state "NEXT") (not (string= last-state state))
-     ;;              )
-     ;;      (org-clock-in)
-     ;;      )
-     ;;   )
-
-     ;; (add-hook 'org-after-todo-state-change-hook
-     ;;                  'wicked/org-clock-in-if-starting)
-     ;; (defadvice org-clock-in (after wicked activate)
-     ;;  "Set this task's status to 'NEXT'."
-     ;;  (org-todo "NEXT"))
-
-;;     (defun wicked/org-clock-out-if-waiting ()
-;;       "Clock out when the task is marked WAITING."
-;;       (when (and (string= state "WAITING")
-;;                  (equal (marker-buffer org-clock-marker) (current-buffer))
-;;                  (< (point) org-clock-marker)
-;;                           (> (save-excursion (outline-next-heading) (point))
-;;                                  org-clock-marker)
-;;                            (not (string= last-state state)))
-;;         (org-clock-out)))
-;;     (defun wicked/org-clock-out-if-done ()
-;;       "Clock out when the task is marked DONE."
-;;       (when (and (string= state "DONE")
-;;                  (equal (marker-buffer org-clock-marker) (current-buffer))
-;;                  (< (point) org-clock-marker)
-;;                           (> (save-excursion (outline-next-heading) (point))
-;;                                  org-clock-marker)
-;;                            (not (string= last-state state)))
-;;         (org-clock-out)))
-
-;;     (add-hook 'org-after-todo-state-change-hook
-;;               'wicked/org-clock-out-if-waiting)
-;;     (add-hook 'org-after-todo-state-change-hook
-;;               'wicked/org-clock-out-if-done)
-
-;; ))
-
-;;----------------------- Tasks ----------------------
-(setq org-todo-state-tags-triggers
-      (quote (("CANCELLED" ("CANCELLED" . t))
-              ("WAITING" ("WAITING" . t))
-              ("HOLD" ("WAITING") ("HOLD" . t))
-              (done ("WAITING") ("HOLD"))
-              ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
-              ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
-              ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
-
-(setq org-todo-keywords
-      '(
-        (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(o)" "|" "CANCELLED(c@/!)")
-        )
-)
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
@@ -374,21 +265,6 @@
 
 
 (setq org-log-done 'time)
-
-
-(custom-set-variables
-;;   ;; custom-set-variables was added by Custom.
-;;   ;; If you edit it by hand, you could mess it up, so be careful.
-;;   ;; Your init file should contain only one such instance.
-;;   ;; If there is more than one, they won't work right.
- '(org-agenda-ndays 7)
- '(org-agenda-show-all-dates t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-start-on-weekday nil)
- '(org-deadline-warning-days 14)
- '(org-fast-tag-selection-single-key (quote expert))
- '(org-reverse-note-order t))
 
 ;; (add-to-list 'org-modules "org-habit")
 ;; (add-to-list 'org-modules "org-timer")
