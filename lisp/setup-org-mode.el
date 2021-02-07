@@ -15,7 +15,6 @@
 (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
 ;; Allow setting single tags without the menu
-(setq org-fast-tag-selection-single-key (quote expert))
 (setq org-alphabetical-lists t)
 (setq-default org-display-custom-times t)
 (setq org-time-stamp-custom-formats '())
@@ -192,13 +191,15 @@
 ;;==================== END AGENDA =====================
 ;;-------------------------------------------------------
                                         ; Tags with fast selection keys
-(setq org-tag-alist (quote ((:startgroup)
-                            ("journal" . ?j)
-                            ("jupedsim" . ?s)
-                            (:endgroup)
-                            ("NEXT" . ?n)
-                            ("WAITING" . ?w)
-                            )))
+(setq org-tag-alist '((:startgroup)
+                      ("@work" . ?w)
+                      ("@home" . ?h)
+                      (:endgroup)
+                      ("PERSONAL" . ?p)
+                      ("NOTE" . ?n)
+                      ("CANCELLED" . ?c)
+                      ))
+(setq org-fast-tag-selection-single-key (quote expert))
 
 (defun notes ()
   "Switch to my work dir."
@@ -243,21 +244,16 @@
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
-               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("r" "respond" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
-               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/work.org")
+               "*** TODO %?\n")
               ("n" "note" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
               ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/journal.org")
                "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)
-               ;; "* %?\n%U\n" :clock-in t :clock-resume t)
-              
-              ("w" "org-protocol" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
-               "* TODO Review %c\n%U\n" :immediate-finish t)
               ("m" "Meeting" entry (file "~/Dropbox/Orgfiles/org-files/meeting.org")
-               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+               "**  %? :MEETING:\n%U" :clock-in t :clock-resume t)
 )))
+
 
 
 ; Use the current window for indirect buffer display
@@ -265,9 +261,6 @@
 
 
 (setq org-log-done 'time)
-
-;; (add-to-list 'org-modules "org-habit")
-;; (add-to-list 'org-modules "org-timer")
 
 
 ;; Set a default value for the timer, for example :
