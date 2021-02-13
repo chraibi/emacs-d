@@ -115,8 +115,6 @@
 
 ;;; Code:
 
-(require 'cl)
-
 ;;;; Customization 
 
 (defvar mf--insert-commentary nil

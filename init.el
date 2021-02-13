@@ -68,19 +68,27 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (message "add repos")
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-  (add-to-list 'package-archives '("MELPA" . "http://melpa.milkbox.net/packages/"))
-  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+  ;; and `package-pinned-packages`. Most users will not need or want to do this.
+  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;;  (package-initialize)
   )
+
+
+
+  ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+  ;; (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+  ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+  ;; (add-to-list 'package-archives '("MELPA" . "https://melpa.org/packages/"))
+  ;; (package-initialize)
+
 
 ; Setup packages
 ;(require 'setup-package)
 ; list the packages
 (setq package-list '(
  ;            dash
-                     cl
                      sml-modeline
                      zenburn-theme
                      highlight-indentation
@@ -98,7 +106,7 @@
 		     beacon ; highlight cursor
 		     projectile
 		     doom-modeline
-		     dired-details
+		     ;; dired-details
 		     diminish
 ;                     dired+
                      ;sx
@@ -130,9 +138,21 @@
                      flymake-cursor
                      python
                      python-mode
-                     ipython
+                     ;; ipython
                      elpy
                      flycheck
+                     hlinum
+                     ;; helm libs
+                     helm
+                     helm-lsp
+                     helm-projectile
+                     helm-git-grep
+                     helm-bibtex
+                     ;; org-roam ecosystem
+                     org-roam
+                     org-roam-bibtex
+                     org-roam-server
+                     zotxt
                      ;;ob-plantuml
                      ;uniquify		;
                      epl      ; needed for projectile
@@ -283,9 +303,6 @@
 
 ;; -------------------- require
 
-
-
-(require 'cl)
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
 ;(require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
@@ -777,9 +794,9 @@ abort completely with `C-g'."
 
 ;; ;; dired
 (setq dired-dwim-target t)
-(require 'dired-details)
-(setq-default dired-details-hidden-string "--- ")
-(dired-details-install)
+;; (require 'dired-details)
+;; (setq-default dired-details-hidden-string "--- ")
+;; (dired-details-install)
 ;; Move files between split panes
 (setq dired-dwim-target t)
 

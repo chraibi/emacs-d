@@ -76,6 +76,27 @@
 
 ;;================ STROKES =============================
 
+
+;;========= zotero
+;; Activate org-zotxt-mode in org-mode buffers
+;; (add-hook 'org-mode-hook (lambda () (org-zotxt-mode 1)))
+;; Bind something to replace the awkward C-u C-c " i
+;; (define-key org-mode-map
+;;   (kbd "C-c \" \"") (lambda () (interactive)
+;;                       (org-zotxt-insert-reference-link '(4))))
+;; Change citation format to be less cumbersome in files.
+;; You'll need to install mkbehr-short into your style manager first.
+;; (eval-after-load "zotxt"
+;;   '(setq zotxt-default-bibliography-style "mkbehr-short"))
+
+;; (org-link-set-parameters "zotero" :follow
+;;                          (lambda (zpath)
+;;                            (browse-url
+;;                             ;; we get the "zotero:"-less url, so we put it back.
+;;                             (format "zotero:%s" zpath))))
+
+
+
 ;;==================== BEGIN JOURNAL ===================
 (use-package org-journal
   :ensure t
@@ -117,6 +138,14 @@
 ;;==================== END JOURNAL =====================
 
 ;;==================== BEGIN AGENDA ===================
+(setq org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s")
+         (timeline . "  % s")
+         (todo .
+               " %i %-12:c %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
+         (tags .
+               " %i %-12:c %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
+         (search . " %i %-12:c"))
+      )
 (setq org-agenda-files `(,org-directory))
 (setq org-agenda-window-frame-fractions '(1.0 . 1.0))
 (setq org-agenda-dim-blocked-tasks 'invisible)
@@ -156,7 +185,7 @@
 ;;  '(org-reverse-note-order t))
 
 ;; Show the daily agenda by default.
-(setq org-agenda-span 'day))
+(setq org-agenda-span 'day)
 
 ;; Hide tasks that are scheduled in the future.
 (setq org-agenda-todo-ignore-scheduled 'future)
@@ -258,11 +287,7 @@
 
 ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
-
-
 (setq org-log-done 'time)
-
-
 ;; Set a default value for the timer, for example :
 (setq org-timer-default-timer 25)
 
@@ -288,35 +313,35 @@
 ;;;(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 ;;(setq reftex-plug-into-AUCTeX t)
 ;;- ORG REFTEX
-(setq reftex-default-bibliography
-      (quote
-       ("~/sciebo/CST/30_Literature/LitDB/ped.bib")))
-(setq reftex-bibpath-environment-variables
-                '("~/sciebo/CST/30_Literature/LitDB/"))
+;; (setq reftex-default-bibliography
+;;       (quote
+;;        ("~/sciebo/CST/30_Literature/LitDB/ped.bib")))
+;; (setq reftex-bibpath-environment-variables
+;;                 '("~/sciebo/CST/30_Literature/LitDB/"))
 
-(defun org-mode-reftex-setup ()
-  (setq TeX-master t)
-  (load-library "reftex")
-  (and (buffer-file-name) (file-exists-p (buffer-file-name))
-       (progn
-                                        ;enable auto-revert-mode to update reftex when bibtex file changes on disk
-         (global-auto-revert-mode t)
-         (reftex-parse-all)
-     ;add a custom reftex cite format to insert links
-     ;; (reftex-set-cite-format "** [[papers:%l][%l]]: %t \n"
-     ;;                         )
-         (reftex-set-cite-format
-          '((?c . "\\cite{%l}") ; natbib inline text
-            (?i . "** [[papers:%l][%l]]: %t \n") ; natbib with parens
-            )
-          )
-         )
-       )
-  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search)
-)
+;; (defun org-mode-reftex-setup ()
+;;   (setq TeX-master t)
+;;   (load-library "reftex")
+;;   (and (buffer-file-name) (file-exists-p (buffer-file-name))
+;;        (progn
+;;                                         ;enable auto-revert-mode to update reftex when bibtex file changes on disk
+;;          (global-auto-revert-mode t)
+;;          (reftex-parse-all)
+;;      ;add a custom reftex cite format to insert links
+;;      ;; (reftex-set-cite-format "** [[papers:%l][%l]]: %t \n"
+;;      ;;                         )
+;;          (reftex-set-cite-format
+;;           '((?c . "\\cite{%l}") ; natbib inline text
+;;             (?i . "** [[papers:%l][%l]]: %t \n") ; natbib with parens
+;;             )
+;;           )
+;;          )
+;;        )
+;;   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+;;   (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search)
+;; )
 
-(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+;; (add-hook 'org-mode-hook 'org-mode-reftex-setup)
 
 
 
@@ -460,9 +485,66 @@
   (re-search-forward "CLOCK: \\[[^]]*\\] *$")
   )
 
+;; helm-bibtex
 
+(setq bibtex-completion-bibliography
+      '(
+        "~/sciebo/CST/30_Literature/LitDB/ped.bib"
+        "~/testzotero.bib"
+        )
+      )
+(setq bibtex-completion-library-path '("~/sciebo/CST/30_Literature/LitDB/pdf/"))
+(setq bibtex-completion-pdf-field "File")
+
+(setq bibtex-completion-notes-path "~/Dropbox/Orgfiles/org-files/refs.org")
+
+(setq bibtex-completion-display-formats
+    '((article       . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${journal:40}")
+      (inbook        . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+      (incollection  . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+      (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+      (t             . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*}")))
+
+(setq bibtex-completion-additional-search-fields '(keywords))
+
+(setq bibtex-completion-pdf-symbol "⌘")
+(setq bibtex-completion-notes-symbol "✎")
+
+(setq bibtex-completion-format-citation-functions
+  '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+    (latex-mode    . bibtex-completion-format-citation-cite)
+    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+    (default       . bibtex-completion-format-citation-default)))
+
+(setq bibtex-completion-pdf-open-function
+  (lambda (fpath)
+    (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath)))
+
+
+(setq bibtex-completion-additional-search-fields '(tags))
+
+;(helm-add-action-to-source "Insert citation" 'bibtex-completion-insert-citation helm-source-bibtex 0)
+
+;(bibtex-completion-candidates)
+
+
+;; org-roam ==========
+
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory "~/Dropbox/Orgfiles/org-files/")
+      :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
 
 
 
 (provide 'setup-org-mode)
-
+;;; setup-org-mode.el ends here
