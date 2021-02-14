@@ -1,6 +1,5 @@
 ;;; package ---- summary
 ;;; Commentary:
-
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -222,26 +221,28 @@
  '(sml/show-client t)
  )
 ;; hide modes
-;(diminish 'projectile-mode)
-;(diminish 'undo-tree-mode)
+(diminish 'projectile-mode)
+(diminish 'undo-tree-mode)
 (diminish 'abbrev-mode)
-;(diminish 'auto-fill-function-mode)
-;(diminish 'pair-mode)
-;; (add-hook 'after-init-hook 'sml/setup) ;todo
-
+(diminish 'auto-fill-function-mode)
+(diminish 'pair-mode)
+;;-------------------------
+;;Whenever the window scrolls a light will shine on top of your cursor so you know where it is.
 (beacon-mode 1)
 (setq beacon-push-mark 35)
 (setq beacon-color "#e56911")
 ;;-------------------------
+(use-package my-core-settings)
 (use-package yasnippet
   ;; Loads after 1 second of idle time.
   :defer 1
   :config
-  (yas/load-directory "~/.emacs.d/snippets")
+  (yas-load-directory "~/.emacs.d/snippets")
 )
 
 
 (defun clangd-xref-manual ()
+  "I don't know what this is doing!"
   (setq-local xref-backend-functions (list #'lsp--xref-backend))
   )
 
@@ -262,22 +263,26 @@
 
 ;-------------------------------------------------------------------
 ;; TODO projectile
+;; when solved  activate projectile settings in my-core-settings
 ;; -------------------- require
 
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
-;(require 'paren)
+(require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
 ;(require 'server)
 ;(require 'recentf)
-;;(require 'setup-electric)
-;(autoload 'setup-magit "setup-magit" "load magit")
+
+(use-package setup-electric
+  ;; Loads after 3 second of idle time.
+  :defer 3)
+
 (use-package setup-magit
-  ;; Loads after 2 second of idle time.
+  ;; Loads after 3 second of idle time.
   :defer 3)
 
 (use-package setup-org-mode
-  ;; Loads after 2 second of idle time.
+  ;; Loads after 3 second of idle time.
   :defer 3)
 
 ;(global-auto-revert-mode t)
@@ -325,10 +330,6 @@
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
 
-(use-package my-core-settings
-  ;; Loads after 1 second of idle time.
-  :defer 1)
-
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
@@ -360,8 +361,9 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-(use-package setup-ido
-  :defer 1)
+;; TODO
+;; (use-package setup-ido
+;;   :defer 1)
 
 (use-package setup-tex
   ;; Loads after 2 second of idle time.
@@ -396,8 +398,7 @@
     (setq undo-tree-visualizer-diff t)))
 
 ;; uniquify: unique buffer names
-(require 'uniquify) ;; make buffer names more unique
-(message "HUHU")
+(require 'uniquify) ;; make buffer names more uniquemy
 ;----------------  load setups ----------------------------
 (message "load my setups")
 
@@ -517,7 +518,8 @@
   )
 
 (defun ido-goto-symbol (&optional symbol-list)
-  "Refresh imenu and jump to a place in the buffer using Ido."
+  "Refresh imenu and jump to a place in the buffer using Ido.
+argument SYMBOL-LIST"
   (interactive)
   (unless (featurep 'imenu)
     (require 'imenu nil t))
@@ -770,6 +772,6 @@ abort completely with `C-g'."
 
 ; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
-
+(message "done loading emacs!")
 (provide 'init)
 ;;; init.el ends here
