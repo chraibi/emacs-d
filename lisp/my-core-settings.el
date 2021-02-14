@@ -41,8 +41,8 @@
 ;;----------------- KEYbindings --------------
 (global-set-key "\C-z" 'nil)
 (global-set-key (kbd "M-2") #'er/expand-region)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+;(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
