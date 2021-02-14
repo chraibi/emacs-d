@@ -1,194 +1,34 @@
+
 ;;; package ---- summary
+;;; Code:
 ;;; Commentary:
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-;;; Code:
-;; Turn off mouse interface early in startup to avoid momentary display
+
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
-;;(setq epg-gpg-program "/usr/local/bin/gpg")
-;; frame font
-;; Setting English Font
-;;(setq multi-term-program "/bin/zsh")
 
-;; (when (string= system-type "darwin")
-;;   (setq dired-use-ls-dired nil))
+(require 'my-core-settings)
 
-;; ;;--------------------------  Backup
-(setq backup-directory-alist `(("." . "~/.saves")))
-(setq delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
+;; (setq abbrev-file-name             ;; tell emacs where to read abbrev
+;;         "~/.emacs.d/abbrev_defs")    ;; definitions from...
 
-(require 'ansi-color)
-(defun my/ansi-colorize-buffer ()
-  "Comments."
-  (let ((buffer-read-only nil))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
-
-;; (find-file "~/Dropbox/Orgfiles/org-files/master.org") ;
-
-(setq is-mac (equal system-type 'darwin))
-(if (equal system-type 'darwin)
-    (setq locate-command "mdfind")
-  (global-set-key (kbd "M-s") 'locate)
- )
-
-(defvar *emacs-load-start* (current-time))
-;; My location for external packages.
-
-(getenv "PATH")
-(setenv "PATH"
-        (concat
-         "/usr/texbin" ":"
-         "/usr/local/bin/" ":"
-         (getenv "PATH")))
-
-(setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
-
-(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
-(add-to-list 'load-path py-install-directory)
-(setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
-
-;; Always load the newer .el or .elc file.
-(setq load-prefer-newer t)
-
-; ELPA package support
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (message "add repos")
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-  ;; and `package-pinned-packages`. Most users will not need or want to do this.
-  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-;;  (package-initialize)
-  )
-
-
-
-  ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  ;; (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
-  ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-  ;; (add-to-list 'package-archives '("MELPA" . "https://melpa.org/packages/"))
-  ;; (package-initialize)
-
-
-; Setup packages
-;(require 'setup-package)
-; list the packages
-(setq package-list '(
- ;            dash
-                     sml-modeline
-                     zenburn-theme
-                     highlight-indentation
-                     ag
-                     auctex-latexmk
-                     org-journal
-;                     org-fstree
-                     remember
-                     color-theme
-                     auctex
-                     yasnippet
-                     expand-region
-                     multiple-cursors
-		     solarized-theme
-		     beacon ; highlight cursor
-		     projectile
-		     doom-modeline
-		     ;; dired-details
-		     diminish
-;                     dired+
-                     ;sx
-                                        ;linumber
-                     flycheck
-                     flycheck-clang-tidy
-                     modern-cpp-font-lock
-                     ccls
-                     counsel-etags
-                     nav
-                     recentf
-                     fill-column-indicator
-                     browse-kill-ring
-                     ;mode-mapping
-                     semantic
-                     ido
-                     ido-vertical-mode
-                     magit
-                     xcscope
-                     cmake-project
-                     cpputils-cmake
-                     paren ;; will highlight matching parentheses next to cursor.
-                     auto-complete
-                     auto-complete-clang-async
-                     auto-complete-clang
-                     company	;
-                     ;; irony ; needed by company-irony
-                     autopair ;; to enable in all buffers
-                     flymake-cursor
-                     python
-                     python-mode
-                     ;; ipython
-                     elpy
-                     flycheck
-                     hlinum
-                     ;; helm libs
-                     helm
-                     helm-lsp
-                     helm-projectile
-                     helm-git-grep
-                     helm-bibtex
-                     ;; org-roam ecosystem
-                     org-roam
-                     org-roam-bibtex
-                     org-roam-server
-                     zotxt
-                     ;;ob-plantuml
-                     ;uniquify		;
-                     epl      ; needed for projectile
-                     async    ; needed for hlem
-                     pkg-info ; needed for projectile
-                     ;projectile
-                     ;;helm-projectile
-                     undo-tree
-                     exec-path-from-shell
-                     ;; gitlab
-                     use-package
-                     guide-key
-                     ivy
-                     swiper
-                     counsel
-                     company-lsp
-                     lsp-ui
-                     ace-window
-                     w32-browser
-                     )
-      )
-
-; activate all the packages (in particular autoloads)
-
-(setq package-enable-at-startup nil) (package-initialize)
-(message "packages initialized")
-; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-(message "fetch packages")
-; install the missing packages
-(dolist (package package-list)
-  (message ">> load %s" package)
-  (unless  (package-installed-p package)
-    (package-install package)
-    )
-)
-(message "done with loading pkgs")
-(setq abbrev-file-name             ;; tell emacs where to read abbrev
-        "~/.emacs.d/abbrev_defs")    ;; definitions from...
-
-(setq save-abbrevs t)              ;; save abbrevs when files are saved
+;; (setq save-abbrevs t)              ;; save abbrevs when files are saved
 ;; you will be asked before the abbreviations are saved
 (message "load solarized-light") ;zenburn
 (load-theme 'solarized-light t)
@@ -202,50 +42,26 @@
   (message "init exec-path")
   (exec-path-from-shell-initialize))
 
-;; Keep emacs Custom-settings in separate file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ag-executable "/usr/local/bin/ag")
- '(ecb-options-version "2.40")
- '(sml/battery-format " [ %p ] ")
- '(sml/show-client t)
- )
-;; hide modes
-;; Diminish lets you hide minor modes from showing in the mode line, keeping it minimal.
-
-(diminish 'undo-tree-mode)
-(diminish 'abbrev-mode)
-(diminish 'auto-fill-function-mode)
-(diminish 'pair-mode)
 ;;-------------------------
 ;;Whenever the window scrolls a light will shine on top of your cursor so you know where it is.
-(beacon-mode 1)
-(setq beacon-push-mark 35)
-(setq beacon-color "#e56911")
+(use-package beacon
+  :ensure t
+  :config
+  (setq beacon-push-mark 35)
+  (setq beacon-color "#e56911")
+  (beacon-mode 1)
+  )
+
 ;;-------------------------
-(use-package my-core-settings)
 (use-package yasnippet
   ;; Loads after 1 second of idle time.
   :defer 1
   :config
   (yas-load-directory "~/.emacs.d/snippets")
+  (yas-global-mode 0)
 )
 
-
-(defun clangd-xref-manual ()
-  "I don't know what this is doing!"
-  (setq-local xref-backend-functions (list #'lsp--xref-backend))
-  )
-
 ;-------------------------------------------------
-
-
-
 ;; Don't ask before rereading the TAGS files if they have changed
 (setq tags-revert-without-query t)
 ;; Don't warn when TAGS files are large
@@ -257,6 +73,16 @@
               'counsel-etags-virtual-update-tags 'append 'local)))
                                         ;DEFINE
 
+(use-package smart-mode-line-powerline-theme
+  :ensure t)
+
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (setq sml/theme 'powerline)
+  (setq sml/no-confirm-load-theme t)
+  (add-hook 'after-init-hook 'sml/setup))
+
 ;-------------------------------------------------------------------
 (use-package projectile
   :ensure t
@@ -267,7 +93,11 @@
    ("C-c p s" . projectile-save-project-buffers))
   :config
   (projectile-mode +1)
-)
+  )
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on))
 ;; when solved  activate projectile settings in my-core-settings
 ;; -------------------- require
 
@@ -278,32 +108,61 @@
 ;(require 'recentf)
 
 (use-package setup-electric
-  ;; Loads after 3 second of idle time.
   :defer 3)
 
-(use-package setup-magit
-  ;; Loads after 3 second of idle time.
+(use-package hlinum
+  :init
+  (message "Loading hlinum!")
+  :ensure t
+  :config
+  (setq linum-format "%3d \u2502 ")
+  (hlinum-activate)
+  )
+(use-package magit
+  :init
+  (message "Loading Magit!")
+  :ensure t
+  :config
+  (require 'setup-magit)
   :defer 3)
 
-(use-package setup-org-mode
-  ;; Loads after 3 second of idle time.
+
+(use-package org
+  :init
+  (message "Loading org-mode!")
+  :config
+  (require 'setup-org-mode)
   :defer 3)
 
-;(global-auto-revert-mode t)
 (use-package autorevert
-  ;; Loads after 2 second of idle time.
+  :init
+  (message "loading autorevert!")
+  :ensure t
   :defer 2)
 
-(use-package setup-helm
-  ;; Loads after 2 second of idle time.
+(use-package helm
+  :init
+  (message "loading helm!")
+  :ensure t
+  :after (projectile helm-projectile)
+  :config
+  (require 'setup-helm)
   :defer 2)
 
-(use-package setup-ivy
+(use-package ivy
+  :init
+  (message "loading ivy!")
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (require 'setup-ivy)
   :defer 1
   )
 
 (use-package recentf
-  ;; Loads after 2 second of idle time.
+  :init
+  (message "loading reventf!")
+  :ensure t
   :defer 2
   :config
   (setq recentf-exclude
@@ -316,53 +175,33 @@
   )
 
 (use-package server
-  ;; Loads after 2 second of idle time.
+  :init
+  (message "loading server!")
+  :ensure t
   :defer 2
-
   :config
   (unless (server-running-p)
   (server-start))
 )
 
 (use-package multiple-cursors
-  ;; Loads after 2 second of idle time.
+  :init
+  (message "loading multiple-cursors!")
+  :ensure t
   :defer 5)
+
 (use-package paren
+  :init
+  (message "loading paren!")
   :ensure t
   :diminish paren-mode
   :defer 3
 )
-
-;; (use-package smartparens
-;;   :ensure t
-;;   :diminish smartparens-mode
-;;   :config
-;;   (progn
-;;     (require 'smartparens-config)
-;;     (smartparens-global-mode 1)
-;;     (show-paren-mode t)))
-
-
-(global-unset-key (kbd "M-<down-mouse-1>"))
-(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
-
-
-
-(require 'doom-modeline)
-(doom-modeline-mode 1)
-;; (setq doom-modeline-mu4e nil)
-                                        ;----- moodline
-;; (require 'mood-line)
-;; (mood-line-activate)
 (defun python-mode-setup ()
   "Load python mode."
   (message "Custom python hook run")
   (load-library "setup-python"))
 (add-hook 'python-mode-hook 'python-mode-setup)
-
-;; (use-package python-cc
-;;   ;; Loads after 2 second of idle time.
-;;   :defer 2)
 
 (add-hook 'dired-load-hook (lambda () (load "dired-x")))
 (setq dired-guess-shell-alist-user
@@ -378,19 +217,39 @@
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-;; TODO
-;; (use-package setup-ido
-;;   :defer 1)
+;; TODO conflict with helm
+;; (use-package ido-vertical-mode
+;;   :init
+;;   (message "ido-vertical-mode")
+;;   :config
+;;   (ido-vertical-mode 1)
 
-(use-package setup-tex
-  ;; Loads after 2 second of idle time.
-  :defer 3)
+;;   )
+;; (use-package ido
+;;   :init
+;;   (message "Loading Ido!")
+;;   :ensure t
+;;   :config
+;;   (ido-mode 1)
+;;   (require 'setup-ido)
+;;   :after (ido-vertical-mode)
+;;   :defer 2)
+
+;; (use-package setup-tex
+;;   ;; Loads after 2 second of idle time.
+;;   :defer 3)
 
 
 (use-package winner
+  :init
+  (message "loading winner!")
+  :ensure t
   :defer 2)
 
 (use-package windmove
+  :init
+  (message "loading windmove!")
+  :ensure t
   :bind
   (("C-x <right>" . windmove-right)
    ("C-x <left>" . windmove-left)
@@ -399,6 +258,7 @@
    ))
 
 (use-package guide-key
+  :ensure t
   :defer 3
   :diminish guide-key-mode
   :config
@@ -407,6 +267,7 @@
   (guide-key-mode 1)))  ; Enable guide-key-mode
 
 (use-package undo-tree
+  :ensure t
   :diminish undo-tree-mode
   :config
   (progn
@@ -414,8 +275,6 @@
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)))
 
-;; uniquify: unique buffer names
-(require 'uniquify) ;; make buffer names more uniquemy
 ;----------------  load setups ----------------------------
 (message "load my setups")
 
@@ -434,14 +293,7 @@
 ;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
-;;store link to message if in header view, not to header query
-;(setq org-mu4e-link-query-in-headers-mode nil)
-
 (message "setups loaded")
-;(cscope-setup)
-;;setup-electric
-;;(package-initialize)
-;----------------------------
 ;;-----------------------------
 
 (defun comment-or-uncomment-region-or-line ()
@@ -465,10 +317,10 @@
     (comment-region bol end arg)))
 
 ;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 
 ;; after mouse selection in X11, you can paste by `yank' in emacs
-(setq x-select-enable-primary t)
+(setq select-enable-primary t)
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -719,8 +571,10 @@ abort completely with `C-g'."
        '(("\\.cmake\\'" . cmake-mode))
        auto-mode-alist))
 
+(use-package cmake-mode
+:ensure t
+)
 
-(require 'cmake-mode)
 ;; ;;--------------------------------- ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (setq ibuffer-default-sorting-mode 'major-mode)
@@ -740,8 +594,6 @@ abort completely with `C-g'."
 ;;-----
 (make-variable-buffer-local 'compile-command)
 
-;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
 
 ;; Use a hook so the message doesn't get clobbered by other messages.
 (add-hook 'emacs-startup-hook
@@ -752,7 +604,11 @@ abort completely with `C-g'."
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+(use-package async
+  :ensure t)
+
 (defun my-test-emacs ()
+  "debuging start of emacs"
   (interactive)
   (require 'async)
   (async-start
@@ -775,6 +631,7 @@ abort completely with `C-g'."
         (search-backward "ERROR!")))))
 
 (defun auto-test-emacs ()
+  "test starting emacs for bugs"
   (when (eq major-mode 'emacs-lisp-mode)
     (my-test-emacs)))
 
@@ -792,3 +649,16 @@ abort completely with `C-g'."
 (message "done loading emacs!")
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(show-paren-match ((((class color) (background light)) (:background "blue")))))

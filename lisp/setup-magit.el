@@ -1,7 +1,7 @@
 ;;; Package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'magit)
+;(require 'magit)
 
 (defadvice magit-status (around magit-fullscreen activate)
   (window-configuration-to-register :magit-fullscreen)

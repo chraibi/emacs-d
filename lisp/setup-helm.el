@@ -1,7 +1,6 @@
-(require 'helm)
-(require 'helm-config)
-(require 'projectile)
-(require 'helm-projectile)
+;;; Package --- Summary
+;;; Commentary:
+;;; Code:
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -36,8 +35,7 @@
 (setq projectile-switch-project-action 'helm-projectile)
 ;(setq helm-projectile-fuzzy-match nil)
 
-
-(require 'helm-git-grep) ;; Not necessary if installed by package.el
+;(require 'helm-git-grep) ;; Not necessary if installed by package.el
 (global-set-key (kbd "C-c n") 'helm-git-grep)
 ;; Invoke `helm-git-grep' from isearch.
 (define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)

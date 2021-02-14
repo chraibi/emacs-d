@@ -3,7 +3,64 @@
 ;;; Code:
 ;;; Commentary:
 
-(yas-global-mode 0)
+
+;; ------cleanup this
+(setq gc-cons-threshold (* 50 1000 1000))
+;;; Code:
+;; Turn off mouse interface early in startup to avoid momentary display
+
+;;(setq epg-gpg-program "/usr/local/bin/gpg")
+;; frame font
+;; Setting English Font
+;;(setq multi-term-program "/bin/zsh")
+
+;; (when (string= system-type "darwin")
+;;   (setq dired-use-ls-dired nil))
+
+;; ;;--------------------------  Backup
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
+(require 'ansi-color)
+(defun my/ansi-colorize-buffer ()
+  "Comments."
+  (let ((buffer-read-only nil))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
+
+;; (find-file "~/Dropbox/Orgfiles/org-files/master.org") ;
+
+(setq is-mac (equal system-type 'darwin))
+(if (equal system-type 'darwin)
+    (setq locate-command "mdfind")
+  (global-set-key (kbd "M-s") 'locate)
+ )
+
+(defvar *emacs-load-start* (current-time))
+;; My location for external packages.
+
+;(getenv "PATH")
+(setenv "PATH"
+        (concat
+         "/usr/texbin" ":"
+         "/usr/local/bin/" ":"
+         (getenv "PATH")))
+
+(setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
+
+(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
+(add-to-list 'load-path py-install-directory)
+(setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
+
+;; Always load the newer .el or .elc file.
+(setq load-prefer-newer t)
+
+;; ------ end cleanup
+
+
 ;https://batsov.com/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/
 ;(add-hook 'before-save-hook 'whitespace-cleanup)
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -16,17 +73,6 @@
 (setq initial-scratch-message nil)
 (setq custom-safe-themes t)
 ;; use smart line
-
-(setq sml/no-confirm-load-theme t)
-;(add-hook 'after-init-hook 'display-time)
-;(setq display-time-24hr-format t)
-;(setq display-time nil)
-;(setq display-time-day-and-date nil)
-;(setq mode-line-mule-info nil)
-;(display-time-mode 0)
-;; powerline
-;(powerline-default-theme)
-;(setq powerline-arrow-shape 'curve)
 
 (setq user-full-name "M. Chraibi")
 (setq user-mail-address "m.chraibi@gmail.com")
@@ -41,8 +87,6 @@
 ;;----------------- KEYbindings --------------
 (global-set-key "\C-z" 'nil)
 (global-set-key (kbd "M-2") #'er/expand-region)
-;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-;(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)

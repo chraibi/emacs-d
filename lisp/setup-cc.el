@@ -6,11 +6,6 @@
 (reftex-mode 0)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
-(require 'hlinum)
-(linum-mode)
-(setq linum-format "%3d \u2502 ")
-
-
 
 
 ;; ----- flycheck
@@ -31,7 +26,7 @@
 (global-set-key (kbd "C-c u") 'clang-format-buffer)
 
 (eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
+0  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
 
 
 
@@ -100,7 +95,9 @@
 
 
 
-(require 'helm-lsp)
+(use-package helm-lsp
+  :ensure t)
+
 (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
 (lsp--client-capabilities)
 

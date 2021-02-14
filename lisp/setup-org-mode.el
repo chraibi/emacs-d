@@ -1,13 +1,8 @@
 ;;; package --- Summary
+;;; Code:
 ;;; Commentary:
 ; settings for calendar, journal, clocks
-
-(require 'org)
-;(require 'org-journal)
-;(require 'org-fstree)
-(require 'remember)
-;; (require 'color-theme)
-(require 'org-crypt)
+(message "Enter setup org-mode")
 
 ;;================ BEGIN GENERAL ===========================
 (setq org-directory "~/Dropbox/Orgfiles/org-files/")
@@ -67,15 +62,10 @@
 
 (setq require-final-newline t)
 ;;================ END GENERAL =============================
-
-;;================ STROKES =============================
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-(define-key global-map "\C-cc" 'org-capture)
-
-;;================ STROKES =============================
-
+  (global-set-key "\C-cl" 'org-store-link)
+   (global-set-key "\C-ca" 'org-agenda)
+   (global-set-key "\C-cb" 'org-iswitchb)
+   (define-key global-map "\C-cc" 'org-capture)
 
 ;;========= zotero
 ;; Activate org-zotxt-mode in org-mode buffers
