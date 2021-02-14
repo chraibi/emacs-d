@@ -19,16 +19,6 @@
 
 
 
-;; ----- clang-tidy
-(load "/usr/local/Cellar/clang-format/10.0.0/share/clang/clang-format.el")
-;(require 'clang-format)
-(global-set-key (kbd "C-c r") 'clang-format-region)
-(global-set-key (kbd "C-c u") 'clang-format-buffer)
-
-(eval-after-load 'flycheck
-0  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
-
-
 
 ;;----------------- ccls
 (use-package ccls
