@@ -8,19 +8,14 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
-;(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs")
-;; (require 'benchmark-init-loaddefs)
-;; (benchmark-init/activate)
 
-;;("/usr/local/bin/osx-notifier" )
-;(setenv "ESHELL" (expand-file-name "~/bin/eshell"))
-(setq epg-gpg-program "/usr/local/bin/gpg")
+;;(setq epg-gpg-program "/usr/local/bin/gpg")
 ;; frame font
 ;; Setting English Font
-(setq multi-term-program "/bin/zsh")
+;;(setq multi-term-program "/bin/zsh")
 
-(when (string= system-type "darwin")
-  (setq dired-use-ls-dired nil))
+;; (when (string= system-type "darwin")
+;;   (setq dired-use-ls-dired nil))
 
 ;; ;;--------------------------  Backup
 (setq backup-directory-alist `(("." . "~/.saves")))
@@ -221,7 +216,8 @@
  '(sml/show-client t)
  )
 ;; hide modes
-(diminish 'projectile-mode)
+;; Diminish lets you hide minor modes from showing in the mode line, keeping it minimal.
+
 (diminish 'undo-tree-mode)
 (diminish 'abbrev-mode)
 (diminish 'auto-fill-function-mode)
@@ -262,12 +258,20 @@
                                         ;DEFINE
 
 ;-------------------------------------------------------------------
-;; TODO projectile
+(use-package projectile
+  :ensure t
+  :diminish projectile-mode
+  :bind
+  (("C-c p f" . helm-projectile-find-file)
+   ("C-c p p" . helm-projectile-switch-project)
+   ("C-c p s" . projectile-save-project-buffers))
+  :config
+  (projectile-mode +1)
+)
 ;; when solved  activate projectile settings in my-core-settings
 ;; -------------------- require
 
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
-(require 'paren)
 (require 'highlight-indentation) ;; visual guides for indentation
 (require 'autopair)
 ;(require 'server)
@@ -324,8 +328,21 @@
   ;; Loads after 2 second of idle time.
   :defer 5)
 (use-package paren
-  ;; Loads after 2 second of idle time.
-  :defer 1)
+  :ensure t
+  :diminish paren-mode
+  :defer 3
+)
+
+;; (use-package smartparens
+;;   :ensure t
+;;   :diminish smartparens-mode
+;;   :config
+;;   (progn
+;;     (require 'smartparens-config)
+;;     (smartparens-global-mode 1)
+;;     (show-paren-mode t)))
+
+
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
