@@ -142,7 +142,7 @@
 (global-hl-line-mode 1)
 (set-face-background 'highlight "#222")
 (set-face-foreground 'highlight nil)
-(set-face-underline-p 'highlight t)
+(set-face-underline 'highlight t)
 
 
 

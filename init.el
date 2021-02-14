@@ -196,23 +196,13 @@
 
 (setq save-abbrevs t)              ;; save abbrevs when files are saved
 ;; you will be asked before the abbreviations are saved
-
-
-
-(cond (( >= emacs-major-version 24)
-;;       (message "load zenburn") ;zenburn
-       (message "load solarized-light") ;zenburn
-       (load-theme 'solarized-light t)
-       ;;(load-theme 'zenburn t)
-       ;; (load-theme 'zenburn t)
-       (if (member "Monaco" (font-family-list))
-           (set-face-attribute
-            'default nil :font "Monaco 18")
-         (message "set Monaco")
-         )
-
-       )
-      );Version 24
+(message "load solarized-light") ;zenburn
+(load-theme 'solarized-light t)
+(if (member "Monaco" (font-family-list))
+    (set-face-attribute
+     'default nil :font "Monaco 18")
+  (message "set font Monaco 18")
+  )
 
 (when (memq window-system '(mac ns))
   (message "init exec-path")
@@ -221,10 +211,6 @@
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
-;; Set up appearance early
-
-;; (require 'sb-imenu)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -246,26 +232,6 @@
 (beacon-mode 1)
 (setq beacon-push-mark 35)
 (setq beacon-color "#e56911")
-
-(message "load packages")
-
-;;-------------------------
-;; (require 'xah-fly-keys)
-;; (xah-fly-keys-set-layout "qwerty") ; required if you use qwerty
-
-;; possible layout values:
-;; "qwerty"
-;; "qwerty-abnt"
-;; "qwertz"
-;; "dvorak"
-;; "programer-dvorak"
-;; "colemak"
-;; "colemak-mod-dh"
-;; "workman"
-;; dvorak is the default
-
-;; (xah-fly-keys 1)
-
 ;;-------------------------
 (use-package yasnippet
   ;; Loads after 1 second of idle time.
@@ -294,13 +260,8 @@
               'counsel-etags-virtual-update-tags 'append 'local)))
                                         ;DEFINE
 
-                                        ;-------------------------------------------------------------------
-
-(message "load packages")
-(projectile-mode +1)
-(projectile-global-mode +1)
-;(setq projectile-completion-system 'ivy)
-
+;-------------------------------------------------------------------
+;; TODO projectile
 ;; -------------------- require
 
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
@@ -309,9 +270,8 @@
 (require 'autopair)
 ;(require 'server)
 ;(require 'recentf)
-(require 'setup-electric)
+;;(require 'setup-electric)
 ;(autoload 'setup-magit "setup-magit" "load magit")
-
 (use-package setup-magit
   ;; Loads after 2 second of idle time.
   :defer 3)
@@ -364,10 +324,10 @@
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
-;(require 'multiple-cursors)
 
-(require 'my-core-settings)
-
+(use-package my-core-settings
+  ;; Loads after 1 second of idle time.
+  :defer 1)
 
 
 (require 'doom-modeline)
@@ -377,6 +337,7 @@
 ;; (require 'mood-line)
 ;; (mood-line-activate)
 (defun python-mode-setup ()
+  "Load python mode."
   (message "Custom python hook run")
   (load-library "setup-python"))
 (add-hook 'python-mode-hook 'python-mode-setup)
@@ -395,12 +356,11 @@
         )
       )
 
-
 (use-package setup-cc
   ;; Loads after 2 second of idle time.
   :defer 2)
 
-'(use-package setup-ido
+(use-package setup-ido
   :defer 1)
 
 (use-package setup-tex
@@ -435,53 +395,9 @@
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)))
 
-;; (require 'semantic/ia)
-;(require 'xcscope)
-;(require 'org-inlinetask)
-;;(require 'flycheck)
-;; (autoload 'flycheck "flycheck" "load flycheck" t)
-;; (require 'flymake-setup)
-;; (require 'setup-hlinum)
-;; (require 'flymake-cursor)
 ;; uniquify: unique buffer names
 (require 'uniquify) ;; make buffer names more unique
-;; (use-package alert
-;;   :defer t
-;;   :config
-;;   (alert-add-rule)
-;;   (alert-log-notify nil)
-;;   (alert--log-enable-logging)
-;;   (setq alert-default-style (quote notifier))
-;;   (setq alert-user-configuration (quote ((nil notifier nil))))
-;;   ;(setq alert-default-style 'terminal-notifier)
-;;   )
-;; (require 'org-alert)
-;; (setq org-alert-interval 3600)
-;; (alert "This is an alert")
-;; (message "HUHU")
-;; You can adjust the severity for more important messages
-;; (alert "This is an alert" :severity 'high)
-
-;; Or decrease it for purely informative ones
-;; (alert "This is an alert" :severity 'trivial)
-
-;; Alerts can have optional titles.  Otherwise, the title is the
-;; buffer-name of the (current-buffer) where the alert originated.
-;; (alert "This is an alert" :title "My Alert")
-
-;; Further, alerts can have categories.  This allows users to
-;; selectively filter on them.
-;; (alert "This is an alert" :title "My Alert" :category 'debug)
-
-;; If a backend allows replacing alerts, you may pass an id
-;; to your alert; then the next one with the same id will replace the
-;; first one:
-;; This avoids piling up lots of alerts, when only the last one is
-;; relevant.
-;; (require 'setup-mu4e)
-;; (require 'ob-plantuml)
-;; (require 'linum)
-;; (require 'nav)
+(message "HUHU")
 ;----------------  load setups ----------------------------
 (message "load my setups")
 
@@ -713,11 +629,11 @@
 
 (global-set-key (kbd "C-c B") 'ebib)
 
-(setq
- ebib-file-search-dirs '("~/LitDB/pdf/"))
-(setq ebib-preload-bib-files
-      (list "~/LitDB/ped.bib")
-      )
+;; (setq
+;;  ebib-file-search-dirs '("~/LitDB/pdf/"))
+;; (setq ebib-preload-bib-files
+;;       (list "~/LitDB/ped.bib")
+;;       )
 
 ;;---------------------- ispell
 (define-key ctl-x-map "\C-i"
@@ -851,30 +767,9 @@ abort completely with `C-g'."
 
 (setq yas-triggers-in-field t)
 
-;(global-unset-key (kbd "C-c ."))
-
-;; Get the backtrace when uncaught errors occur.
-;(setq debug-on-error t)               ; Will be unset at the end.
-
-;; Hit `C-g' while it's frozen to get an Emacs Lisp backtrace.
-;(setq debug-on-quit t)                ; Will be unset at the end.
-
-;; will apply a dark theme if the room is dark, and a light theme if the room is
-;; bright
-;; (defun change-theme-for-lighting ()
-;;   (let* ((current-light-sensor-reading
-;;           (string-to-number
-;;            (shell-command-to-string "~/.emacs.d/lmutracker"))))
-;;     (if (< current-light-sensor-reading 100000)
-;;         (when (not (string-equal current-theme "dark"))
-;;           (load-theme dark-theme 1)
-;;           (setq current-theme "dark"))
-;;       (when (not (string-equal current-theme "light"))
-;;         (load-theme light-theme 1)
-;;         (setq current-theme "light")))))
-
-;; ;; probably want to run this less frequently than every second
-;; (run-with-timer 0 1 #'change-theme-for-lighting)
 
 ; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
+
+(provide 'init)
+;;; init.el ends here

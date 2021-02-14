@@ -112,6 +112,16 @@
 (defvar org-journal-date-format "%Y-%m-%d"  
   "Date format string for journal headings.")  
 
+(defun org-goto-local-search-headings (string bound noerror)
+   "Search and make sure that anu matches are in headlines."
+   (catch 'return
+    (while (if isearch-forward
+               (search-forward string bound noerror)
+             (search-backward string bound noerror))
+       (when (let ((context (mapcar 'car (save-match-data (org-context)))))
+              (and (member :headline context)
+                   (not (member :tags context))))))))
+
 (defun org-journal-entry ()  
   "Create a new diary entry for today or append to an existing one."  
   (interactive)  
@@ -535,7 +545,7 @@
       :hook
       (after-init . org-roam-mode)
       :custom
-      (org-roam-directory "~/Dropbox/Orgfiles/org-files/")
+      (org-roam-directory "~/Dropbox/Orgfiles/org-files/roam")
       :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
