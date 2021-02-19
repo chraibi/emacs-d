@@ -4,7 +4,17 @@
 ; settings for calendar, journal, clocks
 (message "Enter setup org-mode")
 
+
 ;;================ BEGIN GENERAL ===========================
+(use-package org-bullets
+  :init
+  (message "Using org-bullets!")
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
+
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-directory "~/Dropbox/Orgfiles/org-files/")
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
@@ -49,7 +59,7 @@
 
 (define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
 (setq org-enforce-todo-dependencies t)
-(add-hook 'org-mode-hook 
+(add-hook 'org-mode-hook
           \t  (lambda ()
                 \t    'turn-on-font-lock
                 \t    (setq word-wrap 1)
@@ -67,25 +77,6 @@
    (global-set-key "\C-cb" 'org-iswitchb)
    (define-key global-map "\C-cc" 'org-capture)
 
-;;========= zotero
-;; Activate org-zotxt-mode in org-mode buffers
-;; (add-hook 'org-mode-hook (lambda () (org-zotxt-mode 1)))
-;; Bind something to replace the awkward C-u C-c " i
-;; (define-key org-mode-map
-;;   (kbd "C-c \" \"") (lambda () (interactive)
-;;                       (org-zotxt-insert-reference-link '(4))))
-;; Change citation format to be less cumbersome in files.
-;; You'll need to install mkbehr-short into your style manager first.
-;; (eval-after-load "zotxt"
-;;   '(setq zotxt-default-bibliography-style "mkbehr-short"))
-
-;; (org-link-set-parameters "zotero" :follow
-;;                          (lambda (zpath)
-;;                            (browse-url
-;;                             ;; we get the "zotero:"-less url, so we put it back.
-;;                             (format "zotero:%s" zpath))))
-
-
 
 ;;==================== BEGIN JOURNAL ===================
 (use-package org-journal
@@ -97,7 +88,7 @@
   )
 (setq org-journal-file-type "weekly")
 (setq org-journal-dir "~/Dropbox/Orgfiles/org-files/journal/")
-(defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"  
+(defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"
   "Path to OrgMode journal file.")  
 (defvar org-journal-date-format "%Y-%m-%d"  
   "Date format string for journal headings.")  
@@ -146,7 +137,7 @@
                " %i %-12:c %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
          (search . " %i %-12:c"))
       )
-(setq org-agenda-files `(,org-directory))
+(setq org-agenda-files '(,org-directory))
 (setq org-agenda-window-frame-fractions '(1.0 . 1.0))
 (setq org-agenda-dim-blocked-tasks 'invisible)
 (setq org-journal-enable-agenda-integration t
@@ -304,53 +295,6 @@
 ;;----------------------------------------
 ;; AUCTex
 ;;----------------------------------------
-;(setq TeX-auto-save t)
-;(setq TeX-parse-self t)
-;(setq-default TeX-master t)(defun org-mode-reftex-setup ()
-;(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-;(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-;;;(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-;;(setq reftex-plug-into-AUCTeX t)
-;;- ORG REFTEX
-;; (setq reftex-default-bibliography
-;;       (quote
-;;        ("~/sciebo/CST/30_Literature/LitDB/ped.bib")))
-;; (setq reftex-bibpath-environment-variables
-;;                 '("~/sciebo/CST/30_Literature/LitDB/"))
-
-;; (defun org-mode-reftex-setup ()
-;;   (setq TeX-master t)
-;;   (load-library "reftex")
-;;   (and (buffer-file-name) (file-exists-p (buffer-file-name))
-;;        (progn
-;;                                         ;enable auto-revert-mode to update reftex when bibtex file changes on disk
-;;          (global-auto-revert-mode t)
-;;          (reftex-parse-all)
-;;      ;add a custom reftex cite format to insert links
-;;      ;; (reftex-set-cite-format "** [[papers:%l][%l]]: %t \n"
-;;      ;;                         )
-;;          (reftex-set-cite-format
-;;           '((?c . "\\cite{%l}") ; natbib inline text
-;;             (?i . "** [[papers:%l][%l]]: %t \n") ; natbib with parens
-;;             )
-;;           )
-;;          )
-;;        )
-;;   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-;;   (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search)
-;; )
-
-;; (add-hook 'org-mode-hook 'org-mode-reftex-setup)
-
-
-
-  
-(setq org-link-abbrev-alist
-      '(
-        ("papers" . "~/sciebo/CST/30_Literature/LitDB/pdf/%s.pdf")
-        )
-      ) 
  
 
 (setq org-latex-listings 'minted)
@@ -362,25 +306,6 @@
 (setq org-export-latex-listings 'minted)
 ;(add-to-list 'org-export-latex-packages-alist '("" "minted"))
 (setq org-src-fontify-natively t)
-;; (setq org-export-latex-minted-options
-;;       '(;("frame" "lines")
-;;         ("fontsize" "\\scriptsize")
-;;     ;("linenos" "")
-;; ))
-
-
-
-;; (setq org-export-dispatch-use-expert-ui t ; non-intrusive export dispatch
-;;       org-latex-pdf-process; for regular export
-;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-;; "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-;; "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-;; (setq org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-;; (setq org-latex-to-pdf-process '("pdflatex %f && bibtex %f && pdflatex %f && pdflatex %f"))
-
-;; (setq org-latex-pdf-process
-;;   '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
 
 
 (setq org-latex-pdf-process
@@ -450,6 +375,8 @@
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-preserve-indentation t)
 (setq org-startup-indented t)
+(setq org-startup-folded "overview")
+
 ;;--------------- crypt
 
      (org-crypt-use-before-save-magic)
@@ -480,71 +407,215 @@
 
 
 (defun org-find-dangling-clock ()
-  "Find a dangling clock entry in an org-mode buffer"
+  "Find a dangling clock entry in an `org-mode' buffer."
   (interactive)
   (re-search-forward "CLOCK: \\[[^]]*\\] *$")
   )
 
 ;; helm-bibtex
+;; open pdf with system pdf viewer (works on mac)
+;; (use-package helm-bibtex
+;;   :config
+;;   (setq bibtex-completion-bibliography
+;;         '(
+;;           "~/sciebo/zotero/_Research_/_Research_.bib"
+;;           )
+;;         )
+;;   (setq bibtex-completion-library-path '("/Users/chraibi/sciebo/zotero/_Research_/files/"))
+;;   (setq bibtex-completion-pdf-field "file")
+;;   (setq bibtex-completion-notes-path "~/Dropbox/Orgfiles/org-files/roam/bib/bibnote.org")
+;;   (setq bibtex-completion-display-formats
+;;         '((article       . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${journal:40}")
+;;           (inbook        . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+;;           (incollection  . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+;;           (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+;;           (t             . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*}")))
 
-(setq bibtex-completion-bibliography
-      '(
-        "~/sciebo/CST/30_Literature/LitDB/ped.bib"
-        "~/testzotero.bib"
-        )
-      )
-(setq bibtex-completion-library-path '("~/sciebo/CST/30_Literature/LitDB/pdf/"))
-(setq bibtex-completion-pdf-field "File")
+;;   (setq bibtex-completion-additional-search-fields '(keywords))
 
-(setq bibtex-completion-notes-path "~/Dropbox/Orgfiles/org-files/refs.org")
+;;   (setq bibtex-completion-pdf-symbol "⌘")
+;;   (setq bibtex-completion-notes-symbol "✎")
 
-(setq bibtex-completion-display-formats
-    '((article       . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${journal:40}")
-      (inbook        . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-      (incollection  . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-      (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-      (t             . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*}")))
+;;   (setq bibtex-completion-format-citation-functions
+;;         '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+;;           (latex-mode    . bibtex-completion-format-citation-cite)
+;;           (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+;;           (default       . bibtex-completion-format-citation-default)))
 
-(setq bibtex-completion-additional-search-fields '(keywords))
-
-(setq bibtex-completion-pdf-symbol "⌘")
-(setq bibtex-completion-notes-symbol "✎")
-
-(setq bibtex-completion-format-citation-functions
-  '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
-    (latex-mode    . bibtex-completion-format-citation-cite)
-    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-    (default       . bibtex-completion-format-citation-default)))
-
-(setq bibtex-completion-pdf-open-function
-  (lambda (fpath)
-    (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath)))
+;;   (setq bibtex-completion-pdf-open-function
+;;       (lambda (fpath)
+;;           (message "field  %s" bibtex-completion-pdf-field )
+;;           (message "Opening Path : %s " bibtex-completion-library-path)
+;;           (message "Opening Path : %s " fpath)
+;;           (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath)
+;;           )
+;;         )
 
 
-(setq bibtex-completion-additional-search-fields '(tags))
-
-;(helm-add-action-to-source "Insert citation" 'bibtex-completion-insert-citation helm-source-bibtex 0)
-
-;(bibtex-completion-candidates)
-
+;;   (setq bibtex-completion-additional-search-fields '(tags))
+;;   )
 
 ;; org-roam ==========
-
 (use-package org-roam
-      :ensure t
-      :hook
-      (after-init . org-roam-mode)
-      :custom
-      (org-roam-directory "~/Dropbox/Orgfiles/org-files/roam")
-      :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-graph))
+  :init
+  (message "Loading org-roam!")
+  :ensure t
+  :hook
+  (after-init . org-roam-mode org-roam-server-mode)
+  :custom
+  (setq org-roam-directory (concat org-directory "org-roam/"))
+  (setq org-roam-db-update-method 'immediate)
+  (require 'org-roam-protocol)
+  :bind (:map org-roam-mode-map
+              (("C-c o l" . org-roam)
+               ("C-c o f" . org-roam-find-file)
+               ("C-c o t" . org-roam-tag-add)
+               ("C-c o j" . org-roam-dailies-capture-today)
+               ("C-c o p" . org-roam-dailies-capture-tomorrow)
+               ("C-c o g" . org-roam-graph))
               :map org-mode-map
-              (("C-c n i" . org-roam-insert))
-              (("C-c n I" . org-roam-insert-immediate))))
+              (("C-c o i" . org-roam-insert))
+              (("C-c o I" . org-roam-insert-immediate))))
 
+;; org-ref ==============
+(use-package org-ref
+  :init
+  (message "Init org-ref")
+  :ensure t
+  :after org-roam
+  :config
+  (setq
+   org-ref-notes-directory (concat org-roam-directory "papers/")
+   org-ref-pdf-directory "~/Zotero/storage/"
+   org-ref-default-bibliography '("~/Zotero/DB.bib")
+   org-ref-completion-library 'org-ref-ivy-cite
+   org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+   org-ref-bibliography-notes (concat org-ref-notes-directory "bibnote.org")
+   org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
+   org-ref-notes-function 'orb-edit-notes
+   )
+  )
+;; (with-eval-after-load 'org-roam
 
+;;    )
+
+;; org-roam-bibtex ======================
+(use-package org-roam-bibtex
+  :ensure t
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config
+  (setq orb-preformat-keywords
+        '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
+  (setq orb-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           ""
+           :file-name "papers/%<%Y%m%d%H%M%S>-${slug}"
+           :head "#+TITLE: ${=key=}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
+
+- keywords :: ${keywords}
+
+\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n  :NOTER_PAGE: \n  :END:\n\n"
+           :unnarrowed t))))
+
+(use-package deft
+  :init
+  (message "Load deft C-c o s")
+  :ensure t
+  :after org org-roam
+  :bind
+  ("C-c o s" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  :config
+  (with-eval-after-load 'org-roam
+    (setq deft-directory org-roam-directory)
+  )
+)
+
+(use-package org-roam-server
+  :ensure t
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
+
+(setq org-roam-dailies-directory (concat org-roam-directory "journal/"))
+(setq org-roam-dailies-capture-templates
+      '(
+        ("j" "journal" entry
+         #'org-roam-capture--get-point
+         "* %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d>\n"
+         :olp ("Journal"))))
+
+(setq org-roam-capture-templates
+      '(
+        ("d" "default" plain (function org-roam--capture-get-point)
+         "%? \n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+        ("c" "categorized" plain (function org-roam--capture-get-point)
+         "%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "%^{Category|ppl|meeting|project|note}/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+        ;; ppl
+        ("p" "ppl" plain (function org-roam--capture-get-point)
+         "** Facts \n- @ \n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "ppl/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+        ;; meetings
+        ("m" "meeting" plain (function org-roam--capture-get-point)
+         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+        ;; projects
+        ("r" "project" plain (function org-roam--capture-get-point)
+         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "projects/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+        ;;notes 
+        ("n" "note" plain (function org-roam--capture-get-point)
+         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "notes/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+      ;; papers
+      ("b" "paper" plain (function org-roam--capture-get-point)
+       "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+       :file-name "papers/%<%Y%m%d%H%M%S>-${slug}"
+       :head "* ${title}\n"
+       :unnarrowed t)
+      ;; administration
+      ("a" "administration" plain (function org-roam--capture-get-point)
+         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "administration/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+      ;; notes
+      ("l" "lecture" plain (function org-roam--capture-get-point)
+         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U"
+         :file-name "lectures/%<%Y%m%d%H%M%S>-${slug}"
+         :head "* ${title}\n"
+         :unnarrowed t)
+      )
+      )
 
 (provide 'setup-org-mode)
 ;;; setup-org-mode.el ends here
