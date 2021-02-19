@@ -22,6 +22,9 @@
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
+;;on macOS, ls doesn't support the --dired option while on Linux it is supported.
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
 
 (require 'my-core-settings)
 
@@ -85,6 +88,8 @@
 
 ;-------------------------------------------------------------------
 (use-package projectile
+  :init
+  (message "Loading projectile")
   :ensure t
   :diminish projectile-mode
   :bind
@@ -95,9 +100,21 @@
   (projectile-mode +1)
   )
 (use-package helm-projectile
+  :init
+  (message "Loading helm-projectile")
   :ensure t
   :config
   (helm-projectile-on))
+
+(use-package helm
+  :init
+  (message "loading helm!")
+  :ensure t
+  :after (projectile helm-projectile)
+  :config
+  (require 'setup-helm)
+  :defer 2)
+
 ;; when solved  activate projectile settings in my-core-settings
 ;; -------------------- require
 
@@ -140,14 +157,6 @@
   :ensure t
   :defer 2)
 
-(use-package helm
-  :init
-  (message "loading helm!")
-  :ensure t
-  :after (projectile helm-projectile)
-  :config
-  (require 'setup-helm)
-  :defer 2)
 
 (use-package ivy
   :init
@@ -668,10 +677,12 @@ abort completely with `C-g'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/Users/chraibi/Dropbox/Orgfiles/org-files/master.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/roam/20210214163948-queueing.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/roam/20210214175504-qiancheng.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/roam/20210214182509-tarui.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/c++.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/cal.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/home.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/ical.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/journal.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/learn.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/meeting.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/notes.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/papers.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/personal.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/projects.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/refs.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/work.org"))
  '(org-display-custom-times t)
  '(org-time-stamp-custom-formats '("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>"))
  '(package-selected-packages
-   '(clang-format uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
+   '(org-ref deft org-bullets clang-format uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
