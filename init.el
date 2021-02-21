@@ -631,7 +631,7 @@ abort completely with `C-g'."
   :ensure t)
 
 (defun my-test-emacs ()
-  "debuging start of emacs"
+  "Debuging start of Emacs."
   (interactive)
   (require 'async)
   (async-start
@@ -654,7 +654,7 @@ abort completely with `C-g'."
         (search-backward "ERROR!")))))
 
 (defun auto-test-emacs ()
-  "test starting emacs for bugs"
+  "Test starting Emacs for bugs."
   (when (eq major-mode 'emacs-lisp-mode)
     (my-test-emacs)))
 
@@ -670,7 +670,9 @@ abort completely with `C-g'."
 ; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
 (message "done loading emacs!")
+
 (provide 'init)
+
 ;;; init.el ends here
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -682,10 +684,11 @@ abort completely with `C-g'."
  '(org-display-custom-times t)
  '(org-time-stamp-custom-formats '("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>"))
  '(package-selected-packages
-   '(org-ref deft org-bullets clang-format uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
+   '(org-noter-pdftools org-noter org-super-agenda org-ref deft org-bullets clang-format uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
