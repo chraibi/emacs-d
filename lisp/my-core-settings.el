@@ -74,13 +74,31 @@
 (setq custom-safe-themes t)
 ;; use smart line
 
-(setq user-full-name "M. Chraibi")
+(setq user-full-name "MC")
 (setq user-mail-address "m.chraibi@gmail.com")
-(set-default 'cursor-type 'bar)
-(setq cursor-type 'bar)
-(setq-default cursor-type '(hbar . 1))
-(set-cursor-color "#ff0000")
-;; (blink-cursor-mode 1)
+
+(setq-default cursor-type 'bar)
+
+
+(defvar blink-cursor-colors (list  "#ff3900" "#de00ff" "#ff00c1" "#ff0061" "#ff0001" "#961617" "#590c0c" "#2d0404")
+  "On each blink the cursor will cycle to the next color in this list.")
+
+(setq blink-cursor-count 0)
+(defun blink-cursor-timer-function ()
+  "Zarza wrote this cyberpunk variant of timer `blink-cursor-timer'.
+Warning: overwrites original version in `frame.el'.
+This one changes the cursor color on each blink.  Define colors in `blink-cursor-colors'."
+  (when (not (internal-show-cursor-p))
+    (when (>= blink-cursor-count (length blink-cursor-colors))
+      (setq blink-cursor-count 0))
+    (set-cursor-color (nth blink-cursor-count blink-cursor-colors))
+    (setq blink-cursor-count (+ 1 blink-cursor-count))
+    )
+  (internal-show-cursor nil (not (internal-show-cursor-p)))
+  )
+
+;; no beep
+(setq ring-bell-function 'ignore)
 
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
