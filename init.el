@@ -76,16 +76,32 @@
               'counsel-etags-virtual-update-tags 'append 'local)))
                                         ;DEFINE
 
-(use-package smart-mode-line-powerline-theme
-  :ensure t)
+;; (use-package smart-mode-line-powerline-theme
+;;   :ensure t)
 
 (use-package smart-mode-line
   :ensure t
   :config
   (setq sml/theme 'powerline)
   (setq sml/no-confirm-load-theme t)
+  (setq sml/show-time t)
   (add-hook 'after-init-hook 'sml/setup))
+;; (setq display-time-format "%d|%H:%M")
+ (defface egoge-display-time
+   '((((type x w32 mac))
+      ;; #060525 is the background colour of my default face.
+      (:foreground "#060525" :inherit bold))
+     (((type tty))
+      (:foreground "blue")))
+   "Face used to display the time in the mode line.")
 
+ ;; This causes the current time in the mode line to be displayed in
+ ;; `egoge-display-time-face' to make it stand out visually.
+ (setq display-time-string-forms
+       '((propertize (concat " " month "/" day " " 24-hours ":" minutes " ")
+ 		     'face 'egoge-display-time)))
+
+(display-time-mode 1)
 ;-------------------------------------------------------------------
 (use-package projectile
   :init
@@ -160,13 +176,16 @@
 
 (use-package ivy
   :init
-  (message "loading ivy!")
+  (message "loading ivy!") ;; TODO rename. this is not ivy
   :ensure t
   :config
-  (ivy-mode 1)
+  ;; (ivy-mode 1)
   (require 'setup-ivy)
   :defer 1
   )
+
+(require 'swiper-helm)
+(global-set-key (kbd "\C-s") 'swiper-helm)
 
 (use-package recentf
   :init
@@ -267,7 +286,8 @@
   :init
   (message "loading winner!")
   :ensure t
-  :defer 2)
+  )
+(winner-mode 1)
 
 (use-package windmove
   :init
@@ -380,7 +400,7 @@
   "Emacs quick move minor mode"
   t)
 ;; you can select the key you prefer to
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-z SPC") 'ace-jump-mode)
 ;;
 ;; enable a more powerful jump back function from ace jump mode
 ;;
@@ -680,11 +700,11 @@ abort completely with `C-g'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '("/Users/chraibi/Dropbox/Orgfiles/org-files/master.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/roam/20210214163948-queueing.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/roam/20210214175504-qiancheng.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/roam/20210214182509-tarui.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/c++.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/cal.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/home.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/ical.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/journal.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/learn.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/meeting.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/notes.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/papers.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/personal.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/projects.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/refs.org" "/Users/chraibi/Dropbox/Orgfiles/org-files/work.org"))
+   '("~/Dropbox/Orgfiles/org-files/org-roam/administration/20210223175808-juser.org" "~/Dropbox/Orgfiles/org-files/org-roam/administration/20210226211044-work_notes.org" "~/Dropbox/Orgfiles/org-files/org-roam/administration/personal.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210219210938-kings_indian_defence.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210219211229-christian_braun.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210302085309-kia.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210312205107-roy_lopez.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210312205348-sicilian_defence.org" "~/Dropbox/Orgfiles/org-files/org-roam/lectures/20210226211421-evaksim.org" "~/Dropbox/Orgfiles/org-files/org-roam/meetings/20210222121806-al_pro_runde.org" "~/Dropbox/Orgfiles/org-files/org-roam/meetings/20210226220937-division_meetings.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210219231501-pushing.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210219231802-ai.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210219231948-gps.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222080919-queueing.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222081953-supervision.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082324-org_roam.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082517-org_ref.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082625-zotero.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082729-validation_and_verification.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222114209-gama_platform.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210223105750-hacks.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210223105848-hn.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210225003427-web.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210319131845-dictionary.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/notes.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210302124427-analysis_of_information_dissemination_through_direct_communication_in_a_moving_crowd.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210302124645-review_safety_science.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210302124645-single_file_movement_on_stairway_investigating_the_impact_of_stair_construct_on_pedestrian_ascent_and_descent_fundamental_diagram.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210319232736-physa_21442.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/Hirai1975.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/Sibolla2018.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/Zhou et al. - Social graph convolutional LSTM for pedestrian tra.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/blanke2014.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/papers.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/pouw2020a.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210219230924-ahmed_alia.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210219231659-mira.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222080716-qiancheng_xu.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222081111-ghadeer_derbas.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222081248-rudina_subaih.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222081523-ezel_uesten.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222120112-david.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223102121-ramin_sadiri.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223122723-carsten_hutter.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223122907-laura_tichelbaecker.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223125217-jakob_cordes.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223153906-joseph_heinen.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223204851-special_issue_pedestrians.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210225112953-armin_seyfried.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210225160634-jupedsim.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210304192447-bernhard_steffen.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210304192943-jette_schumann.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210311132419-fanni_fiedrich.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210311160609-christoph_gnendiger.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210312142158-antoine_tordeux.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210315131518-jonas_rzezonka.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210315173520-xiang_wang.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210316092429-lukas_kohl.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210321124515-fabian_braennstroem.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210223124906-madras.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210307145406-projects.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210307150250-jpsreport.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210311082806-sisame.org" "~/Dropbox/Orgfiles/org-files/org-roam/20210220130047-index.org" "~/Dropbox/Orgfiles/org-files/.#test.org" "~/Dropbox/Orgfiles/org-files/c++.org" "~/Dropbox/Orgfiles/org-files/cal.org" "~/Dropbox/Orgfiles/org-files/home.org" "~/Dropbox/Orgfiles/org-files/journal.org" "~/Dropbox/Orgfiles/org-files/master.org" "~/Dropbox/Orgfiles/org-files/meeting.org" "~/Dropbox/Orgfiles/org-files/notes.org" "~/Dropbox/Orgfiles/org-files/refs.org"))
  '(org-display-custom-times t)
  '(org-time-stamp-custom-formats '("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>"))
  '(package-selected-packages
-   '(org-noter-pdftools org-noter org-super-agenda org-ref deft org-bullets clang-format uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
+   '(org-pdfview org-pdftools pdf-tools org-analyzer ace-jump-mode helm-org-ql origami org-noter-pdftools org-noter org-super-agenda org-ref deft org-bullets clang-format uniquify org-mode zotxt zenburn-theme xcscope w32-browser use-package undo-tree solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme python-mode projectile-sift org-roam-server org-roam-bibtex org-journal nav multiple-cursors modern-cpp-font-lock magit lsp-ui ido-vertical-mode hlinum helm-projectile helm-lsp helm-git-grep helm-bibtex guide-key flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline diminish cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
