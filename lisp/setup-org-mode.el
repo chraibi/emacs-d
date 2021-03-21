@@ -1,8 +1,10 @@
 ;;; package --- Summary
 ;;; Code:
 ;;; Commentary:
-; settings for calendar, journal, clocks
+                                        ; settings for calendar, journal, clocks
+
 (message "Enter setup org-mode")
+
 
 
 ;;================ BEGIN GENERAL ===========================
@@ -29,8 +31,16 @@
   )
 ; Set default column view headings: Task Effort Clock_Summary
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
-; global Effort estimate values
-(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
+;; Set default column view headings: Task Priority Effort Clock_Summary
+(setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
+
+;; global Effort estimate values
+(setq org-global-properties
+      '(("Effort_ALL" .
+         "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")))
+;;        1    2    3    4    5    6    7    8    9    0
+;; These are the hotkeys ^^
+
 
 (eval-after-load 'org-bullets
   '(setq org-bullets-bullet-list '("✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▲" "●" )))
@@ -88,6 +98,7 @@
   )
 (setq org-journal-file-type "weekly")
 (setq org-journal-dir "~/Dropbox/Orgfiles/org-files/journal/")
+
 (defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"
   "Path to OrgMode journal file.")  
 (defvar org-journal-date-format "%Y-%m-%d"  
@@ -129,18 +140,11 @@
 ;;==================== END JOURNAL =====================
 
 ;;==================== BEGIN AGENDA ===================
-
-
-
-
 (use-package org-agenda
   :after org
   :commands (org-agenda)
   :config
-  (setq org-agenda-files (list
-                          (expand-file-name org-directory)
-                          )
-        )
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (setq
    org-agenda-start-on-weekday 1
    org-agenda-include-diary t
@@ -183,9 +187,9 @@
           ))
      
      ("w" "Agenda"
-           ((agenda "" ) 
+           (
             (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
-                       ((org-agenda-overriding-header "                                                        INTR TASKS                                                                       ")))            
+                       ((org-agenda-overriding-header "                                                         INTR TASKS                                                                       ")))            
             (tags-todo "-goals-incubate-inbox+TODO=\"PROG\""
                       ((org-agenda-overriding-header "                                                         PROG TASKS                                                                       ")))
             (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
@@ -193,6 +197,10 @@
             )
            ((org-super-agenda-groups
              '(
+               (:name "Done today"
+                :and (:regexp "State \"DONE\""
+                              :log t))
+               
                (:name "  📌 Today"
                       :scheduled today :order 1)
                (:name "  📌 Due today"
@@ -219,6 +227,9 @@
 
 
 
+;; Agenda clock report parameters
+(setq org-agenda-clockreport-parameter-plist
+      '(:link t :maxlevel 6 :fileskip0 t :compact t :narrow 60 :score 0))
 
 ;; TODO keywords.
 (setq org-todo-keywords
@@ -236,23 +247,21 @@
                       ("CANCELLED" . ?c)
                       ))
 (setq org-fast-tag-selection-single-key (quote expert))
-(setq org-default-notes-file (concat org-directory "notes.org"))
+(setq org-default-notes-file (concat org-directory "org-roam/notes.org"))
 (custom-set-variables
  '(org-time-stamp-custom-formats (quote ("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>")))
 
  ) 
 ;--------------------------
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
-;; (setq org-capture-templates
-;;       (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/work.org")
-;;                "*** TODO %?\n")
-;;               ("n" "note" entry (file "~/Dropbox/Orgfiles/org-files/notes.org")
-;;                "* %? :NOTE:\n%U\n\n" :clock-in t :clock-resume t)
-;;               ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/journal.org")
-;;                "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)
-;;               ("m" "Meeting" entry (file "~/Dropbox/Orgfiles/org-files/meeting.org")
-;;                "**  %? :MEETING:\n%U" :clock-in t :clock-resume t)
-;; )))
+(setq org-capture-templates
+      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work_notes.org")
+               "** TODO %?\n")
+              ("n" "note" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/notes.org")
+               "** %? :NOTE:\n%U\n\n" :clock-in t :clock-resume t)
+              ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/org-roam/journal/journal.org")
+               "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)              
+)))
 ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
 (setq org-log-done 'time)
@@ -299,6 +308,9 @@
         ;; Include current clocking task in clock reports
         org-clock-report-include-clocking-task t
         org-cycle-include-plain-lists t
+        org-clock-in-switch-to-state "PROG"
+        ;; use pretty things for the clocktable
+        org-pretty-entities t
         )
     )
   )
@@ -306,18 +318,7 @@
  
 ;;------------------------ ORG-Templates
 (setq org-structure-template-alist
-      (quote (("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
-              ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
-              ("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
-              ("v" "#+begin_verse\n?\n#+end_verse" "<verse>\n?\n</verse>")
-              ("c" "#+begin_center\n?\n#+end_center" "<center>\n?\n</center>")
-              ("l" "#+begin_latex\n?\n#+end_latex" "<literal style=\"latex\">\n?\n</literal>")
-              ("L" "#+latex: " "<literal style=\"latex\">?</literal>")
-              ("h" "#+begin_html\n?\n#+end_html" "<literal style=\"html\">\n?\n</literal>")
-              ("H" "#+html: " "<literal style=\"html\">?</literal>")
-              ("a" "#+begin_abstract\n?\n#+end_abstract")
-;              ("i" "#+index: ?" "#+index: ?")
-              ("i" "#+include %file ?" "<include file=%file markup=\"?\">"))))
+      (quote (("s" . "src"))))
 
 (setq org-export-html-validation-link nil)
 
@@ -395,19 +396,19 @@
   (setq bibtex-completion-notes-symbol "✎")
 
   (setq bibtex-completion-format-citation-functions
-        '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+        '((org-mode      . bibtex-completion-format-citation-cite) ;helm-bibtex-format-citation-cite) ;bibtex-completion-format-citation-org-title-link-to-PDF)
           (latex-mode    . bibtex-completion-format-citation-cite)
           (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
           (default       . bibtex-completion-format-citation-default)))
 
-  (setq bibtex-completion-pdf-open-function
-      (lambda (fpath)
-          (message "field  %s" bibtex-completion-pdf-field )
-          (message "Opening Path : %s " bibtex-completion-library-path)
-          (message "Opening Path : %s " fpath)
-          (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath)
-          )
-        )
+  ;; (setq bibtex-completion-pdf-open-function
+  ;;     (lambda (fpath)
+  ;;         (message "field  %s" bibtex-completion-pdf-field )
+  ;;         (message "Opening Path : %s " bibtex-completion-library-path)
+  ;;         (message "Opening Path : %s " fpath)
+  ;;         (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath)
+  ;;         )
+  ;;       )
 
 
   (setq bibtex-completion-additional-search-fields '(tags))
@@ -471,32 +472,103 @@
         '(("r" "ref" plain (function org-roam-capture--get-point)
            ""
            :file-name "papers/${citekey}"
-           :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
+           :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
 
 - keywords :: ${keywords}
 
-\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n   :NOTER_PAGE: \n  :END:\n\n"
+\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: [[file:%(orb-process-file-field \"${=key=}\")][PDF]]\n   :NOTER_PAGE: \n  :END:\n\n"
            :unnarrowed t)))
 
   )
 
-  (use-package org-pdftools
-    :hook (org-load . org-pdftools-setup-link))
+
+(use-package pdf-tools
+  :ensure t
+  :pin manual ;; don't reinstall when package updates
+  :mode  ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (setq-default pdf-view-display-size 'fit-page)
+  (setq pdf-annot-activate-created-annotations t)
+  (pdf-tools-install :no-query)
+  (require 'pdf-occur))
+
+
+
 
 (use-package org-noter
   :ensure t
   :after (:any org pdf-view)
-  :custom (org-noter-always-create-frame nil))
+  :config
+  (setq
+   ;; org-noter-always-create-frame nil
+   ;; org-noter-insert-note-no-questions nil
+   org-noter-separate-notes-from-heading t
+   ;; org-noter-auto-save-last-location t
+   org-noter-notes-search-path '("~/Dropbox/Orgfiles/org-files/org-roam/papers/")
+   )
+    ;; (defun org-noter-init-pdf-view ()
+    ;;   (pdf-view-fit-page-to-window)
+    ;;   (pdf-view-auto-slice-minor-mode)
+    ;;   (run-at-time "0.5 sec" nil #'org-noter))
+    ;; (add-hook 'pdf-view-mode-hook 'org-noter-init-pdf-view)
+    (require 'org-noter-pdftools)
+  )
 
-;;(progn
 (use-package org-noter-pdftools
-  :init
-  (message "call pdf-tools-install when installing for the first time")
-  :ensure t
   :after org-noter
   :config
+  ;; Add a function to ensure precise note is inserted
+  (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                   (not org-noter-insert-note-no-questions)
+                                                 org-noter-insert-note-no-questions))
+           (org-pdftools-use-isearch-link t)
+           (org-pdftools-use-freestyle-annot t))
+       (org-noter-insert-note (org-noter--get-precise-info)))))
+
+  ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+  (defun org-noter-set-start-location (&optional arg)
+    "When opening a session with this document, go to the current location.
+With a prefix ARG, remove start location."
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((inhibit-read-only t)
+           (ast (org-noter--parse-root))
+           (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+       (with-current-buffer (org-noter--session-notes-buffer session)
+         (org-with-wide-buffer
+          (goto-char (org-element-property :begin ast))
+          (if arg
+              (org-entry-delete nil org-noter-property-note-location)
+            (org-entry-put nil org-noter-property-note-location
+                           (org-noter--pretty-print-location location))))))))
   (with-eval-after-load 'pdf-annot
     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+
+;; (use-package org-noter-pdftools
+;;   :after org-noter
+;;   :config
+;;   (with-eval-after-load 'pdf-annot
+;;     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+
+
+(use-package org-pdftools
+  :hook (org-mode . org-pdftools-setup-link))
+
+
+
+(setq org-file-apps
+      '(
+        ("\\.pdf::\\(\\d+\\)\\'" org-pdfview-open link)
+        (directory . emacs)
+        (auto-mode . emacs)
+        ("\\.x?html?\\'" . default)
+        )
+      )
+
+
 
 (use-package deft
   :init
