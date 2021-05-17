@@ -3,8 +3,8 @@
 # key: fig
 # --
 #+CAPTION: ${1:caption}
-#+ATTR_LaTeX: ${2:scale=0.75}
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width ${2:0.75}\textwidth
 #+LABEL: fig:${3:label}
-#+begin_center
-[[file:${4:file}]]
-#+end_center
+#+NAME: fig:$3
+[[file:~/${5}]]$0

@@ -2,10 +2,24 @@
 ;;; Code:
 ;;; Commentary:
                                         ; settings for calendar, journal, clocks
+(require 'ox-latex)
+(require 'org-tempo)
 
 (message "Enter setup org-mode")
 
+(add-to-list 'org-emphasis-alist
+             '("*" (:foreground "red")
+               ))
 
+(setq org-image-actual-width nil)
+
+;;https://emacs.stackexchange.com/questions/29758/yasnippets-and-org-mode-yas-next-field-or-maybe-expand-does-not-expand
+(defun yas-org-very-safe-expand ()
+  (let ((yas-fallback-behavior 'return-nil)) (yas-expand)))
+(add-hook 'org-mode-hook
+      (lambda ()
+        (add-to-list 'org-tab-first-hook 'yas-org-very-safe-expand)
+        (define-key yas-keymap [tab] 'yas-next-field)))
 
 ;;================ BEGIN GENERAL ===========================
 (use-package org-bullets
@@ -43,7 +57,7 @@
 
 
 (eval-after-load 'org-bullets
-  '(setq org-bullets-bullet-list '("✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▲" "●" )))
+  '(setq org-bullets-bullet-list '("●" "✦" "✭" "■" "▲" "✺" "✹" "✸" "✷" "✶")))
 ; Use IDO for target completion
 (setq org-completion-use-ido t)
 ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
@@ -57,6 +71,9 @@
 
 ; Allow refile to create parent tasks with confirmation
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
+
+;; strike through dones
+(set-face-attribute 'org-headline-done nil :strike-through t)
 
 ;;;;----------------------------- subtasks
 (defun my-org-insert-sub-task ()
@@ -187,15 +204,18 @@
           ))
      
      ("w" "Agenda"
-           (
-            (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
-                       ((org-agenda-overriding-header "                                                         INTR TASKS                                                                       ")))            
-            (tags-todo "-goals-incubate-inbox+TODO=\"PROG\""
-                      ((org-agenda-overriding-header "                                                         PROG TASKS                                                                       ")))
-            (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
-                      ((org-agenda-overriding-header "                                                         NEXT TASKS                                                                       ")))
-            )
-           ((org-super-agenda-groups
+      (       
+       (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
+                  ((org-agenda-overriding-header "                                                         CAL                                                                       ")))
+       
+       (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
+                  ((org-agenda-overriding-header "                                                         INTR TASKS                                                                       ")))            
+       (tags-todo "-goals-incubate-inbox+TODO=\"PROG\""
+                  ((org-agenda-overriding-header "                                                         PROG TASKS                                                                       ")))
+       (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
+                  ((org-agenda-overriding-header "                                                         NEXT TASKS                                                                       ")))
+       )
+      ((org-super-agenda-groups
              '(
                (:name "Done today"
                 :and (:regexp "State \"DONE\""
@@ -207,16 +227,20 @@
                       :deadline today :order 1)
                (:name "  ⛔ Overdue"
                       :deadline past :face (:background "RosyBrown1" :underline nil))
+               (:name "  👀 Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
                (:name "  ⭐ Due soon" 
-                      :deadline future :log t)
-               (:name "  ❌ Scheduled earlier"
-                      :scheduled past)
-               (:name "  👀 Important" :priority "A" :face (:background "AliceBlue" :underline nil))
-               (:name "  ☕ Scheduled" :time-grid t)
-               (:name "  💀 Unsorted" :todo "PROG")
-               (:name "  💀 Unsorted" :todo "INTR")
-               (:name "  💀 Unsorted" :todo "NEXT")
-               (:discard (:anything))
+                      :deadline future :log t :order 2)
+               
+               ;; (:name "  ☕ Scheduled"
+               ;;        :tag "NEXT"
+               ;;        :time-grid t
+               ;;        :scheduled future
+               ;;        :order 1) ;
+               (:name "  💀 Unsorted" :todo "PROG" :order 100)
+               (:name "  💀 Unsorted" :todo "INTR" :order 100)
+               (:name "  💀 Unsorted" :todo "NEXT" :order 100)
+               ;; (:name "  💀 Unsorted" :todo "CAL")
+                (:discard (:anything))
                )
              )
             )       
@@ -234,7 +258,7 @@
 ;; TODO keywords.
 (setq org-todo-keywords
       '(
-        (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "INTR(i)" "|" "DONE(d!/!)")
+        (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "INTR(i)" "CAL(c)" "|" "DONE(d!/!)")
         )
       )
                                         ; Tags with fast selection keys
@@ -255,12 +279,17 @@
 ;--------------------------
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work_notes.org")
-               "** TODO %?\n")
-              ("n" "note" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/notes.org")
-               "** %? :NOTE:\n%U\n\n" :clock-in t :clock-resume t)
-              ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/org-roam/journal/journal.org")
-               "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)              
+      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
+               "** TODO %?" :empty-lines 1)
+              ("n" "fleeting note" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org")
+               "* %?")
+              ("p" "private" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/private-notes.org")
+               "* TODO %?" :empty-lines 1)
+              ("l" "literature" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/literature-notes.org")
+               "* TODO %?" :empty-lines 1)
+              
+              ;; ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/org-roam/journal/journal.org")
+              ;;  "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)              
 )))
 ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
@@ -271,6 +300,7 @@
   (progn
     (setq org-timer-default-timer 25
           org-latex-listings 'minted
+          org-latex-packages-alist '(("" "minted"))
           org-latex-minted-options '(("frame" "lines") ("linenos=true"))
           org-export-latex-hyperref-format "\\ref{%s}"
           ;;--------------ORG latex Code
@@ -278,10 +308,10 @@
           org-export-latex-listings 'minted
           org-src-fontify-natively t
           org-latex-pdf-process
-          '("pdflatex -interaction nonstopmode -output-directory %o %f"
+          '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
             "bibtex %b"
-            "pdflatex -interaction nonstopmode -output-directory %o %f"
-            "pdflatex -interaction nonstopmode -output-directory %o %f")
+            "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+            "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
           org-export-with-toc nil)
     ;;--------------
     ;; Resume clocking task when emacs is restarted
@@ -396,10 +426,11 @@
   (setq bibtex-completion-notes-symbol "✎")
 
   (setq bibtex-completion-format-citation-functions
-        '((org-mode      . bibtex-completion-format-citation-cite) ;helm-bibtex-format-citation-cite) ;bibtex-completion-format-citation-org-title-link-to-PDF)
+        '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
           (latex-mode    . bibtex-completion-format-citation-cite)
           (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-          (default       . bibtex-completion-format-citation-default)))
+          (default       . bibtex-completion-format-citation-default))
+        )
 
   ;; (setq bibtex-completion-pdf-open-function
   ;;     (lambda (fpath)
@@ -602,13 +633,13 @@ With a prefix ARG, remove start location."
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
 
-(setq org-roam-dailies-directory (concat org-roam-directory "journal/"))
+(setq org-roam-dailies-directory (concat org-roam-directory "dailies/"))
 (setq org-roam-dailies-capture-templates
       '(
-        ("j" "journal" entry
+        ("d" "daily" entry
          #'org-roam-capture--get-point
          "* %?"
-         :file-name "daily/%<%Y-%m-%d>"
+         :file-name "dailies/%<%Y-%m-%d>"
          :head "#+title: %<%Y-%m-%d>\n"
          :olp ("Journal"))))
 
@@ -677,6 +708,29 @@ With a prefix ARG, remove start location."
       )
       ;;----
       )
+
+;; export
+;(require 'org)
+
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (latex . t)))
+
+(add-to-list 'org-latex-classes
+             '("iitmdiss"
+               "\\documentclass{iitmdiss}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+
+
+
 
 (provide 'setup-org-mode)
 ;;; setup-org-mode.el ends here

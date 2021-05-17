@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: review
+# key: review
+# --
+#+TITLE: 
+#+AUTHOR: Reviewer
+#+LATEX_HEADER: \renewcommand{\rmdefault}{phv} % Arial
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{hyperref}
+
+
+
+\bibliographystyle{plain}
+\bibliography{/Users/chraibi/Zotero/DB}{}
