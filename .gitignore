@@ -43,3 +43,11 @@ custom.el
 /network-security.data
 /places
 /request/curl-cookie-jar
+.lsp-session-v1
+elpy/
+image-dired/
+lisp/w32-shell-execute.el
+org-roam.db
+snippets/org-mode/orglatexheader1b
+snippets/python-mode/mc
+transient/
