@@ -402,7 +402,6 @@
 
 
 ;; helm-bibtex
-;; open pdf with system pdf viewer (works on mac)
 (use-package helm-bibtex
   :config
   (setq bibtex-completion-bibliography
@@ -590,14 +589,14 @@ With a prefix ARG, remove start location."
 
 
 
-(setq org-file-apps
-      '(
-        ("\\.pdf::\\(\\d+\\)\\'" org-pdfview-open link)
-        (directory . emacs)
-        (auto-mode . emacs)
-        ("\\.x?html?\\'" . default)
-        )
-      )
+;; (setq org-file-apps
+;;       '(
+;;         ("\\.pdf::\\(\\d+\\)\\'" org-pdfview-open link)
+;;         (directory . emacs)
+;;         (auto-mode . emacs)
+;;         ("\\.x?html?\\'" . default)
+;;         )
+;;       )
 
 
 

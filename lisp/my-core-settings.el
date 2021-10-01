@@ -103,6 +103,9 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 ;;----------------- KEYbindings --------------
+                                        ; find-file fzf
+;(global-set-key "\C-c\C-f" 'fzf-find-file)
+;(global-set-key "\C-c\C-d" 'fzf-directory)
 (global-set-key "\C-z" 'nil)
 (global-set-key (kbd "M-2") #'er/expand-region)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
@@ -145,6 +148,7 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 (global-set-key (kbd "C-<f8>") 'flyspell-mode)
 (global-set-key (kbd "C-<f9>") 'reftex-mode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 (global-set-key (kbd "C-c z") 'mc/edit-lines)
 (global-set-key (kbd "C-c i") 'mc/insert-numbers)
 (global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
