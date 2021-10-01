@@ -34,13 +34,13 @@
 
 ;; (setq save-abbrevs t)              ;; save abbrevs when files are saved
 ;; you will be asked before the abbreviations are saved
-(message "load solarized-light") ;zenburn
+
 (load-theme 'solarized-light t)
-(if (member "Monaco" (font-family-list))
-    (set-face-attribute
-     'default nil :font "Monaco 18")
-  (message "set font Monaco 18")
-  )
+(set-face-attribute  'default nil :font "Fira Code Retina")
+(set-frame-font "Fira Code Retina" nil t)
+
+(setq default-frame-alist nil)
+(message "set font Fira Code Retina")
 
 (when (memq window-system '(mac ns))
   (message "init exec-path")
@@ -55,6 +55,11 @@
   (setq beacon-color "#e56911")
   (beacon-mode 1)
   )
+
+(use-package crux
+    :bind (("C-c C-o" . crux-open-with)
+           ("C-a" . crux-move-beginning-of-line))
+    )
 
 ;;-------------------------
 (use-package yasnippet
@@ -116,9 +121,18 @@
   :config
   (projectile-mode +1)
   )
+(use-package fzf
+  :init
+  (message "loading fzf")
+  :ensure t
+   :bind
+  (("C-x C-f" . fzf-find-file)
+   ("C-x C-d" . fzf-directory))
+  )
+
 (use-package helm-projectile
   :init
-  (message "Loading helm-projectile")
+  (message "loading helm-projectile")
   :ensure t
   :config
   (helm-projectile-on))
@@ -146,7 +160,7 @@
 
 (use-package hlinum
   :init
-  (message "Loading hlinum!")
+  (message "loading hlinum!")
   :ensure t
   :config
   (setq linum-format "%3d \u2502 ")
@@ -154,7 +168,7 @@
   )
 (use-package magit
   :init
-  (message "Loading Magit!")
+  (message "loading magit!")
   :ensure t
   :config
   (require 'setup-magit)
@@ -252,7 +266,7 @@
    ("C-c u" . 'clang-format-buffer)
    )
   :config
-  (load "/usr/local/Cellar/clang-format/10.0.0/share/clang/clang-format.el")
+  (load "/usr/local/Cellar/clang-format/12.0.1/share/clang/clang-format.el")
   )
 
 ;; TODO conflict with helm
@@ -603,16 +617,13 @@ abort completely with `C-g'."
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; ;;------ cmake support
-;; Add cmake listfile names to the mode list.
-(setq auto-mode-alist
-      (append
-       '(("CMakeLists\\.txt\\'" . cmake-mode))
-       '(("\\.cmake\\'" . cmake-mode))
-       auto-mode-alist))
-
 (use-package cmake-mode
-:ensure t
-)
+  :ensure t
+  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
+
+(use-package cmake-font-lock
+  :after (cmake-mode)
+  :hook (cmake-mode . cmake-font-lock-activate))
 
 ;; ;;--------------------------------- ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
