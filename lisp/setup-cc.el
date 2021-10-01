@@ -30,7 +30,7 @@
   :hook ((c++-mode) .
          (lambda () (require 'ccls) (lsp))))
 
-(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.5/bin/ccls")
+(setq ccls-executable "/usr/local/Cellar/ccls/0.20210330_1/bin/ccls")
 
 ;;----------------
 
@@ -39,47 +39,47 @@
 ;; ---- lsp-mode
 (use-package lsp-mode
   :ensure t
-  :commands lsp
-  :custom
-  (lsp-auto-guess-root nil)
-  (lsp-enable-snippet nil)
-  (lsp-enable-file-watchers)
-  (lsp-clients-clangd-executable "/usr/local/Cellar/llvm/9.0.1/bin/clangd")
-  (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-  :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
-  :hook ((++-mode) . lsp))
+  :defer t
+  :config
+  (add-hook 'c++-mode-hook #'lsp)
+  (add-hook 'python-mode-hook #'lsp)
+  (add-hook 'rust-mode-hook #'lsp)
+  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+  :init
+  (setq lsp-keep-workspace-alive nil
+        lsp-signature-doc-lines 5
+        lsp-idle-delay 0.5
+        lsp-prefer-capf t
+        lsp-client-packages nil)
+)
+(define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
+(push "[/\\\\][^/\\\\]*\\.\\(.github\\|.cache\\|.idea\\|build\\|bin\\)$" lsp-file-watch-ignored-directories) ; json
+;;  [
+;; (with-eval-after-load 'lsp-mode
+;;   (push "[/\\\\][^/\\\\]*\\.\\(build\\|bin2\\|bin\\)$" lsp-file-watch-ignored-directories) ; json
+;;   )]
 
 
-;; ;; (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=info" "-pretty" "-resource-dir=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0"))
-
-
-;; (use-package lsp-ui
-;;   :after lsp-mode
-;;   :diminish
-;;   :commands lsp-ui-mode
-;;   :custom-face
-;;   (lsp-ui-doc-background ((t (:background nil))))
-;;   (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
-;;   :bind (:map lsp-ui-mode-map
-;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
-;;               ("C-c u" . lsp-ui-imenu))
-;;   :custom
-;;   (lsp-ui-doc-enable t)
-;;   (lsp-ui-doc-header t)
-;;   (lsp-ui-doc-include-signature t)
-;;   (lsp-ui-doc-position 'top)
-;;   (lsp-ui-doc-border (face-foreground 'default))
-;;   (lsp-ui-sideline-enable nil)
-;;   (lsp-ui-sideline-ignore-duplicate t)
-;;   (lsp-ui-sideline-show-code-actions nil)
-;;   :config
-;;   ;; Use lsp-ui-doc-webkit only in GUI
-;;   (setq lsp-ui-doc-use-webkit t)
-;;   ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-;;   ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-;;   (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-;;     (setq mode-line-format nil)))
+(use-package lsp-ui
+  :after lsp
+  :requires lsp-mode flycheck
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-use-childframe t
+        lsp-ui-doc-position 'top
+        lsp-ui-doc-include-signature t
+        lsp-ui-sideline-enable nil
+        lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-live-reporting t
+        lsp-ui-peek-enable t
+        lsp-ui-peek-list-width 60
+        lsp-ui-peek-peek-height 25)    
+    ;; (setq lsp-ui-sideline-enable t)
+    ;; (setq lsp-ui-sideline-show-hover nil)
+    ;; (setq lsp-ui-doc-position 'bottom)
+)
 
 
 
@@ -109,11 +109,11 @@
 )
 (add-hook 'after-init-hook 'global-company-mode)
 
-(use-package company-lsp
-  :ensure t
-  :config
- (push 'company-lsp company-backends)
-)
+;; (use-package company-capf
+;;   :ensure t
+;;   :config
+;;  (push 'company-capf company-backends)
+;; )
 
 
 (require 'modern-cpp-font-lock)
