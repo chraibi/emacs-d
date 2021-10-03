@@ -29,16 +29,9 @@
 (global-auto-revert-mode 1)
 (setq auto-revert-use-notify nil)
 
-;; (setq abbrev-file-name             ;; tell emacs where to read abbrev
-;;         "~/.emacs.d/abbrev_defs")    ;; definitions from...
-
-;; (setq save-abbrevs t)              ;; save abbrevs when files are saved
-;; you will be asked before the abbreviations are saved
-
 (load-theme 'solarized-light t)
 (set-face-attribute  'default nil :font "Fira Code Retina")
 (set-frame-font "Fira Code Retina" nil t)
-
 (setq default-frame-alist nil)
 (message "set font Fira Code Retina")
 
@@ -180,7 +173,7 @@
   (message "Loading org-mode!")
   :config
   (require 'setup-org-mode)
-  :defer 3)
+  )
 
 (use-package autorevert
   :init

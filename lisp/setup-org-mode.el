@@ -645,7 +645,7 @@ With a prefix ARG, remove start location."
 (setq org-roam-capture-templates
       '(
         ("d" "default" plain (function org-roam--capture-get-point)
-         "%? \n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "%? \n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#category:${slug}\n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n"
          :unnarrowed t)
@@ -656,13 +656,13 @@ With a prefix ARG, remove start location."
          :unnarrowed t)
         ;; ppl
         ("p" "ppl" plain (function org-roam--capture-get-point)
-         "** Facts \n- @ \n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "** Facts \n- @ \n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "ppl/%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n"
          :unnarrowed t)
         ;; meetings
         ("m" "meeting" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n %U"
          :clock-in t
@@ -670,37 +670,37 @@ With a prefix ARG, remove start location."
          :unnarrowed t)
         ;; projects
         ("r" "project" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "projects/%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n"
          :unnarrowed t)
         ;;notes 
         ("n" "note" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "notes/%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n"
          :unnarrowed t)
       ;; papers
       ("b" "paper" plain (function org-roam--capture-get-point)
-       "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+       "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
        :file-name "papers/%<%Y%m%d%H%M%S>-${slug}"
        :head "* ${title}\n"
        :unnarrowed t)
       ;; administration
       ("a" "administration" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "administration/%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n"
          :unnarrowed t)
       ;; notes
       ("l" "lecture" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
          :file-name "lectures/%<%Y%m%d%H%M%S>-${slug}"
          :head "* ${title}\n"
          :unnarrowed t)
       ;; chess
       ("s" "chess" plain (function org-roam--capture-get-point)
-       "\n%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
+       "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
        :file-name "chess/%<%Y%m%d%H%M%S>-${slug}"
        :head "* ${title}\n"
        :unnarrowed t)
@@ -729,7 +729,9 @@ With a prefix ARG, remove start location."
 
 
 
-
+(setf (cdr (rassoc 'find-file-other-window org-link-frame-setup)) 'find-file)
+;Use return to follow links in org-mode
+(setq org-return-follows-link t)
 
 (provide 'setup-org-mode)
 ;;; setup-org-mode.el ends here
