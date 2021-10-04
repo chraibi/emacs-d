@@ -4,7 +4,7 @@
 ;;; Commentary:
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
-
+(setq org-roam-v2-ack t)
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -23,6 +23,9 @@
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
+; ------ org-roam-ui
+(add-to-list 'load-path "~/.emacs.d/thirdparty/org-roam-ui")
+(load-library "org-roam-ui")
 
 (require 'my-core-settings)
 ;; auto revert mode
@@ -30,8 +33,17 @@
 (setq auto-revert-use-notify nil)
 
 (load-theme 'solarized-light t)
-(set-face-attribute  'default nil :font "Fira Code Retina")
-(set-frame-font "Fira Code Retina" nil t)
+
+
+(set-face-attribute 'default nil
+                    :family "Fira Code"
+                    :weight 'normal)
+
+
+;; ---
+
+(set-frame-font "Fira Code" nil t)
+
 (setq default-frame-alist nil)
 (message "set font Fira Code Retina")
 
@@ -48,6 +60,10 @@
   (setq beacon-color "#e56911")
   (beacon-mode 1)
   )
+
+(use-package fira-code-mode
+  :custom (fira-code-mode-disabled-ligatures '("[]" "x"))  ; ligatures you don't want
+  :hook prog-mode)                                         ; mode to enable fira-code-mode in
 
 (use-package crux
     :bind (("C-c C-o" . crux-open-with)
@@ -97,7 +113,7 @@
  ;; This causes the current time in the mode line to be displayed in
  ;; `egoge-display-time-face' to make it stand out visually.
  (setq display-time-string-forms
-       '((propertize (concat " " month "/" day " " 24-hours ":" minutes " ")
+       '((propertize (concat ">>" month day " | " 24-hours ":" minutes "<< ")
  		     'face 'egoge-display-time)))
 
 (display-time-mode 1)

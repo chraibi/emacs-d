@@ -1,9 +1,11 @@
 ;;; package --- Summary
 ;;; Code:
 ;;; Commentary:
+
                                         ; settings for calendar, journal, clocks
 (require 'ox-latex)
 (require 'org-tempo)
+
 
 (message "Enter setup org-mode")
 
@@ -114,10 +116,10 @@
   (org-journal-date-format "%A, %d %B %Y")
   )
 (setq org-journal-file-type "weekly")
-(setq org-journal-dir "~/Dropbox/Orgfiles/org-files/journal/")
+
 
 (defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"
-  "Path to OrgMode journal file.")  
+  "Path to OrgMode journal file.")
 (defvar org-journal-date-format "%Y-%m-%d"  
   "Date format string for journal headings.")  
 
@@ -276,7 +278,8 @@
  '(org-time-stamp-custom-formats (quote ("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>")))
 
  ) 
-;--------------------------
+                                        ;--------------------------
+;  (concat org-roam-directory "administration/work-notes.org")
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
       (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
@@ -444,30 +447,62 @@
   (setq bibtex-completion-additional-search-fields '(tags))
   )
 
+
+(defun jethro/open-with (arg)
+  "Open visited file in default external program.
+When in dired mode, open file under the cursor.
+With a prefix ARG always prompt for command to use."
+  (interactive "P")
+  (let* ((current-file-name
+          (if (eq major-mode 'dired-mode)
+              (dired-get-file-for-visit)
+            buffer-file-name))
+         (open (pcase system-type
+                 (`darwin "open")
+                 ((or `gnu `gnu/linux `gnu/kfreebsd) "xdg-open")))
+         (program (if (or arg (not open))
+                      (read-shell-command "Open current file with: ")
+                    open)))
+    (call-process program nil 0 nil current-file-name)))
+
 ;; org-roam ==========
+
 (use-package org-roam
   :init
   (message "init org-roam")
+  (setq org-roam-v2-ack t)
   :ensure t
   :after org
   :hook 
-  (after-init . org-roam-mode)
+  (after-init . org-roam-db-autosync-mode)
+  (org-roam-backlinks-mode . visual-line-mode)
   :custom
   (org-roam-directory (concat org-directory "org-roam/"))
+  (org-roam-complete-everywhere t)
   (setq org-roam-db-update-method 'immediate)
+  :custom-face
+  (org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
+  :bind (
+         ("C-c o f" . org-roam-node-find)
+         ("C-c o l" . org-roam-buffer-toggle)
+         ("C-c o i" . org-roam-node-insert)
+         ("C-c o o" . jethro/open-with)
+         ("C-M-i" . completion-at-point)
+         )
+  :config
+  (org-roam-db-autosync-mode)
+  (setq org-roam-db-gc-threshold most-positive-fixnum)
   (require 'org-roam-protocol)
-    :custom-face
-    (org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
-  :bind (:map org-roam-mode-map
-              (("C-c o l" . org-roam)
-               ("C-c o f" . org-roam-find-file)
-               ("C-c o t" . org-roam-tag-add)
-               ("C-c o j" . org-roam-dailies-capture-today)
-               ("C-c o p" . org-roam-dailies-capture-tomorrow)
-               ("C-c o g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c o i" . org-roam-insert))
-              (("C-c o I" . org-roam-insert-immediate))))
+  )
+
+(use-package org-roam-ui
+  :after org-roam
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 ;; org-ref ==============
 (use-package org-ref
@@ -617,20 +652,6 @@ With a prefix ARG, remove start location."
   )
 )
 
-(use-package org-roam-server
-  :ensure t
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8080
-        org-roam-server-authenticate nil
-        org-roam-server-export-inline-images t
-        org-roam-server-serve-files nil
-        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
 
 (setq org-roam-dailies-directory (concat org-roam-directory "dailies/"))
 (setq org-roam-dailies-capture-templates
@@ -644,72 +665,45 @@ With a prefix ARG, remove start location."
 
 (setq org-roam-capture-templates
       '(
-        ("d" "default" plain (function org-roam--capture-get-point)
-         "%? \n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#category:${slug}\n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
+        ("n" "Note" plain
+         "%?"
+         :if-new (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+         :immediate-finish t
+         :unnarrowed t)        
+        ("m" "Meeting" plain
+         "%?"
+         :if-new (file+head "meetings/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+         :immediate-finish t
+         :unnarrowed t)        
+        ("p" "Person" plain
+         "%?"
+         :if-new (file+head "ppl/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+         :immediate-finish t
          :unnarrowed t)
-        ("c" "categorized" plain (function org-roam--capture-get-point)
-         "%?\n\n* Settings \n#+roam_alias: \n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "%^{Category|ppl|meeting|project|note}/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
+        ("a" "Administration" plain
+         "%?"
+         :if-new (file+head "administration/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+         :immediate-finish t
          :unnarrowed t)
-        ;; ppl
-        ("p" "ppl" plain (function org-roam--capture-get-point)
-         "** Facts \n- @ \n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "ppl/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
+        ("c" "Chess" plain
+         "%?"
+         :if-new (file+head "chess/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+         :immediate-finish t
          :unnarrowed t)
-        ;; meetings
-        ("m" "meeting" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n %U"
-         :clock-in t
-         :clock-resume t
-         :unnarrowed t)
-        ;; projects
-        ("r" "project" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "projects/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
-         :unnarrowed t)
-        ;;notes 
-        ("n" "note" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "notes/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
-         :unnarrowed t)
-      ;; papers
-      ("b" "paper" plain (function org-roam--capture-get-point)
-       "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-       :file-name "papers/%<%Y%m%d%H%M%S>-${slug}"
-       :head "* ${title}\n"
-       :unnarrowed t)
-      ;; administration
-      ("a" "administration" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "administration/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
-         :unnarrowed t)
-      ;; notes
-      ("l" "lecture" plain (function org-roam--capture-get-point)
-         "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-         :file-name "lectures/%<%Y%m%d%H%M%S>-${slug}"
-         :head "* ${title}\n"
-         :unnarrowed t)
-      ;; chess
-      ("s" "chess" plain (function org-roam--capture-get-point)
-       "\n%?\n\n* Settings \n#+roam_alias: \n#category:${slug}\n#+roam_tags: \n#+CREATED: %U\n#+STARTUP: fold"
-       :file-name "chess/%<%Y%m%d%H%M%S>-${slug}"
-       :head "* ${title}\n"
-       :unnarrowed t)
-      )
-      ;;----
-      )
-
-;; export
-;(require 'org)
+))
+;; meetings
+       ;;  ("m" "meeting" plain (function org-roam--capture-get-point)
+      ;;    "\n%?\n\n* Settings \n#+roam_aliases: \n#category:${slug}\n#+filetags: \n#+CREATED: %U\n#+STARTUP: fold"
+      ;;    :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
+      ;;    :head "* ${title}\n %U"
+      ;;    :clock-in t
+      ;;    :clock-resume t
+      ;;    :unnarrowed t)
 
 
 (org-babel-do-load-languages
@@ -732,6 +726,58 @@ With a prefix ARG, remove start location."
 (setf (cdr (rassoc 'find-file-other-window org-link-frame-setup)) 'find-file)
 ;Use return to follow links in org-mode
 (setq org-return-follows-link t)
+
+;;---------- org-roam v2 stuff. TODO reorganize later
+
+;; Showing the number of backlinks for each node in org-roam-node-find ;
+;; https://github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#showing-the-number-of-backlinks-for-each-node-in-org-roam-node-find
+(cl-defmethod org-roam-node-directories ((node org-roam-node))
+  (if-let ((dirs (file-name-directory (file-relative-name (org-roam-node-file node) org-roam-directory))))
+      (format "(%s)" (car (f-split dirs)))
+    ""))
+
+(cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
+  (let* ((count (caar (org-roam-db-query
+                       [:select (funcall count source)
+                                :from links
+                                :where (= dest $s1)
+                                :and (= type "id")]
+                       (org-roam-node-id node)))))
+    (format "[%d]" count)))
+
+(setq org-roam-node-display-template "${directories:10} ${tags:10} ${title:100} ${backlinkscount:6}")
+
+;; -------
+                                        ; https://github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#showing-node-hierarchy
+
+(cl-defmethod org-roam-node-filetitle ((node org-roam-node))
+  "Return the file TITLE for the node."
+  (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
+
+(cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
+  "Return the hierarchy for the node."
+  (let ((title (org-roam-node-title node))
+        (olp (org-roam-node-olp node))
+        (level (org-roam-node-level node))
+        (filetitle (org-roam-node-filetitle node)))
+    (concat
+     (if (> level 0) (concat filetitle " > "))
+     (if (> level 1) (concat (string-join olp " > ") " > "))
+     title))
+  )
+
+(setq org-roam-node-display-template "${hierarchy:*} ${tags:30}")
+
+;; for org-roam-buffer-toggle
+;; Recommendation in the official manual
+(add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                  (display-buffer-in-direction)
+                  (direction . right)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer)))
+
+
 
 (provide 'setup-org-mode)
 ;;; setup-org-mode.el ends here
