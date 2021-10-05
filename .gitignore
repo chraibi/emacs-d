@@ -51,3 +51,7 @@ org-roam.db
 snippets/org-mode/orglatexheader1b
 snippets/python-mode/mc
 transient/
+
+bookmarks
+org-roam-db.bak
+thirdparty
