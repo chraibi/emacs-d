@@ -1,6 +1,7 @@
-```
-<body><svg>calendar.svg</svg></body>
-```
+# My Emacs configuration
 
+Works on OSX.
 
-![](calendar.svg)
+## TODOs
+
+    Some stuff is hard-coded. 

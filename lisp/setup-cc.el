@@ -8,6 +8,56 @@
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
 
+(use-package clang-format
+  :after (s)
+  :init
+  (defun get-clang-format-option (config-str field is-num)
+    "Retrieve a config option from a clang-format config.
+
+CONFIG-STR is a string containing the entire clang-format config.
+FIELD is specific option, e.g. `IndentWidth'.  IS-NUM is a
+boolean that should be set to 1 if the option is numeric,
+otherwise assumed alphabetic."
+    (if is-num
+        (let ((primary-match (s-match (concat "^" field ":[ \t]*[0-9]+") config-str)))
+          (if primary-match
+              (string-to-number (car (s-match "[0-9]+" (car primary-match))))
+            0))
+      (let ((primary-match (s-match (concat "^" field ":[ \t]*[A-Za-z]+") config-str)))
+        (if primary-match
+            (car (s-match "[A-Za-z]+$" (car primary-match)))
+          ""))))
+  :hook (c-mode-common . (lambda ()
+                           (let* ((clang-format-config
+                                   (shell-command-to-string "clang-format -dump-config"))
+                                  (c-offset (get-clang-format-option clang-format-config "IndentWidth" t))
+                                  (tabs-str (get-clang-format-option clang-format-config "UseTab" nil))
+                                  (base-style
+                                   (get-clang-format-option clang-format-config "BasedOnStyle" nil)))
+                             (progn
+                               (if (> c-offset 0)
+                                   (setq-local c-basic-offset c-offset)
+                                 (if (not (equal "" base-style))
+                                     (cond ((or (equal "LLVM" base-style)
+                                                (equal "Google" base-style)
+                                                (equal "Chromium" base-style)
+                                                (equal "Mozilla" base-style))
+                                            (setq-local c-basic-offset 2))
+                                           ((equal "WebKit" base-style)
+                                            (setq-local c-basic-offset 4)))))
+                               (if (not (equal "" tabs-str))
+                                   (if (not (string-equal "Never" tabs-str))
+                                       (setq-local indent-tabs-mode t)
+                                     (setq-local indent-tabs-mode nil))
+                                 (if (not (equal "" base-style))
+                                     (cond ((or (equal "LLVM" base-style)
+                                                (equal "Google" base-style)
+                                                (equal "Chromium" base-style)
+                                                (equal "Mozilla" base-style)
+                                                (equal "WebKit" base-style))
+                                            (setq-local indent-tabs-mode nil))))))))))
+
+
 ;; ----- flycheck
 (use-package flycheck
   :ensure t
@@ -18,7 +68,17 @@
   )
 
 
-
+(with-eval-after-load 'cc-mode
+  (fset 'c-indent-region 'clang-format-region)
+  ;; (bind-keys :map c-mode-base-map
+  ;;            ("<C-tab>" . company-complete)
+  ;;            ("M-." . my-goto-symbol)
+  ;;            ("M-," . xref-pop-marker-stack)
+  ;;            ("C-M-\\" . clang-format-region)
+  ;;            ("C-i" . clang-format)
+  ;;            ("C-." . my-imenu)
+  ;;            ("M-o" . cff-find-other-file)
+  )
 
 ;;----------------- ccls
 (use-package ccls
@@ -53,11 +113,17 @@
         lsp-client-packages nil)
 )
 (define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
-(push "[/\\\\][^/\\\\]*\\.\\(.github\\|.cache\\|.idea\\|build\\|bin\\)$" lsp-file-watch-ignored-directories) ; json
-;;  [
-;; (with-eval-after-load 'lsp-mode
-;;   (push "[/\\\\][^/\\\\]*\\.\\(build\\|bin2\\|bin\\)$" lsp-file-watch-ignored-directories) ; json
-;;   )]
+
+;(push "[/\\\\][^/\\\\]*\\.\\(.github\\|.cache\\|.idea\\|build\\|bin\\)$" lsp-file-watch-ignored-directories) ; json
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.build\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\build\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\third-party\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\systemtest\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\demos\\'")
+  )
+
 
 
 (use-package lsp-ui
@@ -95,19 +161,6 @@
 
 (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
 
-
-
-
-;; ---- company
-
-(use-package company
-:ensure t
-:config
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 3)
-(global-company-mode t)
-)
-(add-hook 'after-init-hook 'global-company-mode)
 
 ;; (use-package company-capf
 ;;   :ensure t

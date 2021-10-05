@@ -4,6 +4,8 @@
 ;;; Commentary:
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
+
+; this is called in org-roam-setup. For some reason, thast I don't know, it goes here!
 (setq org-roam-v2-ack t)
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -27,6 +29,9 @@
 (add-to-list 'load-path "~/.emacs.d/thirdparty/org-roam-ui")
 (load-library "org-roam-ui")
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
 (require 'my-core-settings)
 ;; auto revert mode
 (global-auto-revert-mode 1)
@@ -34,14 +39,13 @@
 
 (load-theme 'solarized-light t)
 
-
+                                        ;FiraCode Nerd Font
+;; size in 1/10pt
 (set-face-attribute 'default nil
-                    :family "Fira Code"
+                    :family "Fira Code Retina"
+                    :height 180
                     :weight 'normal)
-
-
 ;; ---
-
 (set-frame-font "Fira Code" nil t)
 
 (setq default-frame-alist nil)
@@ -62,8 +66,9 @@
   )
 
 (use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("[]" "x"))  ; ligatures you don't want
+  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
   :hook prog-mode)                                         ; mode to enable fira-code-mode in
+
 
 (use-package crux
     :bind (("C-c C-o" . crux-open-with)
@@ -102,13 +107,13 @@
 ;;   (setq sml/show-time t)
 ;;   (add-hook 'after-init-hook 'sml/setup))
 ;; ;; (setq display-time-format "%d|%H:%M")
-;;  (defface egoge-display-time
-;;    '((((type x w32 mac))
-;;       ;; #060525 is the background colour of my default face.
-;;       (:foreground "#060525" :inherit bold))
-;;      (((type tty))
-;;       (:foreground "blue")))
-;;    "Face used to display the time in the mode line.")
+ (defface egoge-display-time
+   '((((type x w32 mac))
+      ;; #060525 is the background colour of my default face.
+      (:foreground "#060525" :inherit bold))
+     (((type tty))
+      (:foreground "blue")))
+   "Face used to display the time in the mode line.")
 
 ;;  ;; This causes the current time in the mode line to be displayed in
 ;;  ;; `egoge-display-time-face' to make it stand out visually.
@@ -122,6 +127,22 @@
 (setq display-time-day-and-date t)
 (display-time-mode 1)
 
+;; ---- company
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0)
+(setq company-idle-delay 0.25)
+(add-to-list 'company-backends 'company-capf)
+;; This enables candidates matching to be case-insensitive
+(setq completion-ignore-case t)
+(setq company-minimum-prefix-length 3)
+(global-company-mode t)
+)
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
 (use-package doom-modeline
   :ensure t
@@ -133,7 +154,7 @@
   (setq doom-modeline-workspace-name t)
   (setq doom-modeline-project-detection 'project)
   (setq doom-modeline-buffer-file-name-style 'filename)
-  (setq doom-modeline-minor-modes (featurep 'minions))
+;  (setq doom-modeline-minor-modes (featurep 'minions))
   )
 
 
@@ -723,22 +744,3 @@ abort completely with `C-g'."
 (provide 'init)
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("~/Dropbox/Orgfiles/org-files/org-roam/administration/20210223175808-juser.org" "~/Dropbox/Orgfiles/org-files/org-roam/administration/20210515140904-dsl.org" "~/Dropbox/Orgfiles/org-files/org-roam/administration/20210515141554-steuererklaerung.org" "~/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210219210938-kings_indian_defence.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210219211229-christian_braun.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210302085309-kia.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210312205107-roy_lopez.org" "~/Dropbox/Orgfiles/org-files/org-roam/chess/20210312205348-sicilian_defence.org" "~/Dropbox/Orgfiles/org-files/org-roam/lectures/20210226211421-evaksim.org" "~/Dropbox/Orgfiles/org-files/org-roam/meetings/20210222121806-al_pro_runde.org" "~/Dropbox/Orgfiles/org-files/org-roam/meetings/20210226220937-division_meetings.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210219231501-pushing.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210219231802-ai.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210219231948-gps.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222080919-queueing.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222081953-supervision.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082324-org_roam.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082517-org_ref.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082625-zotero.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222082729-validation_and_verification.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210222114209-gama_platform.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210223105750-hacks.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210223105848-hn.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210225003427-web.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210319131845-dictionary.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210428110656-dakota.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210503114830-habilitation.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210503151928-habilitation_schrift.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210610005441-body_measurements.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210628120626-review_physica_a_211295.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210706101226-professur.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210906090316-servers.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210923174810-turning_behavior.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20210928061704-coding.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20211002081508-causation_and_correlation.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20211002083323-modeling_of_escalators.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/20211004111749-management.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/literature-notes.org" "~/Dropbox/Orgfiles/org-files/org-roam/notes/private-notes.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/reports/report.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210223204851-special_issue_pedestrians.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210302124645-review_safety_science.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210319232736-physa_21442.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210503092059-ped21.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210516161414-safety_d_21_00342r1.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210516162256-review_papers.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210516174637-papers.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/20210609163045-crowd_evacuation_of_pairwise_people.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/Hirai1975.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/arnold2018.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/blanke2014.org" "~/Dropbox/Orgfiles/org-files/org-roam/papers/pouw2020a.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210219230924-ahmed_alia.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210219231659-mira_kuepper.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222080716-qiancheng_xu.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222081111-ghadeer_derbas.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222081248-rudina_subaih.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222081523-ezel_uesten.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210222120112-david.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223102121-ramin_sadiri.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223122723-carsten_hutter.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223122907-laura_tichelbaecker.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223125217-jakob_cordes.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210223153906-joseph_heinen.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210225112953-armin_seyfried.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210304192447-bernhard_steffen.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210304192943-jette_schumann.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210311132419-fanni_fiedrich.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210311160609-christoph_gnendiger.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210312142158-antoine_tordeux.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210315131518-jonas_rzezonka.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210315173520-xiang_wang.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210316092429-lukas_kohl.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210321124515-fabian_braennstroem.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210324085944-mohammed_maree.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210406131252-ann_katrin_boomers.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210406132018-sina_feldmann.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210412141130-lukas_arnold.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210416115612-carol_babelot.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210426122449-idris_chraibi.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210505092044-gabriele_bernardini.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210516181333-praktikantenstelle.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210516181707-tobias_schroedter.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210516182458-csc.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210607132739-yao_xiao.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210709080540-kai_kratz.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210712085005-alex_belt.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210818095154-christian_hirt.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210823110854-anna_braun.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210825092227-alessandro_corbeta.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210831101616-maik_boltes.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20210831101715-anna_sieben.org" "~/Dropbox/Orgfiles/org-files/org-roam/ppl/20211004133216-jan_peters.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210223124906-madras.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210225160634-jupedsim.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210307145406-projects.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210307150250-jpsreport.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210311082806-sisame.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210325203717-pgsb.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210407140320-kapakrit.org" "~/Dropbox/Orgfiles/org-files/org-roam/projects/20210923182929-boost_klaus_tschira_fund.org" "~/Dropbox/Orgfiles/org-files/org-roam/20210220130047-index.org" "~/Dropbox/Orgfiles/org-files/c++.org" "~/Dropbox/Orgfiles/org-files/cal.org" "~/Dropbox/Orgfiles/org-files/journal.org" "~/Dropbox/Orgfiles/org-files/master.org" "~/Dropbox/Orgfiles/org-files/meeting.org" "~/Dropbox/Orgfiles/org-files/refs.org"))
- '(org-display-custom-times t)
- '(org-time-stamp-custom-formats '("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>"))
- '(package-selected-packages
-   '(doom-modeline-now-playing fira-code-mode org-roam websocket zotxt zenburn-theme xcscope w32-browser use-package undo-tree swiper-helm sphinx-doc solarized-theme sml-modeline smartparens smart-mode-line-powerline-theme rust-mode python-mode projectile-sift peep-dired ox-latex-subfigure origami org-roam-bibtex org-ref org-noter-pdftools org-journal org-bullets org-analyzer nav multiple-cursors modern-cpp-font-lock magit lsp-ui image-dired+ ido-vertical-mode hlinum helm-projectile helm-org-ql helm-lsp helm-git-grep guide-key fzf flymake-cursor flycheck-clang-tidy fill-column-indicator expand-region exec-path-from-shell elpy doom-modeline dired-subtree dired-ranger dired-rainbow dired-narrow dired-filter dired-filetype-face dired-collapse diminish deft crux cpputils-cmake counsel-etags company-lsp color-theme cmake-project cmake-mode clang-format ccls browse-kill-ring beacon autopair auto-complete-clang-async auto-complete-clang auctex-latexmk ag ace-window ace-jump-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((((class color) (min-colors 89)) (:foreground "#657b83" :background "#fdf6e3"))))
- '(org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
- '(show-paren-match ((((class color) (background light)) (:background "blue")))))

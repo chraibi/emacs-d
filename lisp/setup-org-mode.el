@@ -1,7 +1,9 @@
 ;;; package --- Summary
 ;;; Code:
 ;;; Commentary:
-
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
                                         ; settings for calendar, journal, clocks
 (require 'ox-latex)
 (require 'org-tempo)
@@ -492,11 +494,20 @@ With a prefix ARG always prompt for command to use."
   :config
   (org-roam-db-autosync-mode)
   (setq org-roam-db-gc-threshold most-positive-fixnum)
+  (setq org-roam-auto-replace-fuzzy-links nil)
   (require 'org-roam-protocol)
+  )
+
+(use-package org-roam-timestamps
+  :after org-roam
+  :config 
+  (setq org-roam-timestamps-parent-file t)
+  (setq org-roam-timestamps-remember-timestamps t)  
   )
 
 (use-package org-roam-ui
   :after org-roam
+  :commands flycheck-mode
   :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
