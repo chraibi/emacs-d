@@ -100,29 +100,38 @@ otherwise assumed alphabetic."
 (use-package lsp-mode
   :ensure t
   :defer t
+  :diminish (lsp-mode . "lsp")
   :config
   (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'python-mode-hook #'lsp)
   (add-hook 'rust-mode-hook #'lsp)
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
   :init
-  (setq lsp-keep-workspace-alive nil
+  (setq lsp-auto-guess-root t       ; Detect project root
+        lsp-keep-workspace-alive nil
+        lsp-enable-imenu t
         lsp-signature-doc-lines 5
         lsp-idle-delay 0.5
-        lsp-prefer-capf t
+        lsp-prefer-provider t
+        lsp-restart 'auto-restart
         lsp-client-packages nil)
-)
-(define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
-
-;(push "[/\\\\][^/\\\\]*\\.\\(.github\\|.cache\\|.idea\\|build\\|bin\\)$" lsp-file-watch-ignored-directories) ; json
+  )
 
 (with-eval-after-load 'lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.build\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\build\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\third-party\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\systemtest\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\demos\\'")
+  (yas-global-mode)
+  (lsp-treemacs-sync-mode 1)
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (push "[/\\\\][^/\\\\]*\\.\\(.github\\|.cache\\|.idea\\|build\\|bin\\|third-party\\|demos\\|docs\\|jpsreport\\)$" lsp-file-watch-ignored-directories)
+  (add-to-list 'lsp-file-watch-ignored-directories "/Users/chraibi/workspace/jupedsim/jpscore/build/")
+  (add-to-list 'lsp-file-watch-ignored-directories "/workspace/jupedsim/jpscore/third-party/")
+  (add-to-list 'lsp-file-watch-ignored-directories "~/workspace/jupedsim/jpscore/systemtest/")
+  (add-to-list 'lsp-file-watch-ignored-directories "~/workspace/jupedsim/jpscore/demos/")
+  (add-to-list 'lsp-file-watch-ignored-directories "~/workspace/jupedsim/jpscore/docs/")
+  (add-to-list 'lsp-file-watch-ignored-directories "~/workspace/jupedsim/jpscore/third-party/")
   )
+
+(define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
+
 
 
 
@@ -224,7 +233,8 @@ otherwise assumed alphabetic."
 ;; (global-set-key (kbd "C-n") 'my-next-error)
 ;; (global-set-key (kbd "C-p") 'my-previous-error)
 ;; (global-set-key (kbd "C-x <f9>") 'my-recompile)
-(global-set-key [f9] 'compile)
+
+
 (setq compilation-scroll-output 'first-error)
 
 
@@ -274,6 +284,16 @@ unless return was pressed outside the comment"
     (insert "\n")))
 (add-hook 'c++-mode-hook (lambda ()
   (local-set-key "\r" 'my-javadoc-return)))
+
+;; ---------------- 
+
+(use-package lsp-treemacs
+  :after (lsp-mode treemacs)
+  :ensure t
+  :commands lsp-treemacs-errors-list
+  :bind (:map lsp-mode-map
+              ("M-9" . lsp-treemacs-errors-list)))
+
 
 
 (message "Provide setup-cc")
