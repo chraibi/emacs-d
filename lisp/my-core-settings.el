@@ -103,9 +103,9 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 ;;----------------- KEYbindings --------------
-                                        ; find-file fzf
-;(global-set-key "\C-c\C-f" 'fzf-find-file)
-;(global-set-key "\C-c\C-d" 'fzf-directory)
+
+(global-set-key [f9] 'projectile-compile-project)
+
 (global-set-key "\C-z" 'nil)
 (global-set-key (kbd "M-2") #'er/expand-region)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
@@ -115,11 +115,10 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
 (global-set-key "\C-cy" 'browse-kill-ring)
 (global-set-key "\C-cg" 'goto-line)
-                                        ;(global-set-key [f4] 'speedbar-get-focus)
-                                        ;(global-set-key [f4] 'speedbar-get-focus)
+
 (global-set-key (kbd "\C-cm") 'magit-status)   ;; ...git mode
                                         ;(global-set-key (kbd "<f4>") 'nav-toggle)
-(global-set-key (kbd "<f4>") 'projectile-speedbar-open-current-buffer-in-tree)
+(global-set-key (kbd "<f4>") 'treemacs)
 (global-set-key [f5] 'buffer-menu)
 
 (global-set-key [end] 'end-of-line)
