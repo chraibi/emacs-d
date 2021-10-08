@@ -96,5 +96,7 @@
 
 ;; (define-key dired-mode-map "ö" 'dired-toggle-read-only)
 
+(define-key dired-mode-map "b" 'dired-create-empty-file)
+
 (provide 'setup-dired)
 ;;; setup-dired.el ends here
