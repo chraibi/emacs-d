@@ -522,16 +522,20 @@ With a prefix ARG always prompt for command to use."
   :ensure t
   :after org-roam
   :config
-  (setq
-   org-ref-notes-directory (concat org-roam-directory "papers/")
-   org-ref-pdf-directory "~/Zotero/storage/"
-   org-ref-default-bibliography '("~/Zotero/DB.bib")
-   org-ref-completion-library 'org-ref-ivy-cite
-   org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-   org-ref-bibliography-notes (concat org-ref-notes-directory "bibnote.org")
-   org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-   org-ref-notes-function 'orb-edit-notes
-   )
+  (setq bibtex-completion-bibliography '("~/Zotero/DB.bib")
+        bibtex-completion-library-path '("~/Zotero/storage")
+	bibtex-completion-notes-path (concat org-roam-directory "papers/")
+	bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+	bibtex-completion-additional-search-fields '(keywords)
+	bibtex-completion-display-formats
+	'((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+	  (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+	  (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+	  (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+	  (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+	bibtex-completion-pdf-open-function
+	(lambda (fpath)
+	  (call-process "open" nil 0 nil fpath)))
   )
 
 ;; org-roam-bibtex ======================
@@ -544,7 +548,7 @@ With a prefix ARG always prompt for command to use."
         '("=key=" "title" "url" "file" "author-or-editor" "keywords" "citekey")
         orb-process-file-keyword t
         )
-    (setq orb-templates
+    (setq org-roam-capture-templates
         '(("r" "ref" plain (function org-roam-capture--get-point)
            ""
            :file-name "papers/${citekey}"
@@ -682,12 +686,6 @@ With a prefix ARG, remove start location."
                             "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
          :immediate-finish t
          :unnarrowed t)        
-        ("m" "Meeting" plain
-         "%?"
-         :if-new (file+head "meetings/%<%Y%m%d%H%M%S>-${slug}.org"
-                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
-         :immediate-finish t
-         :unnarrowed t)        
         ("p" "Person" plain
          "%?"
          :if-new (file+head "ppl/%<%Y%m%d%H%M%S>-${slug}.org"
@@ -697,12 +695,6 @@ With a prefix ARG, remove start location."
         ("a" "Administration" plain
          "%?"
          :if-new (file+head "administration/%<%Y%m%d%H%M%S>-${slug}.org"
-                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("c" "Chess" plain
-         "%?"
-         :if-new (file+head "chess/%<%Y%m%d%H%M%S>-${slug}.org"
                             "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
          :immediate-finish t
          :unnarrowed t)
