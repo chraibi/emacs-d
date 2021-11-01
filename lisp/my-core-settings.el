@@ -107,14 +107,13 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 (global-set-key [f9] 'projectile-compile-project)
 
 (global-set-key "\C-z" 'nil)
-(global-set-key (kbd "M-2") #'er/expand-region)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
 (global-set-key "\C-cy" 'browse-kill-ring)
-(global-set-key "\C-cg" 'goto-line)
+
 
 (global-set-key (kbd "\C-cm") 'magit-status)   ;; ...git mode
                                         ;(global-set-key (kbd "<f4>") 'nav-toggle)
@@ -147,7 +146,7 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 (global-set-key (kbd "C-<f8>") 'flyspell-mode)
 (global-set-key (kbd "C-<f9>") 'reftex-mode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+
 (global-set-key (kbd "C-c z") 'mc/edit-lines)
 (global-set-key (kbd "C-c i") 'mc/insert-numbers)
 (global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
@@ -178,10 +177,6 @@ This one changes the cursor color on each blink.  Define colors in `blink-cursor
 (set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
 
 (show-paren-mode t) ;; will highlight matching parentheses next to cursor.
-(autopair-global-mode) ;; to enable in all buffers
-
-
-(setq  electric-pair-mode t)
 
 
 
