@@ -3,6 +3,9 @@
 ;;; Code:
 ;;; Commentary:
 
+
+(setq  electric-pair-mode t)
+
 (defun electric-pair ()
   "If at end of line, insert character pair without surrounding spaces.  Otherwise, just insert the typed character."
   (interactive)

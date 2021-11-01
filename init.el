@@ -22,12 +22,10 @@
 
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/GitHubPackages/org-roam-ui"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
-; ------ org-roam-ui
-(add-to-list 'load-path "~/.emacs.d/thirdparty/org-roam-ui")
-(load-library "org-roam-ui")
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
@@ -37,8 +35,17 @@
 (global-auto-revert-mode 1)
 (setq auto-revert-use-notify nil)
 
-(load-theme 'solarized-light t)
+(use-package solarized-theme
+:ensure t
+:config
+(load-theme 'solarized-light t))
 
+
+(use-package fira-code-mode
+  :ensure t
+  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
+  :hook prog-mode
+  )
                                         ;FiraCode Nerd Font
 ;; size in 1/10pt
 (set-face-attribute 'default nil
@@ -51,9 +58,11 @@
 (setq default-frame-alist nil)
 (message "set font Fira Code Retina")
 
-(when (memq window-system '(mac ns))
-  (message "init exec-path")
-  (exec-path-from-shell-initialize))
+;;(use-package exec-path-from-shell-initialize :ensure t)
+
+;;(when (memq window-system '(mac ns))
+;;  (message "init exec-path")
+;;  (exec-path-from-shell-initialize))
 
 ;;-------------------------
 ;;Whenever the window scrolls a light will shine on top of your cursor so you know where it is.
@@ -65,20 +74,17 @@
   (beacon-mode 1)
   )
 
-(use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
-  :hook prog-mode)                                         ; mode to enable fira-code-mode in
-
-
 (use-package crux
-    :bind (("C-c C-o" . crux-open-with)
-           ("C-a" . crux-move-beginning-of-line))
-    )
+  :ensure t
+  :bind (("C-c C-o" . crux-open-with)
+         ("C-a" . crux-move-beginning-of-line))
+  )
 
 ;;-------------------------
 (use-package yasnippet
   ;; Loads after 1 second of idle time.
   :defer 1
+  :ensure t
   :config
   (yas-load-directory "~/.emacs.d/snippets")
   (yas-global-mode 0)
@@ -86,15 +92,9 @@
 
 ;-------------------------------------------------
 ;; Don't ask before rereading the TAGS files if they have changed
-(setq tags-revert-without-query t)
-;; Don't warn when TAGS files are large
-(setq large-file-warning-threshold nil)
+
+
 ;; Setup auto update now
-(add-hook 'prog-mode-hook
-  (lambda ()
-    (add-hook 'after-save-hook
-              'counsel-etags-virtual-update-tags 'append 'local)))
-                                        ;DEFINE
 
 ;; (use-package smart-mode-line-powerline-theme
 ;;   :ensure t)
@@ -157,7 +157,12 @@
 ;  (setq doom-modeline-minor-modes (featurep 'minions))
   )
 
-(which-key-mode)
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode)
+  )
+
 
 ;-------------------------------------------------------------------
 (use-package projectile
@@ -203,13 +208,24 @@
 ;; -------------------- require
 
 ;; (autoload 'yasnippet "yasnippet" "load yasnippet" t)
-(require 'highlight-indentation) ;; visual guides for indentation
-(require 'autopair)
-;(require 'server)
-;(require 'recentf)
 
-(use-package setup-electric
-  :defer 3)
+(use-package highlight-indent-guides
+  :ensure t
+  :hook prog-mode-hook highlight-indent-guides-mode
+  ;;  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  :custom
+  (setq highlight-indent-guides-character "|")
+  )
+
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :init
+  (smartparens-global-mode)
+  )
+
+;; (use-package setup-electric
+;;   :defer 3)
 
 (use-package hlinum
   :init
@@ -251,10 +267,7 @@
   (require 'setup-ivy)
   :defer 1
   )
-
-(require 'swiper-helm)
-;;(global-set-key (kbd "\C-s") 'swiper-helm)
-(global-set-key (kbd "\C-s") 'swiper-isearch)
+;; todo 
 
 (use-package recentf
   :init
@@ -287,13 +300,13 @@
   :ensure t
   :defer 5)
 
-(use-package paren
-  :init
-  (message "loading paren!")
-  :ensure t
-  :diminish paren-mode
-  :defer 3
-)
+;; (use-package paren
+;;   :init
+;;   (message "loading paren!")
+;;   :ensure t
+;;   :diminish paren-mode
+;;   :defer 3
+;; )
 (defun python-mode-setup ()
   "Load python mode."
   (message "Custom python hook run")
@@ -311,6 +324,12 @@
   :after (clang-format)
   :defer 2)
 
+(use-package setup-rust
+  :init
+  (message "Loading setup-rust!")
+  :defer 2)
+
+
 (use-package clang-format
   :init
   (message "Loading clang-format")
@@ -323,23 +342,6 @@
   (load "/usr/local/Cellar/clang-format/12.0.1/share/clang/clang-format.el")
   )
 
-;; TODO conflict with helm
-;; (use-package ido-vertical-mode
-;;   :init
-;;   (message "ido-vertical-mode")
-;;   :config
-;;   (ido-vertical-mode 1)
-
-;;   )
-;; (use-package ido
-;;   :init
-;;   (message "Loading Ido!")
-;;   :ensure t
-;;   :config
-;;   (ido-mode 1)
-;;   (require 'setup-ido)
-;;   :after (ido-vertical-mode)
-;;   :defer 2)
 
 ;; (use-package setup-tex
 ;;   ;; Loads after 2 second of idle time.
@@ -364,14 +366,6 @@
    ("C-x <down>" . windmove-down)
    ))
 
-(use-package guide-key
-  :ensure t
-  :defer 3
-  :diminish guide-key-mode
-  :config
-  (progn
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
-  (guide-key-mode 1)))  ; Enable guide-key-mode
 
 (use-package undo-tree
   :ensure t
@@ -454,34 +448,21 @@
  uniquify-after-kill-buffer-p t
  uniquify-ignore-buffers-re "^\\*")
 
-;; Emacs server
-
-                                        ; avy
-                                        ;-----------------------------
-(autoload
-  'ace-jump-mode
-  "ace-jump-mode"
-  "Emacs quick move minor mode"
-  t)
-;; you can select the key you prefer to
-(define-key global-map (kbd "C-z SPC") 'ace-jump-mode)
-;;
-;; enable a more powerful jump back function from ace jump mode
-;;
-(autoload
-  'ace-jump-mode-pop-mark
-  "ace-jump-mode"
-  "Ace jump back:-)"
-  t)
-(eval-after-load "ace-jump-mode"
-  '(ace-jump-mode-enable-mark-sync))
-(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
-
-(autoload
-  'ace-window
-  "ace-window"
-  "Emacs quick move minor mode"
-  t)
+;;https://github.com/magnars/expand-region.el
+(use-package expand-region
+  :ensure t
+  :bind ("M-2" . er/expand-region)
+  )
+(use-package avy
+  :ensure t
+  :bind
+  ("C-." . avy-goto-char)
+  ("C-c ." . avy-goto-char-2)
+  :config
+  (avy-setup-default)  
+  )
+(global-set-key "\C-cg" 'avy-goto-line)
+(global-set-key (kbd "C-c C-j") 'avy-resume)
 
 ;------------------------------
 
@@ -544,16 +525,16 @@ argument SYMBOL-LIST"
 ;;get rid of `find-file-read-only' and replace it with something
 ;; ;; more useful.
 
-;; (nav-disable-overeager-window-splitting)
 
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
 
-;; Browse kill ring
-(require 'browse-kill-ring)
-(setq browse-kill-ring-quit-action 'save-and-restore)
-(setq browse-kill-ring-highlight-current-entry t)
+(use-package browse-kill-ring
+  :ensure t
+  :config
+  (setq browse-kill-ring-quit-action 'save-and-restore)
+  (setq browse-kill-ring-highlight-current-entry t
+  ))
 
-;(global-linum-mode 1)
 
 (defun nolinum ()
   "No lines."
@@ -575,12 +556,6 @@ argument SYMBOL-LIST"
 (global-set-key [(M C i)] 'aj-toggle-fold)
 
 (setq ansi-color-for-comint-mode t)
-;; (setq  flyspell-make t)
-
-;(setq flyspell-mode 0)
-
-;(add-hook 'text-mode-hook 'flyspell-mode) ;
-;(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ;; ;; KEYBINDINGS
 (defun toggle-fullscreen (&optional f)
@@ -605,13 +580,6 @@ argument SYMBOL-LIST"
 
 (global-set-key [f6] 'cycle-ispell-languages)
 
-(global-set-key (kbd "C-c B") 'ebib)
-
-;; (setq
-;;  ebib-file-search-dirs '("~/LitDB/pdf/"))
-;; (setq ebib-preload-bib-files
-;;       (list "~/LitDB/ped.bib")
-;;       )
 
 ;;---------------------- ispell
 (define-key ctl-x-map "\C-i"
@@ -666,7 +634,6 @@ abort completely with `C-g'."
 
 (autoload 'markdown-mode "markdown-mode"
    "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
@@ -808,6 +775,38 @@ abort completely with `C-g'."
   :config (treemacs-set-scope-type 'Perspectives))
 
 
+;; todo this should use melpa, when ui is ready
+;; ------ org-roam-ui
+(use-package f
+  :ensure t)
+(use-package simple-httpd
+  :ensure t)
+(use-package websocket
+  :ensure t)
+
+(load-library "org-roam-ui")
+;;; grammarly
+(use-package lsp-grammarly
+  :ensure t
+  :hook (text-mode . (lambda ()
+                       (require 'lsp-grammarly)
+                       (lsp))))  ; or lsp-deferred
+
+
+(use-package flycheck-grammarly
+  :ensure t
+  :config
+  (setq flycheck-grammarly-check-time 0.8)
+  )
+
+(use-package keytar
+  :ensure t
+  :init
+  (keytar-install)
+  )
+;;(keytar-set-password "grammarly" "" "hello")
+
+;;-----------------------
 (defun my-test-emacs ()
   "Debuging start of Emacs."
   (interactive)
