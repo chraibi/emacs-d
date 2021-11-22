@@ -41,28 +41,24 @@
 (load-theme 'solarized-light t))
 
 
-(use-package fira-code-mode
-  :ensure t
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
-  :hook prog-mode
-  )
+(when (display-graphic-p)
+    (use-package fira-code-mode
+      :ensure t
+      :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
+      :hook prog-mode
+      )
                                         ;FiraCode Nerd Font
-;; size in 1/10pt
-(set-face-attribute 'default nil
-                    :family "Fira Code Retina"
-                    :height 180
-                    :weight 'normal)
-;; ---
-(set-frame-font "Fira Code" nil t)
+  ;; size in 1/10pt
+  (set-face-attribute 'default nil
+                      :family "Fira Code Retina"
+                      :height 180
+                      :weight 'normal)
+  ;; ---
+  (set-frame-font "Fira Code" nil t)
+  (setq default-frame-alist nil)
+  (message "set font Fira Code Retina")
+  )
 
-(setq default-frame-alist nil)
-(message "set font Fira Code Retina")
-
-;;(use-package exec-path-from-shell-initialize :ensure t)
-
-;;(when (memq window-system '(mac ns))
-;;  (message "init exec-path")
-;;  (exec-path-from-shell-initialize))
 
 ;;-------------------------
 ;;Whenever the window scrolls a light will shine on top of your cursor so you know where it is.
@@ -785,26 +781,30 @@ abort completely with `C-g'."
   :ensure t)
 
 (load-library "org-roam-ui")
+
+;; grammarly needs online connections and is often annoying
+;;--------------- grammarly
 ;;; grammarly
-(use-package lsp-grammarly
-  :ensure t
-  :hook (text-mode . (lambda ()
-                       (require 'lsp-grammarly)
-                       (lsp))))  ; or lsp-deferred
+;; (use-package lsp-grammarly
+;;   :ensure t
+;;   :hook (text-mode . (lambda ()
+;;                        (require 'lsp-grammarly)
+;;                        (lsp))))  ; or lsp-deferred
 
 
-(use-package flycheck-grammarly
-  :ensure t
-  :config
-  (setq flycheck-grammarly-check-time 0.8)
-  )
+;; (use-package flycheck-grammarly
+;;   :ensure t
+;;   :config
+;;   (setq flycheck-grammarly-check-time 0.8)
+;;   )
 
-(use-package keytar
-  :ensure t
-  :init
-  (keytar-install)
-  )
-;;(keytar-set-password "grammarly" "" "hello")
+;; (use-package keytar
+;;   :ensure t
+;;   :init
+;;   (keytar-install)
+;;   )
+
+;;--------------- grammarly
 
 ;;-----------------------
 (defun my-test-emacs ()

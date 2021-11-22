@@ -5,6 +5,13 @@
 (setq  reftex-mode t)
 
 
+(setq reftex-default-bibliography '("~/Zotero/DB.bib") )
+(setq helm-bibtex-bibliography '("~/Zotero/DB.bib"))
+(use-package reftex
+  :ensure auctex
+  :after latex)
+
+
 ;; AucTeX
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)

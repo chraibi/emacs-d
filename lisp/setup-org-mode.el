@@ -346,6 +346,9 @@
         org-clock-in-switch-to-state "PROG"
         ;; use pretty things for the clocktable
         org-pretty-entities t
+        ;;Use return to follow links in org-mode
+;; https://emacs.stackexchange.com/questions/62731/changing-the-default-binding-to-open-a-link-in-an-org-mode-file-using-ret
+        org-return-follows-link t
         )
     )
   )
@@ -521,7 +524,7 @@ With a prefix ARG always prompt for command to use."
   (message "Init org-ref")
   :ensure t
   :after org-roam
-  :config
+  :config  
   (setq bibtex-completion-bibliography '("~/Zotero/DB.bib")
         bibtex-completion-library-path '("~/Zotero/storage")
 	bibtex-completion-notes-path (concat org-roam-directory "papers/")
@@ -535,8 +538,39 @@ With a prefix ARG always prompt for command to use."
 	  (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
 	bibtex-completion-pdf-open-function
 	(lambda (fpath)
-	  (call-process "open" nil 0 nil fpath)))
+	  (call-process "open" nil 0 nil fpath))
+        org-ref-default-citation-link "cite"        
+        )
   )
+
+(with-eval-after-load 'org-ref
+  (defun org-ref-open-pdf-at-point ()
+    "Open the pdf for bibtex key under point if it exists.
+Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125"
+    (interactive)
+    (let* ((results (org-ref-get-bibtex-key-and-file))
+           (key (car results))
+           (pdf-other (bibtex-completion-find-pdf key)))
+      ;;(find-file (car pdf-other))
+      (org-open-file (car pdf-other))
+      )
+    )
+  )
+
+(define-key org-mode-map (kbd "C-c )") 'org-ref-insert-link)
+
+
+
+(use-package org-ref-ivy
+  :ensure t
+  :config:
+  (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+      org-ref-insert-cite-function 'org-ref-cite-insert-ivy
+      org-ref-insert-label-function 'org-ref-insert-label-link
+      org-ref-insert-ref-function 'org-ref-insert-ref-link
+      org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
+)
+
 
 ;; org-roam-bibtex ======================
 (use-package org-roam-bibtex
@@ -547,18 +581,7 @@ With a prefix ARG always prompt for command to use."
   (setq orb-preformat-keywords
         '("=key=" "title" "url" "file" "author-or-editor" "keywords" "citekey")
         orb-process-file-keyword t
-        )
-    (setq org-roam-capture-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
-           ""
-           :file-name "papers/${citekey}"
-           :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
-
-- keywords :: ${keywords}
-
-\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: [[file:%(orb-process-file-field \"${=key=}\")][PDF]]\n   :NOTER_PAGE: \n  :END:\n\n"
-           :unnarrowed t)))
-
+        )   
   )
 
 
@@ -682,22 +705,29 @@ With a prefix ARG, remove start location."
       '(
         ("n" "Note" plain
          "%?"
-         :if-new (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org"
+         :target (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org"
                             "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
          :immediate-finish t
          :unnarrowed t)        
         ("p" "Person" plain
          "%?"
-         :if-new (file+head "ppl/%<%Y%m%d%H%M%S>-${slug}.org"
+         :target (file+head "ppl/%<%Y%m%d%H%M%S>-${slug}.org"
                             "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
          :immediate-finish t
          :unnarrowed t)
         ("a" "Administration" plain
          "%?"
-         :if-new (file+head "administration/%<%Y%m%d%H%M%S>-${slug}.org"
+         :target (file+head "administration/%<%Y%m%d%H%M%S>-${slug}.org"
                             "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
          :immediate-finish t
          :unnarrowed t)
+        ("r" "ref" plain 
+         "%?"
+          :target (file+head "papers/${citekey}.org"
+                             "#+title: ${citekey}\n#+roam_key:${ref}\n#+category: ${citekey}\n#+filetags:\n#+date: %U\n- keywords :: ${keywords}\n
+\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: [[file:%(orb-process-file-field \"${=key=}\")][PDF]]\n   :NOTER_PAGE: \n  :END:\n\n")
+          :unnarrowed t)
+        
 ))
 ;; meetings
        ;;  ("m" "meeting" plain (function org-roam--capture-get-point)
@@ -727,8 +757,6 @@ With a prefix ARG, remove start location."
 
 
 (setf (cdr (rassoc 'find-file-other-window org-link-frame-setup)) 'find-file)
-;Use return to follow links in org-mode
-(setq org-return-follows-link t)
 
 ;;---------- org-roam v2 stuff. TODO reorganize later
 
