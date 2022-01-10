@@ -41,12 +41,7 @@
 
 ;; Allow setting single tags without the menu
 (setq org-alphabetical-lists t)
-(setq-default org-display-custom-times t)
-(setq org-time-stamp-custom-formats '())
-(custom-set-variables
-  '(org-display-custom-times t)
-  '(org-time-stamp-custom-formats (quote ("<%d-%m-%Y %a>" . "<%d/%m/%Y  %a>")))
-  )
+;(setq org-time-stamp-custom-formats '())
 ; Set default column view headings: Task Effort Clock_Summary
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
 ;; Set default column view headings: Task Priority Effort Clock_Summary
@@ -210,14 +205,14 @@
      ("w" "Agenda"
       (       
        (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
-                  ((org-agenda-overriding-header "                                                         CAL                                                                       ")))
+                  ((org-agenda-overriding-header " =========  CAL TASKS  ========= ")))
        
        (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
-                  ((org-agenda-overriding-header "                                                         INTR TASKS                                                                       ")))            
+                  ((org-agenda-overriding-header " =========  INTR TASKS  ========= ")))            
        (tags-todo "-goals-incubate-inbox+TODO=\"PROG\""
-                  ((org-agenda-overriding-header "                                                         PROG TASKS                                                                       ")))
+                  ((org-agenda-overriding-header " =========  PROG TASKS  ========= ")))
        (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
-                  ((org-agenda-overriding-header "                                                         NEXT TASKS                                                                       ")))
+                  ((org-agenda-overriding-header " =========  NEXT TASKS  ========= ")))
        )
       ((org-super-agenda-groups
              '(
@@ -225,13 +220,13 @@
                 :and (:regexp "State \"DONE\""
                               :log t))
                
-               (:name "  📌 Today"
+               (:name " ❤ Today"
                       :scheduled today :order 1)
                (:name "  📌 Due today"
                       :deadline today :order 1)
                (:name "  ⛔ Overdue"
                       :deadline past :face (:background "RosyBrown1" :underline nil))
-               (:name "  👀 Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
+               (:name "  ️ Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
                (:name "  ⭐ Due soon" 
                       :deadline future :log t :order 2)
                
@@ -276,10 +271,10 @@
                       ))
 (setq org-fast-tag-selection-single-key (quote expert))
 (setq org-default-notes-file (concat org-directory "org-roam/notes.org"))
-(custom-set-variables
- '(org-time-stamp-custom-formats (quote ("<%d/%m/%Y %a>" . "<%d/%m/%Y  %a [%H:%M]>")))
-
- ) 
+;; (custom-set-variables
+;;  '(org-display-custom-times t)
+;;  '(org-time-stamp-custom-formats (quote ("<%Y-%m-%d %H:%M>" . "<%Y-%m-%d %H:%M>")))
+;;  ) 
                                         ;--------------------------
 ;  (concat org-roam-directory "administration/work-notes.org")
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
@@ -411,6 +406,7 @@
 
 ;; helm-bibtex
 (use-package helm-bibtex
+  :ensure t
   :config
   (setq bibtex-completion-bibliography
         '(
@@ -563,7 +559,7 @@ Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125
 
 (use-package org-ref-ivy
   :ensure t
-  :config:
+  :config
   (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
       org-ref-insert-cite-function 'org-ref-cite-insert-ivy
       org-ref-insert-label-function 'org-ref-insert-label-link
@@ -691,15 +687,15 @@ With a prefix ARG, remove start location."
 )
 
 
-(setq org-roam-dailies-directory (concat org-roam-directory "dailies/"))
-(setq org-roam-dailies-capture-templates
-      '(
-        ("d" "daily" entry
-         #'org-roam-capture--get-point
-         "* %?"
-         :file-name "dailies/%<%Y-%m-%d>"
-         :head "#+title: %<%Y-%m-%d>\n"
-         :olp ("Journal"))))
+;; (setq org-roam-dailies-directory (concat org-roam-directory "dailies/"))
+;; (setq org-roam-dailies-capture-templates
+;;       '(
+;;         ("d" "daily" entry
+;;          #'org-roam-capture--get-point
+;;          "* %?"
+;;          :file-name "dailies/%<%Y-%m-%d>"
+;;          :head "#+title: %<%Y-%m-%d>\n"
+;;          :olp ("Journal"))))
 
 (setq org-roam-capture-templates
       '(
@@ -729,14 +725,6 @@ With a prefix ARG, remove start location."
           :unnarrowed t)
         
 ))
-;; meetings
-       ;;  ("m" "meeting" plain (function org-roam--capture-get-point)
-      ;;    "\n%?\n\n* Settings \n#+roam_aliases: \n#category:${slug}\n#+filetags: \n#+CREATED: %U\n#+STARTUP: fold"
-      ;;    :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
-      ;;    :head "* ${title}\n %U"
-      ;;    :clock-in t
-      ;;    :clock-resume t
-      ;;    :unnarrowed t)
 
 
 (org-babel-do-load-languages
@@ -807,6 +795,130 @@ With a prefix ARG, remove start location."
                   (direction . right)
                   (window-width . 0.33)
                   (window-height . fit-window-to-buffer)))
+
+
+(use-package svg-tag-mode
+  :ensure t
+  :config
+  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+  (defconst day-re "[A-Za-z]\\{3\\}")
+  (defun svg-progress-percent (value)
+    (svg-image (svg-lib-concat
+                (svg-lib-progress-bar (/ (string-to-number value) 100.0)
+                                      nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                (svg-lib-tag (concat value "%")
+                             nil :stroke 0 :margin 0)) :ascent 'center))
+
+  (defun svg-progress-count (value)
+    (let* ((seq (mapcar #'string-to-number (split-string value "/")))
+           (count (float (car seq)))
+           (total (float (cadr seq))))
+      (svg-image (svg-lib-concat
+                  (svg-lib-progress-bar (/ count total) nil
+                                        :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                  (svg-lib-tag value nil
+                               :stroke 0 :margin 0)) :ascent 'center)))
+  (setq svg-tag-tags
+        `(
+          ;; Org tags
+          (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
+          ("CLOCK" . ((svg-tag-make "CLOCK" :face 'font-lock-comment-face
+                                     :inverse nil :margin 0 :radius 0)))   
+          (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))     
+          ;; Task priority
+          ("\\[#[A-Z]\\]" . ( (lambda (tag)
+                                (svg-tag-make tag :face 'org-priority 
+                                              :beg 2 :end -1 :margin 0))))
+        ;; Progress
+        ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+                                            (svg-progress-percent (substring tag 1 -2)))))
+        ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+                                          (svg-progress-count (substring tag 1 -1)))))
+        ;; TODO / DONE
+        ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
+        ("INTR" . ((lambda (tag) (svg-tag-make "INTR" :face 'org-todo :inverse t :margin 0))))
+        ("PROG" . ((lambda (tag) (svg-tag-make "PROG" :face 'org-todo :inverse t :margin 0))))
+        ("NEXT" . ((lambda (tag) (svg-tag-make "NEXT" :face 'org-todo :inverse t :margin 0))))
+        ("HELLO" . ((lambda (tag) (svg-tag-make "HELLO" :face 'org-todo :inverse t :margin 0))))
+        ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+        ;; Citation of the form [cite:@Knuth:1984] 
+        ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+                                          (svg-tag-make tag
+                                                        :inverse t
+                                                        :beg 7 :end -1
+                                                        :crop-right t))))
+        ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+                                                (svg-tag-make tag
+                                                              :end -1
+                                                              :crop-left t))))
+        ;; Active date (without day name, with or without time)
+        (,(format "\\(<%s>\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+        
+        (,(format "\\(<%s *\\)%s>" date-re time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+
+
+        
+        (,(format "<%s *\\(%s>\\)" date-re time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+
+                                        ; MC test
+        ;; [2022-01-03 MON 14:07]
+        ;; <2022-01-03 MON 14:07>
+        ;; [2022-01-03 14:08]
+        ;; <2022-01-03   14:08>
+       ;;https://www.reddit.com/r/emacs/comments/jczet6/svg_tag_minor_mode/hr6njcm/?context=3
+        (,(format "<%s %s*\\(%s>\\)" date-re day-re time-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+
+
+
+
+        
+        ;; Inactive date  (without day name, with or without time)
+         (,(format "\\(\\[%s\\]\\)" date-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+         (,(format "\\(\\[%s *\\)%s\\]" date-re time-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+         (,(format "\\[%s *\\(%s\\]\\)" date-re time-re) .
+          ((lambda (tag)
+             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date))))
+         )
+        )
+  )
+
+
+
+
+;; To do:         TODO DONE NEXT PROG INTR NEXT HELLO
+;; Tags:          :TAG1:TAG2:TAG3:
+;; Priorities:    [#A] [#B] [#C]
+;; Progress:      [1/3]
+;;                [42%]
+;; Active date:   <2021-12-24>
+;;                <2021-12-24 14:00>
+;;CLOCK: [2022-01-03 MON 14:07]--[2022-01-03 14:08]
+
+
+                                        ;:LOGBOOK:
+;;  <2022-01-04 Tue 13:53>--[2022-01-03 Mon 13:54] => -23:59
+;;  <2022-01-04 Tue>--<2022-01-03 Mon>
+
+;; :END:
+
+;; Inactive date: [2021-12-24 Mon]
+;; Inactive date: <MC>
+
+;;              [2021-12-24 14:00]--[2021-12-24 14:00]
+;; Citation:      [cite:@Knuth:1984] 
 
 
 

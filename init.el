@@ -1,4 +1,3 @@
-
 ;;; package ---- summary
 ;;; Code:
 ;;; Commentary:
@@ -40,6 +39,11 @@
 :config
 (load-theme 'solarized-light t))
 
+(use-package svg-tag-mode
+  (global-svg-tag-mode t)
+  )
+
+
 
 (when (display-graphic-p)
     (use-package fira-code-mode
@@ -57,6 +61,21 @@
   (set-frame-font "Fira Code" nil t)
   (setq default-frame-alist nil)
   (message "set font Fira Code Retina")
+  )
+
+
+(if  (daemonp)
+    (message "in DEAMON")
+  (fira-code-mode)
+  )
+    
+(unless (display-graphic-p)
+   (message "in TERMNIAL")
+  )
+
+(use-package git-gutter
+  :ensure t
+  :init (global-git-gutter-mode)
   )
 
 

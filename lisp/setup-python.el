@@ -14,8 +14,15 @@
   ;(setq flycheck-python-pycompile-executable "python3")
   )
 
-
-
+                                        ; sphinx-doc to C-c M-d
+(use-package sphinx-doc
+  :ensure t
+  :init
+  (sphinx-doc-mode t)
+  (setq sphinx-doc-include-types t)
+  :hook (python-mode . sphinx-doc-mode)
+  )
+  
  
 
  (use-package elpy
