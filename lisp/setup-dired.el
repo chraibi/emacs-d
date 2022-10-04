@@ -56,11 +56,16 @@
 
 ;; show the file from point in the other window
 ;; https://github.com/asok/peep-dired
-(use-package peep-dired
-  :ensure t
-  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("P" . peep-dired)))
+;; (use-package peep-dired
+;;   :ensure t
+;;   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
+;;   :bind (:map dired-mode-map
+;;               ("P" . peep-dired))
+;;   :config
+;;   (setq peep-dired-cleanup-on-disable t)
+;;   (setq peep-dired-cleanup-eagerly t)
+;;   (setq peep-dired-cleanup-eagerly t)
+;;   )
 
 (use-package dired-subtree
   :ensure t

@@ -21,9 +21,34 @@
 
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/GitHubPackages/org-roam-ui"))
+;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/GitHubPackages/svg-tag-mode"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
+
+(setq explicit-shell-file-name "~/.zshrc")
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
+(setenv "PYTHONPATH" "$PYTHONPATH:/Users/chraibi/workspace/jupedsim/jpscore/build/lib/:/Users/chraibi/workspace/jupedsim/jpscore/python_modules/jupedsim/")
+(message (getenv "PYTHONPATH"))
+;(setenv "LD_LIBRARY_PATH" "/Users/chraibi/workspace/jupedsim/jpscore/build/lib/")
+
+(setenv "LD_LIBRARY_PATH"
+  (let ((current (getenv "LD_LIBRARY_PATH"))
+        (new "/Users/chraibi/workspace/jupedsim/jpscore/build/lib"))
+    (if current (concat new ":" current) new)))
+
+(message (getenv "LD_LIBRARY_PATH"))
+
+
+
+                                        ; caldav
+(setq org-caldav-url "https://b2drop.eudat.eu/remote.php/dav/calendars/5bd40687-df77-4bf2-b1d7-9e2e9113271f")
+(setq org-caldav-calendar-id "ias-7x_shared_by_08a1cd0a-b318-458f-9cf4-527377fa5934")
+;5bd40687-df77-4bf2-b1d7-9e2e9113271f/personal/
+                                        ;-------
+
 
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -37,7 +62,7 @@
 (use-package solarized-theme
 :ensure t
 :config
-(load-theme 'solarized-light t))
+ (load-theme 'solarized-light t))
 
 (use-package svg-tag-mode
   (global-svg-tag-mode t)
@@ -48,7 +73,8 @@
 (when (display-graphic-p)
     (use-package fira-code-mode
       :ensure t
-      :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
+      :custom
+      (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
       :hook prog-mode
       )
                                         ;FiraCode Nerd Font
@@ -64,14 +90,20 @@
   )
 
 
+;(setq default-frame-alist '((font . "Inconsolata-dz for Powerline")))
+
+
 (if  (daemonp)
     (message "in DEAMON")
   (fira-code-mode)
   )
-    
-(unless (display-graphic-p)
-   (message "in TERMNIAL")
-  )
+
+(global-tree-sitter-mode)
+(tree-sitter-require 'python)
+(add-hook 'python-mode-hook #'tree-sitter-mode)
+;; (unless (display-graphic-p)
+;;    (message "in TERMNIAL")
+;;   )
 
 (use-package git-gutter
   :ensure t
@@ -196,12 +228,14 @@
   )
 (use-package fzf
   :init
+  (setenv "FZF_DEFAULT_OPTS" "--ansi --height 100%")
   (message "loading fzf")
   :ensure t
    :bind
   (("C-c C-f" . fzf-find-file)
    ("C-c C-d" . fzf-directory))
   )
+
 
 (use-package helm-projectile
   :init
@@ -861,6 +895,31 @@ abort completely with `C-g'."
 (defconst dark-theme 'zenburn)
 
 (setq yas-triggers-in-field t)
+
+
+;; ----- helm-dash TODO move to other file
+(defun python-doc ()
+  (interactive)
+  (setq-local dash-docs-docsets '("Python 3")))
+
+(use-package helm-dash
+  :ensure t
+  :config
+  (setq helm-dash-enable-debugging nil)
+  (add-hook 'python-mode-hook 'python-doc)
+  )
+
+
+
+;; for spacebar
+(defun org-clock-get-clock-string-without-properties ()
+  (if (org-clock-is-active)
+    (let ((s (org-clock-get-clock-string)))
+      (set-text-properties 0 (length s) nil s) s
+      )
+    (let (s "") )
+    )
+  )
 
 
 ; profile:

@@ -5,25 +5,23 @@
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
                                         ; settings for calendar, journal, clocks
-(require 'ox-latex)
-(require 'org-tempo)
-
-
+;; (require 'ox-latex)
+;; (require 'org-tempo)
 (message "Enter setup org-mode")
 
 (add-to-list 'org-emphasis-alist
              '("*" (:foreground "red")
                ))
 
-(setq org-image-actual-width nil)
+;; (setq org-image-actual-width nil)
 
 ;;https://emacs.stackexchange.com/questions/29758/yasnippets-and-org-mode-yas-next-field-or-maybe-expand-does-not-expand
-(defun yas-org-very-safe-expand ()
-  (let ((yas-fallback-behavior 'return-nil)) (yas-expand)))
-(add-hook 'org-mode-hook
-      (lambda ()
-        (add-to-list 'org-tab-first-hook 'yas-org-very-safe-expand)
-        (define-key yas-keymap [tab] 'yas-next-field)))
+;; (defun yas-org-very-safe-expand ()
+;;   (let ((yas-fallback-behavior 'return-nil)) (yas-expand)))
+;; (add-hook 'org-mode-hook
+;;       (lambda ()
+;;         (add-to-list 'org-tab-first-hook 'yas-org-very-safe-expand)
+;;         (define-key yas-keymap [tab] 'yas-next-field)))
 
 ;;================ BEGIN GENERAL ===========================
 (use-package org-bullets
@@ -33,7 +31,6 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
-
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-directory "~/Dropbox/Orgfiles/org-files/")
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
@@ -41,12 +38,10 @@
 
 ;; Allow setting single tags without the menu
 (setq org-alphabetical-lists t)
-;(setq org-time-stamp-custom-formats '())
 ; Set default column view headings: Task Effort Clock_Summary
-(setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
-;; Set default column view headings: Task Priority Effort Clock_Summary
+;(setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
 (setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
-
+;; Set default column view headings: Task Priority Effort Clock_Summary
 ;; global Effort estimate values
 (setq org-global-properties
       '(("Effort_ALL" .
@@ -63,97 +58,45 @@
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
 
 ; Targets start with the file name - allows creating level 1 tasks
-(setq org-refile-use-outline-path (quote file))
+;; (setq org-refile-use-outline-path (quote file))
 
 ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
-(setq org-outline-path-complete-in-steps t)
+;; (setq org-outline-path-complete-in-steps t)
 
 ; Allow refile to create parent tasks with confirmation
-(setq org-refile-allow-creating-parent-nodes (quote confirm))
+;;(setq org-refile-allow-creating-parent-nodes (quote confirm))
 
 ;; strike through dones
-(set-face-attribute 'org-headline-done nil :strike-through t)
+;; (set-face-attribute 'org-headline-done nil :strike-through t)
 
 ;;;;----------------------------- subtasks
-(defun my-org-insert-sub-task ()
-  (interactive)
-  (let ((parent-deadline (org-get-deadline-time nil)))
-    (org-goto-sibling)
-    (org-insert-todo-subheading t)
-    (when parent-deadline
-      (org-deadline nil parent-deadline))))
+;; (defun my-org-insert-sub-task ()
+;;   (interactive)
+;;   (let ((parent-deadline (org-get-deadline-time nil)))
+;;     (org-goto-sibling)
+;;     (org-insert-todo-subheading t)
+;;     (when parent-deadline
+;;       (org-deadline nil parent-deadline))))
 
-(define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
-(setq org-enforce-todo-dependencies t)
-(add-hook 'org-mode-hook
-          \t  (lambda ()
-                \t    'turn-on-font-lock
-                \t    (setq word-wrap 1)
-                \t    (setq truncate-lines nil)
-                \t    (flyspell-mode 1)
-                \t    (org-journal-mode 1)
-                )
-          )
+;; (define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
+;; (setq org-enforce-todo-dependencies t)
+;; (add-hook 'org-mode-hook
+;;           \t  (lambda ()
+;;                 \t    'turn-on-font-lock
+;;                 \t    (setq word-wrap 1)
+;;                 \t    (setq truncate-lines nil)
+;;                 \t    (flyspell-mode 1)
+;;                 \t    (org-journal-mode 1)
+;;                 )
+;;           )
 
-
-(setq require-final-newline t)
+;; (setq require-final-newline t)
 ;;================ END GENERAL =============================
   (global-set-key "\C-cl" 'org-store-link)
    (global-set-key "\C-ca" 'org-agenda)
    (global-set-key "\C-cb" 'org-iswitchb)
    (define-key global-map "\C-cc" 'org-capture)
 
-
-;;==================== BEGIN JOURNAL ===================
-(use-package org-journal
-  :ensure t
-  :defer t
-  :custom
-  (org-journal-dir "/Users/chraibi/Dropbox/Orgfiles/org-files/journal")
-  (org-journal-date-format "%A, %d %B %Y")
-  )
-(setq org-journal-file-type "weekly")
-
-
-(defvar org-journal-file "~/Dropbox/Orgfiles/org-files/journal.org"
-  "Path to OrgMode journal file.")
-(defvar org-journal-date-format "%Y-%m-%d"  
-  "Date format string for journal headings.")  
-
-(defun org-goto-local-search-headings (string bound noerror)
-   "Search and make sure that anu matches are in headlines."
-   (catch 'return
-    (while (if isearch-forward
-               (search-forward string bound noerror)
-             (search-backward string bound noerror))
-       (when (let ((context (mapcar 'car (save-match-data (org-context)))))
-              (and (member :headline context)
-                   (not (member :tags context))))))))
-
-(defun org-journal-entry ()  
-  "Create a new diary entry for today or append to an existing one."  
-  (interactive)  
-  (switch-to-buffer (find-file org-journal-file))  
-  (widen)  
-  (let ((today (format-time-string org-journal-date-format)))  
-    (beginning-of-buffer)  
-    (unless (org-goto-local-search-forward-headings today nil t)  
-      ((lambda ()   
-         (org-insert-heading)  
-         (insert today)  
-         (insert "\n\n  \n"))))  
-    (beginning-of-buffer)  
-    (org-show-entry)  
-    (org-narrow-to-subtree)  
-    (end-of-buffer)  
-    (backward-char 2)  
-    (unless (= (current-column) 2)  
-      (insert "\n\n  "))))
-
-(global-set-key "\C-cj" 'org-journal-entry)
-(add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
-
-;;==================== END JOURNAL =====================
 
 ;;==================== BEGIN AGENDA ===================
 (use-package org-agenda
@@ -186,8 +129,7 @@
   (setq 
    org-agenda-custom-commands
    `(
-
-     ("d" "Today"
+     ("l" "Looking Forward"
       (
        (tags-todo "SCHEDULED<\"<+1d>\"&PRIORITY=\"A\""
                      ((org-agenda-skip-function
@@ -200,15 +142,30 @@
                        '(or (org-agenda-skip-entry-if 'done)
                             ))
                       (org-agenda-overriding-header "Tasks:")))
-          ))
+
+
+          (tags-todo "SCHEDULED<\"<+7d>\""
+                     ((org-agenda-skip-function
+                       '(or (org-agenda-skip-entry-if 'done)
+                            ))
+                      (org-agenda-overriding-header "Tasks 7:")))
+          
+          )
+      )
+  
      
      ("w" "Agenda"
       (       
-       (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
-                  ((org-agenda-overriding-header " =========  CAL TASKS  ========= ")))
+       ;; (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
+       ;;            ((org-agenda-overriding-header " =========  CAL TASKS  ========= ")))
        
+          (tags-todo "SCHEDULED<\"<+7d>\""
+                     ((org-agenda-skip-function
+                       '(or (org-agenda-skip-entry-if 'done)
+                            ))
+                      (org-agenda-overriding-header "\n Week:")))
        (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
-                  ((org-agenda-overriding-header " =========  INTR TASKS  ========= ")))            
+                  ((org-agenda-overriding-header "      ")))            
        (tags-todo "-goals-incubate-inbox+TODO=\"PROG\""
                   ((org-agenda-overriding-header " =========  PROG TASKS  ========= ")))
        (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
@@ -221,23 +178,27 @@
                               :log t))
                
                (:name " ❤ Today"
-                      :scheduled today :order 1)
+                      :scheduled today  :face (:background "AliceBlue" :underline nil) :order 1)
                (:name "  📌 Due today"
-                      :deadline today :order 1)
+                      :deadline today  :face (:background "AliceBlue" :underline nil) :order 1)
                (:name "  ⛔ Overdue"
                       :deadline past :face (:background "RosyBrown1" :underline nil))
                (:name "  ️ Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
                (:name "  ⭐ Due soon" 
                       :deadline future :log t :order 2)
                
-               ;; (:name "  ☕ Scheduled"
-               ;;        :tag "NEXT"
-               ;;        :time-grid t
-               ;;        :scheduled future
-               ;;        :order 1) ;
-               (:name "  💀 Unsorted" :todo "PROG" :order 100)
-               (:name "  💀 Unsorted" :todo "INTR" :order 100)
-               (:name "  💀 Unsorted" :todo "NEXT" :order 100)
+               (:name "  ☕ Scheduled"                      
+                      :time-grid t
+                      :scheduled future
+                      :order 2) ;
+               (:name "  ☕ Overdue Scheduled"                      
+                      :time-grid t
+                      :scheduled past
+                      :order 1) ;
+               
+               (:name "  💀 -->" :todo "PROG" :order 100)
+               (:name "  💀 -->" :todo "INTR" :order 100)
+               (:name "  💀 -->" :todo "NEXT" :order 100)
                ;; (:name "  💀 Unsorted" :todo "CAL")
                 (:discard (:anything))
                )
@@ -245,14 +206,14 @@
             )       
            (org-agenda-list)
            ))
-        ))
+        )
 
-
-
+; TODO make sure to install this
+;(add-hook 'org-agenda-finalize-hook 'org-timeline-insert-timeline :append)
 
 ;; Agenda clock report parameters
 (setq org-agenda-clockreport-parameter-plist
-      '(:link t :maxlevel 6 :fileskip0 t :compact t :narrow 60 :score 0))
+      '(:link t :maxlevel 2 :fileskip0 t :compact t :narrow 60 :score 0))
 
 ;; TODO keywords.
 (setq org-todo-keywords
@@ -260,26 +221,13 @@
         (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "INTR(i)" "CAL(c)" "|" "DONE(d!/!)")
         )
       )
-                                        ; Tags with fast selection keys
-(setq org-tag-alist '((:startgroup)
-                      ("@work" . ?w)
-                      ("@home" . ?h)
-                      (:endgroup)
-                      ("PERSONAL" . ?p)
-                      ("NOTE" . ?n)
-                      ("CANCELLED" . ?c)
-                      ))
-(setq org-fast-tag-selection-single-key (quote expert))
-(setq org-default-notes-file (concat org-directory "org-roam/notes.org"))
-;; (custom-set-variables
-;;  '(org-display-custom-times t)
-;;  '(org-time-stamp-custom-formats (quote ("<%Y-%m-%d %H:%M>" . "<%Y-%m-%d %H:%M>")))
-;;  ) 
-                                        ;--------------------------
+;--------------------------
 ;  (concat org-roam-directory "administration/work-notes.org")
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
+      (quote (("j" "Doing" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/journal.org")
+               "** PROG %?" :empty-lines 1)
+              ("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
                "** TODO %?" :empty-lines 1)
               ("n" "fleeting note" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org")
                "* %?")
@@ -299,20 +247,21 @@
   :config
   (progn
     (setq org-timer-default-timer 25
-          org-latex-listings 'minted
-          org-latex-packages-alist '(("" "minted"))
-          org-latex-minted-options '(("frame" "lines") ("linenos=true"))
-          org-export-latex-hyperref-format "\\ref{%s}"
-          ;;--------------ORG latex Code
-          org-export-latex-listings t
-          org-export-latex-listings 'minted
-          org-src-fontify-natively t
-          org-latex-pdf-process
-          '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-            "bibtex %b"
-            "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-            "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
-          org-export-with-toc nil)
+          ;; org-latex-listings 'minted
+          ;; org-latex-packages-alist '(("" "minted"))
+          ;; org-latex-minted-options '(("frame" "lines") ("linenos=true"))
+          ;; org-export-latex-hyperref-format "\\ref{%s}"
+          ;; ;;--------------ORG latex Code
+          ;; org-export-latex-listings t
+          ;; org-export-latex-listings 'minted
+          ;; org-src-fontify-natively t
+          ;; org-latex-pdf-process
+          ;; '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+          ;;   "bibtex %b"
+          ;;   "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+          ;;   "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
+          org-export-with-toc nil
+          )
     ;;--------------
     ;; Resume clocking task when emacs is restarted
     (org-clock-persistence-insinuate)
@@ -340,7 +289,7 @@
         org-cycle-include-plain-lists t
         org-clock-in-switch-to-state "PROG"
         ;; use pretty things for the clocktable
-        org-pretty-entities t
+        ;;org-pretty-entities t
         ;;Use return to follow links in org-mode
 ;; https://emacs.stackexchange.com/questions/62731/changing-the-default-binding-to-open-a-link-in-an-org-mode-file-using-ret
         org-return-follows-link t
@@ -353,9 +302,15 @@
 (setq org-structure-template-alist
       (quote (("s" . "src"))))
 
-(setq org-export-html-validation-link nil)
+;; (setq org-export-html-validation-link nil)
 
 ;;ORG- code
+
+(add-hook 'before-save-hook 'py-isort-before-save)
+(elpy-enable)
+(setq elpy-rpc-python-command "/usr/local/bin/python3")
+(setq python-shell-interpreter "/usr/local/bin/python3")
+
 (org-babel-do-load-languages
  'org-babel-load-languages
   '( (perl . t)         
@@ -391,10 +346,10 @@
 ;; # -*- buffer-auto-save-file-name: nil; -*-
 
 ;; active Org-babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(;; other Babel languages
-   (plantuml . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '(;; other Babel languages
+;;    (plantuml . t)))
 
 
 (defun org-find-dangling-clock ()
@@ -410,7 +365,8 @@
   :config
   (setq bibtex-completion-bibliography
         '(
-          "~/Zotero/DB.bib"
+          "~/Zotero/PED-Modeling.bib"
+          "~/Zotero/Writing.bib"
           )
         )
   (setq bibtex-completion-library-path '("~/Zotero/storage/"))
@@ -482,13 +438,19 @@ With a prefix ARG always prompt for command to use."
   (org-roam-complete-everywhere t)
   (setq org-roam-db-update-method 'immediate)
   :custom-face
-  (org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
+  ;; (org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
   :bind (
          ("C-c o f" . org-roam-node-find)
          ("C-c o l" . org-roam-buffer-toggle)
          ("C-c o i" . org-roam-node-insert)
          ("C-c o o" . jethro/open-with)
          ("C-M-i" . completion-at-point)
+         ("C-c o d" . org-roam-dailies-capture-today)
+         ("C-c o y" . org-roam-dailies-capture-yesterday)
+         ("C-c o t" . org-roam-dailies-capture-tomorrow)
+         ("C-c o D" . org-roam-dailies-goto-today)
+         ("C-c o Y" . org-roam-dailies-goto-yesterday)
+         ("C-c o T" . org-roam-dailies-goto-tomorrow)
          )
   :config
   (org-roam-db-autosync-mode)
@@ -498,6 +460,8 @@ With a prefix ARG always prompt for command to use."
   )
 
 (use-package org-roam-timestamps
+  :init
+  (message "Init timestamp")
   :after org-roam
   :config 
   (setq org-roam-timestamps-parent-file t)
@@ -521,7 +485,10 @@ With a prefix ARG always prompt for command to use."
   :ensure t
   :after org-roam
   :config  
-  (setq bibtex-completion-bibliography '("~/Zotero/DB.bib")
+  (setq bibtex-completion-bibliography '(
+                                         "~/Zotero/PED-Modeling.bib"
+                                         "~/Zotero/Writing.bib"
+                                         )
         bibtex-completion-library-path '("~/Zotero/storage")
 	bibtex-completion-notes-path (concat org-roam-directory "papers/")
 	bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
@@ -538,6 +505,7 @@ With a prefix ARG always prompt for command to use."
         org-ref-default-citation-link "cite"        
         )
   )
+;; (message "START")
 
 (with-eval-after-load 'org-ref
   (defun org-ref-open-pdf-at-point ()
@@ -555,10 +523,11 @@ Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125
 
 (define-key org-mode-map (kbd "C-c )") 'org-ref-insert-link)
 
-
+;; (message "END")
 
 (use-package org-ref-ivy
-  :ensure t
+  :init
+  (message "Init org-ref-ivy")
   :config
   (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
       org-ref-insert-cite-function 'org-ref-cite-insert-ivy
@@ -570,6 +539,7 @@ Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125
 
 ;; org-roam-bibtex ======================
 (use-package org-roam-bibtex
+  (message "Init org-roam-bibtex")
   :ensure t
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode)
@@ -581,70 +551,73 @@ Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125
   )
 
 
-(use-package pdf-tools
-  :ensure t
-  :pin manual ;; don't reinstall when package updates
-  :mode  ("\\.pdf\\'" . pdf-view-mode)
-  :config
-  (setq-default pdf-view-display-size 'fit-page)
-  (setq pdf-annot-activate-created-annotations t)
-  (pdf-tools-install :no-query)
-  (require 'pdf-occur))
+;; (use-package pdf-tools
+;;   :init
+;;   (message "init pdf-tools")
+;;   :ensure t
+;;   :pin manual ;; don't reinstall when package updates
+;;   :mode  ("\\.pdf\\'" . pdf-view-mode)
+;;   :config
+;;   (setq-default pdf-view-display-size 'fit-page)
+;;   (setq pdf-annot-activate-created-annotations t)
+;;   (pdf-tools-install :no-query)
+;;   (require 'pdf-occur))
 
 
 
 
-(use-package org-noter
-  :ensure t
-  :after (:any org pdf-view)
-  :config
-  (setq
-   ;; org-noter-always-create-frame nil
-   ;; org-noter-insert-note-no-questions nil
-   org-noter-separate-notes-from-heading t
-   ;; org-noter-auto-save-last-location t
-   org-noter-notes-search-path '("~/Dropbox/Orgfiles/org-files/org-roam/papers/")
-   )
-    ;; (defun org-noter-init-pdf-view ()
-    ;;   (pdf-view-fit-page-to-window)
-    ;;   (pdf-view-auto-slice-minor-mode)
-    ;;   (run-at-time "0.5 sec" nil #'org-noter))
-    ;; (add-hook 'pdf-view-mode-hook 'org-noter-init-pdf-view)
-    (require 'org-noter-pdftools)
-  )
+;; (use-package org-noter
+  
+;;   :ensure t
+;;   :after (:any org pdf-view)
+;;   :config
+;;   (setq
+;;    ;; org-noter-always-create-frame nil
+;;    ;; org-noter-insert-note-no-questions nil
+;;    org-noter-separate-notes-from-heading t
+;;    ;; org-noter-auto-save-last-location t
+;;    org-noter-notes-search-path '("~/Dropbox/Orgfiles/org-files/org-roam/papers/")
+;;    )
+;;     ;; (defun org-noter-init-pdf-view ()
+;;     ;;   (pdf-view-fit-page-to-window)
+;;     ;;   (pdf-view-auto-slice-minor-mode)
+;;     ;;   (run-at-time "0.5 sec" nil #'org-noter))
+;;     ;; (add-hook 'pdf-view-mode-hook 'org-noter-init-pdf-view)
+;;     (require 'org-noter-pdftools)
+;;   )
 
-(use-package org-noter-pdftools
-  :after org-noter
-  :config
-  ;; Add a function to ensure precise note is inserted
-  (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-    (interactive "P")
-    (org-noter--with-valid-session
-     (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-                                                   (not org-noter-insert-note-no-questions)
-                                                 org-noter-insert-note-no-questions))
-           (org-pdftools-use-isearch-link t)
-           (org-pdftools-use-freestyle-annot t))
-       (org-noter-insert-note (org-noter--get-precise-info)))))
+;; (use-package org-noter-pdftools
+;;   :after org-noter
+;;   :config
+;;   ;; Add a function to ensure precise note is inserted
+;;   (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+;;     (interactive "P")
+;;     (org-noter--with-valid-session
+;;      (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+;;                                                    (not org-noter-insert-note-no-questions)
+;;                                                  org-noter-insert-note-no-questions))
+;;            (org-pdftools-use-isearch-link t)
+;;            (org-pdftools-use-freestyle-annot t))
+;;        (org-noter-insert-note (org-noter--get-precise-info)))))
 
-  ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-  (defun org-noter-set-start-location (&optional arg)
-    "When opening a session with this document, go to the current location.
-With a prefix ARG, remove start location."
-    (interactive "P")
-    (org-noter--with-valid-session
-     (let ((inhibit-read-only t)
-           (ast (org-noter--parse-root))
-           (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-       (with-current-buffer (org-noter--session-notes-buffer session)
-         (org-with-wide-buffer
-          (goto-char (org-element-property :begin ast))
-          (if arg
-              (org-entry-delete nil org-noter-property-note-location)
-            (org-entry-put nil org-noter-property-note-location
-                           (org-noter--pretty-print-location location))))))))
-  (with-eval-after-load 'pdf-annot
-    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+;;   ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+;;   (defun org-noter-set-start-location (&optional arg)
+;;     "When opening a session with this document, go to the current location.
+;; With a prefix ARG, remove start location."
+;;     (interactive "P")
+;;     (org-noter--with-valid-session
+;;      (let ((inhibit-read-only t)
+;;            (ast (org-noter--parse-root))
+;;            (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+;;        (with-current-buffer (org-noter--session-notes-buffer session)
+;;          (org-with-wide-buffer
+;;           (goto-char (org-element-property :begin ast))
+;;           (if arg
+;;               (org-entry-delete nil org-noter-property-note-location)
+;;             (org-entry-put nil org-noter-property-note-location
+;;                            (org-noter--pretty-print-location location))))))))
+;;   (with-eval-after-load 'pdf-annot
+;;     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 ;; (use-package org-noter-pdftools
 ;;   :after org-noter
@@ -653,8 +626,8 @@ With a prefix ARG, remove start location."
 ;;     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 
-(use-package org-pdftools
-  :hook (org-mode . org-pdftools-setup-link))
+;; (use-package org-pdftools
+;;   :hook (org-mode . org-pdftools-setup-link))
 
 
 
@@ -687,18 +660,18 @@ With a prefix ARG, remove start location."
 )
 
 
-;; (setq org-roam-dailies-directory (concat org-roam-directory "dailies/"))
-;; (setq org-roam-dailies-capture-templates
-;;       '(
-;;         ("d" "daily" entry
-;;          #'org-roam-capture--get-point
-;;          "* %?"
-;;          :file-name "dailies/%<%Y-%m-%d>"
-;;          :head "#+title: %<%Y-%m-%d>\n"
-;;          :olp ("Journal"))))
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry "** %<%I:%M %p>: %?"
+         :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
 
 (setq org-roam-capture-templates
       '(
+        ("k" "Start" plain
+         "%?"
+         :target (file+head "notes/journal.org"
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+         :immediate-finish t
+         :unnarrowed t)
         ("n" "Note" plain
          "%?"
          :target (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org"
@@ -727,10 +700,6 @@ With a prefix ARG, remove start location."
 ))
 
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)
-   (latex . t)))
 
 (add-to-list 'org-latex-classes
              '("iitmdiss"
@@ -744,7 +713,7 @@ With a prefix ARG, remove start location."
 
 
 
-(setf (cdr (rassoc 'find-file-other-window org-link-frame-setup)) 'find-file)
+;; (setf (cdr (rassoc 'find-file-other-window org-link-frame-setup)) 'find-file)
 
 ;;---------- org-roam v2 stuff. TODO reorganize later
 
@@ -797,12 +766,43 @@ With a prefix ARG, remove start location."
                   (window-height . fit-window-to-buffer)))
 
 
+;https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
+(defun my/org-roam-copy-todo-to-today ()
+  (interactive)
+  (let ((org-refile-keep t) ;; Set this to nil to delete the original!
+        (org-roam-dailies-capture-templates
+          '(("t" "tasks" entry "%?"
+             :if-new (file+head+olp "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n" ("Tasks")))))
+        (org-after-refile-insert-hook #'save-buffer)
+        today-file
+        pos)
+    (save-window-excursion
+      (org-roam-dailies--capture (current-time) t)
+      (setq today-file (buffer-file-name))
+      (setq pos (point)))
+
+    ;; Only refile if the target file is different than the current file
+    (unless (equal (file-truename today-file)
+                   (file-truename (buffer-file-name)))
+      (org-refile nil nil (list "Tasks" today-file nil pos)))))
+
+(add-to-list 'org-after-todo-state-change-hook
+             (lambda ()
+               (when (equal org-state "DONE")
+                 (my/org-roam-copy-todo-to-today))))
+
+
 (use-package svg-tag-mode
+  :init
+  (message "init svg-tag-mode")
   :ensure t
   :config
   (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
   (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
   (defconst day-re "[A-Za-z]\\{3\\}")
+  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+  
+  ;(defconst day-re "[A-Z]")
   (defun svg-progress-percent (value)
     (svg-image (svg-lib-concat
                 (svg-lib-progress-bar (/ (string-to-number value) 100.0)
@@ -852,60 +852,49 @@ With a prefix ARG, remove start location."
                                                 (svg-tag-make tag
                                                               :end -1
                                                               :crop-left t))))
-        ;; Active date (without day name, with or without time)
+        ;;https://www.reddit.com/r/emacs/comments/jczet6/svg_tag_minor_mode/hr6njcm/?context=3
+
+          ;; Active date (with or without day name, with or without time)
         (,(format "\\(<%s>\\)" date-re) .
          ((lambda (tag)
             (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-        
-        (,(format "\\(<%s *\\)%s>" date-re time-re) .
+        (,(format "\\(<%s \\)%s>" date-re day-time-re) .
          ((lambda (tag)
             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-
-
-        
-        (,(format "<%s *\\(%s>\\)" date-re time-re) .
+        (,(format "<%s \\(%s>\\)" date-re day-time-re) .
          ((lambda (tag)
             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
 
-                                        ; MC test
-        ;; [2022-01-03 MON 14:07]
-        ;; <2022-01-03 MON 14:07>
-        ;; [2022-01-03 14:08]
-        ;; <2022-01-03   14:08>
-       ;;https://www.reddit.com/r/emacs/comments/jczet6/svg_tag_minor_mode/hr6njcm/?context=3
-        (,(format "<%s %s*\\(%s>\\)" date-re day-re time-re) .
-          ((lambda (tag)
-             (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-
-
-
-
-        
-        ;; Inactive date  (without day name, with or without time)
+        ;; Inactive date  (with or without day name, with or without time)
          (,(format "\\(\\[%s\\]\\)" date-re) .
           ((lambda (tag)
              (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-         (,(format "\\(\\[%s *\\)%s\\]" date-re time-re) .
+         (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
           ((lambda (tag)
              (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-         (,(format "\\[%s *\\(%s\\]\\)" date-re time-re) .
+         (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
           ((lambda (tag)
-             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date))))
+             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))
+          )
          )
         )
   )
-
-
-
+         
+        
+  
 
 ;; To do:         TODO DONE NEXT PROG INTR NEXT HELLO
 ;; Tags:          :TAG1:TAG2:TAG3:
 ;; Priorities:    [#A] [#B] [#C]
 ;; Progress:      [1/3]
-;;                [42%]
-;; Active date:   <2021-12-24>
+;;                [42%] 
+;; Active date:   <2021-12-24> 
 ;;                <2021-12-24 14:00>
-;;CLOCK: [2022-01-03 MON 14:07]--[2022-01-03 14:08]
+;; [2021-12-24 14:00]
+;;[2022-01-03 14:07]
+;; [2022-01-03 MON 14:08]
+;; <2022-01-03 Mon 12:22>
+
 
 
                                         ;:LOGBOOK:

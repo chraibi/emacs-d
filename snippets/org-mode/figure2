@@ -1,9 +1,11 @@
 # -*- mode: snippet -*-
 # name: figure2
-# key: figure2
+# key: fig2
 # --
 #+begin_center
-\includegraphics[${1:scale=0.4}]{${2}}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{${1}}
+  \caption{${2}}
+  \label{fig:${3}}
+\end{figure}
 #+end_center
-
-
