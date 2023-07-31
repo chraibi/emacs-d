@@ -36,6 +36,7 @@
         lsp-diagnostics-provider :auto
         lsp-signature-doc-lines 2
         )
+  (define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
   )
 
 (use-package lsp-ui
@@ -64,9 +65,6 @@
         lsp-ui-peek-peek-height 25)
   )
 
-
-	
-
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda () (require 'lsp-pyright)))
@@ -77,8 +75,6 @@
 (use-package helm-lsp
   :ensure t)
 
-(define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
-(lsp--client-capabilities)
 
 (use-package lsp-clangd
   :init
@@ -89,8 +85,6 @@
   )
 
 
-(define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
-
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
       treemacs-space-between-root-nodes nil
@@ -100,7 +94,6 @@
 
 
 (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
-
 
 
 (message "Provide setup-lsp")

@@ -23,25 +23,8 @@
       python-sort-imports-on-save-with-isort t
       python-sort-imports-on-save-isort-options '("--settings-path" "~/.config/isort.cfg"))
 
-  ;(setq flycheck-python-pycompile-executable "python3")
+
   )
-
-;; (use-package flycheck-pycheckers
-;;   :ensure t
-;;   )
-
-
-
-;; (use-package lsp-jedi
-;;   :ensure t
-;;   :config
-;;   (with-eval-after-load "lsp-mode"
-;;     (add-to-list 'lsp-disabled-clients 'pyls)
-;;     (add-to-list 'lsp-enabled-clients 'jedi)
-;;     ))
-;; (setq jls_extract_var "mc")
-;; (setq jls_extract_def "mc")
-
 
 (use-package python-black
   :demand t
@@ -50,19 +33,13 @@
   :hook (python-mode . python-black-on-save-mode) 
   )
 
-
 (use-package py-isort
   :demand t
   :ensure t
   :after python
   hook (python-mode . py-isort-before-save )
   )
-
-
-
-;(add-hook 'before-save-hook 'py-isort-before-save)
-
-                                        ; sphinx-doc to C-c M-d
+; sphinx-doc to C-c M-d
 (use-package sphinx-doc
   :ensure t
   :init
@@ -71,14 +48,12 @@
   :hook (python-mode . sphinx-doc-mode)
   )
   ;; sphinx-doc to C-c M-d
- 
 
  (use-package elpy
    :ensure t
    :init
    (elpy-enable)
-   (setq elpy-rpc-python-command "/usr/local/bin/python3")
-   
+   (setq elpy-rpc-python-command "/usr/local/bin/python3")   
    )
 
 (when (load "flycheck" t t)

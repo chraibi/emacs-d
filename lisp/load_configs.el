@@ -34,11 +34,6 @@
 :config
 (load-theme 'solarized-light t))
 
-;; (setq current-theme "dark")
-;; (defconst light-theme 'solarized-light)
-;; (defconst dark-theme 'zenburn)
-
-
 ;;Whenever the window scrolls a light will shine on top of your cursor so you know where it is.
 (use-package beacon
   :ensure t
@@ -47,7 +42,17 @@
   (setq beacon-color "#e56911")
   (beacon-mode 1)
   )
-
+(use-package all-the-icons
+  :ensure t
+  )
+(use-package nerd-icons
+  :ensure t
+  ;; :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -58,12 +63,14 @@
   (setq doom-modeline-workspace-name t)
   (setq doom-modeline-project-detection 'project)
   (setq doom-modeline-buffer-file-name-style 'filename)
-;  (setq doom-modeline-minor-modes (featurep 'minions))
+  (setq doom-modeline-time t)
+  (setq doom-modeline-lsp t)
+  (setq doom-modeline-unicode-fallback t)
+  (setq doom-modeline-icon nil)
+  (setq doom-modeline-gnus-timer nil)
+  (display-time-mode 1)
   )
-(use-package all-the-icons
-  :ensure t
-  :if (display-graphic-p)
-  )
+
 ;; ================ esthetics ==================
 
 ;; =================== windows and editing ===============
@@ -120,83 +127,85 @@
 ;;   :ensure t
 ;;   :bind ("M-2" . er/expand-region)
 ;;   )
-;; (use-package avy
-;;   :ensure t
-;;   :bind
-;;   ("C-." . avy-goto-char)
-;;   ("C-c ." . avy-goto-char-2)
-;;   :config
-;;   (avy-setup-default)  
-;;   )
-;; (global-set-key "\C-cg" 'avy-goto-line)
-;; (global-set-key (kbd "C-c C-j") 'avy-resume)
 
-;; (use-package browse-kill-ring
-;;   :ensure t
-;;   :config
-;;   (setq browse-kill-ring-quit-action 'save-and-restore)
-;;   (setq browse-kill-ring-highlight-current-entry t
-;;   ))
+; ---- navigate text and goto 
+(use-package avy
+  :ensure t
+  :bind
+  ("C-." . avy-goto-char)
+  ("C-c ." . avy-goto-char-2)
+  :config
+  (avy-setup-default)  
+  )
+(global-set-key "\C-cg" 'avy-goto-line)
+(global-set-key (kbd "C-c C-j") 'avy-resume)
+
+;; https://github.com/browse-kill-ring/browse-kill-ring
+(use-package browse-kill-ring
+  :ensure t
+  :config
+  (setq browse-kill-ring-quit-action 'save-and-restore)
+  (setq browse-kill-ring-highlight-current-entry t
+  ))
 
 ;; =================== windows ===============
 
 ;; ================ directories and files  ==========
 ;; ;;--------------------------------- ibuffer
-;; (autoload 'ibuffer "ibuffer" "List buffers." t)
-;; (setq ibuffer-default-sorting-mode 'major-mode)
-;; (setq ibuffer-expert t)
-;; (setq ibuffer-show-empty-filter-groups nil)
-
-;; (defun ido-goto-symbol (&optional symbol-list)
-;;   "Refresh imenu and jump to a place in the buffer using Ido.
-;; argument SYMBOL-LIST"
-;;   (interactive)
-;;   (unless (featurep 'imenu)
-;;     (require 'imenu nil t))
-;;   (cond
-;;    ((not symbol-list)
-;;     (let ((ido-mode ido-mode)
-;;           (ido-enable-flex-matching
-;;            (if (boundp 'ido-enable-flex-matching)
-;;                ido-enable-flex-matching t))
-;;           name-and-pos symbol-names position)
-;;       (unless ido-mode
-;;         (ido-mode 1)
-;;         (setq ido-enable-flex-matching t))
-;;       (while (progn
-;;                (imenu--cleanup)
-;;                (setq imenu--index-alist nil)
-;;                (ido-goto-symbol (imenu--make-index-alist))
-;;                (setq selected-symbol
-;;                      (ido-completing-read "Symbol? " symbol-names))
-;;                    (string= (car imenu--rescan-item) selected-symbol)))
-;;           (unless (and (boundp 'mark-active) mark-active)
-;;             (push-mark nil t nil))
-;;           (setq position (cdr (assoc selected-symbol name-and-pos)))
-;;           (cond
-;;            ((overlayp position)
-;;             (goto-char (overlay-start position)))
-;;            (t
-;;             (goto-char position)))))
-;;        ((listp symbol-list)
-;;         (dolist (symbol symbol-list)
-;;           (let (name position)
-;;             (cond
-;;              ((and (listp symbol) (imenu--subalist-p symbol))
-;;               (ido-goto-symbol symbol))
-;;              ((listp symbol)
-;;               (setq name (car symbol))
-;;               (setq position (cdr symbol)))
-;;              ((stringp symbol)
-;;               (setq name symbol)
-;;               (setq position
-;;                     (get-text-property 1 'org-imenu-marker symbol))))
-;;             (unless (or (null position) (null name)
-;;                         (string= (car imenu--rescan-item) name))
-;;               (add-to-list 'symbol-names name)
-;;               (add-to-list 'name-and-pos (cons name position))))))))
-;; ;;get rid of `find-file-read-only' and replace it with something
-;; ;; ;; more useful.
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+(setq ibuffer-default-sorting-mode 'major-mode)
+(setq ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+;;------------------------------------------------
+;; M-i jump to symbol in file
+(defun ido-goto-symbol (&optional symbol-list)
+  "Refresh imenu and jump to a place in the buffer using Ido.
+argument SYMBOL-LIST"
+  (interactive)
+  (unless (featurep 'imenu)
+    (require 'imenu nil t))
+  (cond
+   ((not symbol-list)
+    (let ((ido-mode ido-mode)
+          (ido-enable-flex-matching
+           (if (boundp 'ido-enable-flex-matching)
+               ido-enable-flex-matching t))
+          name-and-pos symbol-names position)
+      (unless ido-mode
+        (ido-mode 1)
+        (setq ido-enable-flex-matching t))
+      (while (progn
+               (imenu--cleanup)
+               (setq imenu--index-alist nil)
+               (ido-goto-symbol (imenu--make-index-alist))
+               (setq selected-symbol
+                     (ido-completing-read "Symbol? " symbol-names))
+                   (string= (car imenu--rescan-item) selected-symbol)))
+          (unless (and (boundp 'mark-active) mark-active)
+            (push-mark nil t nil))
+          (setq position (cdr (assoc selected-symbol name-and-pos)))
+          (cond
+           ((overlayp position)
+            (goto-char (overlay-start position)))
+           (t
+            (goto-char position)))))
+       ((listp symbol-list)
+        (dolist (symbol symbol-list)
+          (let (name position)
+            (cond
+             ((and (listp symbol) (imenu--subalist-p symbol))
+              (ido-goto-symbol symbol))
+             ((listp symbol)
+              (setq name (car symbol))
+              (setq position (cdr symbol)))
+             ((stringp symbol)
+              (setq name symbol)
+              (setq position
+                    (get-text-property 1 'org-imenu-marker symbol))))
+            (unless (or (null position) (null name)
+                        (string= (car imenu--rescan-item) name))
+              (add-to-list 'symbol-names name)
+              (add-to-list 'name-and-pos (cons name position))))))))
 
 (use-package setup-dired
   :init
@@ -243,56 +252,54 @@
   (require 'setup-helm)
   :defer 2)
 
-(use-package org
-  :init
-  (message "Loading org-mode!")
-  :config
-  (require 'setup-org-mode)
-  )
+;;(use-package org
+  ;; :init
+  ;; (message "Loading org-mode!")
+  ;; :config
+  ;; (require 'setup-org-mode)
+  ;; )
 
 ;; ================ project management ==========
 
 ;; ================ niceties ==========
-;; (use-package async
-;;   :ensure t)
+; The async package provides asynchronous execution capabilities in Emacs Lisp, allowing certain tasks to be executed in the background, without blocking the Emacs user interface. ;
+(use-package async
+  :ensure t)
 
 
 ;; -------------- EMBARK
-;; (use-package marginalia
-;;   :ensure t
-;;   :config
-;;   (marginalia-mode))
+; can display annotations such as the file type for a file name completion or the documentation string for a command completion. This additional context can be quite handy, especially when you encounter similarly named candidates or when you need more information about each option.
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode))
 
-;; (use-package embark
-;;   :ensure t
+(use-package embark
+  :ensure t
 
-;;   :bind
-;;   (("C-." . embark-act)         ;; pick some comfortable binding
-;;    ("C-;" . embark-dwim)        ;; good alternative: M-.
-;;    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
 
-;;   :init
-
-;;   ;; Optionally replace the key help with a completing-read interface
-;;   (setq prefix-help-command #'embark-prefix-help-command)
-
-;;   :config
-
-;;   ;; Hide the mode line of the Embark live/completions buffers
-;;   (add-to-list 'display-buffer-alist
-;;                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-;;                  nil
-;;                  (window-parameters (mode-line-format . none)))))
-
-;; ;; Consult users will also want the embark-consult package.
-;; (use-package embark-consult
-;;   :ensure t
-;;   :after (embark consult)
-;;   :demand t ; only necessary if you have the hook below
-;;   ;; if you want to have consult previews as you move around an
-;;   ;; auto-updating embark collect buffer
-;;   :hook
-;;   (embark-collect-mode . consult-preview-at-point-mode))
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; (use-package which-key
 ;;   :ensure t
@@ -305,19 +312,19 @@
 ;;   :init (global-git-gutter-mode)
 ;;   )
 
-;; (use-package highlight-indent-guides
-;;   :ensure t
-;;   :hook prog-mode-hook highlight-indent-guides-mode
-;;   :custom
-;;   (setq highlight-indent-guides-character "|")
-;;   )
+(use-package highlight-indent-guides
+  :ensure t
+  :hook prog-mode-hook highlight-indent-guides-mode
+  :custom
+  (setq highlight-indent-guides-character "|")
+  )
 
-;; (use-package smartparens
-;;   :ensure t
-;;   :diminish smartparens-mode
-;;   :init
-;;   (smartparens-global-mode)
-;;   )
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :init
+  (smartparens-global-mode)
+  )
 
 (use-package magit
   :init
@@ -342,96 +349,106 @@
 ;;   (message "loading multiple-cursors!")
 ;;   :ensure t
 ;;   :defer 5)
-;; (use-package recentf
-;;   :init
-;;   (message "loading recentf!")
-;;   :ensure t
-;;   :defer 2
-;;   :config
-;;   (setq recentf-exclude
-;;         (append recentf-exclude
-;;                 '("~$"
-;;                   "\\.emacs.d*")))
-;;   (setq
-;;    recentf-max-saved-items 30
-;;    recentf-max-menu-items 15)      ;; max 15 in menu
-;;   )
+
+(use-package recentf
+  :init
+  (message "loading recentf!")
+  :ensure t
+  :defer 2
+  :config
+  (setq recentf-exclude
+        (append recentf-exclude
+                '("~$"
+                  "\\.emacs.d*")))
+  (setq
+   recentf-max-saved-items 30
+   recentf-max-menu-items 15)      ;; max 15 in menu
+  )
 
 
-;; (use-package autorevert
-;;   :init
-;;   (message "loading autorevert!")
-;;   :ensure t
-;;   :defer 2)
+(use-package autorevert
+  :init
+  (message "loading autorevert!")
+  :ensure t
+  :defer 2)
 
 
-;; (use-package ivy
-;;   :init
-;;   (message "loading ivy!") ;; TODO rename. this is not ivy
-;;   :ensure t
-;;   :config
-;;   ;; (ivy-mode 1)
-;;   (require 'setup-ivy)
-;;   :defer 1
-;;   )
+(use-package ivy
+  :init
+  (message "loading ivy!") ;; TODO rename. this is not ivy
+  :ensure t
+  :config
+  ;; (ivy-mode 1)
+  (require 'setup-ivy)
+  :defer 1
+  )
 
 ;; ================ niceties ==========
 
 ;; ================ programming ======
-;; (defun python-mode-setup ()
-;;   "Load python mode."
-;;   (message "Custom python hook run")
-;;   (load-library "setup-python"))
-;; (add-hook 'python-mode-hook 'python-mode-setup)
+(defun python-mode-setup ()
+  "Load python mode."
+  (when (eq major-mode 'python-mode)
+    (message "Custom python hook run")
+    (load-library "setup-python")))
+
+(add-hook 'python-mode-hook 'python-mode-setup)
+
+(use-package clang-format
+  :init
+  (message "Loading clang-format")
+  :ensure t
+  :bind
+  (("C-c r" . 'clang-format-region)
+   ("C-c u" . 'clang-format-buffer)
+   )
+  :config
+  (load "/usr/local/Cellar/clang-format/12.0.1/share/clang/clang-format.el")
+  )
 
 
-;; (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
+(use-package setup-cc
+  :after (clang-format)
+  :config
+  (when (string-suffix-p ".cpp" (buffer-file-name))
+    (message "Loading setup-cc!"))
+  )
 
-;; (use-package setup-cc
-;;   :init
-;;   (message "Loading setup-cc!")
-;;   :after (clang-format)
-;;   :defer 2)
+(use-package setup-rust
+  :config
+  (when (string-suffix-p ".rs" (buffer-file-name))
+    (message "Loading setup-rust!"))
+)
 
-;; (use-package setup-rust
-;;   :init
-;;   (message "Loading setup-rust!")
-;;   :defer 2)
+(use-package setup-lsp
+  :config
+  (add-hook 'c++-mode-hook (lambda () (setup-lsp)))
+  (add-hook 'python-mode-hook (lambda () (setup-lsp)))
+  (add-hook 'rust-mode-hook (lambda () (setup-lsp)))
+  )
 
-;; (use-package clang-format
-;;   :init
-;;   (message "Loading clang-format")
-;;   :ensure t
-;;   :bind
-;;   (("C-c r" . 'clang-format-region)
-;;    ("C-c u" . 'clang-format-buffer)
-;;    )
-;;   :config
-;;   (load "/usr/local/Cellar/clang-format/12.0.1/share/clang/clang-format.el")
-;;   )
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;; (autoload 'markdown-mode "markdown-mode"
-;;    "Major mode for editing Markdown files" t)
-;; (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-;; (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; ;;------ cmake support
+(use-package cmake-mode
+  :ensure t
+  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
-;; ;; ;;------ cmake support
-;; (use-package cmake-mode
-;;   :ensure t
-;;   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
-
-;; (use-package cmake-font-lock
-;;   :after (cmake-mode)
-;;   :hook (cmake-mode . cmake-font-lock-activate))
+(use-package cmake-font-lock
+  :after (cmake-mode)
+  :hook (cmake-mode . cmake-font-lock-activate))
 
 
-;; (defadvice compile (around split-horizontally activate)
-;;   (let ((split-width-threshold 0)
-;;         (split-height-threshold nil))
-;;     ad-do-it))
+(defadvice compile (around split-horizontally activate)
+  (let ((split-width-threshold 0)
+        (split-height-threshold nil))
+    ad-do-it))
 
 
-;; (make-variable-buffer-local 'compile-command)
+(make-variable-buffer-local 'compile-command)
 
 ;; (use-package company
 ;; :ensure t

@@ -539,10 +539,11 @@ With a prefix ARG always prompt for command to use."
 ;; org-roam ==========
 
 (use-package org-roam
+:ensure t
   :init
   (message "init org-roam")
   (setq org-roam-v2-ack t)
-  :ensure t
+ 
   :after org
   :hook 
   (after-init . org-roam-db-autosync-mode)
@@ -642,17 +643,17 @@ With a prefix ARG always prompt for command to use."
 
 ;; (message "END")
 
-(use-package org-ref-ivy
-  :init
-  (message "Init org-ref-ivy")
-  :ensure t
-  :config
-  (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-      org-ref-insert-cite-function 'org-ref-cite-insert-ivy
-      org-ref-insert-label-function 'org-ref-insert-label-link
-      org-ref-insert-ref-function 'org-ref-insert-ref-link
-      org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
-)
+;; (use-package org-ref-ivy
+;;   :init
+;;   (message "Init org-ref-ivy")
+;;   :ensure t
+;;   :config
+;;   (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+;;       org-ref-insert-cite-function 'org-ref-cite-insert-ivy
+;;       org-ref-insert-label-function 'org-ref-insert-label-link
+;;       org-ref-insert-ref-function 'org-ref-insert-ref-link
+;;       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
+;; )
 
 
 ;; org-roam-bibtex ======================

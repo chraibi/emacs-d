@@ -267,8 +267,8 @@
 ;; (message (getenv "LD_LIBRARY_PATH"))
 
 
-;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-;; (load custom-file)
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
 
 
 (provide 'my-core-settings)
