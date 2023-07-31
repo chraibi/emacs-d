@@ -10,6 +10,7 @@
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -21,7 +22,6 @@
 
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/GitHubPackages/svg-tag-mode"))
 (add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
 (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
@@ -30,7 +30,7 @@
   (exec-path-from-shell-initialize))
 
 ;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
-(setenv "PYTHONPATH" "$PYTHONPATH:/Users/chraibi/workspace/jupedsim/jpscore/build/lib/:/Users/chraibi/workspace/jupedsim/jpscore/python_modules/jupedsim/")
+(setenv "PYTHONPATH" "$PYTHONPATH:/Users/chraibi/workspace/jupedsim/jupedsim_dashboard:/Users/chraibi/workspace/jupedsim/jpscore/build/lib/:/Users/chraibi/workspace/jupedsim/jpscore/python_modules/jupedsim/")
 (message (getenv "PYTHONPATH"))
 ;(setenv "LD_LIBRARY_PATH" "/Users/chraibi/workspace/jupedsim/jpscore/build/lib/")
 
@@ -44,9 +44,9 @@
 
 
                                         ; caldav
-(setq org-caldav-url "https://b2drop.eudat.eu/remote.php/dav/calendars/5bd40687-df77-4bf2-b1d7-9e2e9113271f")
-(setq org-caldav-calendar-id "ias-7x_shared_by_08a1cd0a-b318-458f-9cf4-527377fa5934")
-;5bd40687-df77-4bf2-b1d7-9e2e9113271f/personal/
+;; (setq org-caldav-url "https://b2drop.eudat.eu/remote.php/dav/calendars/5bd40687-df77-4bf2-b1d7-9e2e9113271f")
+;; (setq org-caldav-calendar-id "ias-7x_shared_by_08a1cd0a-b318-458f-9cf4-527377fa5934")
+;; ;5bd40687-df77-4bf2-b1d7-9e2e9113271f/personal/
                                         ;-------
 
 
@@ -54,7 +54,12 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
-(require 'my-core-settings)
+(use-package my-core-settings
+  :init
+  (message "Loading my-settings!")
+  )
+
+;(require 'my-core-settings)
 ;; auto revert mode
 (global-auto-revert-mode 1)
 (setq auto-revert-use-notify nil)
@@ -64,9 +69,9 @@
 :config
  (load-theme 'solarized-light t))
 
-(use-package svg-tag-mode
-  (global-svg-tag-mode t)
-  )
+;(use-package svg-tag-mode
+;  (global-svg-tag-mode t)
+;  )
 
 
 
@@ -98,9 +103,9 @@
   (fira-code-mode)
   )
 
-(global-tree-sitter-mode)
-(tree-sitter-require 'python)
-(add-hook 'python-mode-hook #'tree-sitter-mode)
+;(global-tree-sitter-mode)
+;(tree-sitter-require 'python)
+;(add-hook 'python-mode-hook #'tree-sitter-mode)
 ;; (unless (display-graphic-p)
 ;;    (message "in TERMNIAL")
 ;;   )
@@ -137,7 +142,7 @@
   (yas-global-mode 0)
 )
 
-;-------------------------------------------------
+                                        ;-------------------------------------------------
 ;; Don't ask before rereading the TAGS files if they have changed
 
 
@@ -203,6 +208,8 @@
   (setq doom-modeline-buffer-file-name-style 'filename)
 ;  (setq doom-modeline-minor-modes (featurep 'minions))
   )
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 (use-package which-key
   :ensure t
@@ -276,14 +283,14 @@
 ;; (use-package setup-electric
 ;;   :defer 3)
 
-(use-package hlinum
-  :init
-  (message "loading hlinum!")
-  :ensure t
-  :config
-  (setq linum-format "%3d \u2502 ")
-  (hlinum-activate)
-  )
+;; (use-package hlinum
+;;   :init
+;;   (message "loading hlinum!")
+;;   :ensure t
+;;   :config
+;;   (setq linum-format "%3d \u2502 ")
+;;   (hlinum-activate)
+;;   )
 (use-package magit
   :init
   (message "loading magit!")
@@ -404,6 +411,7 @@
   )
 (winner-mode 1)
 
+
 (use-package windmove
   :init
   (message "loading windmove!")
@@ -414,6 +422,44 @@
    ("C-x <up>" . windmove-up)
    ("C-x <down>" . windmove-down)
    ))
+
+;; -------------- EMBARK
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode))
+
+(use-package embark
+  :ensure t
+
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+  :init
+
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+;;---------------------------
 
 
 (use-package undo-tree
@@ -489,7 +535,7 @@
     (and server-buffer-clients (server-done)))
   (add-hook 'kill-buffer-hook 'fp-kill-server-with-buffer-routine))
 
-(setq flymake-gui-warnings-enabled nil)
+;; (setq flymake-gui-warnings-enabled nil)
 
 (setq
  uniquify-buffer-name-style 'post-forward
@@ -585,11 +631,11 @@ argument SYMBOL-LIST"
   ))
 
 
-(defun nolinum ()
-  "No lines."
-  (global-linum-mode 0)
-  )
-(add-hook 'org-mode-hook 'nolinum)
+;; (defun nolinum ()
+;;   "No lines."
+;;   (global-linum-mode 0)
+;;   )
+;; (add-hook 'org-mode-hook 'nolinum)
 
 (setq ical-pull-list `("https://www.google.com/calendar/ical/s1ilvt2buhj2adrg7363t4k77g%40group.calendar.google.com/private-8ed0f1ebe7b7fcce8ba154c6d823d71c/basic.ics"))
 
@@ -721,107 +767,109 @@ abort completely with `C-g'."
   :ensure t)
 
 
-(use-package treemacs
-  :ensure t
-  :after (lsp-mode)
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :config
-  (progn
-    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay        0.5
-          treemacs-directory-name-transformer      #'identity
-          treemacs-display-in-side-window          t
-          treemacs-eldoc-display                   t
-          treemacs-file-event-delay                5000
-          treemacs-file-extension-regex            treemacs-last-period-regex-value
-          treemacs-file-follow-delay               0.2
-          treemacs-file-name-transformer           #'identity
-          treemacs-follow-after-init               t
-          treemacs-expand-after-init               t
-          treemacs-git-command-pipe                ""
-          treemacs-goto-tag-strategy               'refetch-index
-          treemacs-indentation                     2
-          treemacs-indentation-string              " "
-          treemacs-is-never-other-window           nil
-          treemacs-max-git-entries                 5000
-          treemacs-missing-project-action          'ask
-          treemacs-move-forward-on-expand          nil
-          treemacs-no-png-images                   nil
-          treemacs-no-delete-other-windows         t
-          treemacs-project-follow-cleanup          nil
-          treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                        'left
-          treemacs-read-string-input               'from-child-frame
-          treemacs-recenter-distance               0.1
-          treemacs-recenter-after-file-follow      nil
-          treemacs-recenter-after-tag-follow       nil
-          treemacs-recenter-after-project-jump     'always
-          treemacs-recenter-after-project-expand   'on-distance
-          treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
-          treemacs-show-cursor                     nil
-          treemacs-show-hidden-files               t
-          treemacs-silent-filewatch                nil
-          treemacs-silent-refresh                  nil
-          treemacs-sorting                         'alphabetic-asc
-          treemacs-select-when-already-in-treemacs 'move-back
-          treemacs-space-between-root-nodes        t
-          treemacs-tag-follow-cleanup              t
-          treemacs-tag-follow-delay                1.5
-          treemacs-text-scale                      nil
-          treemacs-user-mode-line-format           nil
-          treemacs-user-header-line-format         nil
-          treemacs-width                           35
-          treemacs-width-is-initially-locked       t
-          treemacs-workspace-switch-cleanup        nil)
+;; (require 'setup-lsp)
 
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+;; (use-package treemacs
+;;   :ensure t
+;;   :after (lsp-mode)
+;;   :init
+;;   (with-eval-after-load 'winum
+;;     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+;;   :config
+;;   (progn
+;;     (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+;;           treemacs-deferred-git-apply-delay        0.5
+;;           treemacs-directory-name-transformer      #'identity
+;;           treemacs-display-in-side-window          t
+;;           treemacs-eldoc-display                   t
+;;           treemacs-file-event-delay                5000
+;;           treemacs-file-extension-regex            treemacs-last-period-regex-value
+;;           treemacs-file-follow-delay               0.2
+;;           treemacs-file-name-transformer           #'identity
+;;           treemacs-follow-after-init               t
+;;           treemacs-expand-after-init               t
+;;           treemacs-git-command-pipe                ""
+;;           treemacs-goto-tag-strategy               'refetch-index
+;;           treemacs-indentation                     2
+;;           treemacs-indentation-string              " "
+;;           treemacs-is-never-other-window           nil
+;;           treemacs-max-git-entries                 5000
+;;           treemacs-missing-project-action          'ask
+;;           treemacs-move-forward-on-expand          nil
+;;           treemacs-no-png-images                   nil
+;;           treemacs-no-delete-other-windows         t
+;;           treemacs-project-follow-cleanup          nil
+;;           treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+;;           treemacs-position                        'left
+;;           treemacs-read-string-input               'from-child-frame
+;;           treemacs-recenter-distance               0.1
+;;           treemacs-recenter-after-file-follow      nil
+;;           treemacs-recenter-after-tag-follow       nil
+;;           treemacs-recenter-after-project-jump     'always
+;;           treemacs-recenter-after-project-expand   'on-distance
+;;           treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
+;;           treemacs-show-cursor                     nil
+;;           treemacs-show-hidden-files               t
+;;           treemacs-silent-filewatch                nil
+;;           treemacs-silent-refresh                  nil
+;;           treemacs-sorting                         'alphabetic-asc
+;;           treemacs-select-when-already-in-treemacs 'move-back
+;;           treemacs-space-between-root-nodes        t
+;;           treemacs-tag-follow-cleanup              t
+;;           treemacs-tag-follow-delay                1.5
+;;           treemacs-text-scale                      nil
+;;           treemacs-user-mode-line-format           nil
+;;           treemacs-user-header-line-format         nil
+;;           treemacs-width                           35
+;;           treemacs-width-is-initially-locked       t
+;;           treemacs-workspace-switch-cleanup        nil)
 
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode 'always)
+;;     ;; The default width and height of the icons is 22 pixels. If you are
+;;     ;; using a Hi-DPI display, uncomment this to double the icon size.
+;;     ;;(treemacs-resize-icons 44)
 
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
+;;     (treemacs-follow-mode t)
+;;     (treemacs-filewatch-mode t)
+;;     (treemacs-fringe-indicator-mode 'always)
 
-    (treemacs-hide-gitignored-files-mode nil))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+;;     (pcase (cons (not (null (executable-find "git")))
+;;                  (not (null treemacs-python-executable)))
+;;       (`(t . t)
+;;        (treemacs-git-mode 'deferred))
+;;       (`(t . _)
+;;        (treemacs-git-mode 'simple)))
 
-;; (use-package treemacs-evil
-;;   :after (treemacs evil)
+;;     (treemacs-hide-gitignored-files-mode nil))
+;;   :bind
+;;   (:map global-map
+;;         ("M-0"       . treemacs-select-window)
+;;         ("C-x t 1"   . treemacs-delete-other-windows)
+;;         ("C-x t t"   . treemacs)
+;;         ("C-x t B"   . treemacs-bookmark)
+;;         ("C-x t C-t" . treemacs-find-file)
+;;         ("C-x t M-t" . treemacs-find-tag)))
+
+;; ;; (use-package treemacs-evil
+;; ;;   :after (treemacs evil)
+;; ;;   :ensure t)
+
+;; (use-package treemacs-projectile
+;;   :after (treemacs projectile)
 ;;   :ensure t)
 
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
+;; (use-package treemacs-icons-dired
+;;   :after (treemacs dired)
+;;   :ensure t
+;;   :config (treemacs-icons-dired-mode))
 
-(use-package treemacs-icons-dired
-  :after (treemacs dired)
-  :ensure t
-  :config (treemacs-icons-dired-mode))
+;; (use-package treemacs-magit
+;;   :after (treemacs magit)
+;;   :ensure t)
 
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t)
-
-(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
+;; (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+;;   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+;;   :ensure t
+;;   :config (treemacs-set-scope-type 'Perspectives))
 
 
 ;; todo this should use melpa, when ui is ready
@@ -833,31 +881,22 @@ abort completely with `C-g'."
 (use-package websocket
   :ensure t)
 
-(load-library "org-roam-ui")
-
-;; grammarly needs online connections and is often annoying
-;;--------------- grammarly
-;;; grammarly
-;; (use-package lsp-grammarly
-;;   :ensure t
-;;   :hook (text-mode . (lambda ()
-;;                        (require 'lsp-grammarly)
-;;                        (lsp))))  ; or lsp-deferred
 
 
-;; (use-package flycheck-grammarly
-;;   :ensure t
-;;   :config
-;;   (setq flycheck-grammarly-check-time 0.8)
-;;   )
 
-;; (use-package keytar
-;;   :ensure t
-;;   :init
-;;   (keytar-install)
-;;   )
 
-;;--------------- grammarly
+
+;; ----- flycheck
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t)
+  (setq flycheck-idle-change-delay 10)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  )
+(setq flymake-mode nil)
+
+;;--------------- Grammarly
 
 ;;-----------------------
 (defun my-test-emacs ()
@@ -897,31 +936,10 @@ abort completely with `C-g'."
 (setq yas-triggers-in-field t)
 
 
-;; ----- helm-dash TODO move to other file
-(defun python-doc ()
-  (interactive)
-  (setq-local dash-docs-docsets '("Python 3")))
-
-(use-package helm-dash
-  :ensure t
-  :config
-  (setq helm-dash-enable-debugging nil)
-  (add-hook 'python-mode-hook 'python-doc)
-  )
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
 
 
-
-;; for spacebar
-(defun org-clock-get-clock-string-without-properties ()
-  (if (org-clock-is-active)
-    (let ((s (org-clock-get-clock-string)))
-      (set-text-properties 0 (length s) nil s) s
-      )
-    (let (s "") )
-    )
-  )
-
-
+  
 ; profile:
 ;    emacs -Q -l ~/.emacs.d/lisp/profile-dotemacs.el --eval "(setq profile-dotemacs-file (setq load-file-name \"$(abspath init.el)\"))" -f profile-dotemacs
 (message "done loading emacs!")

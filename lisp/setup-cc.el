@@ -1,3 +1,4 @@
+
 ;;; Package --- summary
 ;;; Code:
 ;;; Commentary:
@@ -16,14 +17,6 @@
   :hook (c-mode-common-hook . clang-format+-mode)
   )
 
-;; ----- flycheck
-(use-package flycheck
-  :ensure t
-  :init
-  (global-flycheck-mode t)
-  (setq flycheck-idle-change-delay 10)
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  )
 
 (use-package flycheck-clang-tidy
   :ensure t
@@ -32,125 +25,6 @@
   (flycheck-mode . flycheck-clang-tidy-setup)
   )
 
-
-;;----------------- ccls now using clangd
-;; (use-package ccls
-;;   :ensure t
-;;   :config
-;;   (setq ccls-executable "ccls")
-;;   (setq lsp-prefer-flymake nil)
-;;   ;; (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
-;;   :hook ((c++-mode) .
-;;          (lambda () (require 'ccls) (lsp)))
-;;   )
-
-;; (setq ccls-executable "/usr/local/Cellar/ccls/0.20220729_1/bin/ccls")
-
-
-
-;; ---- lsp-mode
-(use-package lsp-mode
-  :ensure t
-  :defer t
-  :diminish (lsp-mode . "lsp")
-  :config
-  (add-hook 'c++-mode-hook #'lsp)
-  (add-hook 'python-mode-hook #'lsp)
-  (add-hook 'rust-mode-hook #'lsp)
-  (setq lsp-disabled-clients '(ccls))
-  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
-  :init
-  (setq lsp-auto-guess-root t       ; Detect project root
-        lsp-keep-workspace-alive nil
-        lsp-enable-imenu t
-        lsp-signature-doc-lines 5
-        lsp-idle-delay 0.1
-        lsp-prefer-provider t
-        lsp-restart 'auto-restart
-        lsp-client-packages nil
-        lsp-modeline-diagnostics-enable t
-        lsp-enable-symbol-highlighting t
-        lsp-enable-snippet nil;; Not supported by company capf, which is the recommended company backend
-        lsp-pyls-plugins-flake8-enabled t
-        lsp-modeline-code-actions-mode '(count icon name)
-        )
-  )
-
-(use-package lsp-clangd
-  :init
-  (add-hook 'c-mode--hook #'lsp-clangd-c-enable)
-  (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
-  (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable)
-  (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd")
-  (setq lsp-clangd-binary-path "/usr/local/opt/llvm/bin/clangd")
-  )
-
-
-(with-eval-after-load 'lsp-mode
-  (yas-global-mode)
-  (lsp-treemacs-sync-mode 1)
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  (push "[/\\\\][^/\\\\]*\\.\\(.github\\|.cache\\|.idea\\|build\\|bin\\|third-party\\|demos\\|docs\\|jpsreport\\)$" lsp-file-watch-ignored-directories)
-  (add-to-list 'lsp-file-watch-ignored-directories "/Users/chraibi/workspace/jupedsim/jpscore/build/")
-  (add-to-list 'lsp-file-watch-ignored-directories "/workspace/jupedsim/jpscore/third-party/")
-  (add-to-list 'lsp-file-watch-ignored-directories "~/workspace/jupedsim/jpscore/systemtest/")
-  (add-to-list 'lsp-file-watch-ignored-directories "~/workspace/jupedsim/jpscore/third-party/")
-  )
-
-(define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
-
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-idle-delay 0.1)  ;; clangd is fast
-
-
-
-(use-package lsp-ui
-  :ensure t
-  :after lsp
-  :requires lsp-mode flycheck
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq lsp-ui-doc-enable nil
-        lsp-ui-doc-show-with-cursor nil
-        lsp-lens-enable t
-        lsp-ui-sideline-enable nil
-        lsp-ui-sideline-show-code-actions ni        
-        lsp-ui-doc-use-childframe t
-        lsp-ui-doc-position 'top
-        lsp-ui-doc-include-signature t
-        lsp-ui-sideline-enable nil
-        lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t
-        lsp-ui-peek-enable t
-        lsp-ui-peek-list-width 60
-        lsp-ui-peek-peek-height 25)
-)
-
-
-
-
-
-(use-package helm-lsp
-  :ensure t)
-
-(define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
-(lsp--client-capabilities)
-
-
-
-(setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
-
-
-;; (use-package company-capf
-;;   :ensure t
-;;   :config
-;;  (push 'company-capf company-backends)
-;; )
 
 
 (use-package modern-cpp-font-lock

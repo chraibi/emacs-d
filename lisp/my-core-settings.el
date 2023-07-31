@@ -59,7 +59,8 @@
 (setq load-prefer-newer t)
 
 ;; ------ end cleanup
-
+;; Avoid performance issues in files with very long lines.
+(global-so-long-mode 1)
 
 ;https://batsov.com/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/
 ;(add-hook 'before-save-hook 'whitespace-cleanup)

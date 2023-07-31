@@ -100,11 +100,9 @@
             (company-complete-common)
           (indent-for-tab-command)))))
 
-(use-package flycheck
-  :ensure t)
 
 (with-eval-after-load 'rustic
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
 
 
 (setq lsp-rust-analyzer-server-display-inlay-hints t)

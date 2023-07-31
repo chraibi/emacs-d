@@ -5,6 +5,9 @@
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
                                         ; settings for calendar, journal, clocks
+
+(setq org-agenda-skip-unavailable-files t)
+(setq org-latex-prefer-user-labels t)
 ;; (require 'ox-latex)
 ;; (require 'org-tempo)
 (message "Enter setup org-mode")
@@ -32,7 +35,7 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq org-directory "~/Dropbox/Orgfiles/org-files/")
+(setq org-directory "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/")
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
@@ -103,7 +106,6 @@
   :after org
   :commands (org-agenda)
   :config
-  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (setq
    org-agenda-start-on-weekday 1
    org-agenda-include-diary t
@@ -123,93 +125,202 @@
                                     " %i %-12:c %(concat \"[ \"(org-format-outline-path (org-get-outline-path)) \" ]\") ")
                               (search . " %i %-12:c"))
    )
-  (use-package org-super-agenda
-    :ensure t
-    :config (org-super-agenda-mode))
-  (setq 
-   org-agenda-custom-commands
-   `(
-     ("l" "Looking Forward"
+  )
+
+(setq spacemacs-theme-org-agenda-height nil
+      org-agenda-time-grid '((daily today require-timed) "----------------------" nil)
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-include-diary t
+      org-agenda-block-separator nil
+      org-agenda-compact-blocks t
+      org-agenda-start-with-log-mode t)
+
+(use-package org-super-agenda
+  :after org-agenda
+  :config
+  (org-super-agenda-mode)
+  (setq org-agenda-custom-commands
+        '(
+   ("w" "Week"
       (
        (tags-todo "SCHEDULED<\"<+1d>\"&PRIORITY=\"A\""
-                     ((org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "High-priority unfinished tasks:"))
-                     )
-
-          (tags-todo "SCHEDULED<\"<+1d>\""
-                     ((org-agenda-skip-function
-                       '(or (org-agenda-skip-entry-if 'done)
-                            ))
-                      (org-agenda-overriding-header "Tasks:")))
-
-
+                  ((org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "High-priority unfinished tasks:"))
+                  )
           (tags-todo "SCHEDULED<\"<+7d>\""
                      ((org-agenda-skip-function
                        '(or (org-agenda-skip-entry-if 'done)
                             ))
-                      (org-agenda-overriding-header "Tasks 7:")))
+                      (org-agenda-overriding-header "Week")))
           
           )
       )
-  
-     
-     ("w" "Agenda"
-      (       
-       ;; (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
-       ;;            ((org-agenda-overriding-header " =========  CAL TASKS  ========= ")))
-       
-          (tags-todo "SCHEDULED<\"<+7d>\""
-                     ((org-agenda-skip-function
-                       '(or (org-agenda-skip-entry-if 'done)
-                            ))
-                      (org-agenda-overriding-header "\n Week:")))
-       (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
-                  ((org-agenda-overriding-header "      ")))            
-       (tags-todo "-goals-incubate-inbox+TODO=\"PROG\""
-                  ((org-agenda-overriding-header " =========  PROG TASKS  ========= ")))
-       (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
-                  ((org-agenda-overriding-header " =========  NEXT TASKS  ========= ")))
-       )
-      ((org-super-agenda-groups
-             '(
-               (:name "Done today"
-                :and (:regexp "State \"DONE\""
-                              :log t))
-               
-               (:name " ❤ Today"
-                      :scheduled today  :face (:background "AliceBlue" :underline nil) :order 1)
-               (:name "  📌 Due today"
-                      :deadline today  :face (:background "AliceBlue" :underline nil) :order 1)
-               (:name "  ⛔ Overdue"
-                      :deadline past :face (:background "RosyBrown1" :underline nil))
-               (:name "  ️ Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
-               (:name "  ⭐ Due soon" 
-                      :deadline future :log t :order 2)
-               
-               (:name "  ☕ Scheduled"                      
-                      :time-grid t
-                      :scheduled future
-                      :order 2) ;
-               (:name "  ☕ Overdue Scheduled"                      
-                      :time-grid t
-                      :scheduled past
-                      :order 1) ;
-               
-               (:name "  💀 -->" :todo "PROG" :order 100)
-               (:name "  💀 -->" :todo "INTR" :order 100)
-               (:name "  💀 -->" :todo "NEXT" :order 100)
-               ;; (:name "  💀 Unsorted" :todo "CAL")
-                (:discard (:anything))
-               )
-             )
-            )       
-           (org-agenda-list)
-           ))
+
+   ("z" "Super view"
+           (
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '(
+                            (:name "Calendar"
+                                   :todo "CAL"
+                                   :face (:background "GhostWhite" :underline nil)
+                                   )
+                            (:name "Today"
+                                   :scheduled today
+                                   :face (:background "AliceBlue" :underline nil)
+                                   :order 2)
+                            (:name "  📌 Due Today"
+                                   :deadline today
+                                   :face (:background "AliceBlue" :underline nil)
+                                   :order 3
+                                   )
+                            (:name "  ☕ Scheduled soon"
+                                   :scheduled future
+                                   :order 1)
+                            (:name "  ☕ Deadline soon"
+                                   :deadline future
+                                   :order 5)
+                            (:name "Important"
+                                   :priority "A"
+                                   :order 6)
+                            (:name "Projects"
+                                   :and (:tag "Project" :todo ("NEXT" "TODO" "PROG"))
+                                   :order 7)
+                            (:name "Habilitation"
+                                   :and (:tag "habilitation" :todo ("NEXT" "TODO" "PROG"))
+                                   :order 8)                            
+                            (:name "Research"
+                                   :and (:tag ("idea" "modeling") :todo ("NEXT" "TODO" "PROG"))                                   
+                                   :order 9)
+                            (:name "  ⛔ Overdue Scheduled"
+                                   :face (:background "LavenderBlush" :underline nil)
+                                   :and (:scheduled past :todo ("NEXT" "TODO" "PROG"))
+                                   :order 10) ;  
+                            (:name "  ⛔ Overdue Deadline"
+                                   :face (:background "LavenderBlush" :underline nil)
+                                   :and (:deadline past :todo ("NEXT" "TODO" "PROG"))
+                                   :order 11)
+                              (:discard (:anything))
+                            
+                                 
+                            )
+                          )
+                         )
+                     )
+            )
+           )
+          )
         )
+  )
+
+
+  ;; (use-package org-super-agenda
+  ;;   :ensure t
+  ;;   :config (org-super-agenda-mode))
+  ;; (setq 
+  ;;  org-agenda-custom-commands
+  ;;  `(
+  ;;    ("l" "Looking Forward"
+  ;;     (
+  ;;      (tags-todo "SCHEDULED<\"<+1d>\"&PRIORITY=\"A\""
+  ;;                    ((org-agenda-skip-function
+  ;;                      '(org-agenda-skip-entry-if 'todo 'done))
+  ;;                     (org-agenda-overriding-header "High-priority unfinished tasks:"))
+  ;;                    )
+
+  ;;         (tags-todo "SCHEDULED<\"<+1d>\""
+  ;;                    ((org-agenda-skip-function
+  ;;                      '(or (org-agenda-skip-entry-if 'done)
+  ;;                           ))
+  ;;                     (org-agenda-overriding-header "Tasks:")))
+
+
+  ;;         (tags-todo "SCHEDULED<\"<+7d>\""
+  ;;                    ((org-agenda-skip-function
+  ;;                      '(or (org-agenda-skip-entry-if 'done)
+  ;;                           ))
+  ;;                     (org-agenda-overriding-header "Tasks 7:")))
+          
+  ;;         )
+  ;;     )
+  ;;    ("z" "zzzz"
+  ;;    (org-super-agenda-groups
+  ;;     '((:name "Next Items"
+  ;;              :time-grid t
+  ;;              :tag ("NEXT" "outbox"))
+  ;;       (:name "Important"
+  ;;              :priority "A")
+  ;;       (:name "Quick Picks"
+  ;;              :effort< "0:30")
+  ;;       (:priority<= "B"
+  ;;                    :scheduled future
+  ;;                    :order 1)))
+     
+  ;;     )
+     
+     
+  ;;    ("w" "Agenda"
+  ;;     (       
+  ;;      ;; (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
+  ;;      ;;            ((org-agenda-overriding-header " =========  CALENDER  ========= ")))
+       
+  ;;         (tags-todo "SCHEDULED<\"<+7d>\""
+  ;;                    ((org-agenda-skip-function
+  ;;                      '(or (org-agenda-skip-entry-if 'done)
+  ;;                           ))
+  ;;                     (org-agenda-overriding-header "\n This week:")))
+  ;;      ;; (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
+  ;;      ;;            ((org-agenda-overriding-header "      ")))            
+  ;;      (tags-todo "project"
+  ;;                 ((org-agenda-overriding-header " =========  Research  ========= ")))
+       
+  ;;      ;; (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
+  ;;      ;;            ((org-agenda-overriding-header " =========  NEXT TASKS  ========= ")))
+  ;;      )
+  ;;     ((org-super-agenda-groups
+  ;;            '(
+  ;;              (:name "Done today"
+  ;;               :and (:regexp "State \"DONE\""
+  ;;                             :log t))
+               
+  ;;              (:name " ❤ Today"
+  ;;                     :scheduled today  :face (:background "AliceBlue" :underline nil) :order 1)
+  ;;              (:name "  📌 Due today"
+  ;;                     :deadline today  :face (:background "AliceBlue" :underline nil) :order 1)
+  ;;              (:name "  ⛔ Overdue"
+  ;;                     :deadline past :face (:background "RosyBrown1" :underline nil))
+  ;;              (:name "  ️ Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
+  ;;              (:name "  ⭐ Due soon" 
+  ;;                     :deadline future :log t :order 2)
+               
+  ;;              (:name "  ☕ Scheduled"                      
+  ;;                     :time-grid t
+  ;;                     :scheduled future
+  ;;                     :order 2) ;
+  ;;              (:name "  ☕ Overdue Scheduled"                      
+  ;;                     :time-grid t
+  ;;                     :scheduled past
+  ;;                     :order 1) ;
+               
+  ;;              (:name "  💀 -->" :todo "PROG" :order 100)
+  ;;              (:name "  💀 -->" :todo "INTR" :order 100)
+  ;;              (:name "  💀 -->" :todo "NEXT" :order 100)
+  ;;              ;; (:name "  💀 Unsorted" :todo "CAL")
+  ;;               (:discard (:anything))
+  ;;              )
+  ;;            )
+  ;;           )       
+  ;;          (org-agenda-list)
+  ;;          ))
+  ;;       )
 
 ; TODO make sure to install this
 ;(add-hook 'org-agenda-finalize-hook 'org-timeline-insert-timeline :append)
+
+(setq org-agenda-files (append '("~/.emacs.d") (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/*")))
 
 ;; Agenda clock report parameters
 (setq org-agenda-clockreport-parameter-plist
@@ -218,22 +329,22 @@
 ;; TODO keywords.
 (setq org-todo-keywords
       '(
-        (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "INTR(i)" "CAL(c)" "|" "DONE(d!/!)")
+        (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "WAITING(w)" "CANCEL(l)" "CAL(c)" "|" "DONE(d!/!)")
         )
       )
 ;--------------------------
 ;  (concat org-roam-directory "administration/work-notes.org")
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("j" "Doing" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/journal.org")
+      (quote (("j" "Doing" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/journal.org")
                "** PROG %?" :empty-lines 1)
-              ("t" "todo" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
+              ("t" "todo" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
                "** TODO %?" :empty-lines 1)
-              ("n" "fleeting note" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org")
+              ("n" "fleeting note" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org")
                "* %?")
-              ("p" "private" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/private-notes.org")
+              ("p" "private" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/private-notes.org")
                "* TODO %?" :empty-lines 1)
-              ("l" "literature" entry (file "~/Dropbox/Orgfiles/org-files/org-roam/notes/literature-notes.org")
+              ("l" "literature" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/literature-notes.org")
                "* TODO %?" :empty-lines 1)
               
               ;; ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/org-roam/journal/journal.org")
@@ -242,6 +353,8 @@
 ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
 (setq org-log-done 'time)
+(setq latex-run-command "xelatex")
+
 (use-package org
   :mode (("\\.org$" . org-mode))
   :config
@@ -255,11 +368,11 @@
           ;; org-export-latex-listings t
           ;; org-export-latex-listings 'minted
           ;; org-src-fontify-natively t
-          ;; org-latex-pdf-process
-          ;; '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-          ;;   "bibtex %b"
-          ;;   "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-          ;;   "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
+           org-latex-pdf-process
+           '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+             "bibtex %b"
+             "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+             "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
           org-export-with-toc nil
           )
     ;;--------------
@@ -371,7 +484,7 @@
         )
   (setq bibtex-completion-library-path '("~/Zotero/storage/"))
   (setq bibtex-completion-pdf-field "file")
-  (setq bibtex-completion-notes-path "~/Dropbox/Orgfiles/org-files/org-roam/papers/bibnote.org")
+  (setq bibtex-completion-notes-path "/Users/chraibi/Library/CloudStorage/Orgfiles/org-files/org-roam/papers/bibnote.org")
   (setq bibtex-completion-display-formats
         '((article       . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} ${journal:40}")
           (inbook        . "${=has-pdf=:1}${=has-note=:1} ${=type=:3} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
@@ -403,6 +516,7 @@
 
   (setq bibtex-completion-additional-search-fields '(tags))
   )
+
 
 
 (defun jethro/open-with (arg)
@@ -474,7 +588,7 @@ With a prefix ARG always prompt for command to use."
   :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
+        org-roam-ui-follow nil
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
@@ -489,6 +603,7 @@ With a prefix ARG always prompt for command to use."
                                          "~/Zotero/PED-Modeling.bib"
                                          "~/Zotero/Writing.bib"
                                          )
+        bibtex-completion-pdf-field "file"
         bibtex-completion-library-path '("~/Zotero/storage")
 	bibtex-completion-notes-path (concat org-roam-directory "papers/")
 	bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
@@ -507,19 +622,21 @@ With a prefix ARG always prompt for command to use."
   )
 ;; (message "START")
 
-(with-eval-after-load 'org-ref
-  (defun org-ref-open-pdf-at-point ()
-    "Open the pdf for bibtex key under point if it exists.
-Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125"
-    (interactive)
-    (let* ((results (org-ref-get-bibtex-key-and-file))
-           (key (car results))
-           (pdf-other (bibtex-completion-find-pdf key)))
-      ;;(find-file (car pdf-other))
-      (org-open-file (car pdf-other))
-      )
-    )
-  )
+;; (with-eval-after-load 'org-ref
+;;   (defun org-ref-open-pdf-at-point ()
+;;     "Open the pdf for bibtex key under point if it exists.
+;; Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125"
+;;     (interactive)
+;;     (let* ((results (org-ref-get-bibtex-key-and-file))
+;;            (key (car results))
+;;            (pdf-other (bibtex-completion-find-pdf key)))
+;;       ;;(find-file (car pdf-other))
+;;       (message pdf-other)
+;;       (org-open-file (car pdf-other))
+;;       )
+;;     )
+;;   )
+
 
 (define-key org-mode-map (kbd "C-c )") 'org-ref-insert-link)
 
@@ -792,93 +909,93 @@ Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125
                  (my/org-roam-copy-todo-to-today))))
 
 
-(use-package svg-tag-mode
-  :init
-  (message "init svg-tag-mode")
-  :ensure t
-  :config
-  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
-  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
-  (defconst day-re "[A-Za-z]\\{3\\}")
-  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+;; (use-package svg-tag-mode
+;;   :init
+;;   (message "init svg-tag-mode")
+;;   :ensure t
+;;   :config
+;;   (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+;;   (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+;;   (defconst day-re "[A-Za-z]\\{3\\}")
+;;   (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
   
-  ;(defconst day-re "[A-Z]")
-  (defun svg-progress-percent (value)
-    (svg-image (svg-lib-concat
-                (svg-lib-progress-bar (/ (string-to-number value) 100.0)
-                                      nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-                (svg-lib-tag (concat value "%")
-                             nil :stroke 0 :margin 0)) :ascent 'center))
+;;   ;(defconst day-re "[A-Z]")
+;;   (defun svg-progress-percent (value)
+;;     (svg-image (svg-lib-concat
+;;                 (svg-lib-progress-bar (/ (string-to-number value) 100.0)
+;;                                       nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+;;                 (svg-lib-tag (concat value "%")
+;;                              nil :stroke 0 :margin 0)) :ascent 'center))
 
-  (defun svg-progress-count (value)
-    (let* ((seq (mapcar #'string-to-number (split-string value "/")))
-           (count (float (car seq)))
-           (total (float (cadr seq))))
-      (svg-image (svg-lib-concat
-                  (svg-lib-progress-bar (/ count total) nil
-                                        :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-                  (svg-lib-tag value nil
-                               :stroke 0 :margin 0)) :ascent 'center)))
-  (setq svg-tag-tags
-        `(
-          ;; Org tags
-          (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
-          ("CLOCK" . ((svg-tag-make "CLOCK" :face 'font-lock-comment-face
-                                     :inverse nil :margin 0 :radius 0)))   
-          (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))     
-          ;; Task priority
-          ("\\[#[A-Z]\\]" . ( (lambda (tag)
-                                (svg-tag-make tag :face 'org-priority 
-                                              :beg 2 :end -1 :margin 0))))
-        ;; Progress
-        ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
-                                            (svg-progress-percent (substring tag 1 -2)))))
-        ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
-                                          (svg-progress-count (substring tag 1 -1)))))
-        ;; TODO / DONE
-        ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
-        ("INTR" . ((lambda (tag) (svg-tag-make "INTR" :face 'org-todo :inverse t :margin 0))))
-        ("PROG" . ((lambda (tag) (svg-tag-make "PROG" :face 'org-todo :inverse t :margin 0))))
-        ("NEXT" . ((lambda (tag) (svg-tag-make "NEXT" :face 'org-todo :inverse t :margin 0))))
-        ("HELLO" . ((lambda (tag) (svg-tag-make "HELLO" :face 'org-todo :inverse t :margin 0))))
-        ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
-        ;; Citation of the form [cite:@Knuth:1984] 
-        ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
-                                          (svg-tag-make tag
-                                                        :inverse t
-                                                        :beg 7 :end -1
-                                                        :crop-right t))))
-        ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
-                                                (svg-tag-make tag
-                                                              :end -1
-                                                              :crop-left t))))
-        ;;https://www.reddit.com/r/emacs/comments/jczet6/svg_tag_minor_mode/hr6njcm/?context=3
+;;   (defun svg-progress-count (value)
+;;     (let* ((seq (mapcar #'string-to-number (split-string value "/")))
+;;            (count (float (car seq)))
+;;            (total (float (cadr seq))))
+;;       (svg-image (svg-lib-concat
+;;                   (svg-lib-progress-bar (/ count total) nil
+;;                                         :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+;;                   (svg-lib-tag value nil
+;;                                :stroke 0 :margin 0)) :ascent 'center)))
+;;   (setq svg-tag-tags
+;;         `(
+;;           ;; Org tags
+;;           (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
+;;           ("CLOCK" . ((svg-tag-make "CLOCK" :face 'font-lock-comment-face
+;;                                      :inverse nil :margin 0 :radius 0)))   
+;;           (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))     
+;;           ;; Task priority
+;;           ("\\[#[A-Z]\\]" . ( (lambda (tag)
+;;                                 (svg-tag-make tag :face 'org-priority 
+;;                                               :beg 2 :end -1 :margin 0))))
+;;         ;; Progress
+;;         ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+;;                                             (svg-progress-percent (substring tag 1 -2)))))
+;;         ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+;;                                           (svg-progress-count (substring tag 1 -1)))))
+;;         ;; TODO / DONE
+;;         ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
+;;         ("INTR" . ((lambda (tag) (svg-tag-make "INTR" :face 'org-todo :inverse t :margin 0))))
+;;         ("PROG" . ((lambda (tag) (svg-tag-make "PROG" :face 'org-todo :inverse t :margin 0))))
+;;         ("NEXT" . ((lambda (tag) (svg-tag-make "NEXT" :face 'org-todo :inverse t :margin 0))))
+;;         ("HELLO" . ((lambda (tag) (svg-tag-make "HELLO" :face 'org-todo :inverse t :margin 0))))
+;;         ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+;;         ;; Citation of the form [cite:@Knuth:1984] 
+;;         ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+;;                                           (svg-tag-make tag
+;;                                                         :inverse t
+;;                                                         :beg 7 :end -1
+;;                                                         :crop-right t))))
+;;         ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+;;                                                 (svg-tag-make tag
+;;                                                               :end -1
+;;                                                               :crop-left t))))
+;;         ;;https://www.reddit.com/r/emacs/comments/jczet6/svg_tag_minor_mode/hr6njcm/?context=3
 
-          ;; Active date (with or without day name, with or without time)
-        (,(format "\\(<%s>\\)" date-re) .
-         ((lambda (tag)
-            (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-        (,(format "\\(<%s \\)%s>" date-re day-time-re) .
-         ((lambda (tag)
-            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-        (,(format "<%s \\(%s>\\)" date-re day-time-re) .
-         ((lambda (tag)
-            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+;;           ;; Active date (with or without day name, with or without time)
+;;         (,(format "\\(<%s>\\)" date-re) .
+;;          ((lambda (tag)
+;;             (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+;;         (,(format "\\(<%s \\)%s>" date-re day-time-re) .
+;;          ((lambda (tag)
+;;             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+;;         (,(format "<%s \\(%s>\\)" date-re day-time-re) .
+;;          ((lambda (tag)
+;;             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
 
-        ;; Inactive date  (with or without day name, with or without time)
-         (,(format "\\(\\[%s\\]\\)" date-re) .
-          ((lambda (tag)
-             (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-         (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
-          ((lambda (tag)
-             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-         (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
-          ((lambda (tag)
-             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))
-          )
-         )
-        )
-  )
+;;         ;; Inactive date  (with or without day name, with or without time)
+;;          (,(format "\\(\\[%s\\]\\)" date-re) .
+;;           ((lambda (tag)
+;;              (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+;;          (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
+;;           ((lambda (tag)
+;;              (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+;;          (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
+;;           ((lambda (tag)
+;;              (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))
+;;           )
+;;          )
+;;         )
+;;   )
          
         
   
@@ -910,6 +1027,30 @@ Tweak from https://github.com/jkitchin/org-ref/issues/172#issuecomment-207626125
 ;; Citation:      [cite:@Knuth:1984] 
 
 
+;; for spacebar
+(defun org-clock-get-clock-string-without-properties ()
+  (if (org-clock-is-active)
+      (let ((s (org-clock-get-clock-string)))
+        (set-text-properties 0 (length s) nil s)
+        s)
+    (let ((s ""))
+      s)))
+
+(defun shackra/task-clocked-time ()
+  "Return a string with the clocked time and effort, if any."
+  (interactive)
+  (let* ((clocked-time (org-clock-get-clocked-time))
+         (h (floor clocked-time 60))
+         (m (- clocked-time (* 60 h)))
+         (work-done-str (org-minutes-to-clocksum-string m)))
+    (if org-clock-effort
+        (let* ((effort-in-minutes
+                (org-duration-string-to-minutes org-clock-effort))
+               (effort-h (floor effort-in-minutes 60))
+               (effort-m (- effort-in-minutes (* effort-h 60)))
+               (effort-str (org-minutes-to-clocksum-string effort-m)))
+          (format "[%s/%s (%s)" work-done-str effort-str org-clock-heading))
+      (format "[%s (%s)]" work-done-str org-clock-heading))))
 
 (provide 'setup-org-mode)
 ;;; setup-org-mode.el ends here
