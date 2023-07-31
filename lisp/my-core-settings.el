@@ -191,8 +191,85 @@
 (set-face-underline 'highlight t)
 
 
+(setq-default global-visual-line-mode t)
+(setq show-paren-style 'parenthesis) ; highlight just brackets
 
-;(global-set-key (kbd "C-SPC") 'set-mark-command)
+                                        ;(global-set-key (kbd "C-SPC") 'set-mark-command)
+
+(setq
+ uniquify-buffer-name-style 'post-forward
+ uniquify-separator ":"
+ uniquify-after-kill-buffer-p t
+ uniquify-ignore-buffers-re "^\\*")
+
+
+;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
+(setq select-enable-clipboard t)
+
+;; after mouse selection in X11, you can paste by `yank' in emacs
+(setq select-enable-primary t)
+
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
+;; ;;-------------------------- Macros
+
+;; (defvar server-buffer-clients)
+;; (when (and (fboundp 'server-start) (string-equal (getenv "TERM") 'xterm))
+;;   (server-start)
+;;   (defun fp-kill-server-with-buffer-routine ()
+;;     (and server-buffer-clients (server-done)))
+;;   (add-hook 'kill-buffer-hook 'fp-kill-server-with-buffer-routine))
+;;https://github.com/magnars/expand-region.el
+
+;------------------------------
+
+;; define function to shutdown emacs server instance
+(defun server-shutdown ()
+  "Save buffers, Quit, and Shutdown (kill) server."
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs)
+  )
+;; overwrite selected text
+(delete-selection-mode t)
+
+
+;; When popping the mark, continue popping until the cursor
+;; actually moves
+;; (defadvice pop-to-mark-command (around ensure-new-position activate)
+;;   (let ((p (point)))
+;;     (dotimes (i 10)
+;;       (when (= p (point)) ad-do-it))))
+
+;; (setq set-mark-command-repeat-pop t)
+
+;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
+;; (setq prettify-symbols-unprettify-at-point 'right-edge)
+
+(global-auto-revert-mode 1)
+(setq auto-revert-use-notify nil)
+
+;; (setq explicit-shell-file-name "~/.zshrc")
+;; (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
+
+;; ;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
+;; (setenv "PYTHONPATH" "$PYTHONPATH:/Users/chraibi/workspace/jupedsim/jupedsim_dashboard:/Users/chraibi/workspace/jupedsim/jpscore/build/lib/:/Users/chraibi/workspace/jupedsim/jpscore/python_modules/jupedsim/")
+;; (message (getenv "PYTHONPATH"))
+;; ;(setenv "LD_LIBRARY_PATH" "/Users/chraibi/workspace/jupedsim/jpscore/build/lib/")
+
+;; (setenv "LD_LIBRARY_PATH"
+;;   (let ((current (getenv "LD_LIBRARY_PATH"))
+;;         (new "/Users/chraibi/workspace/jupedsim/jpscore/build/lib"))
+;;     (if current (concat new ":" current) new)))
+
+;; (message (getenv "LD_LIBRARY_PATH"))
+
+
+;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; (load custom-file)
+
 
 (provide 'my-core-settings)
 ;;; my-core-settings.el ends here

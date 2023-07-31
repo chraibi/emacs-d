@@ -645,6 +645,7 @@ With a prefix ARG always prompt for command to use."
 (use-package org-ref-ivy
   :init
   (message "Init org-ref-ivy")
+  :ensure t
   :config
   (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
       org-ref-insert-cite-function 'org-ref-cite-insert-ivy
@@ -908,123 +909,6 @@ With a prefix ARG always prompt for command to use."
                (when (equal org-state "DONE")
                  (my/org-roam-copy-todo-to-today))))
 
-
-;; (use-package svg-tag-mode
-;;   :init
-;;   (message "init svg-tag-mode")
-;;   :ensure t
-;;   :config
-;;   (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
-;;   (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
-;;   (defconst day-re "[A-Za-z]\\{3\\}")
-;;   (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
-  
-;;   ;(defconst day-re "[A-Z]")
-;;   (defun svg-progress-percent (value)
-;;     (svg-image (svg-lib-concat
-;;                 (svg-lib-progress-bar (/ (string-to-number value) 100.0)
-;;                                       nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-;;                 (svg-lib-tag (concat value "%")
-;;                              nil :stroke 0 :margin 0)) :ascent 'center))
-
-;;   (defun svg-progress-count (value)
-;;     (let* ((seq (mapcar #'string-to-number (split-string value "/")))
-;;            (count (float (car seq)))
-;;            (total (float (cadr seq))))
-;;       (svg-image (svg-lib-concat
-;;                   (svg-lib-progress-bar (/ count total) nil
-;;                                         :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-;;                   (svg-lib-tag value nil
-;;                                :stroke 0 :margin 0)) :ascent 'center)))
-;;   (setq svg-tag-tags
-;;         `(
-;;           ;; Org tags
-;;           (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
-;;           ("CLOCK" . ((svg-tag-make "CLOCK" :face 'font-lock-comment-face
-;;                                      :inverse nil :margin 0 :radius 0)))   
-;;           (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))     
-;;           ;; Task priority
-;;           ("\\[#[A-Z]\\]" . ( (lambda (tag)
-;;                                 (svg-tag-make tag :face 'org-priority 
-;;                                               :beg 2 :end -1 :margin 0))))
-;;         ;; Progress
-;;         ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
-;;                                             (svg-progress-percent (substring tag 1 -2)))))
-;;         ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
-;;                                           (svg-progress-count (substring tag 1 -1)))))
-;;         ;; TODO / DONE
-;;         ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
-;;         ("INTR" . ((lambda (tag) (svg-tag-make "INTR" :face 'org-todo :inverse t :margin 0))))
-;;         ("PROG" . ((lambda (tag) (svg-tag-make "PROG" :face 'org-todo :inverse t :margin 0))))
-;;         ("NEXT" . ((lambda (tag) (svg-tag-make "NEXT" :face 'org-todo :inverse t :margin 0))))
-;;         ("HELLO" . ((lambda (tag) (svg-tag-make "HELLO" :face 'org-todo :inverse t :margin 0))))
-;;         ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
-;;         ;; Citation of the form [cite:@Knuth:1984] 
-;;         ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
-;;                                           (svg-tag-make tag
-;;                                                         :inverse t
-;;                                                         :beg 7 :end -1
-;;                                                         :crop-right t))))
-;;         ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
-;;                                                 (svg-tag-make tag
-;;                                                               :end -1
-;;                                                               :crop-left t))))
-;;         ;;https://www.reddit.com/r/emacs/comments/jczet6/svg_tag_minor_mode/hr6njcm/?context=3
-
-;;           ;; Active date (with or without day name, with or without time)
-;;         (,(format "\\(<%s>\\)" date-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-;;         (,(format "\\(<%s \\)%s>" date-re day-time-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-;;         (,(format "<%s \\(%s>\\)" date-re day-time-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
-
-;;         ;; Inactive date  (with or without day name, with or without time)
-;;          (,(format "\\(\\[%s\\]\\)" date-re) .
-;;           ((lambda (tag)
-;;              (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-;;          (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
-;;           ((lambda (tag)
-;;              (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-;;          (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
-;;           ((lambda (tag)
-;;              (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))
-;;           )
-;;          )
-;;         )
-;;   )
-         
-        
-  
-
-;; To do:         TODO DONE NEXT PROG INTR NEXT HELLO
-;; Tags:          :TAG1:TAG2:TAG3:
-;; Priorities:    [#A] [#B] [#C]
-;; Progress:      [1/3]
-;;                [42%] 
-;; Active date:   <2021-12-24> 
-;;                <2021-12-24 14:00>
-;; [2021-12-24 14:00]
-;;[2022-01-03 14:07]
-;; [2022-01-03 MON 14:08]
-;; <2022-01-03 Mon 12:22>
-
-
-
-                                        ;:LOGBOOK:
-;;  <2022-01-04 Tue 13:53>--[2022-01-03 Mon 13:54] => -23:59
-;;  <2022-01-04 Tue>--<2022-01-03 Mon>
-
-;; :END:
-
-;; Inactive date: [2021-12-24 Mon]
-;; Inactive date: <MC>
-
-;;              [2021-12-24 14:00]--[2021-12-24 14:00]
-;; Citation:      [cite:@Knuth:1984] 
 
 
 ;; for spacebar
