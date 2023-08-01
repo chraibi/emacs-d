@@ -66,6 +66,7 @@
   (setq doom-modeline-time t)
   (setq doom-modeline-lsp t)
   (setq doom-modeline-unicode-fallback t)
+  (setq doom-modeline-enable-word-count t)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-gnus-timer nil)
   (display-time-mode 1)
@@ -272,8 +273,9 @@ argument SYMBOL-LIST"
 ; can display annotations such as the file type for a file name completion or the documentation string for a command completion. This additional context can be quite handy, especially when you encounter similarly named candidates or when you need more information about each option.
 (use-package marginalia
   :ensure t
-  :config
-  (marginalia-mode))
+  :init
+  (marginalia-mode)
+  )
 
 (use-package embark
   :ensure t
@@ -501,7 +503,11 @@ argument SYMBOL-LIST"
 
 (global-set-key [f6] 'cycle-ispell-languages)
 
-
+(use-package setup-orgmode
+  :ensure t
+  :config
+  (message "Mohcine Loading setup-modern-orgmode")
+  )
 
 ;;---------------------- ispell
 ;; (define-key ctl-x-map "\C-i"

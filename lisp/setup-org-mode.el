@@ -1,16 +1,44 @@
-;;; package --- Summary
+;;; package --- modern org-mode, org-roam, super-calendar
 ;;; Code:
 ;;; Commentary:
 ;; Local Variables:
-;; byte-compile-warnings: (not free-vars)
 ;; End:
-                                        ; settings for calendar, journal, clocks
+(message "Enter setup org-mode")
+(use-package org-modern
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+  :config
+  (setq
+   ;; Edit settings
+   org-auto-align-tags nil
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t
+
+   ;; Org styling, hide markup etc.
+   org-hide-emphasis-markers t
+   org-pretty-entities t
+   org-ellipsis "…"
+
+   ;; Agenda styling
+   org-agenda-tags-column 0
+   org-agenda-block-separator ?─
+   org-agenda-time-grid
+   '((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+   org-agenda-current-time-string
+   "⭠ now  ─────────────────────────────────────────────────"))
+
 
 (setq org-agenda-skip-unavailable-files t)
 (setq org-latex-prefer-user-labels t)
 ;; (require 'ox-latex)
 ;; (require 'org-tempo)
-(message "Enter setup org-mode")
+
 
 (add-to-list 'org-emphasis-alist
              '("*" (:foreground "red")
@@ -27,71 +55,40 @@
 ;;         (define-key yas-keymap [tab] 'yas-next-field)))
 
 ;;================ BEGIN GENERAL ===========================
-(use-package org-bullets
-  :init
-  (message "Using org-bullets!")
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  )
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq org-directory "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/")
-(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
+;; (use-package org-bullets
+;;   :init
+;;   (message "Using org-bullets!")
+;;   :ensure t
+;;   :config
+;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;;   )
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (setq org-directory "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/")
+;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+;; (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
-;; Allow setting single tags without the menu
-(setq org-alphabetical-lists t)
-; Set default column view headings: Task Effort Clock_Summary
-;(setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
-(setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
-;; Set default column view headings: Task Priority Effort Clock_Summary
-;; global Effort estimate values
-(setq org-global-properties
-      '(("Effort_ALL" .
-         "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")))
-;;        1    2    3    4    5    6    7    8    9    0
-;; These are the hotkeys ^^
+;; ;; Allow setting single tags without the menu
+;; (setq org-alphabetical-lists t)
+;; ; Set default column view headings: Task Effort Clock_Summary
+;; ;(setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
+;; (setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
+;; ;; Set default column view headings: Task Priority Effort Clock_Summary
+;; ;; global Effort estimate values
+;; (setq org-global-properties
+;;       '(("Effort_ALL" .
+;;          "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")))
+;; ;;        1    2    3    4    5    6    7    8    9    0
+;; ;; These are the hotkeys ^^
 
 
-(eval-after-load 'org-bullets
-  '(setq org-bullets-bullet-list '("●" "✦" "✭" "■" "▲" "✺" "✹" "✸" "✷" "✶")))
-; Use IDO for target completion
-(setq org-completion-use-ido t)
-; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+;; (eval-after-load 'org-bullets
+;;   '(setq org-bullets-bullet-list '("●" "✦" "✭" "■" "▲" "✺" "✹" "✸" "✷" "✶")))
+;; ; Use IDO for target completion
+;; (setq org-completion-use-ido t)
+;; ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
+;; (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
 
-; Targets start with the file name - allows creating level 1 tasks
-;; (setq org-refile-use-outline-path (quote file))
 
-; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
-;; (setq org-outline-path-complete-in-steps t)
-
-; Allow refile to create parent tasks with confirmation
-;;(setq org-refile-allow-creating-parent-nodes (quote confirm))
-
-;; strike through dones
-;; (set-face-attribute 'org-headline-done nil :strike-through t)
-
-;;;;----------------------------- subtasks
-;; (defun my-org-insert-sub-task ()
-;;   (interactive)
-;;   (let ((parent-deadline (org-get-deadline-time nil)))
-;;     (org-goto-sibling)
-;;     (org-insert-todo-subheading t)
-;;     (when parent-deadline
-;;       (org-deadline nil parent-deadline))))
-
-;; (define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
-;; (setq org-enforce-todo-dependencies t)
-;; (add-hook 'org-mode-hook
-;;           \t  (lambda ()
-;;                 \t    'turn-on-font-lock
-;;                 \t    (setq word-wrap 1)
-;;                 \t    (setq truncate-lines nil)
-;;                 \t    (flyspell-mode 1)
-;;                 \t    (org-journal-mode 1)
-;;                 )
-;;           )
 
 ;; (setq require-final-newline t)
 ;;================ END GENERAL =============================
@@ -217,109 +214,6 @@
   )
 
 
-  ;; (use-package org-super-agenda
-  ;;   :ensure t
-  ;;   :config (org-super-agenda-mode))
-  ;; (setq 
-  ;;  org-agenda-custom-commands
-  ;;  `(
-  ;;    ("l" "Looking Forward"
-  ;;     (
-  ;;      (tags-todo "SCHEDULED<\"<+1d>\"&PRIORITY=\"A\""
-  ;;                    ((org-agenda-skip-function
-  ;;                      '(org-agenda-skip-entry-if 'todo 'done))
-  ;;                     (org-agenda-overriding-header "High-priority unfinished tasks:"))
-  ;;                    )
-
-  ;;         (tags-todo "SCHEDULED<\"<+1d>\""
-  ;;                    ((org-agenda-skip-function
-  ;;                      '(or (org-agenda-skip-entry-if 'done)
-  ;;                           ))
-  ;;                     (org-agenda-overriding-header "Tasks:")))
-
-
-  ;;         (tags-todo "SCHEDULED<\"<+7d>\""
-  ;;                    ((org-agenda-skip-function
-  ;;                      '(or (org-agenda-skip-entry-if 'done)
-  ;;                           ))
-  ;;                     (org-agenda-overriding-header "Tasks 7:")))
-          
-  ;;         )
-  ;;     )
-  ;;    ("z" "zzzz"
-  ;;    (org-super-agenda-groups
-  ;;     '((:name "Next Items"
-  ;;              :time-grid t
-  ;;              :tag ("NEXT" "outbox"))
-  ;;       (:name "Important"
-  ;;              :priority "A")
-  ;;       (:name "Quick Picks"
-  ;;              :effort< "0:30")
-  ;;       (:priority<= "B"
-  ;;                    :scheduled future
-  ;;                    :order 1)))
-     
-  ;;     )
-     
-     
-  ;;    ("w" "Agenda"
-  ;;     (       
-  ;;      ;; (tags-todo "-goals-incubate-inbox+TODO=\"CAL\""
-  ;;      ;;            ((org-agenda-overriding-header " =========  CALENDER  ========= ")))
-       
-  ;;         (tags-todo "SCHEDULED<\"<+7d>\""
-  ;;                    ((org-agenda-skip-function
-  ;;                      '(or (org-agenda-skip-entry-if 'done)
-  ;;                           ))
-  ;;                     (org-agenda-overriding-header "\n This week:")))
-  ;;      ;; (tags-todo "-goals-incubate-inbox+TODO=\"INTR\""
-  ;;      ;;            ((org-agenda-overriding-header "      ")))            
-  ;;      (tags-todo "project"
-  ;;                 ((org-agenda-overriding-header " =========  Research  ========= ")))
-       
-  ;;      ;; (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
-  ;;      ;;            ((org-agenda-overriding-header " =========  NEXT TASKS  ========= ")))
-  ;;      )
-  ;;     ((org-super-agenda-groups
-  ;;            '(
-  ;;              (:name "Done today"
-  ;;               :and (:regexp "State \"DONE\""
-  ;;                             :log t))
-               
-  ;;              (:name " ❤ Today"
-  ;;                     :scheduled today  :face (:background "AliceBlue" :underline nil) :order 1)
-  ;;              (:name "  📌 Due today"
-  ;;                     :deadline today  :face (:background "AliceBlue" :underline nil) :order 1)
-  ;;              (:name "  ⛔ Overdue"
-  ;;                     :deadline past :face (:background "RosyBrown1" :underline nil))
-  ;;              (:name "  ️ Important" :priority "A" :face (:background "AliceBlue" :underline nil) :order 1)
-  ;;              (:name "  ⭐ Due soon" 
-  ;;                     :deadline future :log t :order 2)
-               
-  ;;              (:name "  ☕ Scheduled"                      
-  ;;                     :time-grid t
-  ;;                     :scheduled future
-  ;;                     :order 2) ;
-  ;;              (:name "  ☕ Overdue Scheduled"                      
-  ;;                     :time-grid t
-  ;;                     :scheduled past
-  ;;                     :order 1) ;
-               
-  ;;              (:name "  💀 -->" :todo "PROG" :order 100)
-  ;;              (:name "  💀 -->" :todo "INTR" :order 100)
-  ;;              (:name "  💀 -->" :todo "NEXT" :order 100)
-  ;;              ;; (:name "  💀 Unsorted" :todo "CAL")
-  ;;               (:discard (:anything))
-  ;;              )
-  ;;            )
-  ;;           )       
-  ;;          (org-agenda-list)
-  ;;          ))
-  ;;       )
-
-; TODO make sure to install this
-;(add-hook 'org-agenda-finalize-hook 'org-timeline-insert-timeline :append)
-
 (setq org-agenda-files (append '("~/.emacs.d") (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/*")))
 
 ;; Agenda clock report parameters
@@ -350,65 +244,53 @@
               ;; ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/org-roam/journal/journal.org")
               ;;  "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)              
 )))
-; Use the current window for indirect buffer display
-(setq org-indirect-buffer-display 'current-window)
-(setq org-log-done 'time)
+
 (setq latex-run-command "xelatex")
+
 
 (use-package org
   :mode (("\\.org$" . org-mode))
+  :custom
+  (org-timer-default-timer 25)
+  ;; org-latex-listings 'minted
+  ;; org-latex-packages-alist '(("" "minted"))
+  ;; org-latex-minted-options '(("frame" "lines") ("linenos=true"))
+  ;; org-export-latex-hyperref-format "\\ref{%s}"
+  ;; ;;--------------ORG latex Code
+  ;; org-export-latex-listings t
+  ;; org-export-latex-listings 'minted
+  ;; org-src-fontify-natively t
+  (org-latex-pdf-process
+   '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+     "bibtex %b"
+     "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+     "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
+  (org-export-with-toc nil)
+  (org-clock-history-length 23)
+  (org-clock-in-resume t)
+  (org-drawers '("PROPERTIES" "LOGBOOK"))
+  (org-clock-into-drawer t)
+  (org-clock-out-remove-zero-time-clocks t)
+  (org-clock-out-when-done t)
+  (org-clock-persist t)
+  (org-clock-persist-query-resume nil)
+  (org-clock-auto-clock-resolution 'when-no-clock-is-running)
+  (org-clock-report-include-clocking-task t)
+  (org-cycle-include-plain-lists t)
+  (org-clock-in-switch-to-state "PROG")
+  ;; use pretty things for the clocktable
+  ;; org-pretty-entities t
+  ;; Use return to follow links in org-mode
+  ;; https://emacs.stackexchange.com/questions/62731/changing-the-default-binding-to-open-a-link-in-an-org-mode-file-using-ret
+  (org-return-follows-link t)
+
   :config
-  (progn
-    (setq org-timer-default-timer 25
-          ;; org-latex-listings 'minted
-          ;; org-latex-packages-alist '(("" "minted"))
-          ;; org-latex-minted-options '(("frame" "lines") ("linenos=true"))
-          ;; org-export-latex-hyperref-format "\\ref{%s}"
-          ;; ;;--------------ORG latex Code
-          ;; org-export-latex-listings t
-          ;; org-export-latex-listings 'minted
-          ;; org-src-fontify-natively t
-           org-latex-pdf-process
-           '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-             "bibtex %b"
-             "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-             "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
-          org-export-with-toc nil
-          )
-    ;;--------------
-    ;; Resume clocking task when emacs is restarted
-    (org-clock-persistence-insinuate)
-    ;; Show lot of clocking history so it's easy to pick items off the C-F11 list
-    (setq org-clock-history-length 23
-          ;; Resume clocking task on clock-in if the clock is open
-          org-clock-in-resume t
-          ;; Change tasks to NEXT when clocking in
-          ;; Separate drawers for clocking and logs
-          org-drawers (quote ("PROPERTIES" "LOGBOOK"))
-          ;; Save clock data and state changes and notes in the LOGBOOK drawer
-          org-clock-into-drawer t
-          ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
-          org-clock-out-remove-zero-time-clocks t
-          ;; Clock out when moving task to a done state
-        org-clock-out-when-done t
-        ;; Save the running clock and all clock history when exiting Emacs, load it on startup
-        org-clock-persist t
-        ;; Do not prompt to resume an active clock
-        org-clock-persist-query-resume nil
-        ;; Enable auto clock resolution for finding open clocks
-        org-clock-auto-clock-resolution (quote when-no-clock-is-running)
-        ;; Include current clocking task in clock reports
-        org-clock-report-include-clocking-task t
-        org-cycle-include-plain-lists t
-        org-clock-in-switch-to-state "PROG"
-        ;; use pretty things for the clocktable
-        ;;org-pretty-entities t
-        ;;Use return to follow links in org-mode
-;; https://emacs.stackexchange.com/questions/62731/changing-the-default-binding-to-open-a-link-in-an-org-mode-file-using-ret
-        org-return-follows-link t
-        )
-    )
+  (org-clock-persistence-insinuate)
+  ;; Use the current window for indirect buffer display
+  (setq org-indirect-buffer-display 'current-window)
+  (setq org-log-done 'time)
   )
+
 ;; cycle  lists
  
 ;;------------------------ ORG-Templates
@@ -417,23 +299,6 @@
 
 ;; (setq org-export-html-validation-link nil)
 
-;;ORG- code
-
-(add-hook 'before-save-hook 'py-isort-before-save)
-(elpy-enable)
-(setq elpy-rpc-python-command "/usr/local/bin/python3")
-(setq python-shell-interpreter "/usr/local/bin/python3")
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
-  '( (perl . t)         
-     (ruby . t)
-     (C . t)
-     (latex . t)
-     (python . t)
-     (emacs-lisp . t)   
-   )
- )
 
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-preserve-indentation t)
