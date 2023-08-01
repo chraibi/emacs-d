@@ -55,3 +55,5 @@ transient/
 bookmarks
 org-roam-db.bak
 thirdparty
+/eln-cache/
+/GitHubPackages/
