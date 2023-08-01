@@ -3,15 +3,12 @@
 ;;; Code:
 ;;; Commentary:
 
-
 ;; ------cleanup this
 (setq gc-cons-threshold (* 50 1000 1000))
 ;;; Code:
 ;; Turn off mouse interface early in startup to avoid momentary display
 
 ;;(setq epg-gpg-program "/usr/local/bin/gpg")
-;; frame font
-;; Setting English Font
 ;;(setq multi-term-program "/bin/zsh")
 
 ;; (when (string= system-type "darwin")
@@ -31,7 +28,6 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
-;; (find-file "~/Dropbox/Orgfiles/org-files/master.org") ;
 
 (setq is-mac (equal system-type 'darwin))
 (if (equal system-type 'darwin)
@@ -51,9 +47,6 @@
 
 (setq preview-gs-options '("-q" "-dNOSAFER" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4"))
 
-(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
-(add-to-list 'load-path py-install-directory)
-(setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
 
 ;; Always load the newer .el or .elc file.
 (setq load-prefer-newer t)
@@ -99,8 +92,6 @@
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
 (global-set-key "\C-cy" 'browse-kill-ring)
-
-
 (global-set-key (kbd "\C-cm") 'magit-status)   ;; ...git mode
                                         ;(global-set-key (kbd "<f4>") 'nav-toggle)
 (global-set-key (kbd "<f4>") 'treemacs)
@@ -247,8 +238,6 @@
 ;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
 ;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 
-(global-auto-revert-mode 1)
-(setq auto-revert-use-notify nil)
 
 ;; (setq explicit-shell-file-name "~/.zshrc")
 ;; (when (memq window-system '(mac ns x))

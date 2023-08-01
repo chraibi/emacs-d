@@ -22,9 +22,11 @@
       python-sort-imports-on-save-before-answers t
       python-sort-imports-on-save-with-isort t
       python-sort-imports-on-save-isort-options '("--settings-path" "~/.config/isort.cfg"))
-
-
   )
+
+;;(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
+;;(add-to-list 'load-path py-install-directory)
+
 
 (use-package python-black
   :demand t

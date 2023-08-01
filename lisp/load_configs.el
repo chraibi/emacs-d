@@ -70,6 +70,7 @@
   (setq doom-modeline-gnus-timer nil)
   (display-time-mode 1)
   )
+;;(setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
 
 ;; ================ esthetics ==================
 
@@ -370,7 +371,9 @@ argument SYMBOL-LIST"
   :init
   (message "loading autorevert!")
   :ensure t
-  :defer 2)
+  (global-auto-revert-mode 1)
+  (setq auto-revert-use-notify nil)
+  )
 
 
 (use-package ivy
@@ -382,7 +385,6 @@ argument SYMBOL-LIST"
   (require 'setup-ivy)
   :defer 1
   )
-
 ;; ================ niceties ==========
 
 ;; ================ programming ======
