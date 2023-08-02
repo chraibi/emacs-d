@@ -260,5 +260,8 @@
 (load custom-file)
 
 
+;;(global-set-key (kbd "C-a") 'load-file)
+(global-set-key (kbd "C-z") 'eval-region)
+
 (provide 'my-core-settings)
 ;;; my-core-settings.el ends here

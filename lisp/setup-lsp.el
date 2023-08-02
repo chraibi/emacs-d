@@ -6,13 +6,44 @@
 (message "Enter setup-lsp")
 ;; https://www.reddit.com/r/emacs/comments/gocrlq/i_really_dont_understand_why_lspui_shows/
 (use-package lsp-mode
-  :hook ((c-mode          ; clangd
-          c++-mode        ; clangd
-          c-or-c++-mode   ; clangd
-          python-mode     ; pyright
-          ) . lsp-deferred)
+  :hook ((c-mode
+          c++-mode
+          c-or-c++-mode
+          python-mode) . lsp-deferred)
   :commands lsp
+  :custom
+  ;; LSP Settings
+  (lsp-auto-guess-root t)
+  (lsp-log-io nil)
+  (lsp-restart 'auto-restart)
+  (lsp-enable-symbol-highlighting t)
+  (lsp-enable-on-type-formatting nil)
+  (lsp-signature-auto-activate nil)
+  (lsp-signature-render-documentation nil)
+  (lsp-eldoc-hook nil)
+  (lsp-lens-enable t)
+  (lsp-modeline-code-actions-enable nil)
+  (lsp-modeline-diagnostics-enable nil)
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-semantic-tokens-enable nil)
+  (lsp-enable-folding nil)
+  (lsp-enable-imenu nil)
+  (lsp-enable-snippet nil)
+  (lsp-diagnostics-provider :auto)
+  (lsp-signature-doc-lines 2)
+
+  ;; Miscellaneous settings
+  (read-process-output-max (* 1024 1024)) ; 1M
+  (lsp-idle-delay 0.5)
+
+  ;; Completion settings
+  (lsp-completion-show-detail t)
+  (lsp-completion-show-kind t)
+
   :config
+  (define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
+
+  ;; Add comments to explain settings
   (setq lsp-auto-guess-root t
         lsp-completion-show-detail t
         lsp-completion-show-kind t
@@ -34,9 +65,7 @@
         read-process-output-max (* 1024 1024) ;; 1M
         lsp-idle-delay 0.5
         lsp-diagnostics-provider :auto
-        lsp-signature-doc-lines 2
-        )
-  (define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
+        lsp-signature-doc-lines 2)
   )
 
 (use-package lsp-ui

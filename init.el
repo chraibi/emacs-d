@@ -4,7 +4,9 @@
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 0.8MB.  Measured in bytes.
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 ;(add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")

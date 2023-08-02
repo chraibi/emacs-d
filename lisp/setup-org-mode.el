@@ -2,7 +2,7 @@
 ;;; Code:
 ;;; Commentary:
 ;; Local Variables:
-;; End:
+
 (message "Enter setup org-mode")
 (use-package org-modern
   :ensure t
@@ -63,20 +63,20 @@
 ;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 ;;   )
 ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-;; (setq org-directory "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/")
+ (setq org-directory "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/")
 ;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 ;; (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
 ;; ;; Allow setting single tags without the menu
 ;; (setq org-alphabetical-lists t)
 ;; ; Set default column view headings: Task Effort Clock_Summary
-;; ;(setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
-;; (setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
+(setq org-columns-default-format "%80ITEM(Task) %10Effort(Estimated Effort){:} %10CLOCKSUM")
+(setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
 ;; ;; Set default column view headings: Task Priority Effort Clock_Summary
 ;; ;; global Effort estimate values
-;; (setq org-global-properties
-;;       '(("Effort_ALL" .
-;;          "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")))
+(setq org-global-properties
+      '(("Effort_ALL" .
+         "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")))
 ;; ;;        1    2    3    4    5    6    7    8    9    0
 ;; ;; These are the hotkeys ^^
 
@@ -99,40 +99,60 @@
 
 
 ;;==================== BEGIN AGENDA ===================
-(use-package org-agenda
-  :after org
-  :commands (org-agenda)
-  :config
-  (setq
-   org-agenda-start-on-weekday 1
-   org-agenda-include-diary t
-   org-agenda-window-setup 'current-window
-   org-agenda-skip-scheduled-if-done nil
-   org-agenda-compact-blocks t
-   org-agenda-sticky t
-   org-agenda-span 'day
-   org-agenda-todo-ignore-scheduled 'future
-   org-agenda-todo-ignore-time-comparison-use-seconds t
-   org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled                                       ;;https://stackoverflow.com/questions/22888785/is-it-possible-to-get-org-mode-to-show-breadcrumbs-in-agenda-todo-list/22900459#22900459
-   org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s")
-                              (timeline . "  % s")
-                              (todo .
-                                    " %i %-12:c %(concat \"[ \"(org-format-outline-path (org-get-outline-path)) \" ]\") ")
-                              (tags .
-                                    " %i %-12:c %(concat \"[ \"(org-format-outline-path (org-get-outline-path)) \" ]\") ")
-                              (search . " %i %-12:c"))
-   )
-  )
 
-(setq spacemacs-theme-org-agenda-height nil
-      org-agenda-time-grid '((daily today require-timed) "----------------------" nil)
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-include-diary t
-      org-agenda-block-separator nil
-      org-agenda-compact-blocks t
-      org-agenda-start-with-log-mode t)
+
+
+;; (use-package org-agenda
+;;   :after org
+;;   :commands (org-agenda)
+;;   :config
+;;   (setq org-agenda-start-on-weekday 1
+;;         org-agenda-include-diary t
+;;         org-agenda-window-setup 'current-window
+;;         org-agenda-skip-scheduled-if-done t
+;;         org-agenda-compact-blocks t
+;;         org-agenda-sticky t
+;;         org-agenda-span 'day
+;;         org-agenda-todo-ignore-scheduled 'future
+;;         org-agenda-todo-ignore-time-comparison-use-seconds t
+;;         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
+;;         org-agenda-prefix-format
+;;         '((agenda . " %i %-12:c%?-12t% s")
+;;           (timeline . "  % s")
+;;           (todo . " %i %-12:c [%-3e] %? %(org-format-outline-path (org-get-outline-path))")
+;;           (tags . " %i %-12:c [%-3e] %? %(org-format-outline-path (org-get-outline-path))")
+;;           (search . " %i %-12:c"))))
+
+;; (use-package org-super-agenda
+;;   :ensure t
+;;   :config
+;;   (let ((org-super-agenda-groups
+;;          '((:log t)  ; Automatically named "Log"
+;;            (:name "Schedule"
+;;                   :time-grid t)
+;;            (:name "Today"
+;;                   :scheduled today)
+;;            (:habit t)
+;;            (:name "Due today"
+;;                   :deadline today)
+;;            (:name "Overdue"
+;;                   :deadline past)
+;;            (:name "Due soon"
+;;                   :deadline future)
+;;            (:name "Unimportant"
+;;                   :todo ("SOMEDAY" "MAYBE" "CHECK" "TO-READ" "TO-WATCH")
+;;                   :order 100)
+;;            (:name "Waiting..."
+;;                   :todo "WAITING"
+;;                   :order 98)
+;;            (:name "Scheduled earlier"
+;;                   :scheduled past))))
+;;     (org-super-agenda-mode t)))
+
+;; (org-agenda-list)
+
+;(global-set-key (kbd "C-c a") #'org-super-agenda)
+
 
 (use-package org-super-agenda
   :after org-agenda
@@ -140,22 +160,6 @@
   (org-super-agenda-mode)
   (setq org-agenda-custom-commands
         '(
-   ("w" "Week"
-      (
-       (tags-todo "SCHEDULED<\"<+1d>\"&PRIORITY=\"A\""
-                  ((org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-overriding-header "High-priority unfinished tasks:"))
-                  )
-          (tags-todo "SCHEDULED<\"<+7d>\""
-                     ((org-agenda-skip-function
-                       '(or (org-agenda-skip-entry-if 'done)
-                            ))
-                      (org-agenda-overriding-header "Week")))
-          
-          )
-      )
-
    ("z" "Super view"
            (
             (alltodo "" ((org-agenda-overriding-header "")
@@ -212,9 +216,17 @@
           )
         )
   )
+(org-agenda-list)
 
 
-(setq org-agenda-files (append '("~/.emacs.d") (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/*")))
+(setq org-agenda-files
+      (append '("~/.emacs.d")
+              (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/ppl/*.org")
+              (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/administration/*.org")
+              (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/meetings/*.org")
+              (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/*.org")
+              (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/projects/*.org")
+              (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/dailies/*" t)))
 
 ;; Agenda clock report parameters
 (setq org-agenda-clockreport-parameter-plist
@@ -682,18 +694,6 @@ With a prefix ARG always prompt for command to use."
           :unnarrowed t)
         
 ))
-
-
-
-(add-to-list 'org-latex-classes
-             '("iitmdiss"
-               "\\documentclass{iitmdiss}"
-               ("\\chapter{%s}" . "\\chapter*{%s}")
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 
 

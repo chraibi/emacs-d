@@ -122,6 +122,14 @@ unless return was pressed outside the comment"
               ("M-9" . lsp-treemacs-errors-list)))
 
 
+(use-package lsp-clangd
+  :init
+  (add-hook 'c-mode--hook #'lsp-clangd-c-enable)
+  (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
+  (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd")
+  (setq lsp-clangd-binary-path "/usr/local/opt/llvm/bin/clangd")
+  )
+
 
 (message "Provide setup-cc")
 (provide 'setup-cc)

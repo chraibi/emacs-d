@@ -24,8 +24,26 @@
       python-sort-imports-on-save-isort-options '("--settings-path" "~/.config/isort.cfg"))
   )
 
+;; pyright and elpy somehow use node. node uses extensive cpu time.
+
 ;;(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
 ;;(add-to-list 'load-path py-install-directory)
+
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda () (require 'lsp-pyright)))
+;;   :init (when (executable-find "python3")
+;;           (setq lsp-pyright-python-executable-cmd "python3")))
+
+;; (setq pyright-args '("--workers" "2"))  ;
+
+;; emacs 29.1 has eglot built-in
+;; Install eglot (if needed)
+(unless (package-installed-p 'eglot)
+  (package-refresh-contents)
+  (package-install 'eglot))
+(add-hook 'python-mode-hook 'eglot-ensure)
+(setq eglot-python-server 'pylsp)
 
 
 (use-package python-black
@@ -51,22 +69,21 @@
   )
   ;; sphinx-doc to C-c M-d
 
- (use-package elpy
-   :ensure t
-   :init
-   (elpy-enable)
-   (setq elpy-rpc-python-command "/usr/local/bin/python3")   
-   )
+ ;; (use-package elpy
+ ;;   :ensure t
+ ;;   :init
+ ;;   (elpy-enable)
+ ;;   (setq elpy-rpc-python-command "/usr/local/bin/python3")   
+ ;;   )
 
-(when (load "flycheck" t t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; (when (load "flycheck" t t)
+;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 (setq flycheck-enabled-checkers '(python-mypy))
 (setq flycheck-disabled-checkers '(python-pylint))
 (setq flycheck-select-checker 'python-mypy)
 
-(setq pyright-args '("--workers" "2"))
         
 ;;; Code:
 
