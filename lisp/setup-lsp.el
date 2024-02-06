@@ -94,11 +94,11 @@
         lsp-ui-peek-peek-height 25)
   )
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda () (require 'lsp-pyright)))
-  :init (when (executable-find "python3")
-          (setq lsp-pyright-python-executable-cmd "python3")))
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda () (require 'lsp-pyright)))
+;;   :init (when (executable-find "python3")
+;;           (setq lsp-pyright-python-executable-cmd "python3")))
 
 
 (use-package helm-lsp
@@ -119,7 +119,7 @@
       treemacs-space-between-root-nodes nil
       company-idle-delay 0.0
       company-minimum-prefix-length 1
-      lsp-idle-delay 0.1)  ;; clangd is fast
+      )  ;; clangd is fast
 
 
 (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)

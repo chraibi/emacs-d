@@ -1,4 +1,3 @@
-
 ;;; package --- summary
 ;;; Commentary:
 
@@ -23,6 +22,22 @@
       python-sort-imports-on-save-with-isort t
       python-sort-imports-on-save-isort-options '("--settings-path" "~/.config/isort.cfg"))
   )
+
+
+(setenv "WORKON_HOME" "/Users/chraibi/virtualenv/.pedpy_env/")
+(use-package pyvenv
+  :ensure t
+  :config
+  (pyvenv-mode t)
+
+  ;; Set correct Python interpreter
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
+
 
 ;; pyright and elpy somehow use node. node uses extensive cpu time.
 
@@ -60,29 +75,29 @@
   hook (python-mode . py-isort-before-save )
   )
 ; sphinx-doc to C-c M-d
-(use-package sphinx-doc
-  :ensure t
-  :init
-  (sphinx-doc-mode t)
-  (setq sphinx-doc-include-types t)
-  :hook (python-mode . sphinx-doc-mode)
-  )
+;; (use-package sphinx-doc
+;;   :ensure t
+;;   :init
+;;   (sphinx-doc-mode t)
+;;   (setq sphinx-doc-include-types t)
+;;   :hook (python-mode . sphinx-doc-mode)
+;;   )
   ;; sphinx-doc to C-c M-d
 
- ;; (use-package elpy
- ;;   :ensure t
- ;;   :init
- ;;   (elpy-enable)
- ;;   (setq elpy-rpc-python-command "/usr/local/bin/python3")   
- ;;   )
+ (use-package elpy
+   :ensure t
+   :init
+   (elpy-enable)
+   (setq elpy-rpc-python-command "/usr/local/bin/python3")   
+   )
 
 ;; (when (load "flycheck" t t)
 ;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
-(setq flycheck-enabled-checkers '(python-mypy))
-(setq flycheck-disabled-checkers '(python-pylint))
-(setq flycheck-select-checker 'python-mypy)
+;; (setq flycheck-enabled-checkers '(python-mypy))
+;; (setq flycheck-disabled-checkers '(python-pylint))
+;; (setq flycheck-select-checker 'python-mypy)
 
         
 ;;; Code:

@@ -242,6 +242,15 @@
 ;; (setq explicit-shell-file-name "~/.zshrc")
 ;; (when (memq window-system '(mac ns x))
 ;;   (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (daemonp)
+    (exec-path-from-shell-initialize)
+    (message "DDDD")
+    )
+  )
+
 
 ;; ;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
 ;; (setenv "PYTHONPATH" "$PYTHONPATH:/Users/chraibi/workspace/jupedsim/jupedsim_dashboard:/Users/chraibi/workspace/jupedsim/jpscore/build/lib/:/Users/chraibi/workspace/jupedsim/jpscore/python_modules/jupedsim/")

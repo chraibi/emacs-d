@@ -30,13 +30,10 @@
 ;----------------  load setups ----------------------------
 
 
- (use-package load_configs
-   :init
-   (message "load my setups from file")
-   )
+ (load-file "/Users/chraibi/.emacs.d/lisp/load_configs.el")
+(message "load my setups from file")
+   
 ;; (message "setups loaded")
-
-
 ;;-----------------------------
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
 ;; ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -80,7 +77,10 @@
 (add-hook 'after-save-hook 'auto-test-emacs)
 
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-  
+
+
+
+
 (message "done loading emacs!")
 
 (provide 'init)

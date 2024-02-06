@@ -58,6 +58,10 @@
   :bind (("C-s" . swiper-isearch)
          ("C-r" . swiper-isearch)))
 
+(setq swiper-use-visual-line nil)
+(setq swiper-use-visual-line-p (lambda (a) nil))
+
+(setq ivy-dynamic-exhibit-delay-ms 250)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
