@@ -17,9 +17,9 @@
   (setq 
       python-shell-interpreter-args "-i"
       python-shell-completion-native-enable nil
-      python-sort-imports-on-save t
-      python-sort-imports-on-save-before-answers t
-      python-sort-imports-on-save-with-isort t
+      python-sort-imports-on-save nil
+      python-sort-imports-on-save-before-answers nil
+      python-sort-imports-on-save-with-isort nil
       python-sort-imports-on-save-isort-options '("--settings-path" "~/.config/isort.cfg"))
   )
 
@@ -54,25 +54,25 @@
 
 ;; emacs 29.1 has eglot built-in
 ;; Install eglot (if needed)
-(unless (package-installed-p 'eglot)
-  (package-refresh-contents)
-  (package-install 'eglot))
-(add-hook 'python-mode-hook 'eglot-ensure)
-(setq eglot-python-server 'pylsp)
+;; (unless (package-installed-p 'eglot)
+;;   (package-refresh-contents)
+;;   (package-install 'eglot))
+;; (add-hook 'python-mode-hook 'eglot-ensure)
+;; (setq eglot-python-server 'pylsp)
 
 
 (use-package python-black
   :demand t
   :ensure t
   :after python
-  :hook (python-mode . python-black-on-save-mode) 
+  :hook (python-mode .) 
   )
 
 (use-package py-isort
   :demand t
   :ensure t
   :after python
-  hook (python-mode . py-isort-before-save )
+  hook (python-mode .)
   )
 ; sphinx-doc to C-c M-d
 ;; (use-package sphinx-doc
@@ -90,6 +90,17 @@
    (elpy-enable)
    (setq elpy-rpc-python-command "/usr/local/bin/python3")   
    )
+
+
+(use-package reformatter
+  :hook 
+  (python-mode . ruff-format-on-save-mode)
+  :config
+  (reformatter-define ruff-format
+    :program "ruff"
+    :args `("format" "--stdin-filename" ,buffer-file-name "-")))
+
+
 
 ;; (when (load "flycheck" t t)
 ;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))

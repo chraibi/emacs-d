@@ -6,10 +6,9 @@
 (message "Enter setup-lsp")
 ;; https://www.reddit.com/r/emacs/comments/gocrlq/i_really_dont_understand_why_lspui_shows/
 (use-package lsp-mode
-  :hook ((c-mode
-          c++-mode
-          c-or-c++-mode
-          python-mode) . lsp-deferred)
+  :hook (
+          (c-or-c++-mode . lsp-deferred)
+          (python-mode . lsp-deferred))
   :commands lsp
   :custom
   ;; LSP Settings
@@ -22,9 +21,9 @@
   (lsp-signature-render-documentation nil)
   (lsp-eldoc-hook nil)
   (lsp-lens-enable t)
-  (lsp-modeline-code-actions-enable nil)
-  (lsp-modeline-diagnostics-enable nil)
-  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-modeline-code-actions-enable t)
+  (lsp-modeline-diagnostics-enable t)
+  (lsp-headerline-breadcrumb-enable t)
   (lsp-semantic-tokens-enable nil)
   (lsp-enable-folding nil)
   (lsp-enable-imenu nil)
@@ -34,8 +33,8 @@
 
   ;; Miscellaneous settings
   (read-process-output-max (* 1024 1024)) ; 1M
-  (lsp-idle-delay 0.5)
-
+  (lsp-idle-delay 1)
+  (lsp-diagnostics-debounce-interval 1)
   ;; Completion settings
   (lsp-completion-show-detail t)
   (lsp-completion-show-kind t)
@@ -52,21 +51,33 @@
         lsp-enable-symbol-highlighting t
         lsp-enable-on-type-formatting nil
         lsp-signature-auto-activate nil
-        lsp-signature-render-documentation nil
+        lsp-signature-render-documentation t
         lsp-eldoc-hook nil
         lsp-lens-enable t
-        lsp-modeline-code-actions-enable nil
-        lsp-modeline-diagnostics-enable nil
-        lsp-headerline-breadcrumb-enable nil
+        lsp-modeline-code-actions-enable t
+        lsp-modeline-diagnostics-enable t
+        lsp-headerline-breadcrumb-enable t
         lsp-semantic-tokens-enable nil
-        lsp-enable-folding nil
+        lsp-enable-folding t
         lsp-enable-imenu nil
         lsp-enable-snippet nil
         read-process-output-max (* 1024 1024) ;; 1M
-        lsp-idle-delay 0.5
+        lsp-idle-delay 5
         lsp-diagnostics-provider :auto
-        lsp-signature-doc-lines 2)
+        lsp-signature-doc-lines 2
+        lsp-headerline-arrow "➤"
+        )
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)))
+  
   )
+
+
+
+
 
 (use-package lsp-ui
   :ensure t

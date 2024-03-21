@@ -25,7 +25,7 @@
 
    ;; Agenda styling
    ;org-agenda-tags-column 0
-   org-agenda-block-separator ?─
+   ;org-agenda-block-separator ?─
    org-agenda-time-grid
    '((daily today require-timed)
      (800 1000 1200 1400 1600 1800 2000)
@@ -81,12 +81,12 @@
 ;; ;; These are the hotkeys ^^
 
 
-;; (eval-after-load 'org-bullets
-;;   '(setq org-bullets-bullet-list '("●" "✦" "✭" "■" "▲" "✺" "✹" "✸" "✷" "✶")))
-;; ; Use IDO for target completion
-;; (setq org-completion-use-ido t)
-;; ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-;; (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+(eval-after-load 'org-bullets
+  '(setq org-bullets-bullet-list '("●" "✦" "✭" "■" "▲" "✺" "✹" "✸" "✷" "✶")))
+; Use IDO for target completion
+(setq org-completion-use-ido t)
+; Targets include this file and any file contributing to the agenda - up to 5 levels deep
+(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
 
 
 
@@ -102,145 +102,76 @@
 
 
 
-(use-package org-agenda
-  :after org
-  :commands (org-agenda)
-  :config
-  (setq org-agenda-start-on-weekday 1
-        org-agenda-include-diary t
-        org-agenda-window-setup 'current-window
-        org-agenda-skip-scheduled-if-done t
-        org-agenda-compact-blocks t
-        org-agenda-sticky t
-        org-agenda-span 'day
-        org-agenda-todo-ignore-scheduled 'future
-        org-agenda-todo-ignore-time-comparison-use-seconds t
-        org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-        org-agenda-prefix-format
-        '((agenda . " %i %-12:c%?-12t% s")
-          (timeline . "  % s")
-          (todo . " %i %-12:c [%-3e] %? %(org-format-outline-path (org-get-outline-path))")
-          (tags . " %i %-12:c [%-3e] %? %(org-format-outline-path (org-get-outline-path))")
-          (search . " %i %-12:c"))))
-
-;; (use-package org-super-agenda
-;;   :ensure t
+;; (use-package org-agenda
+;;   :after org
+;;   :commands (org-agenda)
 ;;   :config
-;;   (let ((org-super-agenda-groups
-;;          '((:log t)  ; Automatically named "Log"
-;;            (:name "Schedule"
-;;                   :time-grid t)
-;;            (:name "Today"
-;;                   :scheduled today)
-;;            (:habit t)
-;;            (:name "Due today"
-;;                   :deadline today)
-;;            (:name "Overdue"
-;;                   :deadline past)
-;;            (:name "Due soon"
-;;                   :deadline future)
-;;            (:name "Unimportant"
-;;                   :todo ("SOMEDAY" "MAYBE" "CHECK" "TO-READ" "TO-WATCH")
-;;                   :order 100)
-;;            (:name "Waiting..."
-;;                   :todo "WAITING"
-;;                   :order 98)
-;;            (:name "Scheduled earlier"
-;;                   :scheduled past))))
-;;     (org-super-agenda-mode t)))
+;;   (setq org-agenda-start-on-weekday 1
+;;         org-agenda-include-diary t
+;;         org-agenda-window-setup 'current-window
+;;         org-agenda-skip-scheduled-if-done t
+;;         org-agenda-compact-blocks t
+;;         org-agenda-sticky t
+;;         org-agenda-span 'day
+;;         org-agenda-todo-ignore-scheduled 'future
+;;         org-agenda-todo-ignore-time-comparison-use-seconds t
+;;         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
 
-;; (org-agenda-list)
+;;         )
+;;   )
+
 
 ;(global-set-key (kbd "C-c a") #'org-super-agenda)
 
 
-;; (use-package org-super-agenda
-;;   :after org-agenda
-;;   :config
-;;   (org-super-agenda-mode)
-;;   (let ((org-super-agenda-groups
-;;        '((:log t)  ; Automatically named "Log"
-;;          (:name "  ☕ Schedule"
-;;                 :time-grid t)
-;;          (:name "Today"
-;;                 :scheduled today)
-;;          (:habit t)
-;;          (:name "  📌 Due today"
-;;                 :deadline today)
-;;          (:name "  ⛔ Overdue"
-;;                 :deadline past)
-;;          (:name "  ⛔ Due soon"
-;;                 :deadline future)
-;;          (:name "Unimportant"
-;;                 :todo ("SOMEDAY" "MAYBE" "CHECK" "TO-READ" "TO-WATCH")
-;;                 :order 100)
-;;          (:name "Progress"
-;;                 :todo "PROG"
-;;                 :order 98)
-;;          (:name "Scheduled earlier"
-;;                 :scheduled past))))
-;;     (org-agenda-list))
-;;   )
-  ;; (setq org-agenda-custom-commands
-  ;;       '(
-  ;;  ("z" "Super view"
-  ;;          (
-  ;;           (alltodo "" ((org-agenda-overriding-header "")
-  ;;                        (org-super-agenda-groups
-  ;;                         '(
-  ;;                           (:name "Calendar"
-  ;;                                  :todo "CAL"
-  ;;                                  :face (:background "GhostWhite" :underline nil)
-  ;;                                  )
-  ;;                           (:name "Today"
-  ;;                                  :scheduled today
-  ;;                                  :face (:background "AliceBlue" :underline nil)
-  ;;                                  :order 2)
-  ;;                           (:name "  📌 Due Today"
-  ;;                                  :deadline today
-  ;;                                  :face (:background "AliceBlue" :underline nil)
-  ;;                                  :order 3
-  ;;                                  )
-  ;;                           (:name "  ☕ Scheduled soon"
-  ;;                                  :scheduled future
-  ;;                                  :order 1)
-  ;;                           (:name "  ☕ Deadline soon"
-  ;;                                  :deadline future
-  ;;                                  :order 5)
-  ;;                           (:name "Important"
-  ;;                                  :priority "A"
-  ;;                                  :order 6)
-  ;;                           (:name "Projects"
-  ;;                                  :and (:tag "Project" :todo ("NEXT" "TODO" "PROG"))
-  ;;                                  :order 7)
-  ;;                           (:name "Habilitation"
-  ;;                                  :and (:tag "habilitation" :todo ("NEXT" "TODO" "PROG"))
-  ;;                                  :order 8)                            
-  ;;                           (:name "Research"
-  ;;                                  :and (:tag ("idea" "modeling") :todo ("NEXT" "TODO" "PROG"))                                   
-  ;;                                  :order 9)
-  ;;                           (:name "  ⛔ Overdue Scheduled"
-  ;;                                  :face (:background "LavenderBlush" :underline nil)
-  ;;                                  :and (:scheduled past :todo ("NEXT" "TODO" "PROG"))
-  ;;                                  :order 10) ;  
-  ;;                           (:name "  ⛔ Overdue Deadline"
-  ;;                                  :face (:background "LavenderBlush" :underline nil)
-  ;;                                  :and (:deadline past :todo ("NEXT" "TODO" "PROG"))
-  ;;                                  :order 11)
-  ;;                             (:discard (:anything))
-                            
-                                 
-  ;;                           )
-  ;;                         )
-  ;;                        )
-  ;;                    )
-  ;;           )
-  ;;          )
-  ;;         )
-  ;;       )
-  ;; )
-;(org-agenda-list)
-
+(use-package org-super-agenda
+  :after org-agenda
+  :config
+  (org-super-agenda-mode)
+(setq org-agenda-custom-commands
+      '(
+        ("z" "Super view"
+         (
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '(
+                          (:name "Today"
+                                 :scheduled today
+                                 :face (:background "AliceBlue" :underline nil)
+                                 :order 2)
+                          (:name "  📌 Due Today"
+                                 :deadline today
+                                 :face (:background "AliceBlue" :underline nil)
+                                 :order 3
+                                 )
+                          (:name "  ☕ Scheduled soon"
+                                 :scheduled future
+                                 :order 1)
+                          (:name "  ☕ Deadline soon"
+                                 :deadline future
+                                 :order 5)
+                          (:name "Important"
+                                 :priority "A"
+                                 :order 6)
+                          (:name "  ⛔ Overdue Scheduled"
+                                 :face (:background "LavenderBlush" :underline nil)
+                                 :and (:scheduled past :todo ("NEXT" "TODO" "PROG"))
+                                 :order 10) ;  
+                          (:name "  ⛔ Overdue Deadline"
+                                 :face (:background "LavenderBlush" :underline nil)
+                                 :and (:deadline past :todo ("NEXT" "TODO" "PROG"))
+                                 :order 11)
+                          (:discard (:anything))                                 
+                          )
+                        )
+                       )
+                   )
+          )
+         )
+        )
+      )
+(org-agenda-list)
+)
 
 (setq org-agenda-files
       (append '("~/.emacs.d")
@@ -254,7 +185,8 @@
 (setq org-agenda-clockreport-parameter-plist
       '(:link t :maxlevel 2 :fileskip0 t :compact t :narrow 60 :score 0))
 
-;; TODO keywords.
+;; ;; TODO keywords.
+
 (setq org-todo-keywords
       '(
         (sequence "TODO(t)" "NEXT(n)" "PROG(p)" "WAITING(w)" "CANCEL(l)" "CAL(c)" "|" "DONE(d!/!)")
@@ -269,15 +201,15 @@
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
       (quote (("j" "Doing" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/journal.org")
-               "** PROG %?" :empty-lines 1)
+               "** PROG " :empty-lines 1)
               ("t" "todo" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
-               "** TODO %?" :empty-lines 1)
+               "** TODO " :empty-lines 1)
               ("n" "fleeting note" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org")
-               "* %?")
+               "* ")
               ("p" "private" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/private-notes.org")
-               "* TODO %?" :empty-lines 1)
+               "* TODO " :empty-lines 1)
               ("l" "literature" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/literature-notes.org")
-               "* TODO %?" :empty-lines 1)
+               "* TODO " :empty-lines 1)
               
               ;; ("j" "Journal entry" plain (file+datetree+prompt "~/Dropbox/Orgfiles/org-files/org-roam/journal/journal.org")
               ;;  "**** %?         :@journal:\n %U" :clock-in t :clock-resume t)              

@@ -2,6 +2,69 @@
 ;;; --- Editor defaults
 ;;; Code:
 ;;; Commentary:
+(message "start loading setup-dired")
+
+
+
+
+;; ================ directories and files  ==========
+;; ;;--------------------------------- ibuffer
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+(setq ibuffer-default-sorting-mode 'major-mode)
+(setq ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+;;------------------------------------------------
+;; M-i jump to symbol in file
+(defun ido-goto-symbol (&optional symbol-list)
+  "Refresh imenu and jump to a place in the buffer using Ido.
+argument SYMBOL-LIST"
+  (interactive)
+  (unless (featurep 'imenu)
+    (require 'imenu nil t))
+  (cond
+   ((not symbol-list)
+    (let ((ido-mode ido-mode)
+          (ido-enable-flex-matching
+           (if (boundp 'ido-enable-flex-matching)
+               ido-enable-flex-matching t))
+          name-and-pos symbol-names position)
+      (unless ido-mode
+        (ido-mode 1)
+        (setq ido-enable-flex-matching t))
+      (while (progn
+               (imenu--cleanup)
+               (setq imenu--index-alist nil)
+               (ido-goto-symbol (imenu--make-index-alist))
+               (setq selected-symbol
+                     (ido-completing-read "Symbol? " symbol-names))
+                   (string= (car imenu--rescan-item) selected-symbol)))
+          (unless (and (boundp 'mark-active) mark-active)
+            (push-mark nil t nil))
+          (setq position (cdr (assoc selected-symbol name-and-pos)))
+          (cond
+           ((overlayp position)
+            (goto-char (overlay-start position)))
+           (t
+            (goto-char position)))))
+       ((listp symbol-list)
+        (dolist (symbol symbol-list)
+          (let (name position)
+            (cond
+             ((and (listp symbol) (imenu--subalist-p symbol))
+              (ido-goto-symbol symbol))
+             ((listp symbol)
+              (setq name (car symbol))
+              (setq position (cdr symbol)))
+             ((stringp symbol)
+              (setq name symbol)
+              (setq position
+                    (get-text-property 1 'org-imenu-marker symbol))))
+            (unless (or (null position) (null name)
+                        (string= (car imenu--rescan-item) name))
+              (add-to-list 'symbol-names name)
+              (add-to-list 'name-and-pos (cons name position))))))))
+
+
 
 ;;on macOS, ls doesn't support the --dired option while on Linux it is supported.
 (when (string= system-type "darwin")
@@ -19,27 +82,12 @@
         )
       )
 
-
-;; https://www.reddit.com/r/emacs/comments/byhf6w/file_management_with_dired_in_emacs/
-;; (autoload 'dired-jump "dired-x"
-;;   "Jump to Dired buffer corresponding to current buffer." t)
-
-;; (autoload 'dired-jump-other-window "dired-x"
-;;   "Like \\[dired-jump] (dired-jump) but in other window." t)
-
-;; (use-package dired-x :ensure t)
-;; (use-package dired+ :ensure t)
-;; (require 'dired-x)
-;; (require 'dired+)
-
 (use-package dired-rainbow :ensure t)
 (use-package dired-hacks-utils :ensure t)
 
 (defconst dired-audio-files-extensions
   '("mp3" "MP3" "ogg" "OGG" "flac" "FLAC" "wav" "WAV" "org" "txt" "md" "el"); I dont like the colors of org-files
   "Dired Audio files extensions.")
-
-
 
 (dired-rainbow-define audio "#329EE8" dired-audio-files-extensions)
 
@@ -54,18 +102,6 @@
   :ensure t
   :config (image-diredx-async-mode 1))
 
-;; show the file from point in the other window
-;; https://github.com/asok/peep-dired
-;; (use-package peep-dired
-;;   :ensure t
-;;   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-;;   :bind (:map dired-mode-map
-;;               ("P" . peep-dired))
-;;   :config
-;;   (setq peep-dired-cleanup-on-disable t)
-;;   (setq peep-dired-cleanup-eagerly t)
-;;   (setq peep-dired-cleanup-eagerly t)
-;;   )
 
 (use-package dired-subtree
   :ensure t
@@ -99,9 +135,7 @@
   :ensure t
   :config (require 'dired-filetype-face))
 
-;; (define-key dired-mode-map "ö" 'dired-toggle-read-only)
-
 (define-key dired-mode-map "b" 'dired-create-empty-file)
-
+(message "finished loading setup-dired")
 (provide 'setup-dired)
 ;;; setup-dired.el ends here

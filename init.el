@@ -13,27 +13,52 @@
 
 ;; (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
+(exec-path-from-shell-initialize)
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (daemonp)
+    (exec-path-from-shell-initialize)
+    (message "deamon mode")
+    )
+  )
 
-;(setq org-roam-v2-ack t)
-(require 'package)
+(require 'package)                                    
+; Disabling package activation at startup
 (setq package-enable-at-startup nil)
-(package-initialize)
-
+;(package-initialize)
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;(package-refresh-contents)
+(package-install 'use-package)
+)
 
 (eval-when-compile
-  (require 'use-package))
+ (require 'use-package))
+
+;; helper function for timing loads
+(defun load-with-timing (file)
+  (let ((start-time (current-time)))
+    (load file)
+    (message "Loading %s took %s seconds"
+             file
+             (float-time (time-subtract (current-time) start-time)))))
+;;----------------  load setups ----------------------------
+
+(load-with-timing "~/.emacs.d/lisp/niceties.el")
+(load-with-timing "~/.emacs.d/lisp/my-core-settings.el")
+(load-with-timing "~/.emacs.d/lisp/esthetics.el")
+(load-with-timing "~/.emacs.d/lisp/window_editing.el")
+(load-with-timing "~/.emacs.d/lisp/load_coding.el")
+(load-with-timing "~/.emacs.d/lisp/project_management.el")
 
 
-;----------------  load setups ----------------------------
-
-
- (load-file "/Users/chraibi/.emacs.d/lisp/load_configs.el")
-(message "load my setups from file")
-   
-;; (message "setups loaded")
+;; (use-package org
+;;   :init
+;;   (message "Loading org-mode!")
+;;   :config
+;;   (require 'setup-org-mode)
+;;   )
+(message "Finished loading all packages and configs")
 ;;-----------------------------
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
 ;; ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -45,44 +70,11 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-;;-----------------------
-(defun my-test-emacs ()
-  "Debuging start of Emacs."
-  (interactive)
-  (require 'async)
-  (async-start
-   (lambda () (shell-command-to-string
-               "emacs --batch --eval \"
-(condition-case e
-    (progn
-      (load \\\"~/.emacs.d/init.el\\\")
-      (message \\\"-OK-\\\"))
-  (error
-   (message \\\"ERROR!\\\")
-   (signal (car e) (cdr e))))\""))
-   `(lambda (output)
-      (if (string-match "-OK-" output)
-          (when ,(called-interactively-p 'any)
-            (message "All is well"))
-        (switch-to-buffer-other-window "*startup error*")
-        (delete-region (point-min) (point-max))
-        (insert output)
-        (search-backward "ERROR!")))))
 
-(defun auto-test-emacs ()
-  "Test starting Emacs for bugs."
-  (when (eq major-mode 'emacs-lisp-mode)
-    (my-test-emacs)))
-
-(add-hook 'after-save-hook 'auto-test-emacs)
-
-;; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-
-
-
+(message "byte recompiling directory deactivated. Activate it from time to time")
+;(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
 
 (message "done loading emacs!")
-
 (provide 'init)
 
 ;;; init.el ends here

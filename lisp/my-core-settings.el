@@ -2,7 +2,7 @@
 ;;; --- Editor defaults
 ;;; Code:
 ;;; Commentary:
-
+(message "loading my settings")
 ;; ------cleanup this
 (setq gc-cons-threshold (* 50 1000 1000))
 ;;; Code:
@@ -20,14 +20,6 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)
-
-(require 'ansi-color)
-(defun my/ansi-colorize-buffer ()
-  "Comments."
-  (let ((buffer-read-only nil))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
-
 
 (setq is-mac (equal system-type 'darwin))
 (if (equal system-type 'darwin)
@@ -71,9 +63,6 @@
 (setq user-full-name "MC")
 (setq user-mail-address "m.chraibi@gmail.com")
 
-;(setq-default cursor-type 'bar)
-(setq-default cursor-type 'box)
-(set-cursor-color "#4a90e2")
 
 
 ;; no beep
@@ -144,19 +133,6 @@
 
 (column-number-mode 1) ; show column number
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(show-paren-match ((((class color) (background light)) (:background "blue")))))
-
-(set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
-
-(show-paren-mode t) ;; will highlight matching parentheses next to cursor.
-
-
-
 ;; I hate tabs!
 (setq-default indent-tabs-mode nil)
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -174,18 +150,6 @@
 (setq split-height-threshold nil)
 (setq split-width-threshold 0)
 
-;;--------------------- highlight line
-;;https://stackoverflow.com/questions/2718189/emacshighlight-the-current-line-by-underline-it
-(global-hl-line-mode 1)
-(set-face-background 'highlight "#222")
-(set-face-foreground 'highlight nil)
-(set-face-underline 'highlight t)
-
-
-(setq-default global-visual-line-mode t)
-(setq show-paren-style 'parenthesis) ; highlight just brackets
-
-                                        ;(global-set-key (kbd "C-SPC") 'set-mark-command)
 
 (setq
  uniquify-buffer-name-style 'post-forward
@@ -242,14 +206,6 @@
 ;; (setq explicit-shell-file-name "~/.zshrc")
 ;; (when (memq window-system '(mac ns x))
 ;;   (exec-path-from-shell-initialize))
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (when (daemonp)
-    (exec-path-from-shell-initialize)
-    (message "DDDD")
-    )
-  )
 
 
 ;; ;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
@@ -270,7 +226,7 @@
 
 
 ;;(global-set-key (kbd "C-a") 'load-file)
-(global-set-key (kbd "C-z") 'eval-region)
 
+(message "end my settings")
 (provide 'my-core-settings)
 ;;; my-core-settings.el ends here
