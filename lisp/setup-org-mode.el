@@ -24,14 +24,15 @@
    org-ellipsis "…"
 
    ;; Agenda styling
-   ;org-agenda-tags-column 0
-   ;org-agenda-block-separator ?─
+   ; Uncomment and adjust the following lines as needed:
+   ;; org-agenda-tags-column 0
+   ;; org-agenda-block-separator ?─
    org-agenda-time-grid
    '((daily today require-timed)
      (800 1000 1200 1400 1600 1800 2000)
      " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
    org-agenda-current-time-string
-   "⭠ now  ─────────────────────────────────────────────────"))
+   "⭠ now ─────────────────────────────────────────────────"))
 
 
 (setq org-agenda-skip-unavailable-files t)
@@ -409,17 +410,20 @@ With a prefix ARG always prompt for command to use."
   (require 'org-roam-protocol)
   )
 
-(use-package org-roam-timestamps
-  :init
-  (message "Init timestamp")
-  :after org-roam
-  :config 
-  (setq org-roam-timestamps-parent-file t)
-  (setq org-roam-timestamps-remember-timestamps t)  
-  )
+;; (use-package org-roam-timestamps
+;;   :init
+;;   (message "Init timestamp")
+;;   :after org-roam
+;;   :config 
+;;   (setq org-roam-timestamps-parent-file t)
+;;   (setq org-roam-timestamps-remember-timestamps t)  
+;;   )
 
 (use-package org-roam-ui
+  :init
+  (message "Init org-roam-ui.")
   :after org-roam
+  :defer t
   :commands flycheck-mode
   :hook (after-init . org-roam-ui-mode)
   :config
@@ -495,6 +499,7 @@ With a prefix ARG always prompt for command to use."
 (use-package org-roam-bibtex
   (message "Init org-roam-bibtex")
   :ensure t
+  :defer t
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode)
   :config
@@ -595,7 +600,6 @@ With a prefix ARG always prompt for command to use."
 ;;       )
 
 
-
 (use-package deft
   :init
   (message "Load deft")
@@ -604,14 +608,31 @@ With a prefix ARG always prompt for command to use."
   :bind
   ("C-c o s" . deft)
   :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
+  ((deft-recursive t)
+   (deft-use-filter-string-for-filename t)
+   (deft-default-extension "org"))
   :config
-  (with-eval-after-load 'org-roam
-    (setq deft-directory org-roam-directory)
-  )
+  (setq deft-directory (if (bound-and-true-p org-roam-directory)
+                           org-roam-directory
+                           "~/org-roam")) ;; Default path as fallback
 )
+
+;; (use-package deft
+;;   :init
+;;   (message "Load deft")
+;;   :ensure t
+;;   :after org org-roam
+;;   :bind
+;;   ("C-c o s" . deft)
+;;   :custom
+;;   (deft-recursive t)
+;;   (deft-use-filter-string-for-filename t)
+;;   (deft-default-extension "org")
+;;   :config
+;;   (with-eval-after-load 'org-roam
+;;     (setq deft-directory org-roam-directory)
+;;   )
+;; )
 
 
 (setq org-roam-dailies-capture-templates

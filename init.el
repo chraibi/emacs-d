@@ -9,9 +9,6 @@
 ;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-;(add-to-list 'load-path "~/.emacs.d/auto-complete-clang/")
-
-;; (add-to-list 'load-path "~/.emacs.d/lisp/benchmark-init-el")
 
 (exec-path-from-shell-initialize)
 (use-package exec-path-from-shell
@@ -50,14 +47,18 @@
 (load-with-timing "~/.emacs.d/lisp/window_editing.el")
 (load-with-timing "~/.emacs.d/lisp/load_coding.el")
 (load-with-timing "~/.emacs.d/lisp/project_management.el")
+(load-with-timing "~/.emacs.d/lisp/org-basics.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-modern.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-roam.el")
+(load-with-timing "~/.emacs.d/lisp/setup-agenda.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-crypt.el")
+(load-with-timing "~/.emacs.d/lisp/setup-helm-bibtex.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
+(load-with-timing "~/.emacs.d/lisp/setup-deft.el")
 
+;; OLD
+;;(load-with-timing "~/.emacs.d/lisp/setup-org-mode.el")
 
-;; (use-package org
-;;   :init
-;;   (message "Loading org-mode!")
-;;   :config
-;;   (require 'setup-org-mode)
-;;   )
 (message "Finished loading all packages and configs")
 ;;-----------------------------
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
@@ -72,7 +73,14 @@
 
 
 (message "byte recompiling directory deactivated. Activate it from time to time")
-;(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+;;(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 
 (message "done loading emacs!")
 (provide 'init)
