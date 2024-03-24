@@ -57,3 +57,6 @@ org-roam-db.bak
 thirdparty
 /eln-cache/
 /GitHubPackages/
+.cache/
+history
+lisp/ini
