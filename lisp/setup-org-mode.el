@@ -1,7 +1,7 @@
 ;;; package --- modern org-mode, org-roam, super-calendar
 ;;; Code:
 ;;; Commentary:
-;; Local Variables:
+;; Local Variables: ABSOTE
 
 (message "Enter setup org-mode")
 (use-package org-modern

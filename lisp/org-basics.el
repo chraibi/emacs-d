@@ -28,7 +28,7 @@
   (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "PROG(p)" "WAITING(w)" "CANCEL(l)" "CAL(c)" "|" "DONE(d!/!)")))
   (org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
   (org-global-properties '(("Effort_ALL" . "0:15 0:30 0:45 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 7:00 8:00")))
-  
+  (remove-hook 'org-mode-hook 'flyspell-mode)   ;; flyspell causes slow agenda start up
   :config
   (org-clock-persistence-insinuate)
   ;; IDO for target completion

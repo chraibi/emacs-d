@@ -105,6 +105,15 @@
   )
 ;;(setq display-battery-mode t) (display-battery-mode 1) ;; will make the display of date and time persistent.
 
+(defun autocompile ()
+  "Automatically compile Emacs Lisp files upon saving."
+  (interactive)
+    (require 'bytecomp)
+    (byte-compile-file (buffer-file-name)))
+
+(add-hook 'after-save-hook 'autocompile)
+
+
 ;; ================ esthetics ==================
 (message "finished loading esthetics")
 (provide 'esthetics)

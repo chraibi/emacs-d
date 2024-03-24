@@ -145,6 +145,17 @@
 )
 
 
+(defun autocompile nil
+  "compile itself if ~/.emacs"
+  (interactive)
+  (require 'bytecomp)
+  (let ((dotemacs (file-truename user-init-file)))
+    (if (string= (buffer-file-name) (file-chase-links dotemacs))
+      (byte-compile-file dotemacs))))
+
+(add-hook 'after-save-hook 'autocompile)
+
+
 (message "Finished loading niceties")
 (provide 'niceties)
 ;;; niceties.el ends here

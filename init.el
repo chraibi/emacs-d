@@ -41,23 +41,30 @@
              (float-time (time-subtract (current-time) start-time)))))
 ;;----------------  load setups ----------------------------
 
-(load-with-timing "~/.emacs.d/lisp/niceties.el")
-(load-with-timing "~/.emacs.d/lisp/my-core-settings.el")
-(load-with-timing "~/.emacs.d/lisp/esthetics.el")
+(load-with-timing "~/.emacs.d/lisp/niceties.elc")
+(load-with-timing "~/.emacs.d/lisp/my-core-settings.elc")
+(load-with-timing "~/.emacs.d/lisp/esthetics.elc")
 (load-with-timing "~/.emacs.d/lisp/window_editing.el")
-(load-with-timing "~/.emacs.d/lisp/load_coding.el")
 (load-with-timing "~/.emacs.d/lisp/project_management.el")
 (load-with-timing "~/.emacs.d/lisp/org-basics.el")
-(load-with-timing "~/.emacs.d/lisp/setup-org-modern.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-modern.elc")
 (load-with-timing "~/.emacs.d/lisp/setup-org-roam.el")
 (load-with-timing "~/.emacs.d/lisp/setup-agenda.el")
 (load-with-timing "~/.emacs.d/lisp/setup-org-crypt.el")
-(load-with-timing "~/.emacs.d/lisp/setup-helm-bibtex.el")
-(load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
-(load-with-timing "~/.emacs.d/lisp/setup-deft.el")
+(load-with-timing "~/.emacs.d/lisp/load_coding.el")
 
-;; OLD
-;;(load-with-timing "~/.emacs.d/lisp/setup-org-mode.el")
+
+(defun load-ref ()
+  "Load setup-ref.el and setup-help-bibtex explicitly when needed."
+  (interactive)
+  (load-with-timing "~/.emacs.d/lisp/setup-helm-bibtex.el")
+  (load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
+  )
+
+
+
+
+;(load-with-timing "~/.emacs.d/lisp/setup-deft.el")
 
 (message "Finished loading all packages and configs")
 ;;-----------------------------
@@ -74,6 +81,16 @@
 
 (message "byte recompiling directory deactivated. Activate it from time to time")
 ;;(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+(defun autocompile nil
+  "compile itself if ~/.emacs"
+  (interactive)
+  (require 'bytecomp)
+  (let ((dotemacs (file-truename user-init-file)))
+    (if (string= (buffer-file-name) (file-chase-links dotemacs))
+      (byte-compile-file dotemacs))))
+
+(add-hook 'after-save-hook 'autocompile)
+
 
 (use-package benchmark-init
   :ensure t
