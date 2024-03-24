@@ -289,18 +289,16 @@
   (re-search-forward "CLOCK: \\[[^]]*\\] *$")
   )
 
-
-(setq org-directory "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/")
 (setq org-capture-templates
-      (quote (("j" "Doing" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/journal.org")
+      (quote (("j" "Doing" entry (file (concat org-directory "org-roam/journal.org"))
                "** PROG %?" :empty-lines 1)
-              ("t" "todo" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/administration/work-notes.org")
+              ("t" "todo" entry (file (concat org-directory "org-roam/administration/work-notes.org"))
                "** TODO %?" :empty-lines 1)
-              ("n" "fleeting note" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/fleeting-notes.org")
+              ("n" "fleeting note" entry (file (concat org-directory "org-roam/notes/fleeting-notes.org"))
                "* %?")
-              ("p" "private" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/private-notes.org")
+              ("p" "private" entry (file (concat org-directory "org-roam/notes/private-notes.org"))
                "* TODO %?" :empty-lines 1)
-              ("l" "literature" entry (file "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/literature-notes.org")
+              ("l" "literature" entry (file (concat org-directory "org-roam/notes/literature-notes.org"))
                "* TODO %?" :empty-lines 1))))
 
               (setq org-startup-indented t)

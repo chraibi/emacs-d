@@ -8,9 +8,9 @@
   (setq org-agenda-window-setup 'only-window)
   (setq org-agenda-files
         (append         
-         (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/ppl/*.org")
-         (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/administration/*.org")
-         (file-expand-wildcards "/Users/chraibi/Library/CloudStorage/Dropbox/Orgfiles/org-files/org-roam/notes/*.org")))
+         (file-expand-wildcards (concat org-directory "org-roam/ppl/*.org"))
+         (file-expand-wildcards (concat org-directory "org-roam/administration/*.org"))
+         (file-expand-wildcards (concat org-directory"org-roam/notes/*.org"))))
   (setq org-agenda-clockreport-parameter-plist
         '(:link t :maxlevel 2 :fileskip0 t :compact t :narrow 60 :score 0))
   (setq org-agenda-skip-scheduled-if-done t))
