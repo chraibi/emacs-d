@@ -194,7 +194,7 @@
   (setq org-roam-auto-replace-fuzzy-links nil)
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "** %<%I:%M %p>: %?"
-           :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+           :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d> (%A)\n"))))
 
   (setq org-roam-capture-templates
         '(

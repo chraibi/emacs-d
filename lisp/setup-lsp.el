@@ -7,11 +7,13 @@
 ;; https://www.reddit.com/r/emacs/comments/gocrlq/i_really_dont_understand_why_lspui_shows/
 (use-package lsp-mode
   :hook (
-          (c-or-c++-mode . lsp-deferred)
-          (python-mode . lsp-deferred))
+         (c++-mode . lsp)
+         (c-mode . lsp)
+         (python-mode . lsp))
   :commands lsp
   :custom
   ;; LSP Settings
+  (lsp-clients-clangd-executable "clangd")
   (lsp-auto-guess-root t)
   (lsp-log-io nil)
   (lsp-restart 'auto-restart)
@@ -29,11 +31,11 @@
   (lsp-enable-imenu nil)
   (lsp-enable-snippet nil)
   (lsp-diagnostics-provider :auto)
-  (lsp-signature-doc-lines 2)
+  (lsp-signature-doc-lines 1)
 
   ;; Miscellaneous settings
   (read-process-output-max (* 1024 1024)) ; 1M
-  (lsp-idle-delay 1)
+  (lsp-idle-delay 0.5)
   (lsp-diagnostics-debounce-interval 1)
   ;; Completion settings
   (lsp-completion-show-detail t)
@@ -41,69 +43,46 @@
 
   :config
   (define-key lsp-mode-map (kbd "<f2>") lsp-command-map)
-
-  ;; Add comments to explain settings
-  (setq lsp-auto-guess-root t
-        lsp-completion-show-detail t
-        lsp-completion-show-kind t
-        lsp-log-io nil
-        lsp-restart 'auto-restart
-        lsp-enable-symbol-highlighting t
-        lsp-enable-on-type-formatting nil
-        lsp-signature-auto-activate nil
-        lsp-signature-render-documentation t
-        lsp-eldoc-hook nil
-        lsp-lens-enable t
-        lsp-modeline-code-actions-enable t
-        lsp-modeline-diagnostics-enable t
-        lsp-headerline-breadcrumb-enable t
-        lsp-semantic-tokens-enable nil
-        lsp-enable-folding t
-        lsp-enable-imenu nil
-        lsp-enable-snippet nil
-        read-process-output-max (* 1024 1024) ;; 1M
-        lsp-idle-delay 5
-        lsp-diagnostics-provider :auto
-        lsp-signature-doc-lines 2
-        lsp-headerline-arrow "➤"
-        )
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
      ("pyls.plugins.pyls_isort.enabled" t t)))
   
   )
 
 
+;; (use-package lsp-pylyzer
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-pylyzer)
+;;                           (lsp))))  ; or lsp-deferred
 
 
-
-(use-package lsp-ui
-  :ensure t
-  :after lsp
-  :requires lsp-mode flycheck
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq 
-        lsp-ui-doc-enable t
-        lsp-ui-doc-mode t
-        lsp-ui-doc-show-with-cursor t        
-        lsp-ui-sideline-enable t
-        lsp-ui-sideline-show-diagnostics t
-        lsp-ui-sideline-show-code-actions t
-        lsp-modeline-code-actions-enable nil
-        lsp-ui-doc-use-childframe nil
-        lsp-ui-doc-position 'top
-        lsp-ui-doc-include-signature t
-        lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t
-        lsp-ui-peek-enable t
-        lsp-ui-doc-delay 1                
-        lsp-ui-peek-list-width 60
-        lsp-ui-peek-peek-height 25)
-  )
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :after lsp
+;;   :requires lsp-mode flycheck
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :config
+;;   (setq 
+;;         lsp-ui-doc-enable t
+;;         lsp-ui-doc-mode t
+;;         lsp-ui-doc-show-with-cursor t        
+;;         lsp-ui-sideline-enable t
+;;         lsp-ui-sideline-show-diagnostics t
+;;         lsp-ui-sideline-show-code-actions t
+;;         lsp-modeline-code-actions-enable nil
+;;         lsp-ui-doc-use-childframe nil
+;;         lsp-ui-doc-position 'top
+;;         lsp-ui-doc-include-signature t
+;;         lsp-ui-flycheck-enable t
+;;         lsp-ui-flycheck-list-position 'right
+;;         lsp-ui-flycheck-live-reporting t
+;;         lsp-ui-peek-enable t
+;;         lsp-ui-doc-delay 1                
+;;         lsp-ui-peek-list-width 60
+;;         lsp-ui-peek-peek-height 25)
+;;   )
 
 ;; (use-package lsp-pyright
 ;;   :ensure t
@@ -116,13 +95,41 @@
   :ensure t)
 
 
-(use-package lsp-clangd
-  :init
-  (add-hook 'c-mode--hook #'lsp-clangd-c-enable)
-  (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
-  (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd")
-  (setq lsp-clangd-binary-path "/usr/local/opt/llvm/bin/clangd")
-  )
+
+(setq imenu-auto-rescan t)
+;;(setq lsp-ui-imenu-auto-refresh t)
+(setq flycheck-python-ruff-executable "ruff")
+
+
+; From https://github.com/flycheck/flycheck/issues/1974#issuecomment-1343495202
+(flycheck-define-checker python-ruff
+  "A Python syntax and style checker using the ruff utility.
+To override the path to the ruff executable, set
+`flycheck-python-ruff-executable'.
+See URL `http://pypi.python.org/pypi/ruff'."
+  :command ("ruff"
+            "check"
+            "--output-format=concise"
+            (eval (when buffer-file-name
+                    (concat "--stdin-filename=" buffer-file-name)))
+            "-")
+  :standard-input t
+  :error-filter (lambda (errors)
+                  (let ((errors (flycheck-sanitize-errors errors)))
+                    (seq-map #'flycheck-flake8-fix-error-level errors)))
+  :error-patterns
+  ((warning line-start
+            (file-name) ":" line ":" (optional column ":") " "
+            (id (one-or-more (any alpha)) (one-or-more digit)) " "
+            (message (one-or-more not-newline))
+            line-end))
+  :modes (python-mode python-ts-mode))
+
+
+(add-to-list 'flycheck-checkers 'python-ruff)
+
+(setq-default flycheck-disabled-checkers '(python-flake8 python-pylint))
+
 
 
 (setq gc-cons-threshold (* 100 1024 1024)

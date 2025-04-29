@@ -12,6 +12,7 @@
   (message "Initializing org-roam")
   :custom
   (org-roam-directory (file-name-as-directory (concat org-directory "org-roam")))
+  (org-roam-dailies-directory "journals/")
   (org-roam-complete-everywhere t)
   (org-roam-db-update-method 'immediate)
   :bind (("C-c o f" . org-roam-node-find)
@@ -43,33 +44,6 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-
-;; use fzf-grep instead
-;; (use-package helm-rg
-;;   :ensure t
-;;   :config
-;;   ;; Add actions for inserting org file link from selected match
-;;   (defun insert-org-mode-link-from-helm-result (candidate)
-;;     (interactive)
-;;     (with-helm-current-buffer
-;;       (insert (format "[[file:%s][%s]]"
-;;                       (plist-get candidate :file)
-;;                       ;; Extract the title from the file name
-;;                       (subst-char-in-string
-;;                        ?_ ?\s
-;;                        (first
-;;                         (split-string
-;;                          (first
-;;                           (last
-;;                            (split-string (plist-get candidate :file) "\\-")))
-;;                          "\\.")))))))
-
-;;   (helm-add-action-to-source "Insert org-mode link"
-;;                              'insert-org-mode-link-from-helm-result
-;;                              helm-rg-process-source))
-
-;; ;; Bind helm-rg to C-c o s
-;; (global-set-key (kbd "C-c o s") 'helm-rg)
 
 ;; template
 ;; C o d: daily
@@ -197,10 +171,13 @@ With a prefix ARG always prompt for command to use."
                     open)))
     (call-process program nil 0 nil current-file-name)))
 
-(defun autocompile ()
-  "Automatically compile Emacs Lisp files upon saving."
-  (interactive)
-    (require 'bytecomp)
-    (byte-compile-file (buffer-file-name)))
 
-(add-hook 'after-save-hook 'autocompile)
+(package-installed-p 'jinx)
+
+;; (defun autocompile ()
+;;   "Automatically compile Emacs Lisp files upon saving."
+;;   (interactive)
+;;     (require 'bytecomp)
+;;     (byte-compile-file (buffer-file-name)))
+
+;; (add-hook 'after-save-hook 'autocompile)

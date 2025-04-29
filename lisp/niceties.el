@@ -5,11 +5,23 @@
 (message "Loading niceties")
 ; The async package provides asynchronous execution capabilities in Emacs Lisp, allowing certain tasks to be executed in the background, without blocking the Emacs user interface. ;
 
+(save-place-mode 1)
+
+; By default Emacs distinguishes between automatic and manual window switching. If you effect a window switch yourself with C-x b, it’s manual — and exempt from any display action rules you create yourself.
+; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+(setq switch-to-buffer-obey-display-actions t)
 
 (use-package async
   :init
   (message "loading async")
   :ensure t)
+
+;; ;; Alternative 1: Enable Jinx globally
+;; (use-package jinx
+;;   :hook (emacs-startup . global-jinx-mode)
+;;   :bind (("M-$" . jinx-correct)
+;;          ("C-M-$" . jinx-languages)))
+
 
 (use-package vertico
   :init
@@ -31,6 +43,19 @@
                                                "  ")
                                              cand)))
   )
+
+
+
+;; Load and configure Marginalia
+;; (use-package marginalia
+;;   :general
+;;   (:keymaps 'minibuffer-local-map
+;;    "M-A" 'marginalia-cycle)
+;;   :custom
+;;   (marginalia-max-relative-age 0)
+;;   (marginalia-align 'right)
+;;   :init
+;;   (marginalia-mode))
 
 ;; -------------- EMBARK
 ; can display annotations such as the file type for a file name completion or the documentation string for a command completion. This additional context can be quite handy, especially when you encounter similarly named candidates or when you need more information about each option.
@@ -76,30 +101,15 @@
   (message "loading savehist")
   (savehist-mode))
 
-;; Enable rich annotations using the Marginalia package
-(use-package marginalia
-  :ensure t
-  :init
-  (message "loading marginalia")
-  (marginalia-mode))
-
-(all-the-icons-completion-mode)
-(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
-(defun marginalia-use-builtin ()
-  (interactive)
-  (mapc
-   (lambda (x)
-     (setcdr x (cons 'builtin (remq 'builtin (cdr x)))))
-   marginalia-annotator-registry))
 
 (use-package all-the-icons-completion
-  :ensure t
   :after (marginalia all-the-icons)
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
   (all-the-icons-completion-mode)
-  (message "loading all-the-icons-completion")
+  (message "loading all-the-icons-completion ")
   )
+
 
 
 ; Optionally use the `orderless' completion style.
@@ -145,15 +155,54 @@
 )
 
 
-(defun autocompile nil
-  "compile itself if ~/.emacs"
-  (interactive)
-  (require 'bytecomp)
-  (let ((dotemacs (file-truename user-init-file)))
-    (if (string= (buffer-file-name) (file-chase-links dotemacs))
-      (byte-compile-file dotemacs))))
 
-(add-hook 'after-save-hook 'autocompile)
+
+;; Use-package configuration for pomm
+(use-package pomm
+  :ensure t
+  ;; Load pomm when the commands `pomm` or `pomm-third-time` are invoked
+  :commands (pomm pomm-third-time)
+  ;; Optional: Add any additional configurations or hooks for pomm
+  :config
+  (setq pomm-interval 50) ;; Set the default pomodoro interval to 25 minutes
+  (setq pomm-short-break 10) ;; Set the short break interval to 5 minutes
+  (setq pomm-long-break 20) ;; Set the long break interval to 15 minutes
+  (setq pomm-audio-enabled t) ;; Enable audio notifications
+  (setq pomm-mode-line-mode t)
+  (setq pomm-csv-history-file-timestamp-format "%F %T")
+  (setq pomm-csv-history-file "~/.emacs.d/pomm_work.csv")
+  (setq pomm-audio-tick-enabled nil)) ;; Enable ticking sound
+;; Configure alert to use libnotify for notifications
+(use-package alert
+  :ensure t
+  :init (setq alert-default-style 'osx-notifier)
+  :config
+  (setq alert-default-style 'libnotify))
+
+
+(use-package reveal-in-osx-finder
+  :ensure t
+  :commands (reveal-in-osx-finder))
+
+;; https://github.com/emacsmirror/expand-region?tab=readme-ov-file
+
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region)
+  :config
+  (message "loading expand-region")
+  )
+
+
+;; (defun autocompile nil
+;;   "compile itself if ~/.emacs"
+;;   (interactive)
+;;   (require 'bytecomp)
+;;   (let ((dotemacs (file-truename user-init-file)))
+;;     (if (string= (buffer-file-name) (file-chase-links dotemacs))
+;;       (byte-compile-file dotemacs))))
+
+;; (add-hook 'after-save-hook 'autocompile)
 
 
 (message "Finished loading niceties")

@@ -7,10 +7,17 @@
   :config
   (setq org-agenda-window-setup 'only-window)
   (setq org-agenda-files
-        (append         
-         (file-expand-wildcards (concat org-directory "org-roam/ppl/*.org"))
-         (file-expand-wildcards (concat org-directory "org-roam/administration/*.org"))
-         (file-expand-wildcards (concat org-directory"org-roam/notes/*.org"))))
+      (append
+       (file-expand-wildcards (concat org-directory "org-roam/ppl/*.org"))
+       (file-expand-wildcards (concat org-directory "org-roam/administration/*.org"))
+       (file-expand-wildcards (concat org-directory "org-roam/notes/*.org"))
+       (list (concat org-directory "cal.org"))            ;; Add cal.org
+       (list (concat org-directory "Orgzly/privat.org"))  ;; Orgzly private.org
+       (list (concat org-directory "Orgzly/work.org"))    ;; Orgzly work.org
+       ))
+
+
+  
   (setq org-agenda-clockreport-parameter-plist
         '(:link t :maxlevel 2 :fileskip0 t :compact t :narrow 60 :score 0))
   (setq org-agenda-skip-scheduled-if-done t))
@@ -30,7 +37,8 @@
                                 :time-grid t
                                 :date today
                                 :scheduled today
-                                :order 1)))))
+                                :order 1
+                                )))))
             (alltodo ""
                      ((org-agenda-overriding-header "")
                       (org-super-agenda-groups
@@ -44,13 +52,13 @@
                          (:name "📙 Books"
                                 :tag "reading"                                 
                                 :order 7)
+                         (:name "  ☕ Scheduled soon"
+                                :scheduled ((after today) (before +14d)) ; Schedule within the next two weeks
+                                :order 3)
                          (:name "  📌 Due Today"
                                 :deadline today
                                 :face (:background "AliceBlue" :underline nil)
                                 :order 1)
-                         (:name "  ☕ Scheduled soon"
-                                :scheduled future
-                                :order 3)
                          (:name "  ☕ Deadline soon"
                                 :deadline future
                                 :order 4)
@@ -73,12 +81,12 @@
                                 :log t)
                          ))))))))
   )
-(defun autocompile ()
-  "Automatically compile Emacs Lisp files upon saving."
-  (interactive)
-    (require 'bytecomp)
-    (byte-compile-file (buffer-file-name)))
+;; (defun autocompile ()
+;;   "Automatically compile Emacs Lisp files upon saving."
+;;   (interactive)
+;;     (require 'bytecomp)
+;;     (byte-compile-file (buffer-file-name)))
 
-(add-hook 'after-save-hook 'autocompile)
+;; (add-hook 'after-save-hook 'autocompile)
 
 (provide 'org-agenda-setup)

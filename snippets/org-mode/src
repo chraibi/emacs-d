@@ -2,6 +2,6 @@
 # name: src
 # key: src
 # --
-#+begin_src ${1:language} -n -r :results output :exports {both} :wrap results  
+#+begin_src ${1:language} -n :results output :exports both :wrap results :hlines yes :python ~/.venvs/pedpy/bin/python :session ${2:session} 
 $0
 #+end_src

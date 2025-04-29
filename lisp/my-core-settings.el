@@ -72,8 +72,11 @@
 (setq system-uses-terminfo nil)
 ;;----------------- KEYbindings --------------
 
-(global-set-key [f9] 'projectile-compile-project)
 
+(global-set-key (kbd "C-c n") 'fzf-git-grep)
+
+(global-set-key [f9] 'projectile-compile-project)
+(global-set-key (kbd "C-c s") 'window-swap-states)
 (global-set-key "\C-z" 'nil)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region-or-line)
 (global-set-key "\C-x\C-k" 'kill-region)
@@ -118,6 +121,7 @@
 (global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
+
 
 
 (global-set-key (kbd "M-o") 'ace-window)
@@ -227,13 +231,13 @@
 
 ;;(global-set-key (kbd "C-a") 'load-file)
 
-(defun autocompile ()
-  "Automatically compile Emacs Lisp files upon saving."
-  (interactive)
-    (require 'bytecomp)
-    (byte-compile-file (buffer-file-name)))
+;; (defun autocompile ()
+;;   "Automatically compile Emacs Lisp files upon saving."
+;;   (interactive)
+;;     (require 'bytecomp)
+;;     (byte-compile-file (buffer-file-name)))
 
-(add-hook 'after-save-hook 'autocompile)
+;; (add-hook 'after-save-hook 'autocompile)
 
 (message "end my settings")
 (provide 'my-core-settings)

@@ -35,13 +35,21 @@
 (setq projectile-switch-project-action 'helm-projectile)
 ;(setq helm-projectile-fuzzy-match nil)
 
-;(require 'helm-git-grep) ;; Not necessary if installed by package.el
-(global-set-key (kbd "C-c n") 'helm-git-grep)
-;; Invoke `helm-git-grep' from isearch.
-(define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)
-;; Invoke `helm-git-grep' from other helm.
-(eval-after-load 'helm
-  '(define-key helm-map (kbd "C-c n") 'helm-git-grep-from-helm))
+
+(defun my/setup-helm-keybindings ()
+  ;(global-set-key (kbd "C-c n") 'helm-git-grep)
+  (define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)
+  (define-key helm-map (kbd "C-c n") 'helm-git-grep-from-helm))
+
+(add-hook 'helm-mode-hook #'my/setup-helm-keybindings)
+
+;; ;(require 'helm-git-grep) ;; Not necessary if installed by package.el
+;; (global-set-key (kbd "C-c n") 'helm-git-grep)
+;; ;; Invoke `helm-git-grep' from isearch.
+;; (define-key isearch-mode-map (kbd "C-c n") 'helm-git-grep-from-isearch)
+;; ;; Invoke `helm-git-grep' from other helm.
+;; (eval-after-load 'helm
+;;   '(define-key helm-map (kbd "C-c n") 'helm-git-grep-from-helm))
 
 
 (provide 'setup-helm)

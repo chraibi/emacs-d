@@ -11,9 +11,9 @@
   ;; (flycheck-select-checker 'python-flake8)
   ;; (flycheck-mode 1)
   :config
-  (setq python-shell-interpreter "/usr/local/bin/python3")
-  (setq py-python-command "/usr/local/bin/python3")
-  (setq org-babel-python-command "/usr/local/bin/python3")
+  (setq python-shell-interpreter "/usr/bin/python3")
+  (setq py-python-command "/usr/bin/python3")
+  (setq org-babel-python-command "/usr/bin/python3")
   (setq 
       python-shell-interpreter-args "-i"
       python-shell-completion-native-enable nil
@@ -24,73 +24,34 @@
   )
 
 
-(setenv "WORKON_HOME" "/Users/chraibi/virtualenv/.pedpy_env/")
+;; Set the directory where your virtual environments are located
+
+;; Install and configure pyvenv
 (use-package pyvenv
   :ensure t
   :config
+  ;; Set the directory where your virtual environments are located
+  (setq pyvenv-workon-home "/Users/chraibi/.venvs")
+  ;; Enable pyvenv mode
   (pyvenv-mode t)
 
-  ;; Set correct Python interpreter
+  ;; Set the correct Python interpreter when activating a virtual environment
   (setq pyvenv-post-activate-hooks
-        (list (lambda ()
-                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+        '(;; Set the Python interpreter to the one in the activated virtual environment
+          (lambda ()
+            (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+
+  ;; Reset the Python interpreter when deactivating the virtual environment
   (setq pyvenv-post-deactivate-hooks
-        (list (lambda ()
-                (setq python-shell-interpreter "python3")))))
+        '(;; Restore the default system Python interpreter
+          (lambda ()
+            (setq python-shell-interpreter "python3")))))
 
 
-;; pyright and elpy somehow use node. node uses extensive cpu time.
-
-;;(setq py-install-directory "~/.emacs.d/lisp/pdee-master")
-;;(add-to-list 'load-path py-install-directory)
-
-;; (use-package lsp-pyright
-;;   :ensure t
-;;   :hook (python-mode . (lambda () (require 'lsp-pyright)))
-;;   :init (when (executable-find "python3")
-;;           (setq lsp-pyright-python-executable-cmd "python3")))
-
-;; (setq pyright-args '("--workers" "2"))  ;
-
-;; emacs 29.1 has eglot built-in
-;; Install eglot (if needed)
-;; (unless (package-installed-p 'eglot)
-;;   (package-refresh-contents)
-;;   (package-install 'eglot))
-;; (add-hook 'python-mode-hook 'eglot-ensure)
-;; (setq eglot-python-server 'pylsp)
-
-
-(use-package python-black
-  :demand t
-  :ensure t
-  :after python
-  :hook (python-mode .) 
-  )
-
-(use-package py-isort
-  :demand t
-  :ensure t
-  :after python
-  hook (python-mode .)
-  )
-; sphinx-doc to C-c M-d
-;; (use-package sphinx-doc
-;;   :ensure t
-;;   :init
-;;   (sphinx-doc-mode t)
-;;   (setq sphinx-doc-include-types t)
-;;   :hook (python-mode . sphinx-doc-mode)
-;;   )
-  ;; sphinx-doc to C-c M-d
-
- (use-package elpy
-   :ensure t
-   :init
-   (elpy-enable)
-   (setq elpy-rpc-python-command "/usr/local/bin/python3")   
-   )
-
+;; Enable Org Babel for Python
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
 
 (use-package reformatter
   :hook 
@@ -101,17 +62,6 @@
     :args `("format" "--stdin-filename" ,buffer-file-name "-")))
 
 
-
-;; (when (load "flycheck" t t)
-;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; (setq flycheck-enabled-checkers '(python-mypy))
-;; (setq flycheck-disabled-checkers '(python-pylint))
-;; (setq flycheck-select-checker 'python-mypy)
-
-        
-;;; Code:
 
 
 (message "Provide setup-python")

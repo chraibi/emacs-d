@@ -90,14 +90,25 @@
   (browse-kill-ring-highlight-current-entry t)
   )
 
+
+;; disable automatic infinite recursion
+(setq highlight-indent-guides-auto-enabled nil)
+
 (use-package highlight-indent-guides
-  :init
-  (message "loading hightlight-indent-guides!")
   :ensure t
-  :hook prog-mode-hook highlight-indent-guides-mode
-  :custom
-  (setq highlight-indent-guides-character "|")
-  )
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character)
+  (add-hook 'after-load-theme-hook #'highlight-indent-guides-auto-set-faces))
+
+;; (use-package highlight-indent-guides
+;;   :init
+;;   (message "loading hightlight-indent-guides!")
+;;   :ensure t
+;;   :hook prog-mode-hook highlight-indent-guides-mode
+;;   :custom
+;;   (setq highlight-indent-guides-character "|")
+;;   )
 
 (use-package smartparens
   :init

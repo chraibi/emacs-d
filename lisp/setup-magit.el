@@ -36,5 +36,16 @@
 
 (add-hook 'magit-log-edit-mode-hook (lambda() (flyspell-mode t)))
 
+
+;; (remove-hook 'magit-status-sections-hook 'magit-insert-bisect-output)
+;; (remove-hook 'magit-status-sections-hook 'magit-insert-bisect-rest)
+;; (remove-hook 'magit-status-sections-hook 'magit-insert-bisect-log)
+;; (remove-hook 'magit-status-sections-hook 'magit-insert-stashes)
+
+
+;; (setq magit-status-sections-hook (default-value 'magit-status-sections-hook))
+
+
+
 (provide 'setup-magit)
 ;;; setup-magit.el ends here

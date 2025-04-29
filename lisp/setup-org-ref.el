@@ -2,11 +2,12 @@
 ;; Initialisation of org-ref. Eventually related to helm-bibtex.el
 ;; also config for org-roam-bibtex
 
+
+
 (use-package org-ref
   :init
   (message "Init org-ref")
   :ensure t
-  :defer t
   :after org-roam
   :config  
   (setq bibtex-completion-bibliography '(
@@ -29,15 +30,17 @@
 	  (call-process "open" nil 0 nil fpath))
         org-ref-default-citation-link "cite"        
         )
+    
+  ;; Ensure org-ref-insert-link is defined before setting the keybinding
+  (define-key org-mode-map (kbd "C-c )") 'org-ref-insert-link)
   )
 
-(define-key org-mode-map (kbd "C-c )") 'org-ref-insert-link)
+
 
 (use-package org-roam-bibtex
   :init
   (message "Init org-roam-bibtex")
   :ensure t
-  :defer t
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode)
   :config
@@ -46,6 +49,10 @@
         orb-process-file-keyword t
         )   
   )
+
+(require 'org-ref-helm)
+(setq org-ref-insert-cite-function 'org-ref-cite-insert-helm)
+
 
 
 (provide 'org-ref)

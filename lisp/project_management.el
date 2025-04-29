@@ -20,8 +20,8 @@
 (use-package helm
   :init
   (message "loading helm!")
-  :defer t
   :ensure t
+  :demand t
   :after (projectile helm-projectile)
   :config
   (require 'setup-helm)
@@ -35,14 +35,12 @@
   :config
   (helm-projectile-on))
 
-
-
 (use-package fzf
   :init
   (setenv "FZF_DEFAULT_OPTS" "--ansi --height 100%")
   (message "loading fzf")
   :ensure t
-  :defer t
+  
   :bind
   (("C-c n" . fzf-git-grep)
    ("C-c C-f" . fzf-find-file)
