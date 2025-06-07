@@ -7,8 +7,7 @@
   :config
   (setq bibtex-completion-notes-path "/Users/chraibi/Library/CloudStorage/Orgfiles/org-files/org-roam/papers/bibnote.org")
 
-  (setq bibtex-completion-additional-search-fields '(keywords))
-
+  (setq bibtex-completion-additional-search-fields '(keywords tags))
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
 
@@ -19,17 +18,11 @@
           (default       . bibtex-completion-format-citation-default))
         )
 
-  (setq bibtex-completion-pdf-open-function
-      (lambda (fpath)
-          (message "field  %s" bibtex-completion-pdf-field )
-          (message "Opening Path : %s " bibtex-completion-library-path)
-          (message "Opening Path : %s " fpath)
-          (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath)
-          )
-        )
 
-
-  (setq bibtex-completion-additional-search-fields '(tags))
-  )
+   (setq bibtex-completion-pdf-open-function
+        (lambda (fpath)
+          (message "Opening PDF with Skim: %s" fpath)
+          (call-process "open" nil 0 nil "-a" "/Applications/Skim.app" fpath))))
+  
 
 (provide 'helm-bibtex)

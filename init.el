@@ -6,31 +6,32 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-
-(exec-path-from-shell-initialize)
 (use-package exec-path-from-shell
   :ensure t
-  :config
-  (when (daemonp)
-    (exec-path-from-shell-initialize)
-    (message "deamon mode")
-    )
-  )
+  :init (exec-path-from-shell-initialize))
 
-(require 'package)                                    
-; Disabling package activation at startup
+
+(require 'package)
 (setq package-enable-at-startup nil)
-;(package-initialize)
+(package-initialize)
+
+
+
+;; Optional: sanity check
+(message "Using org from: %s" (locate-library "org"))
+
+
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
+
+
 (unless (package-installed-p 'use-package)
-;(package-refresh-contents)
-(package-install 'use-package)
-)
+  (package-refresh-contents) ;; needed
+  (package-install 'use-package))
 
 (eval-when-compile
- (require 'use-package))
+  (require 'use-package))
 
 ;; helper function for timing loads
 (defun load-with-timing (file)
@@ -38,28 +39,29 @@
     (load file)
     (message "Loading %s took %s seconds"
              file
-             (float-time (time-subtract (current-time) start-time)))))
+             (float-time (time-subtract (current-time) start-time))))) 
+
 ;;----------------  load setups ----------------------------
 
-(load-with-timing "~/.emacs.d/lisp/niceties.elc")
-(load-with-timing "~/.emacs.d/lisp/my-core-settings.elc")
-(load-with-timing "~/.emacs.d/lisp/esthetics.elc")
+(load-with-timing "~/.emacs.d/lisp/niceties.el")
+(load-with-timing "~/.emacs.d/lisp/my-core-settings.el")
+(load-with-timing "~/.emacs.d/lisp/esthetics.el")
 (load-with-timing "~/.emacs.d/lisp/window_editing.el")
 (load-with-timing "~/.emacs.d/lisp/project_management.el")
 (load-with-timing "~/.emacs.d/lisp/org-basics.el")
-(load-with-timing "~/.emacs.d/lisp/setup-org-modern.elc")
-(load-with-timing "~/.emacs.d/lisp/setup-org-roam.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-modern.el")
+;(load-with-timing "~/.emacs.d/lisp/setup-org-roam.el")
 (load-with-timing "~/.emacs.d/lisp/setup-agenda.el")
 (load-with-timing "~/.emacs.d/lisp/setup-org-crypt.el")
 (load-with-timing "~/.emacs.d/lisp/load_coding.el")
 
 
-(defun load-ref ()
-  "Load setup-ref.el and setup-help-bibtex explicitly when needed."
-  (interactive)
-  (load-with-timing "~/.emacs.d/lisp/setup-helm-bibtex.el")
+;(defun load-ref ()
+;  "Load setup-ref.el and setup-help-bibtex explicitly when needed."
+;  (interactive)
+;  (load-with-timing "~/.emacs.d/lisp/setup-helm-bibtex.el")
   (load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
-  )
+;  )
 
 
 

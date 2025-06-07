@@ -51,45 +51,6 @@
   )
 
 
-;; (use-package lsp-pylyzer
-;;   :ensure t
-;;   :hook (python-mode . (lambda ()
-;;                           (require 'lsp-pylyzer)
-;;                           (lsp))))  ; or lsp-deferred
-
-
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :after lsp
-;;   :requires lsp-mode flycheck
-;;   :hook (lsp-mode . lsp-ui-mode)
-;;   :config
-;;   (setq 
-;;         lsp-ui-doc-enable t
-;;         lsp-ui-doc-mode t
-;;         lsp-ui-doc-show-with-cursor t        
-;;         lsp-ui-sideline-enable t
-;;         lsp-ui-sideline-show-diagnostics t
-;;         lsp-ui-sideline-show-code-actions t
-;;         lsp-modeline-code-actions-enable nil
-;;         lsp-ui-doc-use-childframe nil
-;;         lsp-ui-doc-position 'top
-;;         lsp-ui-doc-include-signature t
-;;         lsp-ui-flycheck-enable t
-;;         lsp-ui-flycheck-list-position 'right
-;;         lsp-ui-flycheck-live-reporting t
-;;         lsp-ui-peek-enable t
-;;         lsp-ui-doc-delay 1                
-;;         lsp-ui-peek-list-width 60
-;;         lsp-ui-peek-peek-height 25)
-;;   )
-
-;; (use-package lsp-pyright
-;;   :ensure t
-;;   :hook (python-mode . (lambda () (require 'lsp-pyright)))
-;;   :init (when (executable-find "python3")
-;;           (setq lsp-pyright-python-executable-cmd "python3")))
-
 
 (use-package helm-lsp
   :ensure t)

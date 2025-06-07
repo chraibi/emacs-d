@@ -25,6 +25,7 @@
 
 (use-package org-super-agenda
   :after org-agenda
+  :ensure t
   :config
   (org-super-agenda-mode)
   (setq org-agenda-custom-commands

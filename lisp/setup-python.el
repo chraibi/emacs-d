@@ -11,8 +11,11 @@
   ;; (flycheck-select-checker 'python-flake8)
   ;; (flycheck-mode 1)
   :config
-  (setq python-shell-interpreter "/usr/bin/python3")
-  (setq py-python-command "/usr/bin/python3")
+  (setq python-shell-interpreter "ipython"
+    python-shell-interpreter-args "-i --simple-prompt")
+
+;  (setq python-shell-interpreter "/usr/bin/python3")
+;  (setq py-python-command "/usr/bin/python3")
   (setq org-babel-python-command "/usr/bin/python3")
   (setq 
       python-shell-interpreter-args "-i"
@@ -54,6 +57,7 @@
  '((python . t)))
 
 (use-package reformatter
+  :ensure t
   :hook 
   (python-mode . ruff-format-on-save-mode)
   :config

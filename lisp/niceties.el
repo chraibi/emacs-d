@@ -47,15 +47,15 @@
 
 
 ;; Load and configure Marginalia
-;; (use-package marginalia
-;;   :general
-;;   (:keymaps 'minibuffer-local-map
-;;    "M-A" 'marginalia-cycle)
-;;   :custom
-;;   (marginalia-max-relative-age 0)
-;;   (marginalia-align 'right)
-;;   :init
-;;   (marginalia-mode))
+(use-package marginalia
+  :ensure t
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
+  :custom
+  (marginalia-max-relative-age 0)
+  (marginalia-align 'right)
+  :init
+  (marginalia-mode))
 
 ;; -------------- EMBARK
 ; can display annotations such as the file type for a file name completion or the documentation string for a command completion. This additional context can be quite handy, especially when you encounter similarly named candidates or when you need more information about each option.
@@ -78,12 +78,17 @@
                  nil
                  (window-parameters (mode-line-format . none)))))
 
+
+
+(use-package swiper
+  :ensure t)
+ 
 ;; Consult users will also want the embark-consult package.
 (use-package consult
+  :ensure t
   :init
   (message "loading consult")
-  :ensure t
-  :bind (("C-s" . swiper-isearch); consult-line I don't like the result
+  :bind (("C-s" . swiper-isearch) ; you prefer swiper over consult-line
          ("C-r" . swiper-isearch-backward)
          ("C-M-l" . consult-imenu)
          ("C-M-j" . persp-switch-to-buffer*)
@@ -91,14 +96,17 @@
          ("C-r" . consult-history))
   :custom
   (consult-project-root-function #'dw/get-project-root)
-  (completion-in-region-function #'consult-completion-in-region)
-  :config
-  (consult-preview-mode))
+  (completion-in-region-function #'consult-completion-in-region))
 
 
 (use-package savehist
   :init
-  (message "loading savehist")
+    (message "loading savehist")
+  (setq history-length 25)
+  (setq savehist-additional-variables '(mark-ring
+                                        global-mark-ring
+                                        search-ring
+                                        regexp-search-ring))
   (savehist-mode))
 
 

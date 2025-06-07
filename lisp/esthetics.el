@@ -17,9 +17,6 @@
 (set-cursor-color "#4a90e2")
 
 
-
-
-
 (custom-set-faces
  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
 
@@ -116,7 +113,7 @@
 (defun my/org-clock-update ()
   "Update the doom modeline with the current clocked time."
   (when (org-clock-is-active)
-    (setq doom-modeline-gnus-timer (org-clock-get-clock-string))))
+     (setq doom-modeline-gnus-timer (org-clock-get-clock-string))))
 
 (add-hook 'org-clock-out-hook 'my/org-clock-update)
 (add-hook 'org-clock-in-hook 'my/org-clock-update)
@@ -142,7 +139,7 @@
 ;;   (setq doom-modeline-enable-word-count t)
 ;;   (setq doom-modeline-icon nil)
 ;;   (setq doom-modeline-gnus-timer nil)
-;;   (setq org-clock-modeline-total 'current)  ;; Display the time for the current clock in the mode line
+       ;;   (setq org-clock-modeline-total 'current)  ;; Display the time for the current clock in the mode line
 ;;   (setq org-clock-clocked-in-display 'both) ;; Display the clocked-in time in the frame title
 ;;   (display-time-mode 1)
 ;;   )
@@ -151,9 +148,9 @@
 ;;           (lambda () (org-clock-update-mode-line)))
 ;; (add-hook 'org-clock-out-hook
 ;;           (lambda () (org-clock-remove-overlays)))
+ 
 
-
-;; ;; Modify the global mode line format to ensure the Org-mode clock is included in all buffers, including Python buffers.
+ ;; ;; Modify the global mode line format to ensure the Org-mode clock is included in all buffers, including Python buffers.
 ;; (setq-default mode-line-format
 ;;   (append mode-line-format
 ;;           '(:eval (when (and (fboundp 'org-clocking-p)

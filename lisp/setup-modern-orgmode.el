@@ -169,6 +169,7 @@
   :hook 
   (after-init . org-roam-db-autosync-mode)
   (org-roam-backlinks-mode . visual-line-mode)
+  (org-roam-capture-new-node-hook . save-buffer)
   :custom
   (org-roam-directory (concat org-directory "org-roam/"))
   (org-roam-complete-everywhere t)

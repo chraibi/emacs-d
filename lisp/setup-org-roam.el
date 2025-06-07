@@ -60,7 +60,7 @@
         ("n" "Note" plain
          "%?"
          :target (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n\n")
+                            "#+title: ${title}\n#+roam_aliases:\n#+category: ${slug}\n#+filetags:\n#+date: %U\n#+stage: %^{Stage|Idea|Work-in-Progress|Final}\n#+why: %^{Why (purpose of this profile)}\n\n")
          :immediate-finish t
          :unnarrowed t)        
         ("p" "Person" plain
@@ -172,7 +172,18 @@ With a prefix ARG always prompt for command to use."
     (call-process program nil 0 nil current-file-name)))
 
 
-(package-installed-p 'jinx)
+(defun my/org-roam-find-node-by-tag (tag)
+  "Find org-roam nodes with a specific TAG."
+  (interactive "sTag: ")
+  (org-roam-node-find
+   nil
+   nil
+   (lambda (node)
+     (member tag (org-roam-node-tags node)))))
+
+
+
+;(package-installed-p 'jinx)
 
 ;; (defun autocompile ()
 ;;   "Automatically compile Emacs Lisp files upon saving."
