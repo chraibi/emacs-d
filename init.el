@@ -1,3 +1,5 @@
+;;; init.el  -*- lexical-binding: t; -*-
+
 ;;; package ---- summary
 ;;; Code:
 ;;; Commentary:
@@ -42,6 +44,20 @@
              (float-time (time-subtract (current-time) start-time))))) 
 
 ;;----------------  load setups ----------------------------
+(require 'org-clock)
+
+(defun my/org-clock-save-to-file ()
+  "Save clock string to file for tmux."
+  (with-temp-file "~/.emacs-clock"
+    (insert (if (org-clocking-p)
+                (org-clock-get-clock-string)
+              ""))))
+
+(add-hook 'org-clock-in-hook #'my/org-clock-save-to-file)
+(add-hook 'org-clock-out-hook #'my/org-clock-save-to-file)
+;; Add a repeating timer to refresh every 60 seconds
+(run-with-timer 0 60 #'my/org-clock-save-to-file)
+
 
 (load-with-timing "~/.emacs.d/lisp/niceties.el")
 (load-with-timing "~/.emacs.d/lisp/my-core-settings.el")
@@ -50,7 +66,7 @@
 (load-with-timing "~/.emacs.d/lisp/project_management.el")
 (load-with-timing "~/.emacs.d/lisp/org-basics.el")
 (load-with-timing "~/.emacs.d/lisp/setup-org-modern.el")
-;(load-with-timing "~/.emacs.d/lisp/setup-org-roam.el")
+(load-with-timing "~/.emacs.d/lisp/setup-org-roam.el")
 (load-with-timing "~/.emacs.d/lisp/setup-agenda.el")
 (load-with-timing "~/.emacs.d/lisp/setup-org-crypt.el")
 (load-with-timing "~/.emacs.d/lisp/load_coding.el")
@@ -64,6 +80,21 @@
 ;  )
 
 
+(use-package copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . copilot-accept-completion)
+              ("TAB" . copilot-accept-completion)
+              ("C-TAB" . copilot-accept-completion-by-word)
+              ("C-<tab>" . copilot-accept-completion-by-word)
+              ("C-n" . copilot-next-completion)
+              ("C-p" . copilot-previous-completion))
+  :config
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
 
 
 ;(load-with-timing "~/.emacs.d/lisp/setup-deft.el")
