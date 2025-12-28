@@ -171,15 +171,6 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-;; ;;-------------------------- Macros
-
-;; (defvar server-buffer-clients)
-;; (when (and (fboundp 'server-start) (string-equal (getenv "TERM") 'xterm))
-;;   (server-start)
-;;   (defun fp-kill-server-with-buffer-routine ()
-;;     (and server-buffer-clients (server-done)))
-;;   (add-hook 'kill-buffer-hook 'fp-kill-server-with-buffer-routine))
-;;https://github.com/magnars/expand-region.el
 
 ;------------------------------
 

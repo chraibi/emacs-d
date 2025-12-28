@@ -20,19 +20,18 @@
 (set-cursor-color "#4a90e2")
 
 ;; Basic UI improvements
-(custom-set-faces
- '(show-paren-match ((((class color) (background light)) (:background "blue")))))
+;; (custom-set-faces
+;;  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
 
-(set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
+;; (set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
 (show-paren-mode t) ;; highlight matching parentheses
 
 ;;--------------------- highlight line
-(global-hl-line-mode 1)
-(set-face-background 'highlight "#222")
-(set-face-foreground 'highlight nil)
-(set-face-underline 'highlight t)
+;(global-hl-line-mode 1)
+;; (set-face-background 'highlight "#222")
+;; (set-face-foreground 'highlight nil)
+;; (set-face-underline 'highlight t)
 
-(setq-default global-visual-line-mode t)
 (setq show-paren-style 'parenthesis) ; highlight just brackets
 
 ;; ================ GUI-SPECIFIC CONFIGURATION ================
@@ -41,11 +40,12 @@
   
   ;; Fira Code with ligatures (GUI only)
   (use-package fira-code-mode
-    :if (display-graphic-p)
-    :ensure t
-    :custom
-    (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
-    :hook prog-mode)
+  :if (display-graphic-p)
+  :ensure t
+  :custom
+  (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
+  :hook (prog-mode . fira-code-mode))
+
   
   ;; Font setup with fallback
   (cond
@@ -57,14 +57,40 @@
     (set-face-attribute 'default nil :family "Fira Code" :height 180 :weight 'normal)
     (set-frame-font "Fira Code" nil t)
     (message "Using Fira Code"))
-   (t (message "Fira Code not found, using default font")))
-  
-  ;; GUI-specific theme
+   (t (message "Fira Code not found, using default font"))))
+
+
+  ;; --- Solarized everywhere (GUI + terminal), frame-aware ---
   (use-package solarized-theme
     :ensure t
+    :init
+    ;; Important for TTY: make solarized use 256-color palette if available
+    (setq solarized-termcolors 256
+          solarized-use-variable-pitch nil
+          solarized-use-less-bold t
+          solarized-use-more-italic t)
     :config
-    (load-theme 'solarized-light t))
-  
+    (defun my/apply-solarized (frame)
+      "Apply solarized-light consistently for FRAME."
+      (with-selected-frame frame
+        ;; Make sure Emacs treats the frame as light; helps in TTY.
+        (setq frame-background-mode 'light)
+        (frame-set-background-mode frame)
+
+        ;; Disable other themes first (prevents mixed faces).
+        (mapc #'disable-theme custom-enabled-themes)
+
+        (load-theme 'solarized-light t)
+
+        ;; If you insist on tweaks, do them *after* the theme, and keep them minimal:
+        ;; (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil)
+        ))
+
+    ;; Apply to current frame (non-daemon) and future frames (daemon/emacsclient)
+    (my/apply-solarized (selected-frame))
+    (add-hook 'after-make-frame-functions #'my/apply-solarized))
+
+    
   ;; Beacon mode (works better in GUI)
   (use-package beacon
     :ensure t
@@ -72,86 +98,57 @@
     (setq beacon-push-mark 35)
     (setq beacon-color "#e56911")
     (beacon-mode 1))
-  ) ; End of (when (display-graphic-p))
 
-;; ================ TERMINAL-SPECIFIC CONFIGURATION ================
-(unless (display-graphic-p)
-  (message "Configuring terminal-specific settings...")
-  
-  ;; Fix terminal encoding and display issues
-  (set-terminal-coding-system 'utf-8)
-  (set-keyboard-coding-system 'utf-8)
-  (prefer-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8)
-  (set-default-coding-systems 'utf-8)
-  (set-selection-coding-system 'utf-8)
-  
-  ;; Terminal-friendly theme
-  (use-package zenburn-theme
-    :ensure t
-    :config
-    (load-theme 'zenburn t))
-  
-  ;; Alternative good terminal themes (uncomment to try):
-  ;; (use-package gruvbox-theme
-  ;;   :ensure t
-  ;;   :config
-  ;;   (load-theme 'gruvbox-dark-medium t))
-  
-  ;; (use-package dracula-theme
-  ;;   :ensure t
-  ;;   :config
-  ;;   (load-theme 'dracula t))
-  
+;; ================ TERMINAL-SPECIFIC CONFIGURATION ================  
   ;; Enhanced terminal colors
-  (setq term-default-bg-color "#3f3f3f")
-  (setq term-default-fg-color "#dcdccc")
+  ;; (setq term-default-bg-color "#3f3f3f")
+  ;; (setq term-default-fg-color "#dcdccc")
   
-  ;; Better terminal cursor
-  (setq cursor-type 'box)
-  (add-hook 'term-mode-hook
-            (lambda ()
-              (setq cursor-type 'box)))
+  ;; ;; Better terminal cursor
+  ;; (setq cursor-type 'box)
+  ;; (add-hook 'term-mode-hook
+  ;;           (lambda ()
+  ;;             (setq cursor-type 'box)))
   
-  ;; Terminal-specific UI tweaks
-  (set-face-background 'highlight "#4f4f4f")
-  (set-face-foreground 'highlight "#ffffff")
-  (set-face-underline 'highlight t)
+  ;; ;; Terminal-specific UI tweaks
+  ;; (set-face-background 'highlight "#4f4f4f")
+  ;; (set-face-foreground 'highlight "#ffffff")
+  ;; (set-face-underline 'highlight t)
   
-  ;; Improve region selection in terminal
-  (set-face-attribute 'region nil :background "#cc9393" :foreground "#000000")
+  ;; ;; Improve region selection in terminal
+  ;; (set-face-attribute 'region nil :background "#cc9393" :foreground "#000000")
   
-  ;; Better parentheses highlighting for terminal
-  (set-face-attribute 'show-paren-match nil
-                      :background "#8cd0d3"
-                      :foreground "#000000"
-                      :weight 'bold)
+  ;; ;; Better parentheses highlighting for terminal
+  ;; (set-face-attribute 'show-paren-match nil
+  ;;                     :background "#8cd0d3"
+  ;;                     :foreground "#000000"
+  ;;                     :weight 'bold)
   
-  ;; Terminal-friendly line numbers (if you use them)
-  (when (fboundp 'display-line-numbers-mode)
-    (set-face-attribute 'line-number nil
-                        :foreground "#7f7f7f"
-                        :background "#2b2b2b")
-    (set-face-attribute 'line-number-current-line nil
-                        :foreground "#ffffff"
-                        :background "#4f4f4f"
-                        :weight 'bold))
+  ;; ;; Terminal-friendly line numbers (if you use them)
+  ;; (when (fboundp 'display-line-numbers-mode)
+  ;;   (set-face-attribute 'line-number nil
+  ;;                       :foreground "#7f7f7f"
+  ;;                       :background "#2b2b2b")
+  ;;   (set-face-attribute 'line-number-current-line nil
+  ;;                       :foreground "#ffffff"
+  ;;                       :background "#4f4f4f"
+  ;;                       :weight 'bold))
   
   ;; Enable mouse support in terminal
-  (unless (display-graphic-p)
-    (xterm-mouse-mode 1)
-    (global-set-key [mouse-4] 'scroll-down-line)
-    (global-set-key [mouse-5] 'scroll-up-line))
+  ;; (unless (display-graphic-p)
+  ;;   (xterm-mouse-mode 1)
+  ;;   (global-set-key [mouse-4] 'scroll-down-line)
+  ;;   (global-set-key [mouse-5] 'scroll-up-line))
   
-  ;; Fix terminal font rendering issues
-  (setq inhibit-compacting-font-caches t)
-  (setq use-default-font-for-symbols nil)
+  ;; ;; Fix terminal font rendering issues
+  ;; (setq inhibit-compacting-font-caches t)
+  ;; (setq use-default-font-for-symbols nil)
   
-  ;; Ensure proper character display in terminal
-  (setq-default buffer-file-coding-system 'utf-8-unix)
-  (setq-default default-buffer-file-coding-system 'utf-8-unix)
+  ;; ;; Ensure proper character display in terminal
+  ;; (setq-default buffer-file-coding-system 'utf-8-unix)
+  ;; (setq-default default-buffer-file-coding-system 'utf-8-unix)
   
-  ) ; End of (unless (display-graphic-p))
+;  ) ; End of (unless (display-graphic-p))
 
 ;; ================ UNIVERSAL CONFIGURATION (GUI + Terminal) ================
 
