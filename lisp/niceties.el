@@ -1,52 +1,56 @@
-;;; Package --- Some nice-to-have stuff
+;;; niceties.el --- Some nice-to-have stuff -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; server, async, vertico, embark, consult, savehist, marginalia, orderless
 ;;; Code:
-;;; Commentary: server, async, vertico, embark, consult, savehist, marginalia, orderless
 
 (message "Loading niceties")
-; The async package provides asynchronous execution capabilities in Emacs Lisp, allowing certain tasks to be executed in the background, without blocking the Emacs user interface. ;
 
+;; Built-in
 (save-place-mode 1)
-
-; By default Emacs distinguishes between automatic and manual window switching. If you effect a window switch yourself with C-x b, it’s manual — and exempt from any display action rules you create yourself.
-; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
 (setq switch-to-buffer-obey-display-actions t)
 
+;; -------------------- async --------------------
 (use-package async
+  :ensure t
   :init
-  (message "loading async")
-  :ensure t)
+  (message "loading async"))
 
-;; ;; Alternative 1: Enable Jinx globally
-;; (use-package jinx
-;;   :hook (emacs-startup . global-jinx-mode)
-;;   :bind (("M-$" . jinx-correct)
-;;          ("C-M-$" . jinx-languages)))
-
-
+;; -------------------- vertico --------------------
 (use-package vertico
+  :ensure t
   :init
   (message "loading vertico")
-  :ensure t
   :config
-  (vertico-mode)
-  ;; Extensions
-  (vertico-grid-mode)
+  (vertico-mode 1)
+  ;; If you really want grid always:
+;  (vertico-grid-mode 1)
 
-  ;; Prefix the current candidate with “» ”. From
-  ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
-  (advice-add #'vertico--format-candidate :around
-                                          (lambda (orig cand prefix suffix index _start)
-                                            (setq cand (funcall orig cand prefix suffix index _start))
-                                            (concat
-                                             (if (= vertico--index index)
-                                                 (propertize "» " 'face 'vertico-current)
-                                               "  ")
-                                             cand)))
-  )
+  ;; Prefix current candidate with an arrow.
+  ;; NOTE: This advises an internal function; keep it isolated.
+  (defun my/vertico-prefix-current-candidate (orig cand prefix suffix index start)
+    (setq cand (funcall orig cand prefix suffix index start))
+    (concat (if (= vertico--index index)
+                (propertize "» " 'face 'vertico-current)
+              "  ")
+            cand))
 
+  (advice-add #'vertico--format-candidate :around #'my/vertico-prefix-current-candidate))
 
 
-;; Load and configure Marginalia
+
+
+(use-package vertico-multiform
+  :ensure nil
+  :after vertico
+  :config
+  (vertico-multiform-mode 1)
+  (setq vertico-multiform-commands
+        '((consult-imenu grid)
+          (consult-line grid)
+          (execute-extended-command reverse))))
+
+
+;; -------------------- marginalia --------------------
 (use-package marginalia
   :ensure t
   :bind (:map minibuffer-local-map
@@ -55,24 +59,19 @@
   (marginalia-max-relative-age 0)
   (marginalia-align 'right)
   :init
-  (marginalia-mode))
+  (marginalia-mode 1))
 
-;; -------------- EMBARK
-; can display annotations such as the file type for a file name completion or the documentation string for a command completion. This additional context can be quite handy, especially when you encounter similarly named candidates or when you need more information about each option.
-
+;; -------------------- embark --------------------
 (use-package embark
+  :ensure t
   :init
   (message "loading embark")
-  :ensure t
-  :bind
-  (("C-." . embark-act)         ;; pick some comfortable binding
-   ("C-;" . embark-dwim)        ;; good alternative: M-.
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-  :init
-  ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings))
   :config
-  ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
@@ -80,77 +79,87 @@
 
 
 
+
+;; -------------------- consult + swiper choice --------------------
+;; You currently prefer swiper for C-s/C-r. Keep it, but still use consult for other commands.
 (use-package swiper
-  :ensure t)
- 
-;; Consult users will also want the embark-consult package.
+  :ensure t
+  :bind (("C-s" . swiper-isearch)
+         ("C-r" . swiper-isearch-backward)))
+
 (use-package consult
   :ensure t
   :init
   (message "loading consult")
-  :bind (("C-s" . swiper-isearch) ; you prefer swiper over consult-line
-         ("C-r" . swiper-isearch-backward)
-         ("C-M-l" . consult-imenu)
-         ("C-M-j" . persp-switch-to-buffer*)
+  :bind (("C-M-l" . consult-imenu)
          :map minibuffer-local-map
          ("C-r" . consult-history))
   :custom
-  (consult-project-root-function #'dw/get-project-root)
-  (completion-in-region-function #'consult-completion-in-region))
+  ;; Prefer a safe default. If you have dw/get-project-root, you can restore it.
+  (consult-project-root-function
+   (lambda ()
+     (when-let ((pr (project-current nil)))
+       (car (project-roots pr))))))
 
 
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+
+;; -------------------- savehist (built-in) --------------------
 (use-package savehist
+  :ensure nil
   :init
-    (message "loading savehist")
-  (setq history-length 25)
-  (setq savehist-additional-variables '(mark-ring
-                                        global-mark-ring
-                                        search-ring
-                                        regexp-search-ring))
-  (savehist-mode))
+  (message "loading savehist")
+  (setq history-length 200
+        savehist-additional-variables '(mark-ring global-mark-ring search-ring regexp-search-ring))
+  (savehist-mode 1))
 
-
+;; -------------------- icons completion (GUI only) --------------------
 (use-package all-the-icons-completion
+  :ensure t
+  :if (display-graphic-p)
   :after (marginalia all-the-icons)
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
-  (all-the-icons-completion-mode)
-  (message "loading all-the-icons-completion ")
-  )
+  (message "loading all-the-icons-completion")
+  :config
+  (all-the-icons-completion-mode 1))
 
-
-
-; Optionally use the `orderless' completion style.
+;; -------------------- orderless --------------------
 (use-package orderless
   :ensure t
   :init
   (message "loading orderless")
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
-  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  :config
+  ;; Core completion config (single source of truth)
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-(setq completion-styles '(substring orderless basic))
-(defun flex-if-twiddle (pattern _index _total)
-  (when (string-suffix-p "~" pattern)
-    `(orderless-flex . ,(substring pattern 0 -1))))
+        completion-category-overrides '((file (styles partial-completion))))
 
-(defun first-initialism (pattern index _total)
-  (if (= index 0) 'orderless-initialism))
+  ;; Your dispatchers
+  (defun my/orderless-flex-if-twiddle (pattern _index _total)
+    (when (string-suffix-p "~" pattern)
+      `(orderless-flex . ,(substring pattern 0 -1))))
 
-(defun without-if-bang (pattern _index _total)
-  (cond
-   ((equal "!" pattern)
-    '(orderless-literal . ""))
-   ((string-prefix-p "!" pattern)
-    `(orderless-without-literal . ,(substring pattern 1)))))
+  (defun my/orderless-first-initialism (_pattern index _total)
+    (when (= index 0) 'orderless-initialism))
 
-(setq orderless-matching-styles '(orderless-regexp)
-      orderless-style-dispatchers '(first-initialism
-                                    flex-if-twiddle
-                                    without-if-bang))
+  (defun my/orderless-without-if-bang (pattern _index _total)
+    (cond
+     ((equal "!" pattern) '(orderless-literal . ""))
+     ((string-prefix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 1)))))
 
+  (setq orderless-matching-styles '(orderless-regexp)
+        orderless-style-dispatchers '(my/orderless-first-initialism
+                                      my/orderless-flex-if-twiddle
+                                      my/orderless-without-if-bang)))
+
+;; -------------------- server (built-in) --------------------
 (use-package server
   :ensure nil
   :hook (after-init . my/ensure-server)
@@ -161,60 +170,52 @@
     (unless (server-running-p server-name)
       (server-start))))
 
-
-;; Use-package configuration for pomm
+;; -------------------- pomm + alert sound --------------------
 (use-package pomm
   :ensure t
-  ;; Load pomm when the commands `pomm` or `pomm-third-time` are invoked
   :commands (pomm pomm-third-time)
-  ;; Optional: Add any additional configurations or hooks for pomm
   :config
-  (setq pomm-interval 50) ;; Set the default pomodoro interval to 25 minutes
-  (setq pomm-short-break 10) ;; Set the short break interval to 5 minutes
-  (setq pomm-long-break 20) ;; Set the long break interval to 15 minutes
-  (setq pomm-audio-enabled t) ;; Enable audio notifications
-  (setq pomm-mode-line-mode t)
-  (setq pomm-csv-history-file-timestamp-format "%F %T")
-  (setq pomm-csv-history-file "~/.emacs.d/pomm_work.csv")
-  (setq pomm-audio-tick-enabled nil)) ;; Enable ticking sound
-;; Configure alert to use libnotify for notifications
+  (setq pomm-interval 50
+        pomm-short-break 10
+        pomm-long-break 20
+        pomm-audio-enabled t
+        pomm-mode-line-mode t
+        pomm-csv-history-file-timestamp-format "%F %T"
+        pomm-csv-history-file "~/.emacs.d/pomm_work.csv"
+        pomm-audio-tick-enabled nil))
+
 (use-package alert
   :ensure t
   :init
   (setq alert-default-style 'osx-notifier)
   :config
   (defun my-alert-afplay (&rest _args)
-    "Play a sound after any `alert` call."
     (start-process "alert-sound" nil "afplay"
                    (expand-file-name "~/.emacs.d/sounds/chaffinch-singing-sound-effect-384534.wav")))
-
   (advice-remove 'alert #'my-alert-afplay)
   (advice-add 'alert :after #'my-alert-afplay))
 
 
-;; (use-package alert
-;;   :ensure t
-;;   :init (setq alert-default-style 'osx-notifier)
-;;   :config
-;;   (setq alert-default-style 'libnotify))
+;; improve completion ergonomics
+(use-package emacs
+  :ensure nil
+  :init
+  (setq enable-recursive-minibuffers t
+        read-extended-command-predicate #'command-completion-default-include-p
+        completions-detailed t))
 
 
+
+;; -------------------- misc --------------------
 (use-package reveal-in-osx-finder
   :ensure t
   :commands (reveal-in-osx-finder))
 
-;; https://github.com/emacsmirror/expand-region?tab=readme-ov-file
-
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region)
-  :config
-  (message "loading expand-region")
-  )
-
-
-;; (add-hook 'after-save-hook 'autocompile)
-
+  :init
+  (message "loading expand-region"))
 
 (message "Finished loading niceties")
 (provide 'niceties)
