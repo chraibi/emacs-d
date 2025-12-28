@@ -197,6 +197,61 @@
 
 ;; (add-hook 'after-save-hook 'autocompile)
 
+(use-package god-mode
+  :ensure t
+  :config
+  (global-set-key (kbd "<escape>") #'god-local-mode)
+  (define-key god-local-mode-map (kbd "i") #'god-local-mode)
+  (setq god-mode-enable-function-key-translation nil)
+  (add-hook 'minibuffer-setup-hook
+            (lambda () (god-local-mode -1)))
+  )
+
+(defun my-god-mode-update-cursor-type ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar)))
+
+(add-hook 'post-command-hook #'my-god-mode-update-cursor-type)
+
+(defconst my-solarized
+  '((base03 . "#002b36")
+    (base01 . "#586e75")
+    (base00 . "#657b83")
+    (base2  . "#eee8d5")
+    (base3  . "#fdf6e3")
+    (cyan   . "#2aa198")
+    (blue   . "#268bd2")
+    (violet . "#6c71c4")))
+
+(defun my-god-mode-update-mode-line ()
+  (let-alist my-solarized-light
+    (if god-local-mode
+        (progn
+          ;; Active mode-line (God Mode ON)
+          (set-face-attribute 'mode-line nil
+                    :background .violet
+                    :foreground .base00
+                    :box `(:line-width 2 :color ,.cyan))
+          (set-face-attribute 'mode-line-inactive nil
+                              :foreground .base01
+                              :background .violet
+                              :box nil))
+      ;; Normal mode
+      (set-face-attribute 'mode-line nil
+                          :foreground .base00
+                          :background .base2
+                          :box nil)
+      (set-face-attribute 'mode-line-inactive nil
+                          :foreground .base01
+                          :background .base3
+                          :box nil))))
+
+
+(add-hook 'god-mode-enabled-hook #'my-god-mode-update-mode-line)
+(add-hook 'god-mode-disabled-hook #'my-god-mode-update-mode-line)
+
+
+
+
 (message "end my settings")
 (provide 'my-core-settings)
 ;;; my-core-settings.el ends here
