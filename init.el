@@ -72,29 +72,18 @@
 (load-with-timing "~/.emacs.d/lisp/load_coding.el")
 
 
-;(defun load-ref ()
-;  "Load setup-ref.el and setup-help-bibtex explicitly when needed."
-;  (interactive)
-;  (load-with-timing "~/.emacs.d/lisp/setup-helm-bibtex.el")
-  (load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
-;  )
-
-
-(use-package copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . copilot-accept-completion)
-              ("TAB" . copilot-accept-completion)
-              ("C-TAB" . copilot-accept-completion-by-word)
-              ("C-<tab>" . copilot-accept-completion-by-word)
-              ("C-n" . copilot-next-completion)
-              ("C-p" . copilot-previous-completion))
+(use-package org
+  :ensure t
   :config
-  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
-  (add-to-list 'copilot-indentation-alist '(org-mode 2))
-  (add-to-list 'copilot-indentation-alist '(text-mode 2))
-  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
+  (require 'org-habit)
+  (add-to-list 'org-modules 'org-habit))
+(setq org-habit-show-habits-only-for-today nil)
+(setq org-habit-graph-column 60) ;; Customize graph placement
+
+
+(load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
+
+
 
 
 ;(load-with-timing "~/.emacs.d/lisp/setup-deft.el")

@@ -31,8 +31,7 @@
    ("C-c u" . 'clang-format-buffer)
    )
   :config
-  (load "/usr/local/Cellar/clang-format/12.0.1/share/clang/clang-format.el")
-  )
+  (setq clang-format-executable "/opt/homebrew/bin/clang-format"))
 
 (use-package setup-cc
   :init
@@ -56,8 +55,28 @@
 (use-package setup-lsp
   :init
   (message "loading setup-lsp")
-  :defer t
+  ; :defer t
   )
+
+
+
+(use-package copilot
+  :ensure t
+  :hook ((python-mode c++-mode c-mode) . copilot-mode)
+  :bind
+  (:map copilot-completion-map
+        ("<tab>"     . copilot-accept-completion)
+        ("TAB"       . copilot-accept-completion)
+        ("C-<tab>"   . copilot-accept-completion-by-word)
+        ("C-TAB"     . copilot-accept-completion-by-word)
+        ("C-n"       . copilot-next-completion)
+        ("C-p"       . copilot-previous-completion))
+  :config
+  (setq copilot-indentation-alist
+        '((python-mode . 4)
+          (c++-mode    . 2)
+          (c-mode      . 2))))
+
 
 (message "Finished loading coding settings")
 (provide 'load_configs)
