@@ -14,10 +14,20 @@
   :hook (cmake-mode . cmake-font-lock-activate))
 
 
-(defadvice compile (around split-horizontally activate)
+
+(defun my/compile-split-right (orig &rest args)
   (let ((split-width-threshold 0)
         (split-height-threshold nil))
-    ad-do-it))
+    (apply orig args)))
+
+(advice-add 'compile :around #'my/compile-split-right)
+;;Replace defadvice with advice-add
+;; (defadvice compile (around split-horizontally activate)
+;;   (let ((split-width-threshold 0)
+;;         (split-height-threshold nil))
+;;     ad-do-it))
+
+
 
 (make-variable-buffer-local 'compile-command)
 (message "> finished loading cmake-mode")
@@ -43,14 +53,16 @@
     (message "Loading setup-cc!"))
   )
 
+;; ------ Python setup (local file)
 (message "load python-setup")
-(defun python-mode-setup ()
- "Load python mode."
- (when (eq major-mode 'python-mode)
-   (message "Custom python hook run")
-   (load-library "setup-python")))
+(defun my/python-mode-setup ()
+  "Load Python setup."
+  (message "Custom python hook run")
+  (require 'setup-python nil 'noerror))
 
-(add-hook 'python-mode-hook 'python-mode-setup)
+(add-hook 'python-mode-hook #'my/python-mode-setup)
+(add-hook 'python-ts-mode-hook #'my/python-mode-setup)
+
 
 (use-package setup-lsp
   :init
@@ -70,16 +82,68 @@
         ("C-TAB"   . copilot-accept-completion-by-word)
         ("C-n"     . copilot-next-completion)
         ("C-p"     . copilot-previous-completion))
+)
+
+;; Completion: Company + CAPF + Yasnippet
+(use-package yasnippet
+  :ensure t
+  :init
+  ;; Make sure yas is available early enough for completion backends.
+  (yas-global-mode 1)
   :config
-  (setq copilot-indentation-alist
-        '((python-mode     . 4)
-          (python-ts-mode  . 4)
-          (c++-mode        . 2)
-          (c++-ts-mode     . 2)
-          (c-mode          . 2)
-          (c-ts-mode       . 2)
-          (prog-mode       . 2))))  ;; fallback for derived prog modes
+  (yas-reload-all))
+
+(use-package company
+  :ensure t
+  :after yasnippet
+  :init
+  (global-company-mode 1)
+  :custom
+  (company-idle-delay 0.2)
+  (company-minimum-prefix-length 2)
+  (company-tooltip-align-annotations t)
+  :config
+
+  ;; Prefer CAPF but allow snippet completion
+  (setq company-backends
+        '((company-capf company-yasnippet)
+          company-files
+          company-keywords))
+
+  ;; Frame-aware company colors
+  (defun my/setup-company-faces ()
+    "Setup company colors based on current frame."
+    (if (display-graphic-p)
+        (progn
+          (set-face-attribute 'company-tooltip nil
+                              :background "#4f4f4f"
+                              :foreground "#dcdccc")
+          (set-face-attribute 'company-tooltip-selection nil
+                              :background "#8cd0d3"
+                              :foreground "#000000")
+          (set-face-attribute 'company-tooltip-common nil
+                              :foreground "#f0dfaf"
+                              :weight 'bold))
+      (progn
+        (set-face-attribute 'company-tooltip nil
+                            :background "#f0f0f0"
+                            :foreground "#000000")
+        (set-face-attribute 'company-tooltip-selection nil
+                            :background "#4a90e2"
+                            :foreground "#ffffff")
+        (set-face-attribute 'company-tooltip-common nil
+                            :foreground "#d33682"
+                            :weight 'bold))))
+
+  (add-hook 'focus-in-hook #'my/setup-company-faces)
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
+                (my/setup-company-faces))))
+  (my/setup-company-faces))
+
+
 
 (message "Finished loading coding settings")
-(provide 'load_configs)
+(provide 'load_coding)
 
