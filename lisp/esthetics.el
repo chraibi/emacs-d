@@ -45,50 +45,50 @@
   :custom
   (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
   :hook (prog-mode . fira-code-mode))
-
+)
   
   ;; Font setup with fallback
-  (cond
-   ((find-font (font-spec :name "Fira Code Retina"))
-    (set-face-attribute 'default nil :family "Fira Code Retina" :height 180 :weight 'normal)
-    (set-frame-font "Fira Code Retina" nil t)
-    (message "Using Fira Code Retina"))
-   ((find-font (font-spec :name "Fira Code"))
-    (set-face-attribute 'default nil :family "Fira Code" :height 180 :weight 'normal)
-    (set-frame-font "Fira Code" nil t)
-    (message "Using Fira Code"))
-   (t (message "Fira Code not found, using default font"))))
+  ;; (cond
+  ;;  ((find-font (font-spec :name "Fira Code Retina"))
+  ;;   (set-face-attribute 'default nil :family "Fira Code Retina" :height 180 :weight 'normal)
+  ;;   (set-frame-font "Fira Code Retina" nil t)
+  ;;   (message "Using Fira Code Retina"))
+  ;;  ((find-font (font-spec :name "Fira Code"))
+  ;;   (set-face-attribute 'default nil :family "Fira Code" :height 180 :weight 'normal)
+  ;;   (set-frame-font "Fira Code" nil t)
+  ;;   (message "Using Fira Code"))
+  ;;  (t (message "Fira Code not found, using default font")))
+  
 
 
-  ;; --- Solarized everywhere (GUI + terminal), frame-aware ---
-  (use-package solarized-theme
-    :ensure t
-    :init
-    ;; Important for TTY: make solarized use 256-color palette if available
-    (setq solarized-termcolors 256
-          solarized-use-variable-pitch nil
-          solarized-use-less-bold t
-          solarized-use-more-italic t)
-    :config
-    (defun my/apply-solarized (frame)
-      "Apply solarized-light consistently for FRAME."
-      (with-selected-frame frame
-        ;; Make sure Emacs treats the frame as light; helps in TTY.
-        (setq frame-background-mode 'light)
-        (frame-set-background-mode frame)
-
-        ;; Disable other themes first (prevents mixed faces).
-        (mapc #'disable-theme custom-enabled-themes)
-
-        (load-theme 'solarized-light t)
-
-        ;; If you insist on tweaks, do them *after* the theme, and keep them minimal:
-        ;; (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil)
-        ))
-
-    ;; Apply to current frame (non-daemon) and future frames (daemon/emacsclient)
-    (my/apply-solarized (selected-frame))
-    (add-hook 'after-make-frame-functions #'my/apply-solarized))
+;; --- Solarized everywhere (GUI + terminal), frame-aware ---
+(use-package solarized-theme
+  :ensure t
+  :init
+  ;; Important for TTY: make solarized use 256-color palette if available
+  (setq solarized-termcolors 256
+        solarized-use-variable-pitch nil
+        solarized-use-less-bold t
+        solarized-use-more-italic t)
+  :config
+  (defun my/apply-solarized (frame)
+    "Apply solarized-light consistently for FRAME."
+    (with-selected-frame frame
+      ;; Make sure Emacs treats the frame as light; helps in TTY.
+      (setq frame-background-mode 'light)
+      (frame-set-background-mode frame)
+      
+      ;; Disable other themes first (prevents mixed faces).
+      (mapc #'disable-theme custom-enabled-themes)
+      
+      (load-theme 'solarized-light t)
+      
+      ))
+  
+  ;; Apply to current frame (non-daemon) and future frames (daemon/emacsclient)
+  (my/apply-solarized (selected-frame))
+  (add-hook 'after-make-frame-functions #'my/apply-solarized)
+  )
 
     
   ;; Beacon mode (works better in GUI)
@@ -99,61 +99,7 @@
     (setq beacon-color "#e56911")
     (beacon-mode 1))
 
-;; ================ TERMINAL-SPECIFIC CONFIGURATION ================  
-  ;; Enhanced terminal colors
-  ;; (setq term-default-bg-color "#3f3f3f")
-  ;; (setq term-default-fg-color "#dcdccc")
-  
-  ;; ;; Better terminal cursor
-  ;; (setq cursor-type 'box)
-  ;; (add-hook 'term-mode-hook
-  ;;           (lambda ()
-  ;;             (setq cursor-type 'box)))
-  
-  ;; ;; Terminal-specific UI tweaks
-  ;; (set-face-background 'highlight "#4f4f4f")
-  ;; (set-face-foreground 'highlight "#ffffff")
-  ;; (set-face-underline 'highlight t)
-  
-  ;; ;; Improve region selection in terminal
-  ;; (set-face-attribute 'region nil :background "#cc9393" :foreground "#000000")
-  
-  ;; ;; Better parentheses highlighting for terminal
-  ;; (set-face-attribute 'show-paren-match nil
-  ;;                     :background "#8cd0d3"
-  ;;                     :foreground "#000000"
-  ;;                     :weight 'bold)
-  
-  ;; ;; Terminal-friendly line numbers (if you use them)
-  ;; (when (fboundp 'display-line-numbers-mode)
-  ;;   (set-face-attribute 'line-number nil
-  ;;                       :foreground "#7f7f7f"
-  ;;                       :background "#2b2b2b")
-  ;;   (set-face-attribute 'line-number-current-line nil
-  ;;                       :foreground "#ffffff"
-  ;;                       :background "#4f4f4f"
-  ;;                       :weight 'bold))
-  
-  ;; Enable mouse support in terminal
-  ;; (unless (display-graphic-p)
-  ;;   (xterm-mouse-mode 1)
-  ;;   (global-set-key [mouse-4] 'scroll-down-line)
-  ;;   (global-set-key [mouse-5] 'scroll-up-line))
-  
-  ;; ;; Fix terminal font rendering issues
-  ;; (setq inhibit-compacting-font-caches t)
-  ;; (setq use-default-font-for-symbols nil)
-  
-  ;; ;; Ensure proper character display in terminal
-  ;; (setq-default buffer-file-coding-system 'utf-8-unix)
-  ;; (setq-default default-buffer-file-coding-system 'utf-8-unix)
-  
-;  ) ; End of (unless (display-graphic-p))
 
-;; ================ UNIVERSAL CONFIGURATION (GUI + Terminal) ================
-
-;; Enhanced modeline for both GUI and terminal
-;; Enhanced modeline for both GUI and terminal
 (use-package doom-modeline
   :ensure t
   :init

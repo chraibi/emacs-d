@@ -181,17 +181,14 @@
 (use-package alert
   :ensure t
   :init
-  ;; macOS: use Notification Center (via terminal-notifier)
   (setq alert-default-style 'osx-notifier)
-
   :config
-  ;; Sound helper
-  (defun my-alert-afplay (&optional _info)
-    "Play a sound when an alert is raised."
+  (defun my-alert-afplay (&rest _args)
+    "Play a sound after any `alert` call."
     (start-process "alert-sound" nil "afplay"
-                   "/Users/chraibi/.emacs.d/sounds/chaffinch-singing-sound-effect-384534.wav"))
+                   (expand-file-name "~/.emacs.d/sounds/chaffinch-singing-sound-effect-384534.wav")))
 
-  ;; Advice: run sound after any alert
+  (advice-remove 'alert #'my-alert-afplay)
   (advice-add 'alert :after #'my-alert-afplay))
 
 
@@ -215,14 +212,6 @@
   (message "loading expand-region")
   )
 
-
-;; (defun autocompile nil
-;;   "compile itself if ~/.emacs"
-;;   (interactive)
-;;   (require 'bytecomp)
-;;   (let ((dotemacs (file-truename user-init-file)))
-;;     (if (string= (buffer-file-name) (file-chase-links dotemacs))
-;;       (byte-compile-file dotemacs))))
 
 ;; (add-hook 'after-save-hook 'autocompile)
 
