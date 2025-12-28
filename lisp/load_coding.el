@@ -59,24 +59,26 @@
   )
 
 
-
 (use-package copilot
   :ensure t
-  :hook ((python-mode c++-mode c-mode) . copilot-mode)
+  :hook ((python-mode python-ts-mode c++-mode c++-ts-mode c-mode c-ts-mode) . copilot-mode)
   :bind
   (:map copilot-completion-map
-        ("<tab>"     . copilot-accept-completion)
-        ("TAB"       . copilot-accept-completion)
-        ("C-<tab>"   . copilot-accept-completion-by-word)
-        ("C-TAB"     . copilot-accept-completion-by-word)
-        ("C-n"       . copilot-next-completion)
-        ("C-p"       . copilot-previous-completion))
+        ("<tab>"   . copilot-accept-completion)
+        ("TAB"     . copilot-accept-completion)
+        ("C-<tab>" . copilot-accept-completion-by-word)
+        ("C-TAB"   . copilot-accept-completion-by-word)
+        ("C-n"     . copilot-next-completion)
+        ("C-p"     . copilot-previous-completion))
   :config
   (setq copilot-indentation-alist
-        '((python-mode . 4)
-          (c++-mode    . 2)
-          (c-mode      . 2))))
-
+        '((python-mode     . 4)
+          (python-ts-mode  . 4)
+          (c++-mode        . 2)
+          (c++-ts-mode     . 2)
+          (c-mode          . 2)
+          (c-ts-mode       . 2)
+          (prog-mode       . 2))))  ;; fallback for derived prog modes
 
 (message "Finished loading coding settings")
 (provide 'load_configs)

@@ -124,10 +124,6 @@
 
 
 
-(global-set-key (kbd "M-o") 'ace-window)
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-(setq aw-background nil)
-
 ;;-------------------------------------------
 ;; ;;; Make all yes-or-no questions as y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -185,35 +181,6 @@
 (delete-selection-mode t)
 
 
-;; When popping the mark, continue popping until the cursor
-;; actually moves
-;; (defadvice pop-to-mark-command (around ensure-new-position activate)
-;;   (let ((p (point)))
-;;     (dotimes (i 10)
-;;       (when (= p (point)) ad-do-it))))
-
-;; (setq set-mark-command-repeat-pop t)
-
-;; http://endlessparentheses.com/new-in-emacs-25-1-have-prettify-symbols-mode-reveal-the-symbol-at-point.html
-;; (setq prettify-symbols-unprettify-at-point 'right-edge)
-
-
-;; (setq explicit-shell-file-name "~/.zshrc")
-;; (when (memq window-system '(mac ns x))
-;;   (exec-path-from-shell-initialize))
-
-
-;; ;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
-;; (setenv "PYTHONPATH" "$PYTHONPATH:/Users/chraibi/workspace/jupedsim/jupedsim_dashboard:/Users/chraibi/workspace/jupedsim/jpscore/build/lib/:/Users/chraibi/workspace/jupedsim/jpscore/python_modules/jupedsim/")
-;; (message (getenv "PYTHONPATH"))
-;; ;(setenv "LD_LIBRARY_PATH" "/Users/chraibi/workspace/jupedsim/jpscore/build/lib/")
-
-;; (setenv "LD_LIBRARY_PATH"
-;;   (let ((current (getenv "LD_LIBRARY_PATH"))
-;;         (new "/Users/chraibi/workspace/jupedsim/jpscore/build/lib"))
-;;     (if current (concat new ":" current) new)))
-
-;; (message (getenv "LD_LIBRARY_PATH"))
 
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

@@ -1,4 +1,4 @@
-;;; Package --- Summary
+`;;; Package --- Summary
 ;;; --- Le style a sont importance (GUI + Terminal)
 ;;; Code:
 ;;; Commentary:
@@ -45,7 +45,37 @@
   :custom
   (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
   :hook (prog-mode . fira-code-mode))
-)
+
+
+(defvar my/gui-font-height 180
+  "Default GUI font height.")
+
+(defun my/apply-gui-font (frame)
+  "Apply preferred GUI font to FRAME."
+  (with-selected-frame frame
+    (when (display-graphic-p frame)
+      (cond
+       ((find-font (font-spec :name "Fira Code Retina"))
+        (set-face-attribute 'default frame
+                            :family "Fira Code Retina"
+                            :height my/gui-font-height
+                            :weight 'normal)
+        (message "Using Fira Code Retina"))
+       ((find-font (font-spec :name "Fira Code"))
+        (set-face-attribute 'default frame
+                            :family "Fira Code"
+                            :height my/gui-font-height
+                            :weight 'normal)
+        (message "Using Fira Code"))
+       (t
+        (message "Fira Code not found, using default font"))))))
+
+;; Apply now (current frame) and for every new GUI frame (emacsclient -c)
+(my/apply-gui-font (selected-frame))
+(add-hook 'after-make-frame-functions #'my/apply-gui-font)
+
+  
+) ;; end of GUI-SPECIFIC CONFIGURATIOn
   
   ;; Font setup with fallback
   ;; (cond
@@ -57,7 +87,7 @@
   ;;   (set-face-attribute 'default nil :family "Fira Code" :height 180 :weight 'normal)
   ;;   (set-frame-font "Fira Code" nil t)
   ;;   (message "Using Fira Code"))
-  ;;  (t (message "Fira Code not found, using default font")))
+  ;;  (t (message "fira code not found, using default font")))
   
 
 
@@ -287,3 +317,4 @@
 (message "finished loading esthetics")
 (provide 'esthetics)
 ;;; esthetics.el ends here
+`

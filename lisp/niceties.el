@@ -23,7 +23,7 @@
   :config
   (vertico-mode 1)
   ;; If you really want grid always:
-;  (vertico-grid-mode 1)
+  (vertico-grid-mode 1)
 
   ;; Prefix current candidate with an arrow.
   ;; NOTE: This advises an internal function; keep it isolated.
@@ -37,8 +37,6 @@
   (advice-add #'vertico--format-candidate :around #'my/vertico-prefix-current-candidate))
 
 
-
-
 (use-package vertico-multiform
   :ensure nil
   :after vertico
@@ -48,6 +46,36 @@
         '((consult-imenu grid)
           (consult-line grid)
           (execute-extended-command reverse))))
+
+
+(use-package ace-window
+  :ensure t
+  :bind (("C-x o" . ace-window))
+  :init
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+        aw-dispatch-always t)
+  :config
+  ;; Frame-aware visuals (GUI vs terminal)
+  (defun my/ace-window-frame-style (frame)
+    (with-selected-frame frame
+      (if (display-graphic-p frame)
+          (progn
+            (setq aw-background t)
+            (set-face-attribute 'aw-leading-char-face frame :weight 'bold :height 2.0))
+        (progn
+          (setq aw-background nil)
+          (set-face-attribute 'aw-leading-char-face frame :weight 'bold :height 1.0)))))
+  (my/ace-window-frame-style (selected-frame))
+  (add-hook 'after-make-frame-functions #'my/ace-window-frame-style))
+
+
+;(global-set-key (kbd "M-o") 'ace-window)
+;; (global-set-key (kbd "C-x o") 'ace-window)
+
+;; (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+;; (setq aw-background t)
+;; (setq aw-ignore-on t)
+;; (add-to-list 'aw-ignored-buffers '("*Help*" "*Warnings*" "*Messages*"))
 
 
 ;; -------------------- marginalia --------------------
