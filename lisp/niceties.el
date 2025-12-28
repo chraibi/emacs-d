@@ -183,9 +183,26 @@
 ;; Configure alert to use libnotify for notifications
 (use-package alert
   :ensure t
-  :init (setq alert-default-style 'osx-notifier)
+  :init
+  ;; macOS: use Notification Center (via terminal-notifier)
+  (setq alert-default-style 'osx-notifier)
+
   :config
-  (setq alert-default-style 'libnotify))
+  ;; Sound helper
+  (defun my-alert-afplay (&optional _info)
+    "Play a sound when an alert is raised."
+    (start-process "alert-sound" nil "afplay"
+                   "/Users/chraibi/.emacs.d/sounds/chaffinch-singing-sound-effect-384534.wav"))
+
+  ;; Advice: run sound after any alert
+  (advice-add 'alert :after #'my-alert-afplay))
+
+
+;; (use-package alert
+;;   :ensure t
+;;   :init (setq alert-default-style 'osx-notifier)
+;;   :config
+;;   (setq alert-default-style 'libnotify))
 
 
 (use-package reveal-in-osx-finder
