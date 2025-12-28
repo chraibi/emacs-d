@@ -39,6 +39,9 @@
 
 ;; (add-hook 'after-save-hook 'autocompile)
 
+;(setq org-clock-sound t)
+(setq org-clock-sound "/Users/chraibi/.emacs.d/sounds/chaffinch-singing-sound-effect-384534.wav")
+;(setq org-timer-sound "/Users/chraibi/.emacs.d/sounds/chaffinch-singing-sound-effect-384534.wav")
 
 
 (provide 'org-modern)
