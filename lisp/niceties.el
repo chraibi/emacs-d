@@ -151,18 +151,15 @@
                                     flex-if-twiddle
                                     without-if-bang))
 
-
 (use-package server
+  :ensure nil
+  :hook (after-init . my/ensure-server)
   :init
-  (message "loading server!")
-  :ensure t
-  :defer 2
-  :config
-  (unless (server-running-p)
-  (server-start))
-)
-
-
+  (defun my/ensure-server ()
+    "Start the Emacs server unless it's already running."
+    (require 'server)
+    (unless (server-running-p server-name)
+      (server-start))))
 
 
 ;; Use-package configuration for pomm
