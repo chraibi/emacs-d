@@ -1,4 +1,4 @@
-`;;; Package --- Summary
+;;; Package --- Summary
 ;;; --- Le style a sont importance (GUI + Terminal)
 ;;; Code:
 ;;; Commentary:
@@ -17,16 +17,9 @@
 
 ;; Cursor configuration
 (setq-default cursor-type 'box)
-(set-cursor-color "#4a90e2")
 
-;; Basic UI improvements
-;; (custom-set-faces
-;;  '(show-paren-match ((((class color) (background light)) (:background "blue")))))
-
-;; (set-face-attribute 'region nil :background "#ff7f00" :foreground "#000000")
-(show-paren-mode t) ;; highlight matching parentheses
-
-;;--------------------- highlight line
+(when (display-graphic-p)
+  (set-cursor-color "#4a90e2"))
 ;(global-hl-line-mode 1)
 ;; (set-face-background 'highlight "#222")
 ;; (set-face-foreground 'highlight nil)
@@ -34,61 +27,38 @@
 
 (setq show-paren-style 'parenthesis) ; highlight just brackets
 
-;; ================ GUI-SPECIFIC CONFIGURATION ================
+;; ---------------- GUI-specific ----------------
 (when (display-graphic-p)
-  (message "Configuring GUI-specific settings...")
-  
   ;; Fira Code with ligatures (GUI only)
   (use-package fira-code-mode
-  :if (display-graphic-p)
-  :ensure t
-  :custom
-  (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
-  :hook (prog-mode . fira-code-mode))
+    :ensure t
+    :custom
+    (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
+    :hook (prog-mode . fira-code-mode))
 
+  (defvar my/gui-font-height 180
+    "Default GUI font height.")
 
-(defvar my/gui-font-height 180
-  "Default GUI font height.")
+  (defun my/apply-gui-font (frame)
+    "Apply preferred GUI font to FRAME."
+    (with-selected-frame frame
+      (when (display-graphic-p frame)
+        (cond
+         ((find-font (font-spec :name "Fira Code Retina"))
+          (set-face-attribute 'default frame
+                              :family "Fira Code Retina"
+                              :height my/gui-font-height
+                              :weight 'normal))
+         ((find-font (font-spec :name "Fira Code"))
+          (set-face-attribute 'default frame
+                              :family "Fira Code"
+                              :height my/gui-font-height
+                              :weight 'normal))))))
 
-(defun my/apply-gui-font (frame)
-  "Apply preferred GUI font to FRAME."
-  (with-selected-frame frame
-    (when (display-graphic-p frame)
-      (cond
-       ((find-font (font-spec :name "Fira Code Retina"))
-        (set-face-attribute 'default frame
-                            :family "Fira Code Retina"
-                            :height my/gui-font-height
-                            :weight 'normal)
-        (message "Using Fira Code Retina"))
-       ((find-font (font-spec :name "Fira Code"))
-        (set-face-attribute 'default frame
-                            :family "Fira Code"
-                            :height my/gui-font-height
-                            :weight 'normal)
-        (message "Using Fira Code"))
-       (t
-        (message "Fira Code not found, using default font"))))))
+  (my/apply-gui-font (selected-frame))
+  (add-hook 'after-make-frame-functions #'my/apply-gui-font)
+  )
 
-;; Apply now (current frame) and for every new GUI frame (emacsclient -c)
-(my/apply-gui-font (selected-frame))
-(add-hook 'after-make-frame-functions #'my/apply-gui-font)
-
-  
-) ;; end of GUI-SPECIFIC CONFIGURATIOn
-  
-  ;; Font setup with fallback
-  ;; (cond
-  ;;  ((find-font (font-spec :name "Fira Code Retina"))
-  ;;   (set-face-attribute 'default nil :family "Fira Code Retina" :height 180 :weight 'normal)
-  ;;   (set-frame-font "Fira Code Retina" nil t)
-  ;;   (message "Using Fira Code Retina"))
-  ;;  ((find-font (font-spec :name "Fira Code"))
-  ;;   (set-face-attribute 'default nil :family "Fira Code" :height 180 :weight 'normal)
-  ;;   (set-frame-font "Fira Code" nil t)
-  ;;   (message "Using Fira Code"))
-  ;;  (t (message "fira code not found, using default font")))
-  
 
 
 ;; --- Solarized everywhere (GUI + terminal), frame-aware ---
@@ -120,14 +90,14 @@
   (add-hook 'after-make-frame-functions #'my/apply-solarized)
   )
 
-    
-  ;; Beacon mode (works better in GUI)
-  (use-package beacon
-    :ensure t
-    :config
-    (setq beacon-push-mark 35)
-    (setq beacon-color "#e56911")
-    (beacon-mode 1))
+
+(use-package beacon
+  :ensure t
+  :if (display-graphic-p)
+  :config
+  (setq beacon-push-mark 35
+        beacon-color "#e56911")
+  (beacon-mode 1))
 
 
 (use-package doom-modeline
@@ -209,47 +179,9 @@
             (lambda (frame) 
               (with-selected-frame frame 
                 (my/setup-search-faces))))
-  (my/setup-search-faces))
+  (my/setup-search-faces)
+  )
 
-;; Company completion
-(use-package company
-  :ensure t
-  :config
-  (global-company-mode 1)
-  (setq company-idle-delay 0.2)
-  (setq company-minimum-prefix-length 2)
-  
-  ;; Frame-aware company colors
-  (defun my/setup-company-faces ()
-    "Setup company colors based on current frame."
-    (if (display-graphic-p)
-        (progn
-          (set-face-attribute 'company-tooltip nil
-                              :background "#4f4f4f"
-                              :foreground "#dcdccc")
-          (set-face-attribute 'company-tooltip-selection nil
-                              :background "#8cd0d3"
-                              :foreground "#000000")
-          (set-face-attribute 'company-tooltip-common nil
-                              :foreground "#f0dfaf"
-                              :weight 'bold))
-      (progn
-        (set-face-attribute 'company-tooltip nil
-                            :background "#f0f0f0"
-                            :foreground "#000000")
-        (set-face-attribute 'company-tooltip-selection nil
-                            :background "#4a90e2"
-                            :foreground "#ffffff")
-        (set-face-attribute 'company-tooltip-common nil
-                            :foreground "#d33682"
-                            :weight 'bold))))
-  
-  (add-hook 'focus-in-hook 'my/setup-company-faces)
-  (add-hook 'after-make-frame-functions 
-            (lambda (frame) 
-              (with-selected-frame frame 
-                (my/setup-company-faces))))
-  (my/setup-company-faces))
 
 ;; Which-key
 (use-package which-key
@@ -291,30 +223,9 @@
 (which-function-mode 1)
 (setq which-func-unknown "")
 
-;; ================ EMACSCLIENT HELPERS ================
-;; Commands to switch themes when using emacsclient
-(defun my/switch-to-gui-theme ()
-  "Switch to GUI theme for current frame."
-  (interactive)
-  (load-theme 'solarized-light t)
-  (my/setup-gui-frame (selected-frame))
-  (message "Switched to GUI theme"))
-
-(defun my/switch-to-terminal-theme ()
-  "Switch to terminal theme for current frame."
-  (interactive)
-  (load-theme 'zenburn t)
-  (my/setup-terminal-frame (selected-frame))
-  (message "Switched to terminal theme"))
-
-(defun my/reload-frame-config ()
-  "Reload frame configuration for current frame."
-  (interactive)
-  (my/setup-frame-appearance (selected-frame))
-  (message "Reloaded frame configuration"))
 
 ;; ================ FINISH ================
 (message "finished loading esthetics")
 (provide 'esthetics)
 ;;; esthetics.el ends here
-`
+
