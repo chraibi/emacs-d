@@ -156,36 +156,37 @@
 ;; ================ UNIVERSAL CONFIGURATION (GUI + Terminal) ================
 
 ;; Enhanced modeline for both GUI and terminal
+;; Enhanced modeline for both GUI and terminal
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-lsp t)
-  (setq doom-modeline-minor-modes nil)
-  (setq doom-modeline-buffer-encoding nil)
-  (setq doom-modeline-workspace-name t)
-  (setq doom-modeline-project-detection 'project)
-  (setq doom-modeline-buffer-file-name-style 'filename)
-  (setq doom-modeline-time t)
-  (setq doom-modeline-unicode-fallback t)
-  (setq doom-modeline-enable-word-count t)
-  (setq doom-modeline-major-mode-icon t)
-  (setq doom-modeline-major-mode-color-icon t)
-  (setq doom-modeline-gnus-timer nil)
-  (setq doom-modeline-time-live-icon t)
-  (setq doom-modeline-mail-icon nil)
-  (setq doom-modeline-env-enable-mail nil)
-  (setq doom-modeline-mu4e nil)
-  (setq doom-modeline-gnus nil)
-  
-  ;; Adjust icons for terminal
-  (if (display-graphic-p)
-      (setq doom-modeline-icon t)
-    (setq doom-modeline-icon nil)) ; Disable icons in terminal
-  
+  :init
+  ;; Set variables before enabling the mode so they take effect immediately.
+  (setq doom-modeline-lsp t
+        doom-modeline-minor-modes nil
+        doom-modeline-buffer-encoding nil
+        doom-modeline-workspace-name t
+        doom-modeline-project-detection 'project
+        doom-modeline-buffer-file-name-style 'filename
+        doom-modeline-time t
+        doom-modeline-unicode-fallback t
+        doom-modeline-enable-word-count t
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-gnus-timer nil
+        doom-modeline-time-live-icon t
+        doom-modeline-mail-icon nil
+        doom-modeline-env-enable-mail nil
+        doom-modeline-mu4e nil
+        doom-modeline-gnus nil)
+
+  ;; Icons: enable only in GUI
+  (setq doom-modeline-icon (display-graphic-p)
+        doom-modeline-time-icon (display-graphic-p))
+
   ;; Org-clock integration
   (setq org-clock-modeline-total 'current)
-  (setq doom-modeline-time-icon (display-graphic-p))
+
+  (doom-modeline-mode 1)
   (display-time-mode 1))
 
 ;; Org-clock hooks (works in both GUI and terminal)
