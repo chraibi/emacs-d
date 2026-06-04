@@ -183,7 +183,7 @@
       `(orderless-without-literal . ,(substring pattern 1)))))
 
   (setq orderless-matching-styles '(orderless-regexp)
-        orderless-style-dispatchers '(my/orderless-first-initialism
+        orderless-style-dispatchers '(;my/orderless-first-initialism
                                       my/orderless-flex-if-twiddle
                                       my/orderless-without-if-bang)))
 
