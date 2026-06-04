@@ -1,4 +1,4 @@
-;; org-basics.el
+;; org-basics.el  -*- lexical-binding: t; -*-
 ;; Basic Org mode configurations
 ;; defined: org-find-dangling-clok function
 

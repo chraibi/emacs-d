@@ -1,4 +1,4 @@
-;;; Package --- windows behavior
+;;; Package --- windows behavior  -*- lexical-binding: t; -*-
 ;;; Code:
 ;;; Commentary: undo, copy/paste, comment/uncomment, and avy
 
@@ -18,8 +18,7 @@
   "Like `comment-region', but comment/uncomment whole lines."
   (interactive "*r\nP")
   (if (> beg end) (let (mid) (setq mid beg beg end end mid)))
-  (let ((bol  (save-excursion (goto-char beg) (line-beginning-position)))
-        (eol  (save-excursion (goto-char end) (line-end-position))))
+  (let ((bol (save-excursion (goto-char beg) (line-beginning-position))))
     (comment-region bol end arg)))
 
 

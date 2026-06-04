@@ -1,4 +1,4 @@
-;;; Package --- load coding configs
+;;; Package --- load coding configs  -*- lexical-binding: t; -*-
 ;;; Code:
 ;;; Commentary: python, cmake, c++ clang-format
 (message "Loading load_coding.el")

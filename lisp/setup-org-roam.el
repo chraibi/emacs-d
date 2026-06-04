@@ -1,4 +1,4 @@
-;; org-roam-setup.el
+;; org-roam-setup.el  -*- lexical-binding: t; -*-
 ;; Org Roam specific configurations
 ;; org-roam, org-roam-ui, helm-rg (C-c o s)
 ;; todo check:

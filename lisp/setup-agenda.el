@@ -1,4 +1,4 @@
-;; org-agenda-setup.el
+;; org-agenda-setup.el  -*- lexical-binding: t; -*-
 ;; Org agenda-specific configurations
 
 

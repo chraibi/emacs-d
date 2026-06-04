@@ -1,4 +1,4 @@
-;;; Package --- Summary
+;;; Package --- Summary  -*- lexical-binding: t; -*-
 ;;; --- Le style a sont importance (GUI + Terminal)
 ;;; Code:
 ;;; Commentary:

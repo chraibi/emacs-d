@@ -1,5 +1,4 @@
-
-;;; Package --- summary
+;;; setup-cc.el --- C/C++ configuration  -*- lexical-binding: t; -*-
 ;;; Code:
 ;;; Commentary:
 

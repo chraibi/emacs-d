@@ -1,4 +1,4 @@
-;; org-ref.el
+;; org-ref.el  -*- lexical-binding: t; -*-
 ;; Initialisation of org-ref. Eventually related to helm-bibtex.el
 ;; also config for org-roam-bibtex
 

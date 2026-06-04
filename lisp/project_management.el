@@ -1,4 +1,4 @@
-;;; package ---- Project management packages
+;;; package ---- Project management packages  -*- lexical-binding: t; -*-
 ;;; Code:
 ;;; Commentary: projectile, helm, helm-projectile, magit, fzf
 (message "Loading project_management.el")

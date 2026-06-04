@@ -1,4 +1,4 @@
-;; org-modern.el
+;; org-modern.el  -*- lexical-binding: t; -*-
 ;; Modern Org mode
 
 (use-package org-modern

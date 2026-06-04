@@ -1,4 +1,4 @@
-;; org-crypt.el
+;; org-crypt.el  -*- lexical-binding: t; -*-
 ;; org-crypt
 
 

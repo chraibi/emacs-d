@@ -1,4 +1,4 @@
-;;; setup-dired.el --- Dired configuration
+;;; setup-dired.el --- Dired configuration  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;;   Dired enhancements and defaults
 ;;; Code:
@@ -14,6 +14,15 @@
       ibuffer-show-empty-filter-groups nil)
 
 ;;--------------------------------- ido-goto-symbol
+;; `symbol-names'/`name-and-pos'/`selected-symbol' are shared across the
+;; recursive `ido-goto-symbol' calls; `ido-mode'/`ido-enable-flex-matching'
+;; are ido specials the function rebinds.  All must stay dynamically scoped
+;; under lexical-binding.
+(defvar symbol-names)
+(defvar name-and-pos)
+(defvar selected-symbol)
+(defvar ido-mode)
+(defvar ido-enable-flex-matching)
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido.
 Argument SYMBOL-LIST provides symbols to select from."
