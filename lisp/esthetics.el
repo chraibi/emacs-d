@@ -27,15 +27,22 @@
 
 (setq show-paren-style 'parenthesis) ; highlight just brackets
 
+;; Fira Code ligatures: enable per-frame, graphic frames only. The ligatures
+;; are Fira Code Private-Use-Area glyphs (via prettify-symbols); a TTY frame
+;; can't render them and shows missing-glyph boxes, so gate on the frame.
+(defun my/fira-code-if-gui ()
+  "Enable `fira-code-mode' only on graphical frames."
+  (when (display-graphic-p)
+    (fira-code-mode 1)))
+
+(use-package fira-code-mode
+  :ensure t
+  :custom
+  (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
+  :hook (prog-mode . my/fira-code-if-gui))
+
 ;; ---------------- GUI-specific ----------------
 (when (display-graphic-p)
-  ;; Fira Code with ligatures (GUI only)
-  (use-package fira-code-mode
-    :ensure t
-    :custom
-    (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
-    :hook (prog-mode . fira-code-mode))
-
   (defvar my/gui-font-height 180
     "Default GUI font height.")
 

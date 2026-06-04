@@ -191,6 +191,10 @@
 (use-package server
   :ensure nil
   :hook (after-init . my/ensure-server)
+  :custom
+  ;; Use TCP so the socket info lands in `server-auth-dir' (~/.emacs.d/server/)
+  ;; instead of $TMPDIR/emacs<uid>/, making emacsclient TMPDIR-independent.
+  (server-use-tcp t)
   :init
   (defun my/ensure-server ()
     "Start the Emacs server unless it's already running."
