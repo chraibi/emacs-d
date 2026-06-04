@@ -72,7 +72,9 @@
 (setq system-uses-terminfo nil)
 ;;----------------- KEYbindings --------------
 
-
+(setq fzf/window-height 15) ; Ensure this is a reasonable number
+;; Force fzf to use the largest window on the frame
+(setq fzf/args "--height 40% --layout=reverse --border")
 (global-set-key (kbd "C-c n") 'fzf-git-grep)
 
 (global-set-key [f9] 'projectile-compile-project)
@@ -148,7 +150,7 @@
 
 ;; ;;    split vertically
 (setq split-height-threshold nil)
-(setq split-width-threshold 0)
+(setq split-width-threshold 80)
 
 
 (setq
