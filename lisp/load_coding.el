@@ -140,7 +140,8 @@
                             :foreground "#d33682"
                             :weight 'bold))))
 
-  (add-hook 'focus-in-hook #'my/setup-company-faces)
+  (add-function :after after-focus-change-function
+                (lambda () (when (frame-focus-state) (my/setup-company-faces))))
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame

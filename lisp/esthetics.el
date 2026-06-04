@@ -181,10 +181,11 @@
 
 (use-package isearch
   :config
-  (add-hook 'focus-in-hook 'my/setup-search-faces)
-  (add-hook 'after-make-frame-functions 
-            (lambda (frame) 
-              (with-selected-frame frame 
+  (add-function :after after-focus-change-function
+                (lambda () (when (frame-focus-state) (my/setup-search-faces))))
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
                 (my/setup-search-faces))))
   (my/setup-search-faces)
   )
@@ -211,10 +212,11 @@
         (setq which-key-frame-max-width 60)
         (setq which-key-frame-max-height 20))))
   
-  (add-hook 'focus-in-hook 'my/setup-which-key)
-  (add-hook 'after-make-frame-functions 
-            (lambda (frame) 
-              (with-selected-frame frame 
+  (add-function :after after-focus-change-function
+                (lambda () (when (frame-focus-state) (my/setup-which-key))))
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
                 (my/setup-which-key))))
   (my/setup-which-key))
 
