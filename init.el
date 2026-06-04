@@ -70,6 +70,11 @@
 (load-with-timing "~/.emacs.d/lisp/setup-agenda.el")
 (load-with-timing "~/.emacs.d/lisp/setup-org-crypt.el")
 (load-with-timing "~/.emacs.d/lisp/load_coding.el")
+(load-with-timing "~/.emacs.d/lisp/setup-godmode.el")
+
+
+(require 'org-roam-tree)
+(setq org-roam-mode-sections '(org-roam-tree-backlinks-section))
 
 
 (use-package org
