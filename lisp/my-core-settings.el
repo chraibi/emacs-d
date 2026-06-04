@@ -85,7 +85,7 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
-(global-set-key (kbd "M-i") 'ido-goto-symbol)
+(global-set-key (kbd "M-i") 'consult-imenu)
 (global-set-key "\C-cy" 'browse-kill-ring)
 (global-set-key (kbd "\C-cm") 'magit-status)   ;; ...git mode
                                         ;(global-set-key (kbd "<f4>") 'nav-toggle)
