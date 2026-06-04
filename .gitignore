@@ -60,3 +60,12 @@ thirdparty
 .cache/
 history
 lisp/ini
+
+# runtime state / generated data
+.persistent-scratch
+/server/
+pomm
+pomm_work.csv
+habit-quest-data.el
+# embedded git clone of a package
+/better-org-habit.el/
