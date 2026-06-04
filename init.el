@@ -94,11 +94,6 @@
 
 (load-with-timing "~/.emacs.d/lisp/setup-org-ref.el")
 
-
-
-
-;(load-with-timing "~/.emacs.d/lisp/setup-deft.el")
-
 (message "Finished loading all packages and configs")
 ;;-----------------------------
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el

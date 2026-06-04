@@ -3,9 +3,10 @@
 ;;; Code:
 ;(require 'magit)
 
-(defadvice magit-status (around magit-fullscreen activate)
+(define-advice magit-status (:around (orig &rest args) magit-fullscreen)
+  "Open `magit-status' fullscreen, saving the window layout for restore."
   (window-configuration-to-register :magit-fullscreen)
-  ad-do-it
+  (apply orig args)
   (delete-other-windows))
 
 (defun magit-quit-session ()
@@ -15,37 +16,6 @@
   (jump-to-register :magit-fullscreen))
 
 (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-
-(defun magit-toggle-whitespace ()
-  (interactive)
-  (if (member "-w" magit-diff-options)
-      (magit-dont-ignore-whitespace)
-    (magit-ignore-whitespace)))
-
-(defun magit-ignore-whitespace ()
-  (interactive)
-  (add-to-list 'magit-diff-options "-w")
-  (magit-refresh))
-
-(defun magit-dont-ignore-whitespace ()
-  (interactive)
-  (setq magit-diff-options (remove "-w" magit-diff-options))
-  (magit-refresh))
-
-(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-
-(add-hook 'magit-log-edit-mode-hook (lambda() (flyspell-mode t)))
-
-
-;; (remove-hook 'magit-status-sections-hook 'magit-insert-bisect-output)
-;; (remove-hook 'magit-status-sections-hook 'magit-insert-bisect-rest)
-;; (remove-hook 'magit-status-sections-hook 'magit-insert-bisect-log)
-;; (remove-hook 'magit-status-sections-hook 'magit-insert-stashes)
-
-
-;; (setq magit-status-sections-hook (default-value 'magit-status-sections-hook))
-
-
 
 (provide 'setup-magit)
 ;;; setup-magit.el ends here
