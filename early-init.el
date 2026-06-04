@@ -18,4 +18,12 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (setq frame-inhibit-implied-resize t)
 
+;; Only load the LaTeX export backend at startup.  org.el's
+;; `org-export-backends' defcustom requires every listed backend the moment
+;; org loads; the default (ascii html icalendar latex odt) pulls ox-icalendar
+;; (-> org-agenda), ox-odt (-> rng/nxml), ox-html and ox-ascii onto the
+;; startup path.  Must be set before org.el loads, hence here.  To export
+;; another format on demand: e.g. (require 'ox-html), then C-c C-e.
+(setq org-export-backends '(latex))
+
 ;;; early-init.el ends here
