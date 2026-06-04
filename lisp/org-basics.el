@@ -102,11 +102,10 @@
   (add-hook 'modus-themes-after-load-theme-hook #'my-org-todo-set-keyword-faces))
 
 
-;; org-babel stuff for latex export and coding within org-mode.
-;; Defer ox-latex loading off the startup critical path: org autoloads it on
-;; the first LaTeX export.  These settings read/modify ox-latex defaults (the
-;; `delete' below reads `org-latex-packages-alist'), so they must run after
-;; ox-latex is loaded.
+;; LaTeX export settings.  These read/modify ox-latex defaults (the `delete'
+;; below reads `org-latex-packages-alist'), so they must run after ox-latex is
+;; loaded.  ox-latex itself is loaded at startup via `org-export-backends'
+;; (which lists `latex'); this only sequences the settings after it.
 (with-eval-after-load 'ox-latex
   ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
   ;; (setq org-latex-listings 'minted)
@@ -191,13 +190,16 @@
         ("q" . "quote")
         ("v" . "verse")))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (shell . t)
-   (C . t)
-   )
- )
+;; Register babel languages off the startup critical path: loading `ob-C'
+;; pulls in the heavy `cc-mode'.  Languages become available shortly after
+;; Emacs goes idle; source-block execution works once registered.
+(run-with-idle-timer
+ 1 nil
+ (lambda ()
+   (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((shell . t)
+      (C . t)))))
 ;; https://github.com/jkitchin/ox-ipynb/tree/master
 ;;(require 'ox-ipynb)
 ;; org-notification
@@ -232,8 +234,10 @@
   ;; Ensure appointments are activated
   (appt-activate t))
 
-  ;; Automatically clean up old appointments
-  (run-at-time nil 3600 'org-agenda-to-appt t)
+  ;; Refresh appointments hourly, but start 60s after launch instead of
+  ;; immediately: the first scan visits every agenda file (slow on Dropbox)
+  ;; and would force org-agenda to load on the startup critical path.
+  (run-at-time 60 3600 'org-agenda-to-appt t)
   ;; Add additional time warnings (e.g., warn at 60, 30, 15, and 5 minutes)
 (setq appt-message-warning-time-list '(60 30 15 5))
 
