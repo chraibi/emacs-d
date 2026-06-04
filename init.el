@@ -8,13 +8,8 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(use-package exec-path-from-shell
-  :ensure t
-  :init (exec-path-from-shell-initialize))
-
 
 (require 'package)
-(setq package-enable-at-startup nil)
 (package-initialize)
 
 
@@ -23,8 +18,8 @@
 (message "Using org from: %s" (locate-library "org"))
 
 
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 
 
@@ -34,6 +29,19 @@
 
 (eval-when-compile
   (require 'use-package))
+
+;; Pick up PATH/env from the login shell.  Must run after `package-initialize'
+;; so the package is on the load-path (early-init.el disables auto-activation).
+(use-package exec-path-from-shell
+  :ensure t
+  :init (exec-path-from-shell-initialize))
+
+;; Activate benchmark-init first so it can measure the rest of startup.
+(use-package benchmark-init
+  :ensure t
+  :config
+  (benchmark-init/activate)
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; helper function for timing loads
 (defun load-with-timing (file)
@@ -55,8 +63,6 @@
 
 (add-hook 'org-clock-in-hook #'my/org-clock-save-to-file)
 (add-hook 'org-clock-out-hook #'my/org-clock-save-to-file)
-;; Add a repeating timer to refresh every 60 seconds
-(run-with-timer 0 60 #'my/org-clock-save-to-file)
 
 
 (load-with-timing "~/.emacs.d/lisp/niceties.el")
@@ -99,6 +105,10 @@
 ;; ;; Use a hook so the message doesn't get clobbered by other messages.
 (add-hook 'emacs-startup-hook
           (lambda ()
+            ;; Restore a sane GC threshold after the startup spike set in
+            ;; early-init.el.
+            (setq gc-cons-threshold (* 50 1000 1000)
+                  gc-cons-percentage 0.1)
             (message "Emacs ready in %s with %d garbage collections."
                      (format "%.2f seconds"
                              (float-time
@@ -117,13 +127,6 @@
       (byte-compile-file dotemacs))))
 
 (add-hook 'after-save-hook 'autocompile)
-
-
-(use-package benchmark-init
-  :ensure t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 
 (message "done loading emacs!")

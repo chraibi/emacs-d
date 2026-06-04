@@ -102,37 +102,41 @@
   (add-hook 'modus-themes-after-load-theme-hook #'my-org-todo-set-keyword-faces))
 
 
-;; org-babel stuff for latex export and coding withing org-mode
-(require 'ox-latex)
-;; (add-to-list 'org-latex-packages-alist '("" "minted"))
-;; (setq org-latex-listings 'minted) 
-(setq org-latex-listings t) ;; Uses listings package for code exports
-;; Custom listings configuration for better code highlighting
-(setq org-latex-listings-options
-      '(("basicstyle" "\\ttfamily\\small")   ;; Font and size for code
-        ("keywordstyle" "\\color{blue}\\bfseries")  ;; Style for keywords
-        ("commentstyle" "\\color{gray}\\itshape")  ;; Style for comments
-        ("stringstyle" "\\color{orange}")  ;; Style for strings
-        ("showstringspaces" "false")  ;; Don't show spaces in strings
-        ("numbers" "left")  ;; Line numbers on the left
-        ("numberstyle" "\\tiny\\color{gray}")  ;; Style for line numbers
-        ("stepnumber" "1")  ;; Number every line
-        ("frame" "single")  ;; Frame around the code
-        ("breaklines" "true")  ;; Automatically break long lines
-        ("frameround" "tttt")))  ;; Rounded frame corners
+;; org-babel stuff for latex export and coding within org-mode.
+;; Defer ox-latex loading off the startup critical path: org autoloads it on
+;; the first LaTeX export.  These settings read/modify ox-latex defaults (the
+;; `delete' below reads `org-latex-packages-alist'), so they must run after
+;; ox-latex is loaded.
+(with-eval-after-load 'ox-latex
+  ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
+  ;; (setq org-latex-listings 'minted)
+  (setq org-latex-listings t) ;; Uses listings package for code exports
+  ;; Custom listings configuration for better code highlighting
+  (setq org-latex-listings-options
+        '(("basicstyle" "\\ttfamily\\small")   ;; Font and size for code
+          ("keywordstyle" "\\color{blue}\\bfseries")  ;; Style for keywords
+          ("commentstyle" "\\color{gray}\\itshape")  ;; Style for comments
+          ("stringstyle" "\\color{orange}")  ;; Style for strings
+          ("showstringspaces" "false")  ;; Don't show spaces in strings
+          ("numbers" "left")  ;; Line numbers on the left
+          ("numberstyle" "\\tiny\\color{gray}")  ;; Style for line numbers
+          ("stepnumber" "1")  ;; Number every line
+          ("frame" "single")  ;; Frame around the code
+          ("breaklines" "true")  ;; Automatically break long lines
+          ("frameround" "tttt")))  ;; Rounded frame corners
 
-;; Add listings and xcolor to required LaTeX packages
-(setq org-latex-packages-alist
-      (delete '("" "xcolor" t) org-latex-packages-alist))
-(setq org-latex-compiler "xelatex") ;; XeLaTex rather than pdflatex
-(setq org-latex-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
+  ;; Add listings and xcolor to required LaTeX packages
+  (setq org-latex-packages-alist
+        (delete '("" "xcolor" t) org-latex-packages-alist))
+  (setq org-latex-compiler "xelatex") ;; XeLaTex rather than pdflatex
+  (setq org-latex-pdf-process
+        '("xelatex -interaction nonstopmode -output-directory %o %f"
+          "xelatex -interaction nonstopmode -output-directory %o %f"))
+  (setq org-latex-view-pdf-after-export t)) ; Automatically view the PDF after export
 
 (add-hook 'org-mode-hook
           (lambda ()
             (setq TeX-view-program-selection '((output-pdf "Skim")))))
-(setq org-latex-view-pdf-after-export t) ; Automatically view the PDF after export
 
 (setq org-src-fontify-natively t)
 (setq org-export-with-broken-links t

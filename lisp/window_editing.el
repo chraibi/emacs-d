@@ -44,6 +44,10 @@
   :diminish undo-tree-mode
   :config
   (progn
+    ;; Don't write .~undo-tree~ history files next to every visited file
+    ;; (they littered Dropbox and caused slow network I/O at startup when
+    ;; org-roam/agenda programmatically open and kill org files).
+    (setq undo-tree-auto-save-history nil)
     (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff nil)))

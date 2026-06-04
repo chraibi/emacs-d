@@ -36,13 +36,12 @@
   :after org-roam
   :init
   (message "Load org-roam-ui")
-  :defer t
-  :hook (after-init . org-roam-ui-mode)
+  :commands (org-roam-ui-mode org-roam-ui-open)
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow nil
         org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+        org-roam-ui-open-on-start nil))
 
 
 ;; template

@@ -6,6 +6,9 @@
   :ensure org ; Ensure the 'org' package is installed
   :config
   (setq org-agenda-window-setup 'only-window)
+  ;; Silently skip agenda files that no longer exist instead of prompting
+  ;; "[R]emove from list or [A]bort?" every time the agenda is built.
+  (setq org-agenda-skip-unavailable-files t)
   (setq org-agenda-files
       (append
        (file-expand-wildcards (concat org-directory "org-roam/ppl/*.org"))

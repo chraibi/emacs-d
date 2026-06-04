@@ -4,7 +4,8 @@
 ;;; Commentary:
 (message "loading my settings")
 ;; ------cleanup this
-(setq gc-cons-threshold (* 50 1000 1000))
+;; gc-cons-threshold is raised in early-init.el and reset on
+;; `emacs-startup-hook' in init.el.
 ;;; Code:
 ;; Turn off mouse interface early in startup to avoid momentary display
 

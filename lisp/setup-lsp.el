@@ -134,27 +134,8 @@
   (add-to-list 'flycheck-checkers 'python-ruff)
   (setq-default flycheck-disabled-checkers '(python-flake8 python-pylint python-pycompile)))
 
-;; Company configuration for better completion
-(use-package company
-  :ensure t
-  :hook (prog-mode . company-mode)
-  :custom
-  (company-idle-delay 0.1)
-  (company-minimum-prefix-length 1)
-  (company-selection-wrap-around t)
-  (company-tooltip-align-annotations t)
-  (company-frontends '(company-pseudo-tooltip-frontend
-                       company-echo-metadata-frontend))
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-              ("TAB" . company-complete-selection)))
-
-;; Which-key integration for LSP commands
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
+;; company and which-key are configured in load_coding.el and esthetics.el
+;; respectively.
 
 ;; Additional settings
 (setq imenu-auto-rescan t

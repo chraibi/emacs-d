@@ -102,6 +102,11 @@
   (company-idle-delay 0.2)
   (company-minimum-prefix-length 2)
   (company-tooltip-align-annotations t)
+  (company-selection-wrap-around t)
+  :bind (:map company-active-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)
+              ("TAB" . company-complete-selection))
   :config
 
   ;; Prefer CAPF but allow snippet completion

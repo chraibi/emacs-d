@@ -8,8 +8,10 @@
   :init
   (message "Init org-ref")
   :ensure t
-  :after org-roam
-  :config  
+  :defer t
+  :commands (org-ref-insert-link)
+  :bind (:map org-mode-map ("C-c )" . org-ref-insert-link))
+  :config
   (setq bibtex-completion-bibliography '(
                                          "~/Zotero/PED-Modeling.bib"
                                          "~/Zotero/Writing.bib"
@@ -28,12 +30,8 @@
 	bibtex-completion-pdf-open-function
 	(lambda (fpath)
 	  (call-process "open" nil 0 nil fpath))
-        org-ref-default-citation-link "cite"        
-        )
-    
-  ;; Ensure org-ref-insert-link is defined before setting the keybinding
-  (define-key org-mode-map (kbd "C-c )") 'org-ref-insert-link)
-  )
+        org-ref-default-citation-link "cite"
+        ))
 
 
 
@@ -50,9 +48,12 @@
         )   
   )
 
-(require 'org-ref-helm)
-(setq org-ref-insert-cite-function 'org-ref-cite-insert-helm)
+(with-eval-after-load 'org-ref-helm
+  (setq org-ref-insert-cite-function 'org-ref-cite-insert-helm))
 
-
+;; Background-load the citation/bibliography stack ~1s after Emacs goes idle,
+;; instead of eagerly during init.  This pulls org-ref-helm -> org-ref ->
+;; helm/citeproc/bibtex, triggering the :config above off the critical path.
+(run-with-idle-timer 1 nil (lambda () (require 'org-ref-helm)))
 
 (provide 'org-ref)
